@@ -2,6 +2,8 @@ export interface NavItem {
   label: string;
   href: string;
   children?: { label: string; href: string }[];
+  viewAllHref?: string;
+  viewAllLabel?: string;
 }
 
 export const navItems: NavItem[] = [
@@ -10,6 +12,8 @@ export const navItems: NavItem[] = [
   {
     label: "Our Homes",
     href: "#homes",
+    viewAllHref: "#homes",
+    viewAllLabel: "View All Homes",
     children: [
       { label: "Amethyst House", href: "#homes" },
       { label: "Beryl House", href: "#homes" },
@@ -22,7 +26,18 @@ export const navItems: NavItem[] = [
     ],
   },
   { label: "Our Team", href: "#team" },
-  { label: "Careers", href: "#careers" },
+  {
+    label: "Careers",
+    href: "/careers",
+    children: [
+      { label: "Open Roles", href: "/careers/open-roles" },
+      { label: "Why Work With Us", href: "/careers/why-us" },
+      { label: "Benefits", href: "/careers/benefits" },
+      { label: "Training & Development", href: "/careers/training" },
+      { label: "How We Hire", href: "/careers/how-we-hire" },
+      { label: "Contact Recruitment", href: "/careers/contact" },
+    ],
+  },
   { label: "Contact", href: "#contact" },
 ];
 

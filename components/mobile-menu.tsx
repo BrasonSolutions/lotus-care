@@ -9,11 +9,15 @@ interface MobileMenuProps {
 
 export default function MobileMenu({ scrolled }: MobileMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [homesExpanded, setHomesExpanded] = useState(false);
+  const [expandedItem, setExpandedItem] = useState<string | null>(null);
 
   const close = () => {
     setIsOpen(false);
-    setHomesExpanded(false);
+    setExpandedItem(null);
+  };
+
+  const toggleItem = (label: string) => {
+    setExpandedItem((prev) => (prev === label ? null : label));
   };
 
   return (
@@ -69,12 +73,12 @@ export default function MobileMenu({ scrolled }: MobileMenuProps) {
             item.children ? (
               <div key={item.label} className="mb-1">
                 <button
-                  onClick={() => setHomesExpanded((prev) => !prev)}
+                  onClick={() => toggleItem(item.label)}
                   className="flex items-center justify-between w-full py-3 px-2 text-foreground font-medium hover:text-primary transition-colors focus-ring rounded"
                 >
                   {item.label}
                   <svg
-                    className={`w-5 h-5 transition-transform ${homesExpanded ? "rotate-180" : ""}`}
+                    className={`w-5 h-5 transition-transform ${expandedItem === item.label ? "rotate-180" : ""}`}
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -85,7 +89,7 @@ export default function MobileMenu({ scrolled }: MobileMenuProps) {
                 </button>
                 <div
                   className={`overflow-hidden transition-all duration-300 ${
-                    homesExpanded ? "max-h-[60vh]" : "max-h-0"
+                    expandedItem === item.label ? "max-h-[60vh]" : "max-h-0"
                   }`}
                 >
                   <div className="pl-4 pb-2">
