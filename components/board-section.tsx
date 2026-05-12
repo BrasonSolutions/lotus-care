@@ -27,15 +27,15 @@ export default function BoardSection() {
             <button
               key={member.name}
               onClick={() => setSelectedMember(member)}
-              className={`card-hover reveal-delay-${i + 1} bg-white/10 backdrop-blur-sm rounded-2xl p-8 text-center group border border-white/10 hover:border-accent/30 transition-colors`}
+              className={`card-hover reveal-delay-${i + 1} bg-white/10 backdrop-blur-sm rounded-2xl p-8 text-center group border border-white/10 hover:border-accent/30 transition-colors focus-ring-white`}
             >
-              <div className="w-20 h-20 rounded-full bg-gradient-to-br from-accent to-primary mx-auto mb-4 flex items-center justify-center text-white text-xl font-bold group-hover:scale-105 transition-transform">
+              <div className="w-20 h-20 rounded-full bg-gradient-to-br from-accent to-primary mx-auto mb-4 flex items-center justify-center text-white text-2xl font-bold group-hover:scale-105 transition-transform">
                 {member.initials}
               </div>
               <h3 className="text-lg font-bold text-white group-hover:text-accent transition-colors">
                 {member.name}
               </h3>
-              <p className="text-sm text-accent/80 mt-1">{member.role}</p>
+              <p className="text-sm text-accent mt-1">{member.role}</p>
             </button>
           ))}
         </div>

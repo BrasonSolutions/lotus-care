@@ -33,14 +33,14 @@ export default function TeamModal({ member, onClose }: TeamModalProps) {
   return (
     <dialog
       ref={dialogRef}
-      className="backdrop:bg-black/50 bg-transparent p-4 max-w-md w-full m-auto"
+      className="backdrop:bg-black/50 bg-transparent p-4 w-[90vw] max-w-md m-auto"
       onClose={onClose}
       onClick={(e) => {
         if (e.target === dialogRef.current) onClose();
       }}
       aria-label={`Bio for ${member.name}`}
     >
-      <div className="bg-white rounded-2xl overflow-hidden shadow-2xl">
+      <div className="bg-white rounded-2xl overflow-hidden shadow-2xl animate-scale-in">
         {/* Avatar */}
         <div className="bg-gradient-to-br from-primary-dark to-primary p-8 flex flex-col items-center">
           <div className="w-20 h-20 rounded-full bg-white/20 flex items-center justify-center text-white text-2xl font-bold mb-4">
@@ -51,11 +51,19 @@ export default function TeamModal({ member, onClose }: TeamModalProps) {
         </div>
 
         {/* Bio */}
-        <div className="p-6">
-          <p className="text-foreground leading-relaxed mb-6">{member.bio}</p>
+        <div className="p-6 overflow-y-auto max-h-[50vh]">
+          {member.bio ? (
+            <div className="space-y-4 mb-6">
+              {member.bio.split("\n\n").map((para, i) => (
+                <p key={i} className="text-foreground leading-relaxed">{para}</p>
+              ))}
+            </div>
+          ) : (
+            <p className="text-muted italic mb-6">Bio coming soon.</p>
+          )}
           <button
             onClick={onClose}
-            className="w-full bg-primary text-white py-3 rounded-full font-semibold hover:bg-primary-dark transition-colors"
+            className="w-full bg-primary text-white py-3 rounded-full font-semibold hover:bg-primary-dark transition-colors focus-ring"
           >
             Close
           </button>

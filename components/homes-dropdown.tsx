@@ -18,7 +18,7 @@ export default function HomesDropdown({ item, scrolled }: HomesDropdownProps) {
       onMouseLeave={() => setOpen(false)}
     >
       <button
-        className={`text-sm font-medium transition-colors flex items-center gap-1 ${
+        className={`text-base font-medium transition-colors flex items-center gap-1 focus-ring rounded ${
           scrolled
             ? "text-foreground hover:text-primary"
             : "text-white hover:text-accent"
@@ -29,7 +29,7 @@ export default function HomesDropdown({ item, scrolled }: HomesDropdownProps) {
       >
         {item.label}
         <svg
-          className={`w-4 h-4 transition-transform ${open ? "rotate-180" : ""}`}
+          className={`w-5 h-5 transition-transform ${open ? "rotate-180" : ""}`}
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -49,7 +49,7 @@ export default function HomesDropdown({ item, scrolled }: HomesDropdownProps) {
             <a
               key={child.label}
               href={child.href}
-              className="block px-4 py-2.5 text-sm text-foreground hover:bg-warm-bg hover:text-primary transition-colors"
+              className="block px-4 py-3 text-sm text-foreground hover:bg-warm-bg hover:text-primary transition-colors focus-ring"
               onClick={() => setOpen(false)}
             >
               {child.label}
@@ -58,7 +58,7 @@ export default function HomesDropdown({ item, scrolled }: HomesDropdownProps) {
           <div className="border-t border-gray-100 mt-1 pt-1">
             <a
               href="#homes"
-              className="block px-4 py-2.5 text-sm font-semibold text-primary hover:bg-warm-bg transition-colors"
+              className="block px-4 py-3 text-sm font-semibold text-primary hover:bg-warm-bg transition-colors focus-ring"
               onClick={() => setOpen(false)}
             >
               View All Homes

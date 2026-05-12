@@ -14,7 +14,7 @@ export default function AboutSection() {
           subtitle="Dedicated to enhancing the lives of people with disabilities since our founding."
         />
 
-        <div ref={ref} className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center mt-8">
+        <div ref={ref} className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center mt-8">
           {/* Text content */}
           <div className={`reveal ${inView ? "in-view" : ""}`}>
             <p className="text-lg text-foreground leading-relaxed mb-6">
@@ -38,31 +38,31 @@ export default function AboutSection() {
             </p>
           </div>
 
-          {/* Decorative element */}
+          {/* Stats card */}
           <div className={`reveal reveal-delay-2 ${inView ? "in-view" : ""}`}>
             <div className="relative">
               <div className="bg-warm-bg rounded-2xl p-8 lg:p-12">
-                <div className="grid grid-cols-2 gap-6">
+                <dl className="grid grid-cols-2 gap-6">
                   <div className="text-center">
-                    <div className="text-4xl font-bold text-primary-dark mb-2">8</div>
-                    <div className="text-sm text-muted">Care Homes</div>
+                    <dd className="text-4xl font-bold text-primary-dark mb-2">8</dd>
+                    <dt className="text-sm text-foreground">Care Homes</dt>
                   </div>
                   <div className="text-center">
-                    <div className="text-4xl font-bold text-primary-dark mb-2">150+</div>
-                    <div className="text-sm text-muted">Staff Members</div>
+                    <dd className="text-4xl font-bold text-primary-dark mb-2">150+</dd>
+                    <dt className="text-sm text-foreground">Staff Members</dt>
                   </div>
                   <div className="text-center">
-                    <div className="text-4xl font-bold text-primary-dark mb-2">200+</div>
-                    <div className="text-sm text-muted">Lives Supported</div>
+                    <dd className="text-4xl font-bold text-primary-dark mb-2">200+</dd>
+                    <dt className="text-sm text-foreground">Lives Supported</dt>
                   </div>
                   <div className="text-center">
-                    <div className="text-4xl font-bold text-primary-dark mb-2">24/7</div>
-                    <div className="text-sm text-muted">Care Available</div>
+                    <dd className="text-4xl font-bold text-primary-dark mb-2">24/7</dd>
+                    <dt className="text-sm text-foreground">Care Available</dt>
                   </div>
-                </div>
+                </dl>
               </div>
-              <div className="absolute -top-4 -right-4 w-24 h-24 bg-accent/20 rounded-full blur-2xl" />
-              <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-primary/10 rounded-full blur-2xl" />
+              <div className="absolute -top-4 -right-4 w-24 h-24 bg-accent/20 rounded-full blur-2xl pointer-events-none" aria-hidden="true" />
+              <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-primary/10 rounded-full blur-2xl pointer-events-none" aria-hidden="true" />
             </div>
           </div>
         </div>

@@ -12,10 +12,10 @@ export default function RecruitmentSection() {
           ref={ref}
           className={`reveal ${inView ? "in-view" : ""} max-w-3xl mx-auto text-center`}
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-primary-dark mb-6">
+          <h2 className="text-2xl md:text-3xl font-bold text-primary-dark mb-6">
             Join Our Team
           </h2>
-          <p className="text-lg text-foreground leading-relaxed mb-4">
+          <p className="text-lg text-foreground leading-relaxed mb-6">
             Are you passionate about making a real difference in people&apos;s
             lives? Lotus Care is always looking for compassionate, dedicated
             professionals to join our growing team.
@@ -27,7 +27,7 @@ export default function RecruitmentSection() {
           </p>
           <a
             href="#contact"
-            className="inline-block bg-primary text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-primary-dark transition-colors"
+            className="inline-block bg-primary text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-primary-dark transition-colors focus-ring"
           >
             View Open Positions
           </a>

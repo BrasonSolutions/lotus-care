@@ -23,7 +23,7 @@ export default function Footer() {
   return (
     <footer className="bg-primary-dark text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 lg:gap-10">
           {/* Brand */}
           <div className="sm:col-span-2 lg:col-span-1">
             <Image
@@ -33,7 +33,7 @@ export default function Footer() {
               height={48}
               className="h-12 w-auto brightness-0 invert mb-4"
             />
-            <p className="text-white/70 text-sm leading-relaxed">
+            <p className="text-white/70 text-base leading-relaxed">
               Lotus Care is a registered NDIS provider delivering quality
               residential and respite disability care services across Victoria.
             </p>
@@ -47,7 +47,7 @@ export default function Footer() {
                 <li key={link.label}>
                   <a
                     href={link.href}
-                    className="text-sm text-white/70 hover:text-accent transition-colors"
+                    className="text-base text-white/70 hover:text-accent transition-colors focus-ring-white rounded"
                   >
                     {link.label}
                   </a>
@@ -62,7 +62,7 @@ export default function Footer() {
             <ul className="space-y-2.5">
               {services.map((service) => (
                 <li key={service}>
-                  <span className="text-sm text-white/70">{service}</span>
+                  <span className="text-base text-white/70">{service}</span>
                 </li>
               ))}
             </ul>
@@ -71,16 +71,16 @@ export default function Footer() {
           {/* Contact */}
           <div>
             <h3 className="font-bold text-lg mb-4">Contact</h3>
-            <div className="space-y-3 text-sm text-white/70">
+            <div className="space-y-3 text-base text-white/70">
               <a
                 href={`tel:${contactInfo.phone}`}
-                className="block hover:text-accent transition-colors"
+                className="block hover:text-accent transition-colors focus-ring-white rounded"
               >
                 {contactInfo.phone}
               </a>
               <a
                 href={`mailto:${contactInfo.email}`}
-                className="block hover:text-accent transition-colors"
+                className="block hover:text-accent transition-colors focus-ring-white rounded"
               >
                 {contactInfo.email}
               </a>
@@ -93,10 +93,10 @@ export default function Footer() {
                 <a
                   key={social}
                   href="#"
-                  className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-accent/20 transition-colors"
+                  className="w-10 h-10 p-2 rounded-full bg-white/10 flex items-center justify-center hover:bg-accent/20 transition-colors focus-ring-white"
                   aria-label={social}
                 >
-                  <svg className="w-4 h-4 text-white/80" fill="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-5 h-5 text-white/80" fill="currentColor" viewBox="0 0 24 24">
                     {social === "facebook" && (
                       <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
                     )}
@@ -121,8 +121,8 @@ export default function Footer() {
             &copy; {new Date().getFullYear()} Lotus Care. All rights reserved.
           </p>
           <div className="flex gap-6 text-sm text-white/50">
-            <a href="#" className="hover:text-accent transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-accent transition-colors">Terms of Service</a>
+            <a href="#" className="hover:text-accent transition-colors focus-ring-white rounded">Privacy Policy</a>
+            <a href="#" className="hover:text-accent transition-colors focus-ring-white rounded">Terms of Service</a>
           </div>
         </div>
       </div>

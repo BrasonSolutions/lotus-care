@@ -21,7 +21,7 @@ export default function SectionTitle({
       className={`reveal text-center mb-12 ${inView ? "in-view" : ""}`}
     >
       <h2
-        className={`text-3xl md:text-4xl font-bold mb-4 ${light ? "text-white" : "text-primary-dark"}`}
+        className={`text-2xl md:text-3xl lg:text-4xl font-bold mb-4 ${light ? "text-white" : "text-primary-dark"}`}
       >
         {title}
       </h2>

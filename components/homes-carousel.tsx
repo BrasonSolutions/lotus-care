@@ -34,8 +34,11 @@ export default function HomesCarousel() {
     [activeIndex, scrollToIndex]
   );
 
-  // Auto-scroll
+  // Auto-scroll — paused when prefers-reduced-motion is set
   useEffect(() => {
+    if (typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      return;
+    }
     const startAutoScroll = () => {
       autoScrollRef.current = setInterval(() => {
         scrollBy(1);
@@ -80,16 +83,16 @@ export default function HomesCarousel() {
         <div ref={sectionRef} className={`reveal ${inView ? "in-view" : ""}`}>
           {/* Carousel container */}
           <div className="relative">
-            {/* Arrows */}
+            {/* Arrows — visible on all screen sizes */}
             <button
               onClick={() => {
                 pauseAutoScroll();
                 scrollBy(-1);
               }}
-              className="hidden md:flex absolute -left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-white rounded-full shadow-lg items-center justify-center text-primary-dark hover:text-primary transition-colors"
+              className="absolute -left-2 md:-left-4 top-1/2 -translate-y-1/2 z-10 w-8 h-8 md:w-10 md:h-10 bg-white rounded-full shadow-lg flex items-center justify-center text-primary-dark hover:text-primary transition-colors focus-ring"
               aria-label="Previous home"
             >
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <svg className="w-4 h-4 md:w-5 md:h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
               </svg>
             </button>
@@ -98,10 +101,10 @@ export default function HomesCarousel() {
                 pauseAutoScroll();
                 scrollBy(1);
               }}
-              className="hidden md:flex absolute -right-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-white rounded-full shadow-lg items-center justify-center text-primary-dark hover:text-primary transition-colors"
+              className="absolute -right-2 md:-right-4 top-1/2 -translate-y-1/2 z-10 w-8 h-8 md:w-10 md:h-10 bg-white rounded-full shadow-lg flex items-center justify-center text-primary-dark hover:text-primary transition-colors focus-ring"
               aria-label="Next home"
             >
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <svg className="w-4 h-4 md:w-5 md:h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
               </svg>
             </button>
@@ -109,14 +112,14 @@ export default function HomesCarousel() {
             {/* Cards */}
             <div
               ref={scrollRef}
-              className="flex gap-6 overflow-x-auto snap-x snap-mandatory hide-scrollbar pb-4"
+              className="flex gap-6 overflow-x-auto snap-x snap-mandatory hide-scrollbar pb-4 px-1"
               onMouseEnter={pauseAutoScroll}
             >
               {homes.map((home) => (
                 <button
                   key={home.name}
                   onClick={() => setSelectedHome(home)}
-                  className="card-hover snap-start shrink-0 w-[280px] sm:w-[320px] bg-warm-bg rounded-2xl overflow-hidden text-left group"
+                  className="card-hover snap-start shrink-0 w-[calc(85vw)] sm:w-[300px] md:w-[320px] bg-warm-bg rounded-2xl overflow-hidden text-left group focus-ring"
                 >
                   {/* Color header */}
                   <div
@@ -145,7 +148,7 @@ export default function HomesCarousel() {
             </div>
           </div>
 
-          {/* Dots */}
+          {/* Dots — larger tap targets */}
           <div className="flex justify-center gap-2 mt-6">
             {homes.map((home, i) => (
               <button
@@ -154,11 +157,17 @@ export default function HomesCarousel() {
                   pauseAutoScroll();
                   scrollToIndex(i);
                 }}
-                className={`w-2.5 h-2.5 rounded-full transition-all ${
-                  i === activeIndex ? "bg-primary w-6" : "bg-gray-300 hover:bg-gray-400"
-                }`}
+                className="p-1 focus-ring rounded-full"
                 aria-label={`Go to ${home.name}`}
-              />
+              >
+                <span
+                  className={`block rounded-full transition-all ${
+                    i === activeIndex
+                      ? "bg-primary w-8 h-4"
+                      : "bg-gray-300 hover:bg-gray-400 w-4 h-4"
+                  }`}
+                />
+              </button>
             ))}
           </div>
 
@@ -166,7 +175,7 @@ export default function HomesCarousel() {
           <div className="text-center mt-8">
             <a
               href="#contact"
-              className="inline-block border-2 border-primary text-primary px-8 py-3 rounded-full font-semibold hover:bg-primary hover:text-white transition-colors"
+              className="inline-block border-2 border-primary text-primary px-8 py-3 rounded-full font-semibold hover:bg-primary hover:text-white transition-colors focus-ring"
             >
               Enquire About Our Homes
             </a>

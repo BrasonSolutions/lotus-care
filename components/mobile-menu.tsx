@@ -18,10 +18,10 @@ export default function MobileMenu({ scrolled }: MobileMenuProps) {
 
   return (
     <div className="lg:hidden">
-      {/* Hamburger button */}
+      {/* Hamburger button — p-3 gives ~50px tap area */}
       <button
         onClick={() => setIsOpen((prev) => !prev)}
-        className={`p-2 transition-colors ${
+        className={`p-3 -mr-1 transition-colors focus-ring rounded ${
           scrolled ? "text-foreground" : "text-white"
         }`}
         aria-label={isOpen ? "Close menu" : "Open menu"}
@@ -47,13 +47,17 @@ export default function MobileMenu({ scrolled }: MobileMenuProps) {
 
       {/* Menu panel */}
       <div
-        className={`fixed top-0 right-0 h-full w-80 max-w-[85vw] bg-white z-50 transform transition-transform duration-300 shadow-2xl ${
+        className={`fixed top-0 right-0 h-full w-80 max-w-[90vw] bg-white z-50 transform transition-transform duration-300 shadow-2xl ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
         <div className="flex items-center justify-between p-4 border-b border-gray-100">
           <span className="text-lg font-bold text-primary-dark">Menu</span>
-          <button onClick={close} className="p-2 text-muted hover:text-foreground" aria-label="Close menu">
+          <button
+            onClick={close}
+            className="p-2 text-muted hover:text-foreground focus-ring rounded"
+            aria-label="Close menu"
+          >
             <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
@@ -66,7 +70,7 @@ export default function MobileMenu({ scrolled }: MobileMenuProps) {
               <div key={item.label} className="mb-1">
                 <button
                   onClick={() => setHomesExpanded((prev) => !prev)}
-                  className="flex items-center justify-between w-full py-3 px-2 text-foreground font-medium hover:text-primary transition-colors"
+                  className="flex items-center justify-between w-full py-3 px-2 text-foreground font-medium hover:text-primary transition-colors focus-ring rounded"
                 >
                   {item.label}
                   <svg
@@ -81,7 +85,7 @@ export default function MobileMenu({ scrolled }: MobileMenuProps) {
                 </button>
                 <div
                   className={`overflow-hidden transition-all duration-300 ${
-                    homesExpanded ? "max-h-96" : "max-h-0"
+                    homesExpanded ? "max-h-[60vh]" : "max-h-0"
                   }`}
                 >
                   <div className="pl-4 pb-2">
@@ -90,7 +94,7 @@ export default function MobileMenu({ scrolled }: MobileMenuProps) {
                         key={child.label}
                         href={child.href}
                         onClick={close}
-                        className="block py-2 px-2 text-sm text-muted hover:text-primary transition-colors"
+                        className="block py-2.5 px-2 text-base text-muted hover:text-primary transition-colors focus-ring rounded"
                       >
                         {child.label}
                       </a>
@@ -103,7 +107,7 @@ export default function MobileMenu({ scrolled }: MobileMenuProps) {
                 key={item.label}
                 href={item.href}
                 onClick={close}
-                className="block py-3 px-2 text-foreground font-medium hover:text-primary transition-colors"
+                className="block py-3 px-2 text-foreground font-medium hover:text-primary transition-colors focus-ring rounded"
               >
                 {item.label}
               </a>
@@ -114,15 +118,21 @@ export default function MobileMenu({ scrolled }: MobileMenuProps) {
             <a
               href="#contact"
               onClick={close}
-              className="block w-full text-center bg-primary text-white py-3 rounded-full font-semibold hover:bg-primary-dark transition-colors"
+              className="block w-full text-center bg-primary text-white py-3 rounded-full font-semibold hover:bg-primary-dark transition-colors focus-ring"
             >
               Get in Touch
             </a>
-            <div className="mt-4 space-y-2 text-sm text-muted">
-              <a href={`tel:${contactInfo.phone}`} className="block hover:text-primary transition-colors">
+            <div className="mt-4 space-y-1 text-muted">
+              <a
+                href={`tel:${contactInfo.phone}`}
+                className="block py-2 px-2 text-base hover:text-primary transition-colors focus-ring rounded"
+              >
                 {contactInfo.phone}
               </a>
-              <a href={`mailto:${contactInfo.email}`} className="block hover:text-primary transition-colors">
+              <a
+                href={`mailto:${contactInfo.email}`}
+                className="block py-2 px-2 text-base hover:text-primary transition-colors focus-ring rounded"
+              >
                 {contactInfo.email}
               </a>
             </div>

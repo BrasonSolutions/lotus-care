@@ -38,6 +38,18 @@ body {
   top: 0;
 }
 
+/* Global focus ring — apply to any interactive element that needs keyboard visibility */
+.focus-ring:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Focus ring variant for dark backgrounds */
+.focus-ring-white:focus-visible {
+  outline: 2px solid white;
+  outline-offset: 2px;
+}
+
 /* Card hover effect */
 .card-hover {
   transition: transform 300ms cubic-bezier(0.25, 0.1, 0.25, 1),
@@ -60,8 +72,8 @@ body {
 .reveal {
   opacity: 0;
   transform: translateY(24px);
-  transition: opacity 700ms cubic-bezier(0.25, 0.1, 0.25, 1),
-    transform 700ms cubic-bezier(0.25, 0.1, 0.25, 1);
+  transition: opacity 600ms cubic-bezier(0.25, 0.1, 0.25, 1),
+    transform 600ms cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 
 .reveal.in-view {
@@ -70,19 +82,19 @@ body {
 }
 
 .reveal-delay-1 {
-  transition-delay: 100ms;
+  transition-delay: 80ms;
 }
 .reveal-delay-2 {
-  transition-delay: 200ms;
+  transition-delay: 160ms;
 }
 .reveal-delay-3 {
-  transition-delay: 300ms;
+  transition-delay: 240ms;
 }
 .reveal-delay-4 {
-  transition-delay: 400ms;
+  transition-delay: 320ms;
 }
 .reveal-delay-5 {
-  transition-delay: 500ms;
+  transition-delay: 400ms;
 }
 
 /* Scrollbar for carousel */
@@ -93,6 +105,61 @@ body {
 
 .hide-scrollbar::-webkit-scrollbar {
   display: none;
+}
+
+/* Animation keyframes for step 19 */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fadeUp 400ms cubic-bezier(0.25, 0.1, 0.25, 1) both;
+}
+
+.animate-fade-in {
+  animation: fadeIn 300ms ease both;
+}
+
+.animate-scale-in {
+  animation: scaleIn 250ms cubic-bezier(0.25, 0.1, 0.25, 1) both;
+}
+
+.animate-slide-down {
+  animation: slideDown 300ms cubic-bezier(0.25, 0.1, 0.25, 1) both;
 }
 
 /* Reduced motion */

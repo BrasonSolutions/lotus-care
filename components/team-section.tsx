@@ -36,31 +36,36 @@ export default function TeamSection() {
         {/* Department tabs */}
         <div
           ref={ref}
-          className={`reveal ${inView ? "in-view" : ""} flex gap-2 overflow-x-auto hide-scrollbar pb-4 mb-8 justify-center`}
+          className={`reveal ${inView ? "in-view" : ""} relative`}
         >
-          {departments.map((dept) => (
-            <button
-              key={dept}
-              onClick={() => setActiveDept(dept)}
-              className={`px-5 py-2.5 rounded-full text-sm font-medium whitespace-nowrap transition-colors ${
-                activeDept === dept
-                  ? "bg-primary text-white"
-                  : "bg-white text-foreground hover:bg-primary/10 border border-gray-200"
-              }`}
-            >
-              {dept}
-            </button>
-          ))}
+          <div className="flex gap-2 overflow-x-auto hide-scrollbar pb-4 mb-8 justify-start sm:justify-center">
+            {departments.map((dept) => (
+              <button
+                key={dept}
+                onClick={() => setActiveDept(dept)}
+                className={`px-6 py-3 rounded-full text-sm font-medium whitespace-nowrap transition-colors focus-ring ${
+                  activeDept === dept
+                    ? "bg-primary text-white"
+                    : "bg-white text-foreground hover:bg-primary/10 border border-gray-200"
+                }`}
+              >
+                {dept}
+              </button>
+            ))}
+          </div>
+          {/* Scroll hint fade on mobile */}
+          <div className="sm:hidden absolute right-0 top-0 bottom-4 w-8 bg-gradient-to-l from-warm-bg to-transparent pointer-events-none" aria-hidden="true" />
         </div>
 
-        {/* Team grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {filtered.map((member) => (
-            <TeamCard
-              key={member.name}
-              member={member}
-              onClick={() => setSelectedMember(member)}
-            />
+        {/* Team grid — key on activeDept triggers remount+animate on filter change */}
+        <div key={activeDept} className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {filtered.map((member, i) => (
+            <div key={member.name} className="animate-fade-up" style={{ animationDelay: `${i * 40}ms` }}>
+              <TeamCard
+                member={member}
+                onClick={() => setSelectedMember(member)}
+              />
+            </div>
           ))}
         </div>
       </div>

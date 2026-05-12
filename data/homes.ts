@@ -5,6 +5,7 @@ export interface Home {
   capacity: number;
   features: string[];
   color: string;
+  images: string[];
 }
 
 export const homes: Home[] = [
@@ -22,6 +23,11 @@ export const homes: Home[] = [
       "Activity program",
     ],
     color: "#9b59b6",
+    images: [
+      "https://picsum.photos/seed/amethyst-1/800/450",
+      "https://picsum.photos/seed/amethyst-2/800/450",
+      "https://picsum.photos/seed/amethyst-3/800/450",
+    ],
   },
   {
     name: "Beryl House",
@@ -37,6 +43,11 @@ export const homes: Home[] = [
       "Modern kitchen facilities",
     ],
     color: "#2ecc71",
+    images: [
+      "https://picsum.photos/seed/beryl-1/800/450",
+      "https://picsum.photos/seed/beryl-2/800/450",
+      "https://picsum.photos/seed/beryl-3/800/450",
+    ],
   },
   {
     name: "Citrine House",
@@ -52,6 +63,11 @@ export const homes: Home[] = [
       "Family-style dining",
     ],
     color: "#f1c40f",
+    images: [
+      "https://picsum.photos/seed/citrine-1/800/450",
+      "https://picsum.photos/seed/citrine-2/800/450",
+      "https://picsum.photos/seed/citrine-3/800/450",
+    ],
   },
   {
     name: "Diamond House",
@@ -67,6 +83,11 @@ export const homes: Home[] = [
       "Low-stimulus spaces",
     ],
     color: "#3498db",
+    images: [
+      "https://picsum.photos/seed/diamond-1/800/450",
+      "https://picsum.photos/seed/diamond-2/800/450",
+      "https://picsum.photos/seed/diamond-3/800/450",
+    ],
   },
   {
     name: "Emerald House",
@@ -82,6 +103,11 @@ export const homes: Home[] = [
       "Outdoor recreation",
     ],
     color: "#27ae60",
+    images: [
+      "https://picsum.photos/seed/emerald-1/800/450",
+      "https://picsum.photos/seed/emerald-2/800/450",
+      "https://picsum.photos/seed/emerald-3/800/450",
+    ],
   },
   {
     name: "Fluorite House",
@@ -96,6 +122,11 @@ export const homes: Home[] = [
       "Exhibition space",
     ],
     color: "#e74c3c",
+    images: [
+      "https://picsum.photos/seed/fluorite-1/800/450",
+      "https://picsum.photos/seed/fluorite-2/800/450",
+      "https://picsum.photos/seed/fluorite-3/800/450",
+    ],
   },
   {
     name: "Garnet House",
@@ -111,6 +142,11 @@ export const homes: Home[] = [
       "Transition planning",
     ],
     color: "#c0392b",
+    images: [
+      "https://picsum.photos/seed/garnet-1/800/450",
+      "https://picsum.photos/seed/garnet-2/800/450",
+      "https://picsum.photos/seed/garnet-3/800/450",
+    ],
   },
   {
     name: "Heliodor House",
@@ -126,5 +162,10 @@ export const homes: Home[] = [
       "Modern amenities",
     ],
     color: "#f39c12",
+    images: [
+      "https://picsum.photos/seed/heliodor-1/800/450",
+      "https://picsum.photos/seed/heliodor-2/800/450",
+      "https://picsum.photos/seed/heliodor-3/800/450",
+    ],
   },
 ];
