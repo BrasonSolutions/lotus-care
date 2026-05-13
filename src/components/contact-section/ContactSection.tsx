@@ -130,7 +130,7 @@ export function ContactSection({
           </div>
 
           {/* Info card */}
-          <div className="reveal reveal-delay-2">
+          <div className={`reveal reveal-delay-2 ${inView ? "in-view" : ""}`}>
             <div className="bg-warm-bg rounded-2xl p-8 h-full">
               <h3 className="text-xl font-bold text-primary-dark mb-6">
                 Contact Information
