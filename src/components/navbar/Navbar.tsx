@@ -2,12 +2,24 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import { navItems, contactInfo } from "@/data/navigation";
+import type { NavItem } from "@/data/navigation";
 import { HomesDropdown } from "@/components/homes-dropdown";
 import { MobileMenu } from "@/components/mobile-menu";
 import { LogoWhite } from "@/components/logo-white";
 
-export function Navbar() {
+interface NavbarProps {
+  navItems: NavItem[];
+  contactInfo: { phone: string; email: string };
+  ctaLabel?: string;
+  ctaHref?: string;
+}
+
+export function Navbar({
+  navItems,
+  contactInfo,
+  ctaLabel = "Get in Touch",
+  ctaHref = "#contact",
+}: NavbarProps) {
   const [scrolled, setScrolled] = useState(false);
   const [mounted, setMounted] = useState(false);
 
@@ -63,7 +75,7 @@ export function Navbar() {
                   alt="Lotus Care — Enhanced Living"
                   width={180}
                   height={48}
-                  className="h-10 w-auto"
+                  style={{ height: "2.5rem", width: "auto" }}
                   priority
                 />
               ) : (
@@ -91,15 +103,21 @@ export function Navbar() {
                 )
               )}
               <a
-                href="#contact"
+                href={ctaHref}
                 className="bg-primary text-white px-5 py-2.5 rounded-full text-base font-semibold hover:bg-primary-dark transition-colors focus-ring"
               >
-                Get in Touch
+                {ctaLabel}
               </a>
             </div>
 
             {/* Mobile hamburger */}
-            <MobileMenu scrolled={scrolled} />
+            <MobileMenu
+              scrolled={scrolled}
+              navItems={navItems}
+              contactInfo={contactInfo}
+              ctaLabel={ctaLabel}
+              ctaHref={ctaHref}
+            />
           </div>
         </div>
       </nav>

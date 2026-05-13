@@ -4,6 +4,7 @@ import { HubNavCard } from "@/components/careers/hub-nav-card";
 import { JobCard } from "@/components/careers/job-card";
 import { TestimonialCard } from "@/components/careers/testimonial-card";
 import { CareersCTAStrip } from "@/components/careers/careers-cta-strip";
+import { SectionTitle } from "@/components/section-title";
 import { jobs } from "@/data/jobs";
 import { testimonials, companyValues } from "@/data/careers";
 
@@ -88,14 +89,10 @@ export default function CareersPage() {
       {/* Hub nav cards */}
       <section className="py-16 sm:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-10">
-            <h2 className="text-2xl sm:text-3xl font-bold text-primary-dark mb-3">
-              Everything You Need to Know
-            </h2>
-            <p className="text-muted max-w-xl mx-auto">
-              From open roles to our hiring process — explore what a career at Lotus Care looks like.
-            </p>
-          </div>
+          <SectionTitle
+            title="Everything You Need to Know"
+            subtitle="From open roles to our hiring process — explore what a career at Lotus Care looks like."
+          />
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {hubCards.map((card) => (
               <HubNavCard key={card.title} {...card} />
@@ -143,9 +140,7 @@ export default function CareersPage() {
       {/* Company Values */}
       <section className="py-16 sm:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl sm:text-3xl font-bold text-primary-dark text-center mb-10">
-            Our Values
-          </h2>
+          <SectionTitle title="Our Values" />
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {companyValues.map((value) => (
               <div

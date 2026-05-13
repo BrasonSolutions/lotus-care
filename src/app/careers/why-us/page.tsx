@@ -3,6 +3,7 @@ import { CareersHero } from "@/components/careers/careers-hero";
 import { CareersBreadcrumb } from "@/components/careers/careers-breadcrumb";
 import { TestimonialCard } from "@/components/careers/testimonial-card";
 import { CareersCTAStrip } from "@/components/careers/careers-cta-strip";
+import { SectionTitle } from "@/components/section-title";
 import { testimonials, companyValues } from "@/data/careers";
 
 export const metadata: Metadata = {
@@ -29,9 +30,7 @@ export default function WhyUsPage() {
       {/* Values */}
       <section className="pb-16 sm:pb-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl sm:text-3xl font-bold text-primary-dark text-center mb-10">
-            What We Stand For
-          </h2>
+          <SectionTitle title="What We Stand For" />
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {companyValues.map((value) => (
               <div
@@ -99,9 +98,7 @@ export default function WhyUsPage() {
       {/* Testimonials */}
       <section className="py-16 sm:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl sm:text-3xl font-bold text-primary-dark text-center mb-10">
-            Hear From Our Team
-          </h2>
+          <SectionTitle title="Hear From Our Team" />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             {testimonials.map((t) => (
               <TestimonialCard key={t.name} testimonial={t} />

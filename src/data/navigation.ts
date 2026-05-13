@@ -7,25 +7,25 @@ export interface NavItem {
 }
 
 export const navItems: NavItem[] = [
-  { label: "About Us", href: "#about" },
-  { label: "Our Services", href: "#services" },
+  { label: "About Us", href: "/#about" },
+  { label: "Our Services", href: "/#services" },
   {
     label: "Our Homes",
-    href: "#homes",
-    viewAllHref: "#homes",
+    href: "/#homes",
+    viewAllHref: "/#homes",
     viewAllLabel: "View All Homes",
     children: [
-      { label: "Amethyst House", href: "#homes" },
-      { label: "Beryl House", href: "#homes" },
-      { label: "Citrine House", href: "#homes" },
-      { label: "Diamond House", href: "#homes" },
-      { label: "Emerald House", href: "#homes" },
-      { label: "Fluorite House", href: "#homes" },
-      { label: "Garnet House", href: "#homes" },
-      { label: "Heliodor House", href: "#homes" },
+      { label: "Amethyst House", href: "/#homes" },
+      { label: "Beryl House", href: "/#homes" },
+      { label: "Citrine House", href: "/#homes" },
+      { label: "Diamond House", href: "/#homes" },
+      { label: "Emerald House", href: "/#homes" },
+      { label: "Fluorite House", href: "/#homes" },
+      { label: "Garnet House", href: "/#homes" },
+      { label: "Heliodor House", href: "/#homes" },
     ],
   },
-  { label: "Our Team", href: "#team" },
+  { label: "Our Team", href: "/#team" },
   {
     label: "Careers",
     href: "/careers",
@@ -38,7 +38,7 @@ export const navItems: NavItem[] = [
       { label: "Contact Recruitment", href: "/careers/contact" },
     ],
   },
-  { label: "Contact", href: "#contact" },
+  { label: "Contact", href: "/#contact" },
 ];
 
 export const contactInfo = {

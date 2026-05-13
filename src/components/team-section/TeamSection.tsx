@@ -2,36 +2,39 @@
 
 import { useState } from "react";
 import { useInView } from "@/hooks/use-in-view";
-import {
-  departments,
-  teamMembers,
-  type Department,
-  type TeamMember,
-  type BoardMember,
-} from "@/data/team";
+import type { TeamMember, BoardMember } from "@/data/team";
 import { SectionTitle } from "@/components/section-title";
 import { TeamCard } from "@/components/team-card";
 import { TeamModal } from "@/components/team-modal";
 
-export function TeamSection() {
+interface TeamSectionProps {
+  title?: string;
+  subtitle?: string;
+  members: TeamMember[];
+  departments: readonly string[];
+}
+
+export function TeamSection({
+  title = "Meet the Team",
+  subtitle = "Dedicated professionals committed to making a difference every day.",
+  members,
+  departments,
+}: TeamSectionProps) {
   const { ref, inView } = useInView({ threshold: 0.1 });
-  const [activeDept, setActiveDept] = useState<Department>("All");
+  const [activeDept, setActiveDept] = useState<string>("All");
   const [selectedMember, setSelectedMember] = useState<
     TeamMember | BoardMember | null
   >(null);
 
   const filtered =
     activeDept === "All"
-      ? teamMembers
-      : teamMembers.filter((m) => m.department === activeDept);
+      ? members
+      : members.filter((m) => m.department === activeDept);
 
   return (
     <section id="team" className="py-20 lg:py-28 bg-warm-bg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <SectionTitle
-          title="Meet the Team"
-          subtitle="Dedicated professionals committed to making a difference every day."
-        />
+        <SectionTitle title={title} subtitle={subtitle} />
 
         {/* Department tabs */}
         <div

@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { MobileMenu } from "@/components/mobile-menu";
+import { navItems, contactInfo } from "@/data/navigation";
 
 const meta: Meta<typeof MobileMenu> = {
   title: "Navigation/MobileMenu",
@@ -10,6 +11,10 @@ const meta: Meta<typeof MobileMenu> = {
     viewport: { defaultViewport: "mobile1" },
   },
   tags: ["autodocs"],
+  args: {
+    navItems,
+    contactInfo,
+  },
 };
 export default meta;
 type Story = StoryObj<typeof MobileMenu>;

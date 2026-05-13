@@ -1,13 +1,22 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback } from "react";
-import { homes } from "@/data/homes";
+import type { Home } from "@/data/homes";
 import { useInView } from "@/hooks/use-in-view";
 import { SectionTitle } from "@/components/section-title";
 import { HomeModal } from "@/components/home-modal";
-import type { Home } from "@/data/homes";
 
-export function HomesCarousel() {
+interface HomesCarouselProps {
+  homes: Home[];
+  title?: string;
+  subtitle?: string;
+}
+
+export function HomesCarousel({
+  homes,
+  title = "Our Homes",
+  subtitle = "Eight unique homes across Victoria, each designed to feel like home.",
+}: HomesCarouselProps) {
   const { ref: sectionRef, inView } = useInView({ threshold: 0.1 });
   const scrollRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -31,7 +40,7 @@ export function HomesCarousel() {
       const next = (activeIndex + direction + homes.length) % homes.length;
       scrollToIndex(next);
     },
-    [activeIndex, scrollToIndex]
+    [activeIndex, scrollToIndex, homes.length]
   );
 
   // Auto-scroll — paused when prefers-reduced-motion is set
@@ -70,15 +79,12 @@ export function HomesCarousel() {
 
     container.addEventListener("scroll", handleScroll, { passive: true });
     return () => container.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [homes.length]);
 
   return (
     <section id="homes" className="py-20 lg:py-28 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <SectionTitle
-          title="Our Homes"
-          subtitle="Eight unique homes across Victoria, each designed to feel like home."
-        />
+        <SectionTitle title={title} subtitle={subtitle} />
 
         <div ref={sectionRef} className={`reveal ${inView ? "in-view" : ""}`}>
           {/* Carousel container */}

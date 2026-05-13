@@ -1,25 +1,12 @@
 import Image from "next/image";
-import { contactInfo } from "@/data/navigation";
 
-const quickLinks = [
-  { label: "About Us", href: "#about" },
-  { label: "Our Services", href: "#services" },
-  { label: "Our Homes", href: "#homes" },
-  { label: "Meet the Team", href: "#team" },
-  { label: "Careers", href: "#careers" },
-  { label: "Contact Us", href: "#contact" },
-];
+interface FooterProps {
+  contactInfo: { phone: string; email: string; address: string };
+  quickLinks: Array<{ label: string; href: string }>;
+  serviceNames: string[];
+}
 
-const services = [
-  "Community Residential Living",
-  "Residential Respite Care",
-  "MDT Pathways",
-  "Model of Care",
-  "Person Centred Planning",
-  "Community Integration",
-];
-
-export function Footer() {
+export function Footer({ contactInfo, quickLinks, serviceNames }: FooterProps) {
   return (
     <footer className="bg-primary-dark text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
@@ -31,7 +18,8 @@ export function Footer() {
               alt="Lotus Care"
               width={160}
               height={48}
-              className="h-12 w-auto brightness-0 invert mb-4"
+              className="brightness-0 invert mb-4"
+              style={{ height: "3rem", width: "auto" }}
             />
             <p className="text-white/70 text-base leading-relaxed">
               Lotus Care is a registered NDIS provider delivering quality
@@ -60,7 +48,7 @@ export function Footer() {
           <div>
             <h3 className="font-bold text-lg mb-4">Services</h3>
             <ul className="space-y-2.5">
-              {services.map((service) => (
+              {serviceNames.map((service) => (
                 <li key={service}>
                   <span className="text-base text-white/70">{service}</span>
                 </li>
