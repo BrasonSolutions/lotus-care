@@ -12,6 +12,7 @@ interface NavbarProps {
   contactInfo: { phone: string; email: string };
   ctaLabel?: string;
   ctaHref?: string;
+  solidWhenTop?: boolean;
 }
 
 export function Navbar({
@@ -19,6 +20,7 @@ export function Navbar({
   contactInfo,
   ctaLabel = "Get in Touch",
   ctaHref = "#contact",
+  solidWhenTop = false,
 }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -60,7 +62,7 @@ export function Navbar({
         className={`fixed left-0 right-0 z-40 transition-all duration-300 ${
           scrolled
             ? "top-0 bg-white shadow-md"
-            : "top-0 lg:top-10 bg-transparent"
+            : `top-0 lg:top-10 ${solidWhenTop ? "bg-primary-dark" : "bg-transparent"}`
         } ${mounted ? "animate-slide-down" : "opacity-0"}`}
         role="navigation"
         aria-label="Main navigation"

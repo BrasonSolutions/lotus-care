@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { LogoWhite } from "@/components/logo-white";
 
 interface HeroSectionProps {
@@ -17,8 +18,16 @@ export function HeroSection({
 }: HeroSectionProps) {
   return (
     <section className="relative min-h-screen flex items-center justify-center bg-primary-dark overflow-hidden">
-      {/* Background overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-primary-dark/90 via-primary-dark/80 to-primary-dark/95" />
+      {/* Background image */}
+      <Image
+        src="/images/home-bg.jpg"
+        alt=""
+        fill
+        className="object-cover opacity-100"
+        priority
+      />
+      {/* Teal colour overlay — keeps brand colour while letting image show through */}
+      <div className="absolute inset-0 bg-gradient-to-b from-primary-dark/75 via-primary-dark/65 to-primary-dark/80" />
 
       {/* Decorative circles */}
       <div className="absolute top-20 left-10 w-64 h-64 rounded-full bg-accent/10 blur-3xl pointer-events-none" aria-hidden="true" />

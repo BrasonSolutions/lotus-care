@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { LogoWhite } from "@/components/logo-white";
 
 interface FooterProps {
   contactInfo: { phone: string; email: string; address: string };
@@ -13,17 +13,10 @@ export function Footer({ contactInfo, quickLinks, serviceNames }: FooterProps) {
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 lg:gap-10">
           {/* Brand */}
           <div className="sm:col-span-2 lg:col-span-1">
-            <Image
-              src="/images/logo.png"
-              alt="Lotus Care"
-              width={160}
-              height={48}
-              className="brightness-0 invert mb-4"
-              style={{ height: "3rem", width: "auto" }}
-            />
+            <LogoWhite className="h-12 w-auto mb-4" />
             <p className="text-white/70 text-base leading-relaxed">
-              Lotus Care is a registered NDIS provider delivering quality
-              residential and respite disability care services across Victoria.
+              Lotus Care provides quality residential and community disability
+              care services across Co. Offaly and the surrounding Midlands region.
             </p>
           </div>
 

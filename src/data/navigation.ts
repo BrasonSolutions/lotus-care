@@ -42,7 +42,7 @@ export const navItems: NavItem[] = [
 ];
 
 export const contactInfo = {
-  phone: "+61 3 9000 0000",
-  email: "info@lotuscare.com.au",
-  address: "Melbourne, Victoria, Australia",
+  phone: "057 910 7107",
+  email: "info@lotuscare.ie",
+  address: "Head Office: Suite 204, Birr Technology Park, St Brendans Park, Birr, Co Offaly, R51 E891",
 };
