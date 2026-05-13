@@ -1,11 +1,19 @@
-const BASE_URL = "https://api.occupop.com";
+const BASE_URL = "https://api.occupop.com/rest";
+
+interface OccupopLocation {
+  city: string | null;
+  state: string | null;
+  country: string | null;
+  cityFullName: string | null;
+}
 
 interface OccupopJob {
   uuid: string;
   title: string;
   description: string | null;
-  location: string | null;
+  location: OccupopLocation | null;
   contract: string | null;
+  period: string | null;
   created_at: string;
   close_date: string | null;
   apply_url: string;
@@ -29,8 +37,23 @@ function stripHtml(html: string): string {
   return html.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
 }
 
-function formatDate(iso: string): string {
-  return new Date(iso).toLocaleDateString("en-IE", {
+function normalizePeriod(period: string | null): string {
+  if (!period) return "Permanent";
+  const p = period.toLowerCase();
+  if (p.includes("full")) return "Full-time";
+  if (p.includes("part")) return "Part-time";
+  return period;
+}
+
+function extractLocation(location: OccupopLocation | null): string {
+  if (!location) return "Ireland";
+  return location.cityFullName ?? location.city ?? "Ireland";
+}
+
+function formatDate(dateStr: string): string {
+  const d = new Date(dateStr);
+  if (isNaN(d.getTime())) return "";
+  return d.toLocaleDateString("en-IE", {
     day: "numeric",
     month: "short",
     year: "numeric",
@@ -45,8 +68,8 @@ function normalise(job: OccupopJob): NormalizedJob {
   return {
     uuid: job.uuid,
     title: job.title,
-    location: job.location ?? "Ireland",
-    contractType: job.contract ?? "Permanent",
+    location: extractLocation(job.location),
+    contractType: normalizePeriod(job.period),
     shortDescription,
     postedDate: formatDate(job.created_at),
     applyUrl: job.apply_url,
