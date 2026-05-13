@@ -1,20 +1,27 @@
 "use client";
 
 import { useInView } from "@/hooks/use-in-view";
-import { services } from "@/data/services";
+import type { Service } from "@/data/services";
 import { SectionTitle } from "@/components/section-title";
 import { ServiceCard } from "@/components/service-card";
 
-export function ServicesSection() {
+interface ServicesSectionProps {
+  title?: string;
+  subtitle?: string;
+  services: Service[];
+}
+
+export function ServicesSection({
+  title = "Our Services",
+  subtitle = "Comprehensive disability support services designed around each individual's needs and aspirations.",
+  services,
+}: ServicesSectionProps) {
   const { ref, inView } = useInView({ threshold: 0.1 });
 
   return (
     <section id="services" className="py-20 lg:py-28 bg-warm-bg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <SectionTitle
-          title="Our Services"
-          subtitle="Comprehensive disability support services designed around each individual's needs and aspirations."
-        />
+        <SectionTitle title={title} subtitle={subtitle} />
 
         <div
           ref={ref}

@@ -1,6 +1,6 @@
 import type { Preview, Decorator } from "@storybook/react";
 import { useEffect } from "react";
-import "../app/globals.css";
+import "../src/app/globals.css";
 
 // Forces .reveal elements to show immediately — components use useInView
 // which starts at opacity:0 and animates in on scroll. In Storybook we

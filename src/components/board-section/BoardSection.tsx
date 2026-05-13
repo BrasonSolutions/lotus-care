@@ -2,28 +2,34 @@
 
 import { useState } from "react";
 import { useInView } from "@/hooks/use-in-view";
-import { boardMembers, type BoardMember } from "@/data/team";
+import type { BoardMember } from "@/data/team";
 import { SectionTitle } from "@/components/section-title";
 import { TeamModal } from "@/components/team-modal";
 
-export function BoardSection() {
+interface BoardSectionProps {
+  title?: string;
+  subtitle?: string;
+  members: BoardMember[];
+}
+
+export function BoardSection({
+  title = "Our Board",
+  subtitle = "Experienced leaders guiding Lotus Care's strategic direction and governance.",
+  members,
+}: BoardSectionProps) {
   const { ref, inView } = useInView({ threshold: 0.1 });
   const [selectedMember, setSelectedMember] = useState<BoardMember | null>(null);
 
   return (
     <section className="py-20 lg:py-28 bg-primary-dark">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <SectionTitle
-          title="Our Board"
-          subtitle="Experienced leaders guiding Lotus Care's strategic direction and governance."
-          light
-        />
+        <SectionTitle title={title} subtitle={subtitle} light />
 
         <div
           ref={ref}
           className={`reveal ${inView ? "in-view" : ""} grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl mx-auto`}
         >
-          {boardMembers.map((member, i) => (
+          {members.map((member, i) => (
             <button
               key={member.name}
               onClick={() => setSelectedMember(member)}

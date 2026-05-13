@@ -2,10 +2,19 @@
 
 import { useState } from "react";
 import { useInView } from "@/hooks/use-in-view";
-import { contactInfo } from "@/data/navigation";
 import { SectionTitle } from "@/components/section-title";
 
-export function ContactSection() {
+interface ContactSectionProps {
+  title?: string;
+  subtitle?: string;
+  contactInfo: { phone: string; email: string; address: string };
+}
+
+export function ContactSection({
+  title = "Get in Touch",
+  subtitle = "We'd love to hear from you. Reach out to learn more about our services.",
+  contactInfo,
+}: ContactSectionProps) {
   const { ref, inView } = useInView({ threshold: 0.1 });
   const [formState, setFormState] = useState({
     name: "",
@@ -23,10 +32,7 @@ export function ContactSection() {
   return (
     <section id="contact" className="py-20 lg:py-28 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <SectionTitle
-          title="Get in Touch"
-          subtitle="We'd love to hear from you. Reach out to learn more about our services."
-        />
+        <SectionTitle title={title} subtitle={subtitle} />
 
         <div
           ref={ref}

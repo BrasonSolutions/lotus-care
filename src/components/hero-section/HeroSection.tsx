@@ -1,6 +1,20 @@
 import { LogoWhite } from "@/components/logo-white";
 
-export function HeroSection() {
+interface HeroSectionProps {
+  title: string;
+  titleHighlight: string;
+  subtitle: string;
+  ctaLabel?: string;
+  ctaHref?: string;
+}
+
+export function HeroSection({
+  title,
+  titleHighlight,
+  subtitle,
+  ctaLabel = "Read More",
+  ctaHref = "#about",
+}: HeroSectionProps) {
   return (
     <section className="relative min-h-screen flex items-center justify-center bg-primary-dark overflow-hidden">
       {/* Background overlay */}
@@ -14,20 +28,18 @@ export function HeroSection() {
       <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
         <LogoWhite className="mx-auto mb-8 h-16 md:h-20 w-auto animate-fade-in" />
         <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight animate-fade-up" style={{ animationDelay: "100ms" }}>
-          Enhanced Living,{" "}
-          <span className="text-accent">Empowered Lives</span>
+          {title}{" "}
+          <span className="text-accent">{titleHighlight}</span>
         </h1>
         <p className="text-lg md:text-xl text-white/80 mb-10 max-w-2xl mx-auto leading-relaxed animate-fade-up" style={{ animationDelay: "200ms" }}>
-          Providing quality respite and residential disability care services
-          across Victoria, supporting individuals to live their best lives with
-          dignity and purpose.
+          {subtitle}
         </p>
         <a
-          href="#about"
+          href={ctaHref}
           className="inline-block bg-primary text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-accent transition-colors focus-ring animate-fade-up"
           style={{ animationDelay: "300ms" }}
         >
-          Read More
+          {ctaLabel}
         </a>
       </div>
 

@@ -1,13 +1,23 @@
 "use client";
 
 import { useState } from "react";
-import { navItems, contactInfo } from "@/data/navigation";
+import type { NavItem } from "@/data/navigation";
 
 interface MobileMenuProps {
   scrolled: boolean;
+  navItems: NavItem[];
+  contactInfo: { phone: string; email: string };
+  ctaLabel?: string;
+  ctaHref?: string;
 }
 
-export function MobileMenu({ scrolled }: MobileMenuProps) {
+export function MobileMenu({
+  scrolled,
+  navItems,
+  contactInfo,
+  ctaLabel = "Get in Touch",
+  ctaHref = "#contact",
+}: MobileMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [expandedItem, setExpandedItem] = useState<string | null>(null);
 
@@ -120,11 +130,11 @@ export function MobileMenu({ scrolled }: MobileMenuProps) {
 
           <div className="border-t border-gray-100 mt-4 pt-4">
             <a
-              href="#contact"
+              href={ctaHref}
               onClick={close}
               className="block w-full text-center bg-primary text-white py-3 rounded-full font-semibold hover:bg-primary-dark transition-colors focus-ring"
             >
-              Get in Touch
+              {ctaLabel}
             </a>
             <div className="mt-4 space-y-1 text-muted">
               <a

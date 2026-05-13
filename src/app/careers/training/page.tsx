@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { CareersHero } from "@/components/careers/careers-hero";
 import { CareersBreadcrumb } from "@/components/careers/careers-breadcrumb";
 import { CareersCTAStrip } from "@/components/careers/careers-cta-strip";
+import { SectionTitle } from "@/components/section-title";
 import { trainingPrograms } from "@/data/careers";
 
 export const metadata: Metadata = {
@@ -76,9 +77,7 @@ export default function TrainingPage() {
 
           {/* Career progression pathway */}
           <section className="mt-16">
-            <h2 className="text-2xl font-bold text-primary-dark mb-8 text-center">
-              Career Progression Pathway
-            </h2>
+            <SectionTitle title="Career Progression Pathway" />
             <ol className="relative border-l-2 border-primary/30 ml-4 space-y-8">
               {pathway.map((step) => (
                 <li key={step.level} className="relative pl-8">
