@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import Image from "next/image";
 import type { TeamMember, BoardMember } from "@/data/team";
 
 interface TeamModalProps {
@@ -41,10 +42,22 @@ export function TeamModal({ member, onClose }: TeamModalProps) {
       aria-label={`Bio for ${member.name}`}
     >
       <div className="bg-white rounded-2xl overflow-hidden shadow-2xl animate-scale-in">
-        {/* Avatar */}
+        {/* Header */}
         <div className="bg-gradient-to-br from-primary-dark to-primary p-8 flex flex-col items-center">
-          <div className="w-20 h-20 rounded-full bg-white/20 flex items-center justify-center text-white text-2xl font-bold mb-4">
-            {member.initials}
+          <div className="w-24 h-24 rounded-full overflow-hidden mb-4 ring-4 ring-white/20">
+            {member.image ? (
+              <Image
+                src={member.image}
+                alt={member.name}
+                width={96}
+                height={96}
+                className="w-full h-full object-cover object-top"
+              />
+            ) : (
+              <div className="w-full h-full bg-white/20 flex items-center justify-center text-white text-2xl font-bold">
+                {member.initials}
+              </div>
+            )}
           </div>
           <h3 className="text-xl font-bold text-white">{member.name}</h3>
           <p className="text-accent text-sm mt-1">{member.role}</p>
