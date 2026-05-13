@@ -1,25 +1,17 @@
 "use client";
 
-import type { JobDepartment } from "@/data/jobs";
-import { departmentLabels } from "@/data/jobs";
-
-type FilterOption = "all" | JobDepartment;
-
-interface JobFilterProps {
-  active: FilterOption;
-  onChange: (dept: FilterOption) => void;
+interface FilterOption {
+  value: string;
+  label: string;
 }
 
-const filters: { value: FilterOption; label: string }[] = [
-  { value: "all", label: "All Roles" },
-  { value: "residential-support", label: departmentLabels["residential-support"] },
-  { value: "nursing", label: departmentLabels["nursing"] },
-  { value: "management", label: departmentLabels["management"] },
-  { value: "clinical", label: departmentLabels["clinical"] },
-  { value: "admin", label: departmentLabels["admin"] },
-];
+interface JobFilterProps {
+  filters: FilterOption[];
+  active: string;
+  onChange: (value: string) => void;
+}
 
-export function JobFilter({ active, onChange }: JobFilterProps) {
+export function JobFilter({ filters, active, onChange }: JobFilterProps) {
   return (
     <div className="relative">
       <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
