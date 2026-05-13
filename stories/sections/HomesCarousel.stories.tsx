@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import HomesCarousel from "@/components/homes-carousel";
+import { HomesCarousel } from "@/components/homes-carousel";
 
 const meta: Meta<typeof HomesCarousel> = {
   title: "Sections/HomesCarousel",

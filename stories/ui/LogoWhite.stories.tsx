@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import LogoWhite from "@/components/logo-white";
+import { LogoWhite } from "@/components/logo-white";
 
 const meta: Meta<typeof LogoWhite> = {
   title: "UI/LogoWhite",

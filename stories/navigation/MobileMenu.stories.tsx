@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import MobileMenu from "@/components/mobile-menu";
+import { MobileMenu } from "@/components/mobile-menu";
 
 const meta: Meta<typeof MobileMenu> = {
   title: "Navigation/MobileMenu",

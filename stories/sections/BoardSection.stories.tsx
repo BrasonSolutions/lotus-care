@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import BoardSection from "@/components/board-section";
+import { BoardSection } from "@/components/board-section";
 
 const meta: Meta<typeof BoardSection> = {
   title: "Sections/BoardSection",

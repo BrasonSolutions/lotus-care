@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import TeamCard from "@/components/team-card";
+import { TeamCard } from "@/components/team-card";
 import { teamMembers } from "@/data/team";
 
 const meta: Meta<typeof TeamCard> = {

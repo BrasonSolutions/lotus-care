@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import HomesDropdown from "@/components/homes-dropdown";
+import { HomesDropdown } from "@/components/homes-dropdown";
 import { navItems } from "@/data/navigation";
 
 const homesItem = navItems.find((item) => item.children)!;

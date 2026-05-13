@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import ServiceCard from "@/components/service-card";
+import { ServiceCard } from "@/components/service-card";
 import { services } from "@/data/services";
 
 const meta: Meta<typeof ServiceCard> = {

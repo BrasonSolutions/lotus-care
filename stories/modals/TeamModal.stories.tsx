@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import TeamModal from "@/components/team-modal";
+import { TeamModal } from "@/components/team-modal";
 import { teamMembers, boardMembers } from "@/data/team";
 
 const meta: Meta<typeof TeamModal> = {

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import HomeModal from "@/components/home-modal";
+import { HomeModal } from "@/components/home-modal";
 import { homes } from "@/data/homes";
 
 const meta: Meta<typeof HomeModal> = {
