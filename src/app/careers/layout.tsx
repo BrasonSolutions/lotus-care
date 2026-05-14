@@ -38,7 +38,7 @@ export default function CareersLayout({
 }) {
   return (
     <>
-      <Navbar navItems={navItems} contactInfo={contactInfo} />
+      <Navbar navItems={navItems} contactInfo={contactInfo} solidWhenTop />
       {/* Subnav sits immediately below the 64px navbar */}
       <CareersSubnav />
       {/* pt-28 = 64px navbar + 48px subnav */}

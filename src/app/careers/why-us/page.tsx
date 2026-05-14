@@ -4,6 +4,7 @@ import { CareersBreadcrumb } from "@/components/careers/careers-breadcrumb";
 import { TestimonialCard } from "@/components/careers/testimonial-card";
 import { CareersCTAStrip } from "@/components/careers/careers-cta-strip";
 import { SectionTitle } from "@/components/section-title";
+import { getCareersIcon } from "@/components/careers/careers-icons";
 import { testimonials, companyValues } from "@/data/careers";
 
 export const metadata: Metadata = {
@@ -37,9 +38,9 @@ export default function WhyUsPage() {
                 key={value.title}
                 className="text-center p-6 bg-white rounded-2xl border border-gray-100 shadow-sm"
               >
-                <span className="text-4xl mb-4 block" aria-hidden="true">
-                  {value.icon}
-                </span>
+                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-4 text-primary">
+                  {getCareersIcon(value.icon)}
+                </div>
                 <h3 className="font-semibold text-primary-dark mb-2">{value.title}</h3>
                 <p className="text-sm text-muted leading-relaxed">{value.description}</p>
               </div>

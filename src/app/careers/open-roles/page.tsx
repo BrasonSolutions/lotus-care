@@ -1,23 +1,11 @@
-"use client";
-
-import { useState } from "react";
 import { CareersHero } from "@/components/careers/careers-hero";
 import { CareersBreadcrumb } from "@/components/careers/careers-breadcrumb";
-import { JobFilter } from "@/components/careers/job-filter";
-import { JobCard } from "@/components/careers/job-card";
 import { CareersCTAStrip } from "@/components/careers/careers-cta-strip";
-import { jobs } from "@/data/jobs";
-import type { JobDepartment } from "@/data/jobs";
+import { OpenRolesClient } from "./OpenRolesClient";
+import { fetchLiveJobs } from "@/lib/occupop";
 
-type FilterOption = "all" | JobDepartment;
-
-export default function OpenRolesPage() {
-  const [activeFilter, setActiveFilter] = useState<FilterOption>("all");
-
-  const filtered =
-    activeFilter === "all"
-      ? jobs
-      : jobs.filter((j) => j.department === activeFilter);
+export default async function OpenRolesPage() {
+  let jobs = await fetchLiveJobs().catch(() => null);
 
   return (
     <>
@@ -31,23 +19,14 @@ export default function OpenRolesPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <CareersBreadcrumb />
 
-          <div className="mt-8 mb-6">
-            <JobFilter active={activeFilter} onChange={setActiveFilter} />
-          </div>
-
-          {filtered.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-              {filtered.map((job) => (
-                <JobCard key={job.slug} job={job} />
-              ))}
-            </div>
-          ) : (
+          {jobs === null ? (
             <p className="text-muted text-center py-16">
-              No roles found in this category right now.
+              We&apos;re having trouble loading roles right now. Please check back soon.
             </p>
+          ) : (
+            <OpenRolesClient jobs={jobs} />
           )}
 
-          {/* No match fallback */}
           <div className="mt-12 text-center p-8 bg-white rounded-2xl border border-gray-100">
             <h3 className="font-semibold text-primary-dark mb-2">
               Don&apos;t see the right role?

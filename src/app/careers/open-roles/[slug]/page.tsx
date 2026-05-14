@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { CareersBreadcrumb } from "@/components/careers/careers-breadcrumb";
 import { JobCard } from "@/components/careers/job-card";
 import { CareersCTAStrip } from "@/components/careers/careers-cta-strip";
+import { getCareersIcon } from "@/components/careers/careers-icons";
 import { jobs, departmentLabels } from "@/data/jobs";
 import { benefits } from "@/data/careers";
 
@@ -110,7 +111,9 @@ export default async function JobDetailPage({ params }: Params) {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {highlightBenefits.map((b) => (
                     <div key={b.title} className="flex gap-3 p-4 bg-white rounded-xl border border-gray-100">
-                      <span className="text-2xl shrink-0" aria-hidden="true">{b.icon}</span>
+                      <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center shrink-0 text-primary">
+                        {getCareersIcon(b.icon)}
+                      </div>
                       <div>
                         <p className="font-medium text-primary-dark text-sm">{b.title}</p>
                         <p className="text-xs text-muted mt-0.5 leading-relaxed">{b.description}</p>

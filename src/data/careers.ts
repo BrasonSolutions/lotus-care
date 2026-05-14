@@ -37,61 +37,61 @@ export interface CompanyValue {
 
 export const benefits: Benefit[] = [
   {
-    icon: "💰",
+    icon: "currency-dollar",
     title: "Competitive Pay",
     description:
       "Market-leading salaries with annual pay reviews and incremental scale progression.",
   },
   {
-    icon: "📚",
+    icon: "book-open",
     title: "Paid Training",
     description:
       "All mandatory and professional development training is fully funded and completed on company time.",
   },
   {
-    icon: "🏖️",
+    icon: "calendar",
     title: "Generous Annual Leave",
     description:
       "Starting at 22 days per year, increasing with service — plus public holidays.",
   },
   {
-    icon: "❤️",
+    icon: "heart",
     title: "Wellbeing Support",
     description:
       "Access to our Employee Assistance Programme (EAP) offering confidential counselling and wellbeing resources.",
   },
   {
-    icon: "📈",
+    icon: "chart-bar",
     title: "Career Progression",
     description:
       "Clear career pathways from Support Worker through to Senior Management, with internal promotion prioritised.",
   },
   {
-    icon: "🤝",
+    icon: "users",
     title: "Supportive Culture",
     description:
       "Regular supervision, peer support, and a management team that truly listens and invests in people.",
   },
   {
-    icon: "🚗",
+    icon: "map-pin",
     title: "Mileage Allowance",
     description:
       "Competitive mileage reimbursement for travel between sites and community activities.",
   },
   {
-    icon: "🎓",
+    icon: "academic-cap",
     title: "Further Education Support",
     description:
       "Study leave and financial support for staff pursuing relevant further education qualifications.",
   },
   {
-    icon: "🌙",
+    icon: "moon",
     title: "Enhanced Night Rates",
     description:
       "Premium rates for night shifts and sleep-ins, recognising the demands of 24/7 care.",
   },
   {
-    icon: "🏠",
+    icon: "home",
     title: "Stable Local Employment",
     description:
       "Permanent and part-time roles across multiple sites — work close to where you live.",
@@ -264,24 +264,24 @@ export const companyValues: CompanyValue[] = [
     title: "Person-Centred",
     description:
       "Every decision starts with the individual. We support people to live on their own terms, in their own way.",
-    icon: "🧡",
+    icon: "user-circle",
   },
   {
     title: "Compassionate",
     description:
       "We lead with empathy and kindness — towards residents, families, and each other.",
-    icon: "💚",
+    icon: "heart",
   },
   {
     title: "Accountable",
     description:
       "We hold ourselves to the highest standards of quality and compliance, always transparent and honest.",
-    icon: "🔵",
+    icon: "shield-check",
   },
   {
     title: "Inclusive",
     description:
       "We champion diversity in our teams and actively support social inclusion for every person we support.",
-    icon: "🌍",
+    icon: "user-group",
   },
 ];

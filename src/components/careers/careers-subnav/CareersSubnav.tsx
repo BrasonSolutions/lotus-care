@@ -1,6 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
+import { useState, useEffect } from "react";
 
 const links = [
   { label: "Overview", href: "/careers" },
@@ -14,11 +15,21 @@ const links = [
 
 export function CareersSubnav() {
   const pathname = usePathname() ?? "";
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 50);
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <nav
       aria-label="Careers sections"
-      className="fixed top-16 left-0 right-0 z-30 bg-white border-b border-gray-100 shadow-sm"
+      className={`fixed left-0 right-0 z-30 bg-white border-b border-gray-100 shadow-sm transition-all duration-300 ${
+        scrolled ? "top-16" : "top-16 lg:top-[6.5rem]"
+      }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="relative">
