@@ -3,6 +3,7 @@ export interface Service {
   description: string;
   icon: string;
   hasImage?: boolean;
+  href?: string;
 }
 
 export const services: Service[] = [
@@ -25,18 +26,21 @@ export const services: Service[] = [
     description:
       "Our Multi-Disciplinary Team works collaboratively to create holistic care pathways, integrating therapy, health, and wellbeing supports.",
     icon: "users",
+    href: "/quality/mdt",
   },
   {
     title: "Model of Care",
     description:
-      "A person-centred framework that guides every interaction, ensuring consistent, high-quality support aligned with individual goals.",
+      "A person-centred, rights-based framework that puts dignity, choice, and autonomy at the heart of every interaction — overseen by our Human Rights Committee.",
     icon: "shield",
+    href: "/quality/human-rights",
   },
   {
-    title: "Person Centred Planning",
+    title: "Quality, Safety & Continuous Improvement",
     description:
-      "Empowering each individual to direct their own support plan, focusing on their strengths, preferences, and aspirations.",
-    icon: "target",
+      "Board-level governance and a culture of continuous improvement that keeps standards high and safe across every home we run.",
+    icon: "chart-bar",
+    href: "/quality/safety-improvement",
   },
   {
     title: "Community Integration",
