@@ -6,6 +6,7 @@ import { TestimonialCard } from "@/components/careers/testimonial-card";
 import { CareersCTAStrip } from "@/components/careers/careers-cta-strip";
 import { SectionTitle } from "@/components/section-title";
 import { getCareersIcon } from "@/components/careers/careers-icons";
+import { Reveal } from "@/components/reveal";
 import { jobs } from "@/data/jobs";
 import { testimonials, companyValues } from "@/data/careers";
 
@@ -71,19 +72,31 @@ export default function CareersPage() {
         subtitle="Join the Lotus Care team and make a genuine difference in the lives of people with disabilities every single day."
         ctaLabel="View Open Roles"
         ctaHref="/careers/open-roles"
+        image="/images/stock/dignity-activity.jpg"
+        stat={{ value: "150+", label: "Team Members" }}
+        chips={["Person-Centred", "Compassionate"]}
+        avatarImages={[
+          "/images/staff/Mary-Bardin.png",
+          "/images/staff/Patrick-Troy.png",
+          "/images/staff/Danny-Scally.png",
+          "/images/staff/Teresa-McGuire-Cooke.webp",
+        ]}
+        avatarCaption="Join our growing team."
       />
 
       {/* Impact stats */}
       <section className="bg-white py-10 border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <dl className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-            {stats.map(({ value, label }) => (
-              <div key={label}>
-                <dd className="text-3xl font-bold text-primary">{value}</dd>
-                <dt className="text-sm text-muted mt-1">{label}</dt>
-              </div>
-            ))}
-          </dl>
+          <Reveal>
+            <dl className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+              {stats.map(({ value, label }) => (
+                <div key={label}>
+                  <dd className="text-3xl font-bold text-primary">{value}</dd>
+                  <dt className="text-sm text-muted mt-1">{label}</dt>
+                </div>
+              ))}
+            </dl>
+          </Reveal>
         </div>
       </section>
 
@@ -94,11 +107,11 @@ export default function CareersPage() {
             title="Everything You Need to Know"
             subtitle="From open roles to our hiring process — explore what a career at Lotus Care looks like."
           />
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          <Reveal className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {hubCards.map((card) => (
               <HubNavCard key={card.title} {...card} />
             ))}
-          </div>
+          </Reveal>
         </div>
       </section>
 
@@ -122,11 +135,11 @@ export default function CareersPage() {
               </svg>
             </a>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          <Reveal className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {featuredJobs.map((job) => (
               <JobCard key={job.slug} job={job} />
             ))}
-          </div>
+          </Reveal>
           <div className="mt-6 sm:hidden text-center">
             <a
               href="/careers/open-roles"
@@ -142,7 +155,7 @@ export default function CareersPage() {
       <section className="py-16 sm:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionTitle title="Our Values" />
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <Reveal className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {companyValues.map((value) => (
               <div
                 key={value.title}
@@ -155,13 +168,13 @@ export default function CareersPage() {
                 <p className="text-sm text-muted leading-relaxed">{value.description}</p>
               </div>
             ))}
-          </div>
+          </Reveal>
         </div>
       </section>
 
       {/* Staff testimonial pull-quote */}
       <section className="py-16 sm:py-20 bg-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <Reveal className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <TestimonialCard testimonial={testimonials[0]} />
           <a
             href="/careers/why-us"
@@ -169,7 +182,7 @@ export default function CareersPage() {
           >
             Hear more from our team →
           </a>
-        </div>
+        </Reveal>
       </section>
 
       <CareersCTAStrip

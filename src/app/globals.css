@@ -98,6 +98,15 @@ body {
   transition-delay: 400ms;
 }
 
+/* Scale-settle variant, layered on top of .reveal for images/media */
+.reveal.reveal-scale {
+  transform: translateY(24px) scale(1.05);
+}
+
+.reveal.reveal-scale.in-view {
+  transform: translateY(0) scale(1);
+}
+
 /* Scrollbar for carousel */
 .hide-scrollbar {
   -ms-overflow-style: none;

@@ -20,6 +20,7 @@ export default function WhyUsPage() {
         title="A Career With Purpose"
         subtitle="At Lotus Care, we believe great care starts with great people. Here's what makes us different."
         compact
+        image="/images/stock/community-friends.jpg"
       />
 
       <div className="py-10 sm:py-14">

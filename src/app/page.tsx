@@ -34,7 +34,7 @@ const serviceNames = [
 ];
 
 const aboutParagraphs = [
-  "Lotus Care is a registered NDIS provider committed to delivering exceptional residential and respite disability care across Victoria. Our network of eight purpose-designed homes provides warm, supportive environments where individuals are empowered to thrive.",
+  "Lotus Care is a HIQA-registered provider committed to delivering exceptional residential and respite disability care across Co. Offaly and the Midlands. Our network of eight purpose-designed homes provides warm, supportive environments where individuals are empowered to thrive.",
   "We believe every person deserves to live a life of dignity, choice, and connection. Our dedicated team of professionals works alongside each participant to develop personalised support plans that reflect their unique goals, interests, and aspirations.",
   "Through our person-centred approach, multi-disciplinary expertise, and genuine commitment to community integration, we create pathways for individuals to build meaningful relationships, develop new skills, and participate fully in community life.",
 ];
@@ -66,7 +66,7 @@ export default function Home() {
         <HeroSection
           title="Enhanced Living,"
           titleHighlight="Empowered Lives"
-          subtitle="Providing quality respite and residential disability care services across Victoria, supporting individuals to live their best lives with dignity and purpose."
+          subtitle="Providing quality respite and residential disability care services across Co. Offaly and the Midlands, supporting individuals to live their best lives with dignity and purpose."
         />
         <AboutSection
           title="About Lotus Care"

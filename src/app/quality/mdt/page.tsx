@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { CareersHero } from "@/components/careers/careers-hero";
 import { SectionTitle } from "@/components/section-title";
 import { HubAndSpoke } from "@/components/quality/hub-and-spoke";
 import { ContentSection } from "@/components/quality/content-section";
-import { mdtCore, mdtSpokes, mdtContent } from "@/data/quality";
+import { TeamStrip } from "@/components/quality/team-strip";
+import { Reveal } from "@/components/reveal";
+import { mdtCore, mdtSpokes, mdtContent, mdtTeam } from "@/data/quality";
 
 export const metadata: Metadata = {
   title: "Multidisciplinary Team",
@@ -18,16 +21,28 @@ export default function MdtPage() {
         title="Multidisciplinary Team"
         subtitle="A collaborative, holistic approach bringing together clinical and therapeutic expertise for every person we support."
         compact
+        image="/images/stock/clinical-consultation.jpg"
       />
 
       <div className="py-14 sm:py-16">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
-          {mdtContent.intro.map((paragraph) => (
-            <p key={paragraph} className="text-muted leading-relaxed">
-              {paragraph}
-            </p>
-          ))}
-        </div>
+        <Reveal className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-10 lg:gap-16 items-center reveal-scale">
+          <div className="space-y-4">
+            {mdtContent.intro.map((paragraph) => (
+              <p key={paragraph} className="text-muted leading-relaxed">
+                {paragraph}
+              </p>
+            ))}
+          </div>
+          <div className="group relative rounded-2xl overflow-hidden aspect-[4/3]">
+            <Image
+              src="/images/stock/team-meeting.jpg"
+              alt=""
+              fill
+              sizes="(min-width: 768px) 40vw, 100vw"
+              className="object-cover transition-transform duration-500 group-hover:scale-105"
+            />
+          </div>
+        </Reveal>
       </div>
 
       <section className="py-16 sm:py-20 bg-white">
@@ -36,17 +51,33 @@ export default function MdtPage() {
             title="Our Internal MDT"
             subtitle="Eight disciplines working around a single, person-centred core."
           />
-          <HubAndSpoke core={mdtCore} spokes={mdtSpokes} />
+          <Reveal>
+            <HubAndSpoke core={mdtCore} spokes={mdtSpokes} />
+          </Reveal>
         </div>
       </section>
 
       <section className="py-16 sm:py-20">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <ContentSection {...mdtContent.approach} />
-          <ContentSection {...mdtContent.partnership} />
-          <ContentSection {...mdtContent.governance} />
-          <ContentSection {...mdtContent.commitment} />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+          <Reveal className="reveal-scale">
+            <ContentSection {...mdtContent.approach} image="/images/stock/clinical-consultation.jpg" imagePosition="right" />
+          </Reveal>
+          <Reveal className="reveal-scale">
+            <ContentSection {...mdtContent.partnership} image="/images/stock/community-friends.jpg" imagePosition="left" />
+          </Reveal>
+          <Reveal><ContentSection {...mdtContent.governance} /></Reveal>
+          <Reveal><ContentSection {...mdtContent.commitment} /></Reveal>
         </div>
+      </section>
+
+      <section className="pb-16 sm:pb-20">
+        <Reveal className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <TeamStrip
+            heading="Some of Our MDT"
+            intro="A few of the clinical and therapeutic specialists behind this model of care."
+            members={mdtTeam}
+          />
+        </Reveal>
       </section>
     </>
   );
