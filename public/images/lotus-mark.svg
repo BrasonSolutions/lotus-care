@@ -1,0 +1,9 @@
+<svg viewBox="-50 -50 100 100" xmlns="http://www.w3.org/2000/svg">
+  <g fill="#1badb2">
+    <path d="M0,0 Q-17,-19 -14,-36 Q-11,-50 0,-50 Q11,-50 14,-36 Q17,-19 0,0 Z" transform="rotate(0)"/>
+    <path d="M0,0 Q-17,-19 -14,-36 Q-11,-50 0,-50 Q11,-50 14,-36 Q17,-19 0,0 Z" transform="rotate(72)"/>
+    <path d="M0,0 Q-17,-19 -14,-36 Q-11,-50 0,-50 Q11,-50 14,-36 Q17,-19 0,0 Z" transform="rotate(144)"/>
+    <path d="M0,0 Q-17,-19 -14,-36 Q-11,-50 0,-50 Q11,-50 14,-36 Q17,-19 0,0 Z" transform="rotate(216)"/>
+    <path d="M0,0 Q-17,-19 -14,-36 Q-11,-50 0,-50 Q11,-50 14,-36 Q17,-19 0,0 Z" transform="rotate(288)"/>
+  </g>
+</svg>
