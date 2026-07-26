@@ -2,6 +2,7 @@
 
 import { useState, useSyncExternalStore } from "react";
 import { createPortal } from "react-dom";
+import { usePathname } from "next/navigation";
 import type { NavItem } from "@/data/navigation";
 
 const noopSubscribe = () => () => {};
@@ -21,6 +22,7 @@ export function MobileMenu({
   ctaLabel = "Get in Touch",
   ctaHref = "#contact",
 }: MobileMenuProps) {
+  const pathname = usePathname() ?? "";
   const [isOpen, setIsOpen] = useState(false);
   const [expandedItem, setExpandedItem] = useState<string | null>(null);
   // Portal target (document.body) only exists on the client; this avoids
@@ -34,6 +36,17 @@ export function MobileMenu({
   const close = () => {
     setIsOpen(false);
     setExpandedItem(null);
+  };
+
+  const open = () => {
+    // Pre-expand whichever section the current page belongs to, so a
+    // careers-page visitor opening the menu sees the Careers submenu
+    // already open instead of having to tap it again.
+    const activeParent = navItems.find(
+      (item) => item.children && item.href !== "/" && pathname.startsWith(item.href)
+    );
+    setExpandedItem(activeParent?.label ?? null);
+    setIsOpen(true);
   };
 
   const toggleItem = (label: string) => {
@@ -154,7 +167,7 @@ export function MobileMenu({
     <div className="lg:hidden">
       {/* Hamburger button — p-3 gives ~50px tap area */}
       <button
-        onClick={() => setIsOpen((prev) => !prev)}
+        onClick={() => (isOpen ? close() : open())}
         className={`p-3 -mr-1 transition-colors focus-ring rounded ${
           scrolled ? "text-foreground" : "text-white"
         }`}
