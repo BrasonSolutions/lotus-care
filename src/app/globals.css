@@ -50,6 +50,15 @@
   --color-primary: var(--color-teal-500);
   --color-accent: var(--color-teal-400);
   --color-muted: var(--color-neutral-500);
+  /* Navbar collapse breakpoint ("Laptop L") — deliberately separate from
+     the default `lg` (1024px) scale used elsewhere for spacing/grids, so
+     raising it only affects when the navbar switches from hamburger to
+     full inline layout. */
+  --breakpoint-nav: 1440px;
+
+  --color-primary-dark: #0d6a70;
+  --color-primary: #1badb2;
+  --color-accent: #54c7d6;
   --color-warm-bg: #f8f6f3;
   --color-foreground: #2d3436;
   --color-background: #ffffff;

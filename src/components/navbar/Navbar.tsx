@@ -30,7 +30,7 @@ export function Navbar({
     <>
       {/* Top contact strip — desktop only, slides away on scroll */}
       <div
-        className={`hidden lg:block fixed top-0 left-0 right-0 z-50 transition-all duration-300 overflow-hidden bg-primary-dark text-white ${
+        className={`hidden nav:block fixed top-0 left-0 right-0 z-50 transition-all duration-300 overflow-hidden bg-primary-dark text-white ${
           scrolled ? "max-h-0 opacity-0" : "max-h-10 opacity-100"
         }`}
       >
@@ -55,7 +55,7 @@ export function Navbar({
         className={`fixed left-0 right-0 z-40 transition-all duration-300 ${
           scrolled
             ? "top-0 bg-white shadow-md"
-            : `top-0 lg:top-10 ${solidWhenTop ? "bg-primary-dark" : "bg-transparent"}`
+            : `top-0 nav:top-10 ${solidWhenTop ? "bg-primary-dark" : "bg-transparent"}`
         } animate-slide-down`}
         role="navigation"
         aria-label="Main navigation"
@@ -72,7 +72,7 @@ export function Navbar({
             </Link>
 
             {/* Desktop nav */}
-            <div className="hidden lg:flex items-center gap-8">
+            <div className="hidden nav:flex items-center gap-8">
               {navItems.map((item) =>
                 item.children ? (
                   <HomesDropdown key={item.label} item={item} scrolled={scrolled} />

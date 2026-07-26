@@ -20,10 +20,10 @@ export default function QualityLayout({
   return (
     <>
       <Navbar solidWhenTop />
-      {/* Subnav only renders at the lg breakpoint — see QualitySubnav */}
+      {/* Subnav only renders at the nav breakpoint — see QualitySubnav */}
       <QualitySubnav />
-      {/* pt-16 = 64px navbar (no subnav below lg); lg:pt-28 = navbar + subnav */}
-      <main id="main" className="pt-16 lg:pt-28 min-h-screen bg-warm-bg">
+      {/* pt-16 = 64px navbar (no subnav below the nav breakpoint); nav:pt-28 = navbar + subnav */}
+      <main id="main" className="pt-16 nav:pt-28 min-h-screen bg-warm-bg">
         {children}
       </main>
       <Footer />
