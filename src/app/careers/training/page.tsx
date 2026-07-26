@@ -31,6 +31,7 @@ export default function TrainingPage() {
         title="Grow With Us"
         subtitle="We're committed to your professional development at every stage of your career."
         compact
+        image="/images/stock/clinical-consultation.jpg"
       />
 
       <div className="py-10 sm:py-14">

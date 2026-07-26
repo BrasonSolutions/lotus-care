@@ -14,7 +14,19 @@ export const metadata: Metadata = {
 export default function QualityPage() {
   return (
     <>
-      <CareersHero title={qualityHub.heroTitle} subtitle={qualityHub.heroSubtitle} />
+      <CareersHero
+        title={qualityHub.heroTitle}
+        subtitle={qualityHub.heroSubtitle}
+        image="/images/stock/warm-home.jpg"
+        stat={{ value: "8", label: "Homes" }}
+        chips={["Rights-Based", "HIQA Registered"]}
+        avatarImages={[
+          "/images/staff/Louise-Kidney.png",
+          "/images/staff/Claire-Maher.png",
+          "/images/staff/Caithriona-Lynch.jpg",
+        ]}
+        avatarCaption="The people behind these standards."
+      />
 
       {/* Intro */}
       <section className="py-14 sm:py-16">

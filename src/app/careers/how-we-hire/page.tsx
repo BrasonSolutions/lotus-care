@@ -19,6 +19,7 @@ export default function HowWeHirePage() {
         title="Our Hiring Process"
         subtitle="We keep things simple, transparent, and respectful of your time."
         compact
+        image="/images/stock/team-meeting.jpg"
       />
 
       <div className="py-10 sm:py-14">

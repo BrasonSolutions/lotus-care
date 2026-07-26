@@ -20,6 +20,7 @@ export default function SafetyImprovementPage() {
         title="Quality, Safety & Continuous Improvement"
         subtitle="Quality and safety are the foundation of our culture — the standard by which we measure ourselves every day."
         compact
+        image="/images/stock/team-meeting.jpg"
       />
 
       <div className="py-14 sm:py-16">

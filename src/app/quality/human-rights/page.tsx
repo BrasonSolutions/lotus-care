@@ -20,6 +20,7 @@ export default function HumanRightsPage() {
         title="Human Rights Committee"
         subtitle="A rights-based approach where dignity, respect, equality, and autonomy are central to every aspect of care."
         compact
+        image="/images/stock/dignity-activity.jpg"
       />
 
       <div className="py-14 sm:py-16">

@@ -20,6 +20,7 @@ export default function MdtPage() {
         title="Multidisciplinary Team"
         subtitle="A collaborative, holistic approach bringing together clinical and therapeutic expertise for every person we support."
         compact
+        image="/images/stock/clinical-consultation.jpg"
       />
 
       <div className="py-14 sm:py-16">

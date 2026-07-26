@@ -72,6 +72,16 @@ export default function CareersPage() {
         subtitle="Join the Lotus Care team and make a genuine difference in the lives of people with disabilities every single day."
         ctaLabel="View Open Roles"
         ctaHref="/careers/open-roles"
+        image="/images/stock/dignity-activity.jpg"
+        stat={{ value: "150+", label: "Team Members" }}
+        chips={["Person-Centred", "Compassionate"]}
+        avatarImages={[
+          "/images/staff/Mary-Bardin.png",
+          "/images/staff/Patrick-Troy.png",
+          "/images/staff/Danny-Scally.png",
+          "/images/staff/Teresa-McGuire-Cooke.webp",
+        ]}
+        avatarCaption="Join our growing team."
       />
 
       {/* Impact stats */}
