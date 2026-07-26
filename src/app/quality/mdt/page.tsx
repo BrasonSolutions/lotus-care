@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { CareersHero } from "@/components/careers/careers-hero";
 import { SectionTitle } from "@/components/section-title";
 import { HubAndSpoke } from "@/components/quality/hub-and-spoke";
@@ -24,12 +25,23 @@ export default function MdtPage() {
       />
 
       <div className="py-14 sm:py-16">
-        <Reveal className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
-          {mdtContent.intro.map((paragraph) => (
-            <p key={paragraph} className="text-muted leading-relaxed">
-              {paragraph}
-            </p>
-          ))}
+        <Reveal className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-10 lg:gap-16 items-center reveal-scale">
+          <div className="space-y-4">
+            {mdtContent.intro.map((paragraph) => (
+              <p key={paragraph} className="text-muted leading-relaxed">
+                {paragraph}
+              </p>
+            ))}
+          </div>
+          <div className="group relative rounded-2xl overflow-hidden aspect-[4/3]">
+            <Image
+              src="/images/stock/team-meeting.jpg"
+              alt=""
+              fill
+              sizes="(min-width: 768px) 40vw, 100vw"
+              className="object-cover transition-transform duration-500 group-hover:scale-105"
+            />
+          </div>
         </Reveal>
       </div>
 
@@ -46,16 +58,20 @@ export default function MdtPage() {
       </section>
 
       <section className="py-16 sm:py-20">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
-          <Reveal><ContentSection {...mdtContent.approach} /></Reveal>
-          <Reveal><ContentSection {...mdtContent.partnership} /></Reveal>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+          <Reveal className="reveal-scale">
+            <ContentSection {...mdtContent.approach} image="/images/stock/clinical-consultation.jpg" imagePosition="right" />
+          </Reveal>
+          <Reveal className="reveal-scale">
+            <ContentSection {...mdtContent.partnership} image="/images/stock/community-friends.jpg" imagePosition="left" />
+          </Reveal>
           <Reveal><ContentSection {...mdtContent.governance} /></Reveal>
           <Reveal><ContentSection {...mdtContent.commitment} /></Reveal>
         </div>
       </section>
 
       <section className="pb-16 sm:pb-20">
-        <Reveal className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <Reveal className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <TeamStrip
             heading="Some of Our MDT"
             intro="A few of the clinical and therapeutic specialists behind this model of care."
