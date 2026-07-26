@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { CareersHero } from "@/components/careers/careers-hero";
 import { HubNavCard } from "@/components/careers/hub-nav-card";
 import { JobCard } from "@/components/careers/job-card";
@@ -125,7 +126,7 @@ export default function CareersPage() {
               </h2>
               <p className="text-muted">Current opportunities we&apos;re actively hiring for.</p>
             </div>
-            <a
+            <Link
               href="/careers/open-roles"
               className="hidden sm:flex items-center gap-1 text-sm font-medium text-primary hover:text-primary-dark transition-colors focus-ring rounded shrink-0"
             >
@@ -133,7 +134,7 @@ export default function CareersPage() {
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
               </svg>
-            </a>
+            </Link>
           </div>
           <Reveal className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {featuredJobs.map((job) => (
@@ -141,12 +142,12 @@ export default function CareersPage() {
             ))}
           </Reveal>
           <div className="mt-6 sm:hidden text-center">
-            <a
+            <Link
               href="/careers/open-roles"
               className="inline-block text-sm font-medium text-primary hover:text-primary-dark transition-colors focus-ring rounded"
             >
               View all open roles →
-            </a>
+            </Link>
           </div>
         </div>
       </section>

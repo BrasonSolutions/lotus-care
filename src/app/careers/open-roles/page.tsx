@@ -5,7 +5,7 @@ import { OpenRolesClient } from "./OpenRolesClient";
 import { fetchLiveJobs } from "@/lib/occupop";
 
 export default async function OpenRolesPage() {
-  let jobs = await fetchLiveJobs().catch(() => null);
+  const jobs = await fetchLiveJobs().catch(() => null);
 
   return (
     <>

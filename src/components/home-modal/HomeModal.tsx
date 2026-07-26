@@ -11,6 +11,7 @@ interface HomeModalProps {
 export function HomeModal({ home, onClose }: HomeModalProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const [currentPhoto, setCurrentPhoto] = useState(0);
+  const [lastHomeName, setLastHomeName] = useState(home?.name);
 
   useEffect(() => {
     const dialog = dialogRef.current;
@@ -30,9 +31,10 @@ export function HomeModal({ home, onClose }: HomeModalProps) {
   }, [home]);
 
   // Reset carousel to first photo whenever a different home is opened
-  useEffect(() => {
+  if (home?.name !== lastHomeName) {
+    setLastHomeName(home?.name);
     setCurrentPhoto(0);
-  }, [home?.name]);
+  }
 
   if (!home) return null;
 
