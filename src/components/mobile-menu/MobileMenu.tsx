@@ -1,7 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useSyncExternalStore } from "react";
+import { createPortal } from "react-dom";
 import type { NavItem } from "@/data/navigation";
+
+const noopSubscribe = () => () => {};
 
 interface MobileMenuProps {
   scrolled: boolean;
@@ -20,6 +23,13 @@ export function MobileMenu({
 }: MobileMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [expandedItem, setExpandedItem] = useState<string | null>(null);
+  // Portal target (document.body) only exists on the client; this avoids
+  // the SSR/client markup mismatch that `typeof document` checks trigger.
+  const isClient = useSyncExternalStore(
+    noopSubscribe,
+    () => true,
+    () => false
+  );
 
   const close = () => {
     setIsOpen(false);
@@ -30,27 +40,12 @@ export function MobileMenu({
     setExpandedItem((prev) => (prev === label ? null : label));
   };
 
-  return (
-    <div className="lg:hidden">
-      {/* Hamburger button — p-3 gives ~50px tap area */}
-      <button
-        onClick={() => setIsOpen((prev) => !prev)}
-        className={`p-3 -mr-1 transition-colors focus-ring rounded ${
-          scrolled ? "text-foreground" : "text-white"
-        }`}
-        aria-label={isOpen ? "Close menu" : "Open menu"}
-        aria-expanded={isOpen}
-      >
-        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-          {isOpen ? (
-            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-          ) : (
-            <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-          )}
-        </svg>
-      </button>
-
-      {/* Full-screen overlay */}
+  // Portaled to document.body: the navbar's entrance animation applies a
+  // transform to <nav>, which creates a new containing block for any
+  // `position: fixed` descendants — breaking this drawer's fixed
+  // positioning on small screens. Rendering outside <nav> avoids that.
+  const drawer = (
+    <>
       {isOpen && (
         <div
           className="fixed inset-0 bg-black/50 z-40"
@@ -59,7 +54,6 @@ export function MobileMenu({
         />
       )}
 
-      {/* Menu panel */}
       <div
         className={`fixed top-0 right-0 h-full w-80 max-w-[90vw] bg-white z-50 transform transition-transform duration-300 shadow-2xl ${
           isOpen ? "translate-x-0" : "translate-x-full"
@@ -153,6 +147,30 @@ export function MobileMenu({
           </div>
         </nav>
       </div>
+    </>
+  );
+
+  return (
+    <div className="lg:hidden">
+      {/* Hamburger button — p-3 gives ~50px tap area */}
+      <button
+        onClick={() => setIsOpen((prev) => !prev)}
+        className={`p-3 -mr-1 transition-colors focus-ring rounded ${
+          scrolled ? "text-foreground" : "text-white"
+        }`}
+        aria-label={isOpen ? "Close menu" : "Open menu"}
+        aria-expanded={isOpen}
+      >
+        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          {isOpen ? (
+            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+          ) : (
+            <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+          )}
+        </svg>
+      </button>
+
+      {isClient && createPortal(drawer, document.body)}
     </div>
   );
 }
