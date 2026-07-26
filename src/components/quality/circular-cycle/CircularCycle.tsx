@@ -1,3 +1,7 @@
+"use client";
+
+import { useInView } from "@/hooks/use-in-view";
+
 interface CircularCycleStep {
   label: string;
   description: string;
@@ -10,29 +14,39 @@ interface CircularCycleProps {
 
 const RADIUS = 220;
 const NODE_WIDTH = 192;
+const STAGGER_MS = 90;
 
 export function CircularCycle({ steps, centerLabel }: CircularCycleProps) {
+  const { ref, inView } = useInView();
   const count = steps.length;
   const size = RADIUS * 2 + NODE_WIDTH;
 
   return (
-    <div>
+    <div ref={ref}>
       {/* Desktop: nodes arranged in a ring */}
       <div
         className="hidden lg:block relative mx-auto"
         style={{ width: size, height: size }}
       >
-        <div
-          className="absolute rounded-full border-2 border-dashed border-primary/20"
-          style={{
-            width: RADIUS * 2,
-            height: RADIUS * 2,
-            left: "50%",
-            top: "50%",
-            transform: "translate(-50%, -50%)",
-          }}
+        <svg
+          className="absolute"
+          width={RADIUS * 2}
+          height={RADIUS * 2}
+          style={{ left: "50%", top: "50%", transform: "translate(-50%, -50%)" }}
           aria-hidden="true"
-        />
+        >
+          <circle
+            cx={RADIUS}
+            cy={RADIUS}
+            r={RADIUS - 1}
+            fill="none"
+            stroke="var(--color-primary)"
+            strokeOpacity={0.25}
+            strokeWidth={2}
+            strokeDasharray="8 8"
+            className="cycle-ring-flow"
+          />
+        </svg>
         {centerLabel && (
           <div className="absolute left-1/2 top-1/2 w-36 text-center -translate-x-1/2 -translate-y-1/2">
             <p className="text-sm font-semibold text-primary-dark leading-snug">
@@ -52,18 +66,23 @@ export function CircularCycle({ steps, centerLabel }: CircularCycleProps) {
                 width: NODE_WIDTH,
                 left: `calc(50% + ${x}px)`,
                 top: `calc(50% + ${y}px)`,
-                transform: "translate(-50%, -50%)",
+                transform: "translate(-50%, -20px)",
               }}
             >
-              <div className="w-10 h-10 mx-auto rounded-full bg-primary text-white flex items-center justify-center font-semibold mb-2">
-                {i + 1}
+              <div
+                className={`pop-item ${inView ? "in-view" : ""}`}
+                style={{ transitionDelay: `${i * STAGGER_MS}ms` }}
+              >
+                <div className="w-10 h-10 mx-auto rounded-full bg-primary text-white flex items-center justify-center font-semibold mb-2">
+                  {i + 1}
+                </div>
+                <h3 className="text-sm font-semibold text-primary-dark mb-1">
+                  {step.label}
+                </h3>
+                <p className="text-xs text-muted leading-relaxed">
+                  {step.description}
+                </p>
               </div>
-              <h3 className="text-sm font-semibold text-primary-dark mb-1">
-                {step.label}
-              </h3>
-              <p className="text-xs text-muted leading-relaxed">
-                {step.description}
-              </p>
             </div>
           );
         })}
@@ -72,7 +91,11 @@ export function CircularCycle({ steps, centerLabel }: CircularCycleProps) {
       {/* Mobile/tablet: stacked list */}
       <ol className="lg:hidden space-y-6">
         {steps.map((step, i) => (
-          <li key={step.label} className="flex gap-4">
+          <li
+            key={step.label}
+            className={`flex gap-4 pop-item ${inView ? "in-view" : ""}`}
+            style={{ transitionDelay: `${i * STAGGER_MS}ms` }}
+          >
             <div className="w-10 h-10 shrink-0 rounded-full bg-primary text-white flex items-center justify-center font-semibold">
               {i + 1}
             </div>
