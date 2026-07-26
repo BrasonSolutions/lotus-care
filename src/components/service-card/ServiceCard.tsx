@@ -88,7 +88,7 @@ export function ServiceCard({ service, index, inView }: ServiceCardProps) {
         className={`card-hover reveal ${delayClass} ${inView ? "in-view" : ""} group relative rounded-2xl overflow-hidden min-h-[240px] sm:min-h-[280px] flex items-end`}
       >
         {/* SVG illustration background */}
-        <div className="absolute inset-0">
+        <div className="absolute inset-0 transition-transform duration-500 group-hover:scale-105">
           {illustrations[service.icon]}
         </div>
         <div className="absolute inset-0 bg-gradient-to-t from-primary-dark/90 via-primary-dark/40 to-transparent" />
@@ -104,12 +104,12 @@ export function ServiceCard({ service, index, inView }: ServiceCardProps) {
 
   return (
     <div
-      className={`card-hover reveal ${delayClass} ${inView ? "in-view" : ""} bg-white rounded-2xl p-6 border border-gray-100 hover:border-primary/30 transition-colors`}
+      className={`card-hover reveal ${delayClass} ${inView ? "in-view" : ""} group bg-white rounded-2xl p-6 border border-gray-100 hover:border-primary/30 transition-colors`}
     >
-      <div className="w-14 h-14 rounded-xl bg-primary/10 text-primary flex items-center justify-center mb-4">
+      <div className="w-14 h-14 rounded-xl bg-primary/10 text-primary flex items-center justify-center mb-4 transition-colors duration-300 group-hover:bg-primary group-hover:text-white">
         {icons[service.icon]}
       </div>
-      <h3 className="text-lg font-bold text-primary-dark mb-3">
+      <h3 className="text-lg font-bold text-primary-dark mb-3 transition-colors group-hover:text-primary">
         {service.title}
       </h3>
       <p className="text-muted text-sm leading-relaxed">{service.description}</p>
@@ -120,7 +120,7 @@ export function ServiceCard({ service, index, inView }: ServiceCardProps) {
         >
           Learn more
           <svg
-            className="w-4 h-4"
+            className="w-4 h-4 transition-transform group-hover:translate-x-1"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
