@@ -3,6 +3,7 @@ import { CareersHero } from "@/components/careers/careers-hero";
 import { SectionTitle } from "@/components/section-title";
 import { HubAndSpoke } from "@/components/quality/hub-and-spoke";
 import { ContentSection } from "@/components/quality/content-section";
+import { MediaFrame } from "@/components/quality/media-frame";
 import { mdtCore, mdtSpokes, mdtContent } from "@/data/quality";
 
 export const metadata: Metadata = {
@@ -46,6 +47,12 @@ export default function MdtPage() {
           <ContentSection {...mdtContent.partnership} />
           <ContentSection {...mdtContent.governance} />
           <ContentSection {...mdtContent.commitment} />
+        </div>
+      </section>
+
+      <section className="pb-16 sm:pb-20">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <MediaFrame caption="See our MDT in action." />
         </div>
       </section>
     </>

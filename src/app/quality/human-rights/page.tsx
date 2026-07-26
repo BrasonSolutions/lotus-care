@@ -3,6 +3,7 @@ import { CareersHero } from "@/components/careers/careers-hero";
 import { SectionTitle } from "@/components/section-title";
 import { CircularCycle } from "@/components/quality/circular-cycle";
 import { ContentSection } from "@/components/quality/content-section";
+import { MediaFrame } from "@/components/quality/media-frame";
 import { humanRightsFramework, humanRightsContent } from "@/data/quality";
 
 export const metadata: Metadata = {
@@ -47,6 +48,12 @@ export default function HumanRightsPage() {
           <ContentSection {...humanRightsContent.champions} />
           <ContentSection {...humanRightsContent.governance} />
           <ContentSection {...humanRightsContent.culture} />
+        </div>
+      </section>
+
+      <section className="pb-16 sm:pb-20">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <MediaFrame caption="See our rights-based approach in action." />
         </div>
       </section>
     </>
