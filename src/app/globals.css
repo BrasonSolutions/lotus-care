@@ -4,6 +4,12 @@
   --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     "Helvetica Neue", Arial, sans-serif;
 
+  /* Navbar collapse breakpoint ("Laptop L") — deliberately separate from
+     the default `lg` (1024px) scale used elsewhere for spacing/grids, so
+     raising it only affects when the navbar switches from hamburger to
+     full inline layout. */
+  --breakpoint-nav: 1440px;
+
   --color-primary-dark: #0d6a70;
   --color-primary: #1badb2;
   --color-accent: #54c7d6;

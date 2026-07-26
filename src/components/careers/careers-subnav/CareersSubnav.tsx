@@ -2,7 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import { useScrolled } from "@/hooks/use-scrolled";
-import { useMediaQuery } from "@/hooks/use-media-query";
+import { useMediaQuery, NAV_BREAKPOINT_QUERY } from "@/hooks/use-media-query";
 
 const links = [
   { label: "Overview", href: "/careers" },
@@ -18,10 +18,10 @@ export function CareersSubnav() {
   const pathname = usePathname() ?? "";
   const scrolled = useScrolled();
   // The subnav duplicates links already in the main navbar's mobile
-  // "Careers" submenu, so it only exists at the desktop (lg) breakpoint
+  // "Careers" submenu, so it only exists at the desktop (nav) breakpoint
   // where the main navbar shows its full inline layout instead of the
   // hamburger menu.
-  const isDesktop = useMediaQuery("(min-width: 1024px)");
+  const isDesktop = useMediaQuery(NAV_BREAKPOINT_QUERY);
 
   if (!isDesktop || scrolled) return null;
 

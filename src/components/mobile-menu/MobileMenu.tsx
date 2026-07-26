@@ -53,6 +53,11 @@ export function MobileMenu({
     setExpandedItem((prev) => (prev === label ? null : label));
   };
 
+  // Anchor links (e.g. "/#about") point at homepage sections rather than
+  // distinct routes, so there's no reliable way to tell which is "current"
+  // without scroll-spy — only real routes get active styling.
+  const isCurrentPage = (href: string) => !href.includes("#") && pathname === href;
+
   // Portaled to document.body: the navbar's entrance animation applies a
   // transform to <nav>, which creates a new containing block for any
   // `position: fixed` descendants — breaking this drawer's fixed
@@ -115,7 +120,12 @@ export function MobileMenu({
                         key={child.label}
                         href={child.href}
                         onClick={close}
-                        className="block py-2.5 px-2 text-base text-muted hover:text-primary transition-colors focus-ring rounded"
+                        aria-current={isCurrentPage(child.href) ? "page" : undefined}
+                        className={`block py-2.5 px-2 text-base transition-colors focus-ring rounded ${
+                          isCurrentPage(child.href)
+                            ? "text-primary font-semibold underline underline-offset-4"
+                            : "text-muted hover:text-primary"
+                        }`}
                       >
                         {child.label}
                       </a>
@@ -128,7 +138,12 @@ export function MobileMenu({
                 key={item.label}
                 href={item.href}
                 onClick={close}
-                className="block py-3 px-2 text-foreground font-medium hover:text-primary transition-colors focus-ring rounded"
+                aria-current={isCurrentPage(item.href) ? "page" : undefined}
+                className={`block py-3 px-2 font-medium transition-colors focus-ring rounded ${
+                  isCurrentPage(item.href)
+                    ? "text-primary underline underline-offset-4"
+                    : "text-foreground hover:text-primary"
+                }`}
               >
                 {item.label}
               </a>
@@ -164,7 +179,7 @@ export function MobileMenu({
   );
 
   return (
-    <div className="lg:hidden">
+    <div className="nav:hidden">
       {/* Hamburger button — p-3 gives ~50px tap area */}
       <button
         onClick={() => (isOpen ? close() : open())}
