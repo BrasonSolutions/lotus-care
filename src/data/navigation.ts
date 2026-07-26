@@ -38,6 +38,15 @@ export const navItems: NavItem[] = [
       { label: "Contact Recruitment", href: "/careers/contact" },
     ],
   },
+  {
+    label: "Quality & Governance",
+    href: "/quality",
+    children: [
+      { label: "Human Rights Committee", href: "/quality/human-rights" },
+      { label: "Multidisciplinary Team", href: "/quality/mdt" },
+      { label: "Quality, Safety & Improvement", href: "/quality/safety-improvement" },
+    ],
+  },
   { label: "Contact", href: "/#contact" },
 ];
 
