@@ -1,5 +1,9 @@
 import { LotusMark } from "@/components/lotus-mark";
 
+interface CareersHeroStat {
+  value: string;
+  label: string;
+}
 interface CareersHeroProps {
   title: string;
   subtitle: string;
