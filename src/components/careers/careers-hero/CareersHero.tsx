@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { LotusMark } from "@/components/lotus-mark";
 
 interface CareersHeroStat {
