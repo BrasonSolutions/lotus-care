@@ -3,6 +3,7 @@ import { CareersHero } from "@/components/careers/careers-hero";
 import { HubNavCard } from "@/components/careers/hub-nav-card";
 import { TestimonialCard } from "@/components/careers/testimonial-card";
 import { CareersCTAStrip } from "@/components/careers/careers-cta-strip";
+import { MediaFrame } from "@/components/quality/media-frame";
 import { qualityHub, hubCards, anonymizedTestimonial } from "@/data/quality";
 
 export const metadata: Metadata = {
@@ -30,6 +31,13 @@ export default function QualityPage() {
               <HubNavCard key={card.title} {...card} />
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Video */}
+      <section className="pb-16 sm:pb-20">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <MediaFrame caption="A closer look at life at Lotus Care." />
         </div>
       </section>
 
