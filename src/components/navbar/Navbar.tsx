@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import type { NavItem } from "@/data/navigation";
 import { HomesDropdown } from "@/components/homes-dropdown";
 import { MobileMenu } from "@/components/mobile-menu";
@@ -23,10 +24,8 @@ export function Navbar({
   solidWhenTop = false,
 }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false);
-  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
     const handleScroll = () => setScrolled(window.scrollY > 50);
     handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -63,20 +62,20 @@ export function Navbar({
           scrolled
             ? "top-0 bg-white shadow-md"
             : `top-0 lg:top-10 ${solidWhenTop ? "bg-primary-dark" : "bg-transparent"}`
-        } ${mounted ? "animate-slide-down" : "opacity-0"}`}
+        } animate-slide-down`}
         role="navigation"
         aria-label="Main navigation"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
-            <a href="/" className="flex items-center shrink-0 focus-ring rounded">
+            <Link href="/" className="flex items-center shrink-0 focus-ring rounded">
               {scrolled ? (
                 <LogoDark className="h-10 w-auto" />
               ) : (
                 <LogoWhite className="h-10 w-auto" />
               )}
-            </a>
+            </Link>
 
             {/* Desktop nav */}
             <div className="hidden lg:flex items-center gap-8">
