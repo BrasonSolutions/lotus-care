@@ -1,0 +1,1 @@
+export { LogoDark } from './LogoDark';

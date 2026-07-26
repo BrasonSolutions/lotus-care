@@ -1,3 +1,5 @@
+import { LotusMark } from "@/components/lotus-mark";
+
 interface CareersHeroProps {
   title: string;
   subtitle: string;
@@ -28,6 +30,7 @@ export function CareersHero({
         className="absolute bottom-0 left-0 w-48 h-48 bg-accent/20 rounded-full translate-y-1/2 -translate-x-1/4 pointer-events-none"
         aria-hidden="true"
       />
+      <LotusMark className="absolute -right-12 -bottom-16 w-80 h-80 text-white opacity-[0.06] pointer-events-none" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 animate-fade-up">

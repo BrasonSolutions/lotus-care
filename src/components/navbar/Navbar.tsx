@@ -1,11 +1,11 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Image from "next/image";
 import type { NavItem } from "@/data/navigation";
 import { HomesDropdown } from "@/components/homes-dropdown";
 import { MobileMenu } from "@/components/mobile-menu";
 import { LogoWhite } from "@/components/logo-white";
+import { LogoDark } from "@/components/logo-dark";
 
 interface NavbarProps {
   navItems: NavItem[];
@@ -72,14 +72,7 @@ export function Navbar({
             {/* Logo */}
             <a href="/" className="flex items-center shrink-0 focus-ring rounded">
               {scrolled ? (
-                <Image
-                  src="/images/logo.png"
-                  alt="Lotus Care — Enhanced Living"
-                  width={180}
-                  height={48}
-                  style={{ height: "2.5rem", width: "auto" }}
-                  priority
-                />
+                <LogoDark className="h-10 w-auto" />
               ) : (
                 <LogoWhite className="h-10 w-auto" />
               )}
