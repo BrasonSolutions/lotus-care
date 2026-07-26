@@ -15,7 +15,7 @@ interface HomesCarouselProps {
 export function HomesCarousel({
   homes,
   title = "Our Homes",
-  subtitle = "Eight unique homes across Victoria, each designed to feel like home.",
+  subtitle = "Eight unique homes across Co. Offaly and the Midlands, each designed to feel like home.",
 }: HomesCarouselProps) {
   const { ref: sectionRef, inView } = useInView({ threshold: 0.1 });
   const scrollRef = useRef<HTMLDivElement>(null);

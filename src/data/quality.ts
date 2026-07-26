@@ -1,4 +1,19 @@
 import type { Testimonial } from "@/data/careers";
+import { teamMembers } from "@/data/team";
+
+function pickTeam(names: string[]) {
+  return names.map((name) => {
+    const member = teamMembers.find((m) => m.name === name);
+    if (!member) throw new Error(`Unknown team member referenced in quality.ts: ${name}`);
+    return { name: member.name, role: member.role, initials: member.initials, image: member.image };
+  });
+}
+
+// Real staff, picked for genuine role overlap with each page's subject matter
+// (not asserted committee members — see PR notes).
+export const humanRightsTeam = pickTeam(["Louise Kidney", "Claire Maher"]);
+export const mdtTeam = pickTeam(["Vaida Cheema", "Nadeeka Pathirana", "Tina Early"]);
+export const safetyImprovementTeam = pickTeam(["Caithriona Lynch", "Louise Kidney"]);
 
 export interface CycleStep {
   label: string;

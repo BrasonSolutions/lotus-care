@@ -2,7 +2,7 @@ import type { ContentBlock } from "@/data/quality";
 
 export function ContentSection({ heading, intro, body, bullets }: ContentBlock) {
   return (
-    <div className="mb-12 last:mb-0">
+    <div>
       <h2 className="text-xl sm:text-2xl font-bold text-primary-dark mb-4">
         {heading}
       </h2>
