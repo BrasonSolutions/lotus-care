@@ -1,36 +1,30 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import Link from "next/link";
 import type { NavItem } from "@/data/navigation";
+import { navItems as defaultNavItems, contactInfo as defaultContactInfo } from "@/data/navigation";
 import { HomesDropdown } from "@/components/homes-dropdown";
 import { MobileMenu } from "@/components/mobile-menu";
 import { LogoWhite } from "@/components/logo-white";
 import { LogoDark } from "@/components/logo-dark";
+import { useScrolled } from "@/hooks/use-scrolled";
 
 interface NavbarProps {
-  navItems: NavItem[];
-  contactInfo: { phone: string; email: string };
+  navItems?: NavItem[];
+  contactInfo?: { phone: string; email: string };
   ctaLabel?: string;
   ctaHref?: string;
   solidWhenTop?: boolean;
 }
 
 export function Navbar({
-  navItems,
-  contactInfo,
+  navItems = defaultNavItems,
+  contactInfo = defaultContactInfo,
   ctaLabel = "Get in Touch",
   ctaHref = "#contact",
   solidWhenTop = false,
 }: NavbarProps) {
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50);
-    handleScroll();
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  const scrolled = useScrolled();
 
   return (
     <>
