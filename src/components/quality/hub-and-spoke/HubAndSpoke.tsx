@@ -12,8 +12,9 @@ interface HubAndSpokeProps {
   spokes: Spoke[];
 }
 
-const RADIUS = 260;
-const NODE_WIDTH = 176;
+const RADIUS = 325;
+const NODE_WIDTH = 220;
+const HUB_SIZE = NODE_WIDTH;
 const CORE_POP_MS = 300;
 const STAGGER_MS = 90;
 
@@ -48,15 +49,18 @@ export function HubAndSpoke({ core, spokes }: HubAndSpokeProps) {
           );
         })}
 
-        <div className="absolute left-1/2 top-1/2 w-44 h-44 -translate-x-1/2 -translate-y-1/2 z-10">
+        <div
+          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10"
+          style={{ width: HUB_SIZE, height: HUB_SIZE }}
+        >
           <div
-            className={`pop-item w-full h-full rounded-full bg-primary text-white flex flex-col items-center justify-center text-center p-4 shadow-md ${
+            className={`pop-item w-full h-full rounded-full bg-primary text-white flex flex-col items-center justify-center text-center p-5 shadow-md ${
               inView ? "in-view" : ""
             }`}
           >
-            <p className="text-sm font-semibold leading-snug">{core.label}</p>
+            <p className="text-base font-semibold leading-snug">{core.label}</p>
             {core.subtext && (
-              <p className="text-xs text-white/80 mt-2 leading-snug">
+              <p className="text-sm text-white/80 mt-2 leading-snug">
                 {core.subtext}
               </p>
             )}
@@ -79,15 +83,15 @@ export function HubAndSpoke({ core, spokes }: HubAndSpokeProps) {
               }}
             >
               <div
-                className={`pop-item bg-white rounded-xl border border-gray-100 shadow-sm p-3 ${
+                className={`pop-item bg-white rounded-xl border border-gray-100 shadow-sm p-4 ${
                   inView ? "in-view" : ""
                 }`}
                 style={{ transitionDelay: `${CORE_POP_MS + i * STAGGER_MS}ms` }}
               >
-                <h3 className="text-sm font-semibold text-primary-dark mb-1">
+                <h3 className="text-base font-semibold text-primary-dark mb-1">
                   {spoke.label}
                 </h3>
-                <p className="text-xs text-muted leading-relaxed">
+                <p className="text-sm text-muted leading-relaxed">
                   {spoke.description}
                 </p>
               </div>

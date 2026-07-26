@@ -12,8 +12,10 @@ interface CircularCycleProps {
   centerLabel?: string;
 }
 
-const RADIUS = 220;
-const NODE_WIDTH = 192;
+const RADIUS = 275;
+const NODE_WIDTH = 240;
+const BADGE_SIZE = 50;
+const CENTER_LABEL_WIDTH = 180;
 const STAGGER_MS = 90;
 
 export function CircularCycle({ steps, centerLabel }: CircularCycleProps) {
@@ -48,8 +50,11 @@ export function CircularCycle({ steps, centerLabel }: CircularCycleProps) {
           />
         </svg>
         {centerLabel && (
-          <div className="absolute left-1/2 top-1/2 w-36 text-center -translate-x-1/2 -translate-y-1/2">
-            <p className="text-sm font-semibold text-primary-dark leading-snug">
+          <div
+            className="absolute left-1/2 top-1/2 text-center -translate-x-1/2 -translate-y-1/2"
+            style={{ width: CENTER_LABEL_WIDTH }}
+          >
+            <p className="text-base font-semibold text-primary-dark leading-snug">
               {centerLabel}
             </p>
           </div>
@@ -66,20 +71,23 @@ export function CircularCycle({ steps, centerLabel }: CircularCycleProps) {
                 width: NODE_WIDTH,
                 left: `calc(50% + ${x}px)`,
                 top: `calc(50% + ${y}px)`,
-                transform: "translate(-50%, -20px)",
+                transform: `translate(-50%, -${BADGE_SIZE / 2}px)`,
               }}
             >
               <div
                 className={`pop-item ${inView ? "in-view" : ""}`}
                 style={{ transitionDelay: `${i * STAGGER_MS}ms` }}
               >
-                <div className="w-10 h-10 mx-auto rounded-full bg-primary text-white flex items-center justify-center font-semibold mb-2">
+                <div
+                  className="mx-auto rounded-full bg-primary text-white flex items-center justify-center font-semibold text-lg mb-2"
+                  style={{ width: BADGE_SIZE, height: BADGE_SIZE }}
+                >
                   {i + 1}
                 </div>
-                <h3 className="text-sm font-semibold text-primary-dark mb-1">
+                <h3 className="text-base font-semibold text-primary-dark mb-1">
                   {step.label}
                 </h3>
-                <p className="text-xs text-muted leading-relaxed">
+                <p className="text-sm text-muted leading-relaxed">
                   {step.description}
                 </p>
               </div>
