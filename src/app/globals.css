@@ -107,6 +107,50 @@ body {
   transform: translateY(0) scale(1);
 }
 
+/* Staggered pop-in for infographic items (CircularCycle, HubAndSpoke) —
+   deliberately not `.reveal`, so Storybook's force-in-view decorator doesn't
+   short-circuit the staggered demo; these components drive their own
+   IntersectionObserver via useInView. */
+.pop-item {
+  opacity: 0;
+  transform: scale(0.4);
+  transition: opacity 500ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    transform 500ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.pop-item.in-view {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* CircularCycle: flowing marching-dash ring */
+@keyframes ring-flow {
+  to {
+    stroke-dashoffset: -128px;
+  }
+}
+
+.cycle-ring-flow {
+  animation: ring-flow 9s linear infinite;
+}
+
+/* HubAndSpoke: flowing marching-dash spoke lines */
+.spoke-line-flow {
+  background-image: repeating-linear-gradient(
+    to right,
+    var(--color-primary) 0 6px,
+    transparent 6px 12px
+  );
+  background-size: 24px 100%;
+  animation: spoke-flow 5s linear infinite;
+}
+
+@keyframes spoke-flow {
+  to {
+    background-position-x: -24px;
+  }
+}
+
 /* Scrollbar for carousel */
 .hide-scrollbar {
   -ms-overflow-style: none;
@@ -187,6 +231,11 @@ body {
   }
 
   .reveal {
+    opacity: 1;
+    transform: none;
+  }
+
+  .pop-item {
     opacity: 1;
     transform: none;
   }

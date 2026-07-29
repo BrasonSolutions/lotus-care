@@ -1,3 +1,7 @@
+"use client";
+
+import { useInView } from "@/hooks/use-in-view";
+
 interface Spoke {
   label: string;
   description: string;
@@ -8,15 +12,19 @@ interface HubAndSpokeProps {
   spokes: Spoke[];
 }
 
-const RADIUS = 260;
-const NODE_WIDTH = 176;
+const RADIUS = 325;
+const NODE_WIDTH = 220;
+const HUB_SIZE = NODE_WIDTH;
+const CORE_POP_MS = 300;
+const STAGGER_MS = 90;
 
 export function HubAndSpoke({ core, spokes }: HubAndSpokeProps) {
+  const { ref, inView } = useInView();
   const count = spokes.length;
   const size = RADIUS * 2 + NODE_WIDTH;
 
   return (
-    <div>
+    <div ref={ref}>
       {/* Desktop: core + radiating spokes */}
       <div
         className="hidden lg:block relative mx-auto"
@@ -27,7 +35,7 @@ export function HubAndSpoke({ core, spokes }: HubAndSpokeProps) {
           return (
             <div
               key={`line-${spoke.label}`}
-              className="absolute bg-primary/15"
+              className="absolute spoke-line-flow"
               style={{
                 left: "50%",
                 top: "50%",
@@ -41,13 +49,22 @@ export function HubAndSpoke({ core, spokes }: HubAndSpokeProps) {
           );
         })}
 
-        <div className="absolute left-1/2 top-1/2 w-44 h-44 -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary text-white flex flex-col items-center justify-center text-center p-4 shadow-md z-10">
-          <p className="text-sm font-semibold leading-snug">{core.label}</p>
-          {core.subtext && (
-            <p className="text-xs text-white/80 mt-2 leading-snug">
-              {core.subtext}
-            </p>
-          )}
+        <div
+          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10"
+          style={{ width: HUB_SIZE, height: HUB_SIZE }}
+        >
+          <div
+            className={`pop-item w-full h-full rounded-full bg-primary text-white flex flex-col items-center justify-center text-center p-5 shadow-md ${
+              inView ? "in-view" : ""
+            }`}
+          >
+            <p className="text-base font-semibold leading-snug">{core.label}</p>
+            {core.subtext && (
+              <p className="text-sm text-white/80 mt-2 leading-snug">
+                {core.subtext}
+              </p>
+            )}
+          </div>
         </div>
 
         {spokes.map((spoke, i) => {
@@ -65,11 +82,16 @@ export function HubAndSpoke({ core, spokes }: HubAndSpokeProps) {
                 transform: "translate(-50%, -50%)",
               }}
             >
-              <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-3">
-                <h3 className="text-sm font-semibold text-primary-dark mb-1">
+              <div
+                className={`pop-item bg-white rounded-xl border border-gray-100 shadow-sm p-4 ${
+                  inView ? "in-view" : ""
+                }`}
+                style={{ transitionDelay: `${CORE_POP_MS + i * STAGGER_MS}ms` }}
+              >
+                <h3 className="text-base font-semibold text-primary-dark mb-1">
                   {spoke.label}
                 </h3>
-                <p className="text-xs text-muted leading-relaxed">
+                <p className="text-sm text-muted leading-relaxed">
                   {spoke.description}
                 </p>
               </div>
@@ -81,7 +103,11 @@ export function HubAndSpoke({ core, spokes }: HubAndSpokeProps) {
       {/* Mobile/tablet: core banner + stacked list */}
       <div className="lg:hidden">
         <div className="text-center mb-6">
-          <div className="inline-block bg-primary text-white rounded-2xl px-6 py-4">
+          <div
+            className={`inline-block bg-primary text-white rounded-2xl px-6 py-4 pop-item ${
+              inView ? "in-view" : ""
+            }`}
+          >
             <p className="font-semibold">{core.label}</p>
             {core.subtext && (
               <p className="text-xs text-white/80 mt-1">{core.subtext}</p>
@@ -89,10 +115,13 @@ export function HubAndSpoke({ core, spokes }: HubAndSpokeProps) {
           </div>
         </div>
         <ul className="space-y-4">
-          {spokes.map((spoke) => (
+          {spokes.map((spoke, i) => (
             <li
               key={spoke.label}
-              className="bg-white rounded-xl border border-gray-100 shadow-sm p-4"
+              className={`bg-white rounded-xl border border-gray-100 shadow-sm p-4 pop-item ${
+                inView ? "in-view" : ""
+              }`}
+              style={{ transitionDelay: `${CORE_POP_MS + i * STAGGER_MS}ms` }}
             >
               <h3 className="text-sm font-semibold text-primary-dark mb-1">
                 {spoke.label}
