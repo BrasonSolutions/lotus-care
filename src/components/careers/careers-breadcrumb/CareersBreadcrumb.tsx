@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { WideContainer } from "@/components/layout";
+import { Container } from "@/components/layout";
 
 const pageLabels: Record<string, string> = {
   "open-roles": "Open Roles",
@@ -26,7 +26,7 @@ export function CareersBreadcrumb() {
 
   return (
     <nav aria-label="Breadcrumb">
-      <WideContainer className="pt-4">
+      <Container className="pt-4">
         <ol className="flex items-center gap-2 text-sm text-muted">
           <li>
             <a href="/careers" className="hover:text-primary transition-colors focus-ring rounded">
@@ -63,7 +63,7 @@ export function CareersBreadcrumb() {
             </li>
           )}
         </ol>
-      </WideContainer>
+      </Container>
     </nav>
   );
 }

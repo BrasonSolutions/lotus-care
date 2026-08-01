@@ -6,7 +6,7 @@ import { useInView } from "@/hooks/use-in-view";
 import type { BoardMember } from "@/data/team";
 import { SectionTitle } from "@/components/section-title";
 import { TeamModal } from "@/components/team-modal";
-import { WideContainer } from "@/components/layout";
+import { Container } from "@/components/layout";
 
 interface BoardSectionProps {
   title?: string;
@@ -24,7 +24,7 @@ export function BoardSection({
 
   return (
     <section className="py-20 lg:py-28 bg-primary-dark">
-      <WideContainer>
+      <Container>
         <SectionTitle title={title} subtitle={subtitle} light />
 
         <div
@@ -59,7 +59,7 @@ export function BoardSection({
             </button>
           ))}
         </div>
-      </WideContainer>
+      </Container>
 
       <TeamModal
         member={selectedMember}

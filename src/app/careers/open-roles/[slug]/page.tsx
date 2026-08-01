@@ -6,7 +6,7 @@ import { CareersCTAStrip } from "@/components/careers/careers-cta-strip";
 import { getCareersIcon } from "@/components/careers/careers-icons";
 import { jobs, departmentLabels } from "@/data/jobs";
 import { benefits } from "@/data/careers";
-import { WideContainer } from "@/components/layout";
+import { Container } from "@/components/layout";
 
 interface Params {
   params: Promise<{ slug: string }>;
@@ -47,7 +47,7 @@ export default async function JobDetailPage({ params }: Params) {
     <>
       {/* Job header */}
       <section className="bg-gradient-to-br from-primary-dark via-primary to-accent/80 py-16 sm:py-20">
-        <WideContainer>
+        <Container>
           <div className="max-w-3xl">
             <div className="flex flex-wrap gap-2 mb-4">
               <span className="bg-white/20 text-white text-xs font-medium px-3 py-1 rounded-full">
@@ -63,11 +63,11 @@ export default async function JobDetailPage({ params }: Params) {
             <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4">{job.title}</h1>
             <p className="text-white/80 text-lg">{job.shortDescription}</p>
           </div>
-        </WideContainer>
+        </Container>
       </section>
 
       <div className="py-10 sm:py-14">
-        <WideContainer>
+        <Container>
           <CareersBreadcrumb />
 
           <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -162,7 +162,7 @@ export default async function JobDetailPage({ params }: Params) {
               </div>
             </section>
           )}
-        </WideContainer>
+        </Container>
       </div>
 
       <CareersCTAStrip

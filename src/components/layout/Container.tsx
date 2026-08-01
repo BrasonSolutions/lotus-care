@@ -2,54 +2,42 @@ import type { ComponentPropsWithoutRef } from "react";
 
 const GUTTERS = "px-4 sm:px-6 lg:px-8";
 
-interface WideContainerProps extends ComponentPropsWithoutRef<"div"> {
-  /** Adds the standard page gutters. Defaults to true — this is normally
-   * the outermost width constraint on a section. */
+const MAX_WIDTH = {
+  wide: "max-w-wide",
+  reading: "max-w-prose",
+} as const;
+
+const DEFAULT_PADDED = {
+  wide: true,
+  reading: false,
+} as const;
+
+interface ContainerProps extends ComponentPropsWithoutRef<"div"> {
+  /** Width cap: "wide" (max-w-wide, gutters on by default) for heroes,
+   * galleries, infographics, 50/50 media rows — or "reading" (max-w-prose,
+   * gutters off by default) for long-form body copy nested inside a wide
+   * section. Defaults to "wide". */
+  width?: keyof typeof MAX_WIDTH;
+  /** Adds the standard page gutters. Defaults per `width` (see above);
+   * pass explicitly to override. */
   padded?: boolean;
 }
 
 /**
- * Wide layout primitive for heroes, galleries, infographics, 50/50 media
- * rows, and any section that should use most of the viewport.
+ * Layout width primitive. "wide" caps at 90rem for sections that should use
+ * most of the viewport; "reading" caps at ~65ch (max-w-prose) for
+ * comfortable long-form body copy, typically nested inside a wide section.
  */
-export function WideContainer({
-  padded = true,
+export function Container({
+  width = "wide",
+  padded = DEFAULT_PADDED[width],
   className = "",
   children,
   ...rest
-}: WideContainerProps) {
+}: ContainerProps) {
   return (
     <div
-      className={`mx-auto w-full max-w-wide ${padded ? GUTTERS : ""} ${className}`.trim()}
-      {...rest}
-    >
-      {children}
-    </div>
-  );
-}
-
-interface ReadingContainerProps extends ComponentPropsWithoutRef<"div"> {
-  /** Adds the standard page gutters. Defaults to false — ReadingContainer
-   * is normally nested inside a WideContainer (or another element) that
-   * already provides gutters. Set true when used as a standalone,
-   * top-level text section. */
-  padded?: boolean;
-}
-
-/**
- * Reading-measure layout primitive for long-form body copy. Caps line
- * length at ~65ch (Tailwind's `max-w-prose`) for comfortable reading,
- * regardless of how wide its parent section is.
- */
-export function ReadingContainer({
-  padded = false,
-  className = "",
-  children,
-  ...rest
-}: ReadingContainerProps) {
-  return (
-    <div
-      className={`mx-auto w-full max-w-prose ${padded ? GUTTERS : ""} ${className}`.trim()}
+      className={`mx-auto w-full ${MAX_WIDTH[width]} ${padded ? GUTTERS : ""} ${className}`.trim()}
       {...rest}
     >
       {children}

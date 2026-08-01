@@ -4,7 +4,7 @@ import { useInView } from "@/hooks/use-in-view";
 import type { Service } from "@/data/services";
 import { SectionTitle } from "@/components/section-title";
 import { ServiceCard } from "@/components/service-card";
-import { WideContainer } from "@/components/layout";
+import { Container } from "@/components/layout";
 
 interface ServicesSectionProps {
   title?: string;
@@ -21,7 +21,7 @@ export function ServicesSection({
 
   return (
     <section id="services" className="py-20 lg:py-28 bg-warm-bg">
-      <WideContainer>
+      <Container>
         <SectionTitle title={title} subtitle={subtitle} />
 
         <div
@@ -32,7 +32,7 @@ export function ServicesSection({
             <ServiceCard key={service.title} service={service} index={i} inView={inView} />
           ))}
         </div>
-      </WideContainer>
+      </Container>
     </section>
   );
 }

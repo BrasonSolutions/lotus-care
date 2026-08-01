@@ -4,7 +4,7 @@ import { useState, useRef } from "react";
 import { CareersHero } from "@/components/careers/careers-hero";
 import { CareersBreadcrumb } from "@/components/careers/careers-breadcrumb";
 import { contactInfo } from "@/data/navigation";
-import { WideContainer } from "@/components/layout";
+import { Container } from "@/components/layout";
 
 const roleOptions = [
   "Residential Support Worker",
@@ -37,7 +37,7 @@ export default function CareersContactPage() {
       />
 
       <div className="py-10 sm:py-14">
-        <WideContainer>
+        <Container>
           <CareersBreadcrumb />
 
           <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-10">
@@ -194,7 +194,7 @@ export default function CareersContactPage() {
               </div>
             </aside>
           </div>
-        </WideContainer>
+        </Container>
       </div>
     </>
   );

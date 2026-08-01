@@ -7,7 +7,7 @@ import { ContentSection } from "@/components/quality/content-section";
 import { TeamStrip } from "@/components/quality/team-strip";
 import { Reveal } from "@/components/reveal";
 import { qualitySafetyCycle, qualitySafetyContent, safetyImprovementTeam } from "@/data/quality";
-import { WideContainer } from "@/components/layout";
+import { Container } from "@/components/layout";
 
 export const metadata: Metadata = {
   title: "Quality, Safety & Continuous Improvement",
@@ -26,7 +26,7 @@ export default function SafetyImprovementPage() {
       />
 
       <div className="py-14 sm:py-16">
-        <WideContainer>
+        <Container>
           <Reveal className="grid md:grid-cols-2 gap-10 lg:gap-16 items-center reveal-scale">
             <div className="space-y-4">
               {qualitySafetyContent.intro.map((paragraph) => (
@@ -45,11 +45,11 @@ export default function SafetyImprovementPage() {
               />
             </div>
           </Reveal>
-        </WideContainer>
+        </Container>
       </div>
 
       <section className="py-16 sm:py-20 bg-white">
-        <WideContainer>
+        <Container>
           <SectionTitle
             title="Our Continuous Improvement Cycle"
             subtitle="How standards, delivery, insight, and learning connect to keep raising the bar."
@@ -57,11 +57,11 @@ export default function SafetyImprovementPage() {
           <Reveal>
             <CircularCycle steps={qualitySafetyCycle} centerLabel="Continuous Improvement" />
           </Reveal>
-        </WideContainer>
+        </Container>
       </section>
 
       <section className="py-16 sm:py-20">
-        <WideContainer className="space-y-16">
+        <Container className="space-y-16">
           <Reveal><ContentSection {...qualitySafetyContent.commitment} /></Reveal>
           <Reveal className="reveal-scale">
             <ContentSection {...qualitySafetyContent.governance} image="/images/stock/team-meeting.jpg" imagePosition="right" />
@@ -71,11 +71,11 @@ export default function SafetyImprovementPage() {
           </Reveal>
           <Reveal><ContentSection {...qualitySafetyContent.broaderView} /></Reveal>
           <Reveal><ContentSection {...qualitySafetyContent.culture} /></Reveal>
-        </WideContainer>
+        </Container>
       </section>
 
       <section className="pb-16 sm:pb-20">
-        <WideContainer>
+        <Container>
           <Reveal>
             <TeamStrip
               heading="Governance in Practice"
@@ -83,7 +83,7 @@ export default function SafetyImprovementPage() {
               members={safetyImprovementTeam}
             />
           </Reveal>
-        </WideContainer>
+        </Container>
       </section>
     </>
   );

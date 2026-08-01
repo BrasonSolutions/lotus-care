@@ -1,6 +1,6 @@
 import Image from "next/image";
 import type { ContentBlock } from "@/data/quality";
-import { ReadingContainer } from "@/components/layout";
+import { Container } from "@/components/layout";
 
 interface ContentSectionProps extends ContentBlock {
   image?: string;
@@ -34,9 +34,9 @@ function Text({ heading, intro, body, bullets }: ContentBlock) {
 export function ContentSection({ image, imagePosition = "right", ...content }: ContentSectionProps) {
   if (!image) {
     return (
-      <ReadingContainer>
+      <Container width="reading">
         <Text {...content} />
-      </ReadingContainer>
+      </Container>
     );
   }
 

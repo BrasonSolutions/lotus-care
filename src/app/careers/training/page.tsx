@@ -4,7 +4,7 @@ import { CareersBreadcrumb } from "@/components/careers/careers-breadcrumb";
 import { CareersCTAStrip } from "@/components/careers/careers-cta-strip";
 import { SectionTitle } from "@/components/section-title";
 import { trainingPrograms } from "@/data/careers";
-import { WideContainer } from "@/components/layout";
+import { Container } from "@/components/layout";
 
 export const metadata: Metadata = {
   title: "Training & Development",
@@ -36,7 +36,7 @@ export default function TrainingPage() {
       />
 
       <div className="py-10 sm:py-14">
-        <WideContainer>
+        <Container>
           <CareersBreadcrumb />
 
           <div className="mt-8 max-w-2xl mb-12">
@@ -92,7 +92,7 @@ export default function TrainingPage() {
               ))}
             </ol>
           </section>
-        </WideContainer>
+        </Container>
       </div>
 
       <CareersCTAStrip

@@ -5,7 +5,7 @@ import { ProcessTimeline } from "@/components/careers/process-timeline";
 import { FaqAccordion } from "@/components/careers/faq-accordion";
 import { CareersCTAStrip } from "@/components/careers/careers-cta-strip";
 import { processSteps, faqs } from "@/data/careers";
-import { WideContainer } from "@/components/layout";
+import { Container } from "@/components/layout";
 
 export const metadata: Metadata = {
   title: "How We Hire",
@@ -24,7 +24,7 @@ export default function HowWeHirePage() {
       />
 
       <div className="py-10 sm:py-14">
-        <WideContainer>
+        <Container>
           <CareersBreadcrumb />
 
           {/* Process timeline */}
@@ -80,7 +80,7 @@ export default function HowWeHirePage() {
               Contact Our Recruitment Team
             </a>
           </div>
-        </WideContainer>
+        </Container>
       </div>
 
       <CareersCTAStrip

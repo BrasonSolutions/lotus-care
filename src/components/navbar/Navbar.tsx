@@ -7,7 +7,7 @@ import { HomesDropdown } from "@/components/homes-dropdown";
 import { MobileMenu } from "@/components/mobile-menu";
 import { LogoWhite } from "@/components/logo-white";
 import { LogoDark } from "@/components/logo-dark";
-import { WideContainer } from "@/components/layout";
+import { Container } from "@/components/layout";
 
 interface NavbarProps {
   navItems: NavItem[];
@@ -41,7 +41,7 @@ export function Navbar({
           scrolled ? "max-h-0 opacity-0" : "max-h-10 opacity-100"
         }`}
       >
-        <WideContainer className="h-10 flex items-center justify-end gap-6 text-sm">
+        <Container className="h-10 flex items-center justify-end gap-6 text-sm">
           <a
             href={`tel:${contactInfo.phone}`}
             className="hover:text-accent transition-colors focus-ring rounded"
@@ -54,7 +54,7 @@ export function Navbar({
           >
             {contactInfo.email}
           </a>
-        </WideContainer>
+        </Container>
       </div>
 
       {/* Main navbar */}
@@ -67,7 +67,7 @@ export function Navbar({
         role="navigation"
         aria-label="Main navigation"
       >
-        <WideContainer>
+        <Container>
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <Link href="/" className="flex items-center shrink-0 focus-ring rounded">
@@ -114,7 +114,7 @@ export function Navbar({
               ctaHref={ctaHref}
             />
           </div>
-        </WideContainer>
+        </Container>
       </nav>
     </>
   );

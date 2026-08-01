@@ -7,7 +7,7 @@ import { ContentSection } from "@/components/quality/content-section";
 import { TeamStrip } from "@/components/quality/team-strip";
 import { Reveal } from "@/components/reveal";
 import { mdtCore, mdtSpokes, mdtContent, mdtTeam } from "@/data/quality";
-import { WideContainer } from "@/components/layout";
+import { Container } from "@/components/layout";
 
 export const metadata: Metadata = {
   title: "Multidisciplinary Team",
@@ -26,7 +26,7 @@ export default function MdtPage() {
       />
 
       <div className="py-14 sm:py-16">
-        <WideContainer>
+        <Container>
           <Reveal className="grid md:grid-cols-2 gap-10 lg:gap-16 items-center reveal-scale">
             <div className="space-y-4">
               {mdtContent.intro.map((paragraph) => (
@@ -45,11 +45,11 @@ export default function MdtPage() {
               />
             </div>
           </Reveal>
-        </WideContainer>
+        </Container>
       </div>
 
       <section className="py-16 sm:py-20 bg-white">
-        <WideContainer>
+        <Container>
           <SectionTitle
             title="Our Internal MDT"
             subtitle="Eight disciplines working around a single, person-centred core."
@@ -57,11 +57,11 @@ export default function MdtPage() {
           <Reveal>
             <HubAndSpoke core={mdtCore} spokes={mdtSpokes} />
           </Reveal>
-        </WideContainer>
+        </Container>
       </section>
 
       <section className="py-16 sm:py-20">
-        <WideContainer className="space-y-16">
+        <Container className="space-y-16">
           <Reveal className="reveal-scale">
             <ContentSection {...mdtContent.approach} image="/images/stock/clinical-consultation.jpg" imagePosition="right" />
           </Reveal>
@@ -70,11 +70,11 @@ export default function MdtPage() {
           </Reveal>
           <Reveal><ContentSection {...mdtContent.governance} /></Reveal>
           <Reveal><ContentSection {...mdtContent.commitment} /></Reveal>
-        </WideContainer>
+        </Container>
       </section>
 
       <section className="pb-16 sm:pb-20">
-        <WideContainer>
+        <Container>
           <Reveal>
             <TeamStrip
               heading="Some of Our MDT"
@@ -82,7 +82,7 @@ export default function MdtPage() {
               members={mdtTeam}
             />
           </Reveal>
-        </WideContainer>
+        </Container>
       </section>
     </>
   );

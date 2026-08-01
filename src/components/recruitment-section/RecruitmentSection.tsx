@@ -3,7 +3,7 @@
 import { useInView } from "@/hooks/use-in-view";
 import { JobCard } from "@/components/careers/job-card";
 import type { JobRole as Job } from "@/data/jobs";
-import { WideContainer } from "@/components/layout";
+import { Container } from "@/components/layout";
 
 interface RecruitmentSectionProps {
   title?: string;
@@ -29,7 +29,7 @@ export function RecruitmentSection({
 
   return (
     <section id="careers" className="py-20 lg:py-28 bg-accent/10">
-      <WideContainer>
+      <Container>
         <div
           ref={ref}
           className={`reveal ${inView ? "in-view" : ""}`}
@@ -79,7 +79,7 @@ export function RecruitmentSection({
             )}
           </div>
         </div>
-      </WideContainer>
+      </Container>
     </section>
   );
 }

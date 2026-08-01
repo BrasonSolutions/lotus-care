@@ -6,7 +6,7 @@ import type { TeamMember, BoardMember } from "@/data/team";
 import { SectionTitle } from "@/components/section-title";
 import { TeamCard } from "@/components/team-card";
 import { TeamModal } from "@/components/team-modal";
-import { WideContainer } from "@/components/layout";
+import { Container } from "@/components/layout";
 
 interface TeamSectionProps {
   title?: string;
@@ -34,7 +34,7 @@ export function TeamSection({
 
   return (
     <section id="team" className="py-20 lg:py-28 bg-warm-bg">
-      <WideContainer>
+      <Container>
         <SectionTitle title={title} subtitle={subtitle} />
 
         {/* Department tabs */}
@@ -72,7 +72,7 @@ export function TeamSection({
             </div>
           ))}
         </div>
-      </WideContainer>
+      </Container>
 
       <TeamModal
         member={selectedMember}

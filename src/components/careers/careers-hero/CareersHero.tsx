@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { LotusMark } from "@/components/lotus-mark";
-import { WideContainer } from "@/components/layout";
+import { Container } from "@/components/layout";
 
 interface CareersHeroStat {
   value: string;
@@ -44,7 +44,7 @@ export function CareersHero({
           aria-hidden="true"
         />
 
-        <WideContainer
+        <Container
           className={`relative ${!compact ? "min-h-[22rem] flex flex-col justify-center" : ""}`}
         >
           <div className="max-w-xl">
@@ -115,7 +115,7 @@ export function CareersHero({
               <p className="text-3xl font-bold">{stat.value}</p>
             </div>
           )}
-        </WideContainer>
+        </Container>
       </section>
     );
   }
@@ -137,7 +137,7 @@ export function CareersHero({
       />
       <LotusMark className="absolute -right-12 -bottom-16 w-80 h-80 text-white opacity-[0.06] pointer-events-none" />
 
-      <WideContainer className="relative text-center">
+      <Container className="relative text-center">
         <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 animate-fade-up">
           {title}
         </h1>
@@ -160,7 +160,7 @@ export function CareersHero({
             </a>
           </div>
         )}
-      </WideContainer>
+      </Container>
     </section>
   );
 }

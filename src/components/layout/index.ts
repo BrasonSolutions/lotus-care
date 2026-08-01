@@ -1,1 +1,1 @@
-export { WideContainer, ReadingContainer } from "./Container";
+export { Container } from "./Container";

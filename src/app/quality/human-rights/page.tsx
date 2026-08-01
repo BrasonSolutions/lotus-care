@@ -7,7 +7,7 @@ import { ContentSection } from "@/components/quality/content-section";
 import { TeamStrip } from "@/components/quality/team-strip";
 import { Reveal } from "@/components/reveal";
 import { humanRightsFramework, humanRightsContent, humanRightsTeam } from "@/data/quality";
-import { WideContainer } from "@/components/layout";
+import { Container } from "@/components/layout";
 
 export const metadata: Metadata = {
   title: "Human Rights Committee",
@@ -26,7 +26,7 @@ export default function HumanRightsPage() {
       />
 
       <div className="py-14 sm:py-16">
-        <WideContainer>
+        <Container>
           <Reveal className="grid md:grid-cols-2 gap-10 lg:gap-16 items-center reveal-scale">
             <div className="space-y-4">
               {humanRightsContent.intro.map((paragraph) => (
@@ -45,11 +45,11 @@ export default function HumanRightsPage() {
               />
             </div>
           </Reveal>
-        </WideContainer>
+        </Container>
       </div>
 
       <section className="py-16 sm:py-20 bg-white">
-        <WideContainer>
+        <Container>
           <SectionTitle
             title="The Human Rights Framework"
             subtitle="Five principles that guide how rights are embedded, upheld, and continuously strengthened across our services."
@@ -57,11 +57,11 @@ export default function HumanRightsPage() {
           <Reveal>
             <CircularCycle steps={humanRightsFramework} centerLabel="Human Rights Framework" />
           </Reveal>
-        </WideContainer>
+        </Container>
       </section>
 
       <section className="py-16 sm:py-20">
-        <WideContainer className="space-y-16">
+        <Container className="space-y-16">
           <Reveal className="reveal-scale">
             <ContentSection {...humanRightsContent.purpose} image="/images/stock/team-meeting.jpg" imagePosition="left" />
           </Reveal>
@@ -71,11 +71,11 @@ export default function HumanRightsPage() {
           </Reveal>
           <Reveal><ContentSection {...humanRightsContent.governance} /></Reveal>
           <Reveal><ContentSection {...humanRightsContent.culture} /></Reveal>
-        </WideContainer>
+        </Container>
       </section>
 
       <section className="pb-16 sm:pb-20">
-        <WideContainer>
+        <Container>
           <Reveal>
             <TeamStrip
               heading="Our Quality & Compliance Team"
@@ -83,7 +83,7 @@ export default function HumanRightsPage() {
               members={humanRightsTeam}
             />
           </Reveal>
-        </WideContainer>
+        </Container>
       </section>
     </>
   );
