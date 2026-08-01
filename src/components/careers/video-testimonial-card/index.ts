@@ -1,0 +1,1 @@
+export { VideoTestimonialCard } from "./VideoTestimonialCard";

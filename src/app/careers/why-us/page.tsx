@@ -2,10 +2,11 @@ import type { Metadata } from "next";
 import { CareersHero } from "@/components/careers/careers-hero";
 import { CareersBreadcrumb } from "@/components/careers/careers-breadcrumb";
 import { TestimonialCard } from "@/components/careers/testimonial-card";
+import { CultureGallery } from "@/components/careers/culture-gallery";
+import { VideoTestimonialCard } from "@/components/careers/video-testimonial-card";
 import { CareersCTAStrip } from "@/components/careers/careers-cta-strip";
 import { SectionTitle } from "@/components/section-title";
-import { getCareersIcon } from "@/components/careers/careers-icons";
-import { testimonials, companyValues } from "@/data/careers";
+import { testimonials, employerStats, cultureGalleryImages, videoTestimonials } from "@/data/careers";
 import { Container } from "@/components/layout";
 
 export const metadata: Metadata = {
@@ -30,36 +31,17 @@ export default function WhyUsPage() {
         </Container>
       </div>
 
-      {/* Values */}
-      <section className="pb-16 sm:pb-20">
-        <Container>
-          <SectionTitle title="What We Stand For" />
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            {companyValues.map((value) => (
-              <div
-                key={value.title}
-                className="text-center p-6 bg-white rounded-2xl border border-gray-100 shadow-sm"
-              >
-                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-4 text-primary">
-                  {getCareersIcon(value.icon)}
-                </div>
-                <h3 className="font-semibold text-primary-dark mb-2">{value.title}</h3>
-                <p className="text-sm text-muted leading-relaxed">{value.description}</p>
-              </div>
-            ))}
-          </div>
-        </Container>
-      </section>
+      <CultureGallery images={cultureGalleryImages} />
 
       {/* Culture narrative */}
-      <section className="py-16 sm:py-20 bg-white">
+      <section className="py-16 sm:py-20 bg-primary-dark">
         <Container>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-2xl sm:text-3xl font-bold text-primary-dark mb-6">
+              <h2 className="text-2xl sm:text-3xl font-bold text-white mb-6">
                 A Culture Built on Respect
               </h2>
-              <div className="space-y-4 text-foreground leading-relaxed">
+              <div className="space-y-4 text-white/90 leading-relaxed">
                 <p>
                   We know that the wellbeing of our staff directly impacts the quality of
                   care our residents receive. That&apos;s why we&apos;ve invested heavily in
@@ -79,18 +61,13 @@ export default function WhyUsPage() {
               </div>
             </div>
             <div className="grid grid-cols-2 gap-4">
-              {[
-                { label: "Staff retention rate", value: "87%" },
-                { label: "Internal promotions per year", value: "40%" },
-                { label: "Average tenure", value: "4+ yrs" },
-                { label: "Staff recommend Lotus Care", value: "9/10" },
-              ].map(({ label, value }) => (
+              {employerStats.map(({ label, value }) => (
                 <div
                   key={label}
-                  className="bg-warm-bg rounded-2xl p-6 text-center"
+                  className="bg-white/10 backdrop-blur-sm border border-white/10 rounded-2xl p-6 text-center"
                 >
-                  <p className="text-3xl font-bold text-primary mb-1">{value}</p>
-                  <p className="text-sm text-muted">{label}</p>
+                  <p className="text-3xl font-bold text-accent mb-1">{value}</p>
+                  <p className="text-sm text-white/80">{label}</p>
                 </div>
               ))}
             </div>
@@ -105,6 +82,21 @@ export default function WhyUsPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             {testimonials.map((t) => (
               <TestimonialCard key={t.name} testimonial={t} />
+            ))}
+          </div>
+        </Container>
+      </section>
+
+      {/* Video testimonials */}
+      <section className="py-16 sm:py-20 bg-white">
+        <Container>
+          <SectionTitle
+            title="In Their Own Words"
+            subtitle="Video stories from the people who make Lotus Care what it is."
+          />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {videoTestimonials.map((t) => (
+              <VideoTestimonialCard key={t.name} testimonial={t} />
             ))}
           </div>
         </Container>
