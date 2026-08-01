@@ -10,12 +10,54 @@
      full inline layout. */
   --breakpoint-nav: 1440px;
 
-  --color-primary-dark: #0d6a70;
-  --color-primary: #1badb2;
-  --color-accent: #54c7d6;
+  /* Teal — real brand colour, sourced from lotus-mark.svg / logo assets */
+  --color-teal-50: #eef9fb;
+  --color-teal-100: #d4f1f5;
+  --color-teal-200: #aae3eb;
+  --color-teal-300: #7fd5e0;
+  --color-teal-400: #54c7d6; /* = current --color-accent */
+  --color-teal-500: #1badb2; /* = current --color-primary; matches lotus-mark.svg fill */
+  --color-teal-600: #148c91;
+  --color-teal-700: #0d6a70; /* = current --color-primary-dark */
+  --color-teal-800: #094a4e;
+  --color-teal-900: #073538;
+
+  /* Purple — PROVISIONAL. No real purple exists anywhere in the repo (logo,
+     raster assets, live site are all teal-only). Derived from build-plan.md's
+     explicitly-approximate mock stops (~#7F77DD / ~#534AB7 / ~#26215C / ~#EEEDFE)
+     as a swap-ready placeholder. Replace these 10 values in place once the
+     client provides the real brand purple — every purple-* consumer updates
+     automatically. Do not treat as colour truth. */
+  --color-purple-50: #f7f6fe;
+  --color-purple-100: #eeedfe;
+  --color-purple-200: #c9c6f3;
+  --color-purple-300: #a49ee8;
+  --color-purple-400: #7f77dd;
+  --color-purple-500: #6961ca;
+  --color-purple-600: #534ab7;
+  --color-purple-700: #443c99;
+  --color-purple-800: #352f7a;
+  --color-purple-900: #26215c;
+
+  /* Neutral — matches existing --color-muted (= Tailwind gray-500) exactly */
+  --color-neutral-50: #f9fafb;
+  --color-neutral-100: #f3f4f6;
+  --color-neutral-200: #e5e7eb;
+  --color-neutral-300: #d1d5db;
+  --color-neutral-400: #9ca3af;
+  --color-neutral-500: #6b7280;
+  --color-neutral-600: #4b5563;
+  --color-neutral-700: #374151;
+  --color-neutral-800: #1f2937;
+  --color-neutral-900: #111827;
+
+  /* Semantic aliases — unchanged names/values, now sourced from the scales above */
+  --color-primary-dark: var(--color-teal-700);
+  --color-primary: var(--color-teal-500);
+  --color-accent: var(--color-teal-400);
+  --color-muted: var(--color-neutral-500);
   --color-warm-bg: #f8f6f3;
   --color-foreground: #2d3436;
-  --color-muted: #6b7280;
   --color-background: #ffffff;
 }
 
@@ -71,7 +113,7 @@ body {
 /* Input glow */
 .input-glow:focus {
   border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px rgba(27, 173, 178, 0.15);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 15%, transparent);
   outline: none;
 }
 

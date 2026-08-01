@@ -44,9 +44,9 @@ const icons: Record<string, React.ReactNode> = {
 const illustrations: Record<string, React.ReactNode> = {
   home: (
     <svg viewBox="0 0 400 200" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
-      <rect width="400" height="200" fill="#0d6a70" />
-      <circle cx="320" cy="60" r="80" fill="#1badb2" opacity="0.2" />
-      <circle cx="80" cy="160" r="60" fill="#54c7d6" opacity="0.15" />
+      <rect width="400" height="200" fill="var(--color-teal-700)" />
+      <circle cx="320" cy="60" r="80" fill="var(--color-teal-500)" opacity="0.2" />
+      <circle cx="80" cy="160" r="60" fill="var(--color-teal-400)" opacity="0.15" />
       <g transform="translate(160, 40)">
         <path d="M40 10L70 40V90H10V40L40 10Z" fill="white" opacity="0.15" />
         <rect x="25" y="55" width="15" height="25" rx="2" fill="white" opacity="0.2" />
@@ -58,9 +58,9 @@ const illustrations: Record<string, React.ReactNode> = {
   ),
   heart: (
     <svg viewBox="0 0 400 200" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
-      <rect width="400" height="200" fill="#0d6a70" />
-      <circle cx="100" cy="40" r="90" fill="#1badb2" opacity="0.15" />
-      <circle cx="340" cy="140" r="70" fill="#54c7d6" opacity="0.1" />
+      <rect width="400" height="200" fill="var(--color-teal-700)" />
+      <circle cx="100" cy="40" r="90" fill="var(--color-teal-500)" opacity="0.15" />
+      <circle cx="340" cy="140" r="70" fill="var(--color-teal-400)" opacity="0.1" />
       <g transform="translate(155, 45)">
         <path d="M45 25C45 10 30 0 22.5 0C15 0 0 10 0 25C0 55 45 80 45 80C45 80 90 55 90 25C90 10 75 0 67.5 0C60 0 45 10 45 25Z" fill="white" opacity="0.15" />
       </g>
