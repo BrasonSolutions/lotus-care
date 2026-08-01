@@ -61,12 +61,14 @@ export default function WhyUsPage() {
               </div>
             </div>
             <div className="grid grid-cols-2 gap-4">
-              {employerStats.map(({ label, value }) => (
+              {employerStats.map(({ label, value }, i) => (
                 <div
                   key={label}
                   className="bg-white/10 backdrop-blur-sm border border-white/10 rounded-2xl p-6 text-center"
                 >
-                  <p className="text-3xl font-bold text-accent mb-1">{value}</p>
+                  <p className={`text-3xl font-bold mb-1 ${i % 2 === 0 ? "text-accent" : "text-purple-100"}`}>
+                    {value}
+                  </p>
                   <p className="text-sm text-white/80">{label}</p>
                 </div>
               ))}
@@ -95,8 +97,8 @@ export default function WhyUsPage() {
             subtitle="Video stories from the people who make Lotus Care what it is."
           />
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {videoTestimonials.map((t) => (
-              <VideoTestimonialCard key={t.name} testimonial={t} />
+            {videoTestimonials.map((t, i) => (
+              <VideoTestimonialCard key={t.name} testimonial={t} accent={i % 2 === 0 ? "teal" : "purple"} />
             ))}
           </div>
         </Container>

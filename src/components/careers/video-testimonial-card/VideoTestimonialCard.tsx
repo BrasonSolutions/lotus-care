@@ -3,9 +3,15 @@ import type { VideoTestimonial } from "@/data/careers";
 
 interface VideoTestimonialCardProps {
   testimonial: VideoTestimonial;
+  accent?: "teal" | "purple";
 }
 
-export function VideoTestimonialCard({ testimonial }: VideoTestimonialCardProps) {
+const BADGE = {
+  teal: "bg-primary",
+  purple: "bg-purple-600",
+} as const;
+
+export function VideoTestimonialCard({ testimonial, accent = "teal" }: VideoTestimonialCardProps) {
   const { name, role, poster, videoSrc, captionsSrc } = testimonial;
 
   return (
@@ -37,7 +43,7 @@ export function VideoTestimonialCard({ testimonial }: VideoTestimonialCardProps)
                 </svg>
               </div>
             </div>
-            <span className="absolute top-3 right-3 bg-primary text-white text-xs font-semibold px-3 py-1 rounded-full">
+            <span className={`absolute top-3 right-3 ${BADGE[accent]} text-white text-xs font-semibold px-3 py-1 rounded-full`}>
               Coming soon
             </span>
           </>
