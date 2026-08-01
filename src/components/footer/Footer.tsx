@@ -1,4 +1,5 @@
 import { LogoWhite } from "@/components/logo-white";
+import { Container } from "@/components/layout";
 import { contactInfo as defaultContactInfo } from "@/data/navigation";
 import { quickLinks as defaultQuickLinks, serviceNames as defaultServiceNames } from "@/data/footer";
 
@@ -15,7 +16,7 @@ export function Footer({
 }: FooterProps) {
   return (
     <footer className="bg-primary-dark text-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <Container className="py-16">
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 lg:gap-10">
           {/* Brand */}
           <div className="sm:col-span-2 lg:col-span-1">
@@ -99,11 +100,11 @@ export function Footer({
             </div>
           </div>
         </div>
-      </div>
+      </Container>
 
       {/* Bottom bar */}
       <div className="border-t border-white/10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <Container className="py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-sm text-white/50">
             &copy; {new Date().getFullYear()} Lotus Care. All rights reserved.
           </p>
@@ -111,7 +112,7 @@ export function Footer({
             <a href="#" className="hover:text-accent transition-colors focus-ring-white rounded">Privacy Policy</a>
             <a href="#" className="hover:text-accent transition-colors focus-ring-white rounded">Terms of Service</a>
           </div>
-        </div>
+        </Container>
       </div>
     </footer>
   );

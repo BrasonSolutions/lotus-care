@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { Container } from "@/components/layout";
 import type { NavItem } from "@/data/navigation";
 import { navItems as defaultNavItems, contactInfo as defaultContactInfo } from "@/data/navigation";
 import { HomesDropdown } from "@/components/homes-dropdown";
@@ -34,7 +35,7 @@ export function Navbar({
           scrolled ? "max-h-0 opacity-0" : "max-h-10 opacity-100"
         }`}
       >
-        <div className="max-w-7xl mx-auto px-6 h-10 flex items-center justify-end gap-6 text-sm">
+        <Container className="h-10 flex items-center justify-end gap-6 text-sm">
           <a
             href={`tel:${contactInfo.phone}`}
             className="hover:text-accent transition-colors focus-ring rounded"
@@ -47,7 +48,7 @@ export function Navbar({
           >
             {contactInfo.email}
           </a>
-        </div>
+        </Container>
       </div>
 
       {/* Main navbar */}
@@ -60,7 +61,7 @@ export function Navbar({
         role="navigation"
         aria-label="Main navigation"
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <Container>
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <Link href="/" className="flex items-center shrink-0 focus-ring rounded">
@@ -107,7 +108,7 @@ export function Navbar({
               ctaHref={ctaHref}
             />
           </div>
-        </div>
+        </Container>
       </nav>
     </>
   );

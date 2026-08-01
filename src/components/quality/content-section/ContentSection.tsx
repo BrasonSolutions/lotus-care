@@ -1,5 +1,6 @@
 import Image from "next/image";
 import type { ContentBlock } from "@/data/quality";
+import { Container } from "@/components/layout";
 
 interface ContentSectionProps extends ContentBlock {
   image?: string;
@@ -33,14 +34,14 @@ function Text({ heading, intro, body, bullets }: ContentBlock) {
 export function ContentSection({ image, imagePosition = "right", ...content }: ContentSectionProps) {
   if (!image) {
     return (
-      <div className="max-w-4xl mx-auto">
+      <Container width="reading">
         <Text {...content} />
-      </div>
+      </Container>
     );
   }
 
   return (
-    <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-10 lg:gap-16 items-center">
+    <div className="grid md:grid-cols-2 gap-10 lg:gap-16 items-center">
       <div className={imagePosition === "left" ? "md:order-2" : ""}>
         <Text {...content} />
       </div>

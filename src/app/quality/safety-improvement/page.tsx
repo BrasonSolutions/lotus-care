@@ -7,6 +7,7 @@ import { ContentSection } from "@/components/quality/content-section";
 import { TeamStrip } from "@/components/quality/team-strip";
 import { Reveal } from "@/components/reveal";
 import { qualitySafetyCycle, qualitySafetyContent, safetyImprovementTeam } from "@/data/quality";
+import { Container } from "@/components/layout";
 
 export const metadata: Metadata = {
   title: "Quality, Safety & Continuous Improvement",
@@ -25,28 +26,30 @@ export default function SafetyImprovementPage() {
       />
 
       <div className="py-14 sm:py-16">
-        <Reveal className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-10 lg:gap-16 items-center reveal-scale">
-          <div className="space-y-4">
-            {qualitySafetyContent.intro.map((paragraph) => (
-              <p key={paragraph} className="text-muted leading-relaxed">
-                {paragraph}
-              </p>
-            ))}
-          </div>
-          <div className="group relative rounded-2xl overflow-hidden aspect-[4/3]">
-            <Image
-              src="/images/stock/dignity-activity.jpg"
-              alt=""
-              fill
-              sizes="(min-width: 768px) 40vw, 100vw"
-              className="object-cover transition-transform duration-500 group-hover:scale-105"
-            />
-          </div>
-        </Reveal>
+        <Container>
+          <Reveal className="grid md:grid-cols-2 gap-10 lg:gap-16 items-center reveal-scale">
+            <div className="space-y-4">
+              {qualitySafetyContent.intro.map((paragraph) => (
+                <p key={paragraph} className="text-muted leading-relaxed">
+                  {paragraph}
+                </p>
+              ))}
+            </div>
+            <div className="group relative rounded-2xl overflow-hidden aspect-[4/3]">
+              <Image
+                src="/images/stock/dignity-activity.jpg"
+                alt=""
+                fill
+                sizes="(min-width: 768px) 40vw, 100vw"
+                className="object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+            </div>
+          </Reveal>
+        </Container>
       </div>
 
       <section className="py-16 sm:py-20 bg-white">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <Container>
           <SectionTitle
             title="Our Continuous Improvement Cycle"
             subtitle="How standards, delivery, insight, and learning connect to keep raising the bar."
@@ -54,11 +57,11 @@ export default function SafetyImprovementPage() {
           <Reveal>
             <CircularCycle steps={qualitySafetyCycle} centerLabel="Continuous Improvement" />
           </Reveal>
-        </div>
+        </Container>
       </section>
 
       <section className="py-16 sm:py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+        <Container className="space-y-16">
           <Reveal><ContentSection {...qualitySafetyContent.commitment} /></Reveal>
           <Reveal className="reveal-scale">
             <ContentSection {...qualitySafetyContent.governance} image="/images/stock/team-meeting.jpg" imagePosition="right" />
@@ -68,17 +71,19 @@ export default function SafetyImprovementPage() {
           </Reveal>
           <Reveal><ContentSection {...qualitySafetyContent.broaderView} /></Reveal>
           <Reveal><ContentSection {...qualitySafetyContent.culture} /></Reveal>
-        </div>
+        </Container>
       </section>
 
       <section className="pb-16 sm:pb-20">
-        <Reveal className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <TeamStrip
-            heading="Governance in Practice"
-            intro="Real people at Lotus Care overseeing quality and safety day to day."
-            members={safetyImprovementTeam}
-          />
-        </Reveal>
+        <Container>
+          <Reveal>
+            <TeamStrip
+              heading="Governance in Practice"
+              intro="Real people at Lotus Care overseeing quality and safety day to day."
+              members={safetyImprovementTeam}
+            />
+          </Reveal>
+        </Container>
       </section>
     </>
   );

@@ -4,6 +4,7 @@ import { CareersBreadcrumb } from "@/components/careers/careers-breadcrumb";
 import { BenefitCard } from "@/components/careers/benefit-card";
 import { CareersCTAStrip } from "@/components/careers/careers-cta-strip";
 import { benefits } from "@/data/careers";
+import { Container } from "@/components/layout";
 
 export const metadata: Metadata = {
   title: "Benefits",
@@ -22,7 +23,7 @@ export default function BenefitsPage() {
       />
 
       <div className="py-10 sm:py-14">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <Container>
           <CareersBreadcrumb />
 
           <div className="mt-8">
@@ -37,7 +38,7 @@ export default function BenefitsPage() {
               ))}
             </div>
           </div>
-        </div>
+        </Container>
       </div>
 
       <CareersCTAStrip

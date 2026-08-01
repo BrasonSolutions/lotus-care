@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { LotusMark } from "@/components/lotus-mark";
+import { Container } from "@/components/layout";
 
 interface CareersHeroStat {
   value: string;
@@ -43,10 +44,8 @@ export function CareersHero({
           aria-hidden="true"
         />
 
-        <div
-          className={`relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ${
-            !compact ? "min-h-[22rem] flex flex-col justify-center" : ""
-          }`}
+        <Container
+          className={`relative ${!compact ? "min-h-[22rem] flex flex-col justify-center" : ""}`}
         >
           <div className="max-w-xl">
             {!compact && avatarImages && avatarImages.length > 0 && (
@@ -116,7 +115,7 @@ export function CareersHero({
               <p className="text-3xl font-bold">{stat.value}</p>
             </div>
           )}
-        </div>
+        </Container>
       </section>
     );
   }
@@ -138,7 +137,7 @@ export function CareersHero({
       />
       <LotusMark className="absolute -right-12 -bottom-16 w-80 h-80 text-white opacity-[0.06] pointer-events-none" />
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <Container className="relative text-center">
         <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 animate-fade-up">
           {title}
         </h1>
@@ -161,7 +160,7 @@ export function CareersHero({
             </a>
           </div>
         )}
-      </div>
+      </Container>
     </section>
   );
 }

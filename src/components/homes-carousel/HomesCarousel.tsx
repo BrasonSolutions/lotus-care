@@ -5,6 +5,7 @@ import type { Home } from "@/data/homes";
 import { useInView } from "@/hooks/use-in-view";
 import { SectionTitle } from "@/components/section-title";
 import { HomeModal } from "@/components/home-modal";
+import { Container } from "@/components/layout";
 
 interface HomesCarouselProps {
   homes: Home[];
@@ -83,7 +84,7 @@ export function HomesCarousel({
 
   return (
     <section id="homes" className="py-20 lg:py-28 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <Container>
         <SectionTitle title={title} subtitle={subtitle} />
 
         <div ref={sectionRef} className={`reveal ${inView ? "in-view" : ""}`}>
@@ -187,7 +188,7 @@ export function HomesCarousel({
             </a>
           </div>
         </div>
-      </div>
+      </Container>
 
       <HomeModal home={selectedHome} onClose={() => setSelectedHome(null)} />
     </section>

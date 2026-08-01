@@ -58,6 +58,10 @@
   --color-warm-bg: #f8f6f3;
   --color-foreground: #2d3436;
   --color-background: #ffffff;
+
+  /* F2 — layout width system: wide container cap for heroes, galleries,
+     infographics, 50/50 media rows. Generates the `max-w-wide` utility. */
+  --container-wide: 90rem;
 }
 
 html {
