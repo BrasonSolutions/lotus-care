@@ -1,35 +1,37 @@
-# F4 — Decorative palette "blobs"
+# C6 — Shared animated timeline component
 
-Card source: `docs/build-plan.md` (F4). Full plan: `C:\Users\andre\.claude\plans\enumerated-marinating-gray.md`.
+Card source: `docs/build-plan.md` (C6). Full plan: `C:\Users\andre\.claude\plans\misty-chasing-sky.md`.
 
 ## Tasks
-- [x] Generate 3 static organic blob path variants (script-assisted, verified visually) — `src/components/blob/blob-geometry.ts`
-- [x] Build `Blob.tsx` (`color`, `variant`, `opacity`, `animate`, `className` props)
-- [x] Add `.blob-drift` `@keyframes` to `globals.css` (reduced-motion handled by existing global rule)
-- [x] `src/components/blob/index.ts` barrel
-- [x] `stories/ui/Blob.stories.tsx` — variants × colors, animated example, "behind text" contrast demo
-- [x] Verify: `npm run build` + `npx tsc --noEmit` pass
-- [x] Verify: Storybook renders all stories; reduced-motion confirmed via Playwright media emulation (animation-duration collapses to 0.01ms); contrast demo visually confirms AA-safe default opacity
-- [x] Verify: `npx storybook build` passes
+- [x] `src/components/timeline/Timeline.tsx` — `TimelineStep`/`TimelineProps`, `orientation` ("horizontal" | "vertical", default "vertical"), reuses `useInView` + `.pop-item` stagger (CircularCycle pattern)
+- [x] `src/components/timeline/index.ts` barrel
+- [x] `stories/ui/Timeline.stories.tsx` — Vertical (4 steps) + Horizontal (6 steps) stories, CSF3, autodocs
+- [x] Verify: `npx tsc --noEmit`
+- [x] Verify: `npm run lint`
+- [x] Verify: `npm run build`
+- [x] Verify: `npm run build-storybook`
+- [x] Verify: `npm run storybook` manual check — Vertical/Horizontal render, Horizontal collapses to vertical below 768px, reduced-motion emulation shows no stagger
 
-## Acceptance criteria (from build-plan F4)
-- [x] Reusable blob component with position/colour/size props (position/size via `className`, consistent with `WideContainer`/`LotusMark` convention; `color` is a dedicated prop)
-- [x] Zero network cost (inline SVG, no raster images)
-- [x] Text over/near blobs still passes AA contrast (default opacity 0.12, matches existing safe precedent; demonstrated in Storybook's "Behind text" story)
-- [x] Reduced-motion respected if animated (verified — no bespoke JS needed, the existing global `prefers-reduced-motion` rule in `globals.css` already covers any `animation` on any element)
+## Acceptance criteria (from build-plan C6)
+- [x] Horizontal + vertical variants, prop-driven steps
+- [x] Scroll/entrance animation, reduced-motion safe
+- [x] Documented in Storybook
+- [ ] Used by both C5 and C7 — N/A this cycle, tracked as future work (C5/C7 depend on C6, not the reverse)
 
 ## Explicitly out of scope (confirmed with user)
-- Migrating the 3 existing ad hoc decorative circles (CareersHero, HeroSection, AboutSection) to `<Blob>` — new component only, existing usages untouched
-- Replacing `<LotusMark tone="mono">`'s decorative use — both primitives remain valid, different purposes
+- Migrating `ProcessTimeline` (careers/how-we-hire) to `<Timeline>` — C7's job
+- Migrating the training page's inline pathway list to `<Timeline>` — C5's job
+- A `color` prop / second brand color — no current consumer needs it
+- Storybook viewport addon — not configured, not needed to demonstrate the collapse
 
 ## Review
 
-All acceptance criteria met. Summary:
+All in-scope acceptance criteria met. Summary:
 
-- `src/components/blob/blob-geometry.ts` (new) — 3 organic blob silhouettes, procedurally generated (Catmull-Rom curves through randomized points around a center, seeded/deterministic) and committed as static path data, not randomized at render time (would break SSR/hydration).
-- `src/components/blob/Blob.tsx` (new) — `color` ("teal"|"purple", mapped to real brand tokens via inline `fill: var(--color-*)`, never arbitrary hex), `variant` (1-3), `opacity` (default 0.12), `animate` (drift), `className` for size/position (Tailwind utilities, matching `WideContainer`/`LotusMark` convention rather than bespoke numeric props). Always `aria-hidden` + `pointer-events-none` — baked in since it's never anything but decoration.
-- `.blob-drift` keyframes added to `globals.css`, reusing the existing global `prefers-reduced-motion` rule for free — verified via Playwright media emulation that `animation-duration` correctly collapses to 0.01ms under reduced motion.
-- `stories/ui/Blob.stories.tsx` (new) — all 6 variant×color combinations, an animated example, and a "Behind text" story demonstrating AA-safe contrast at the default opacity.
-- Scope deliberately limited to the new component per user decision: the 3 existing ad hoc decorative circles (CareersHero, HeroSection, AboutSection) and `LotusMark`'s existing watermark use are both left untouched.
+- `src/components/timeline/Timeline.tsx` (new) — single `<Timeline>` component, `orientation` prop ("horizontal" | "vertical", default "vertical"). Vertical renders a left-border connector with numbered circle badges (same visual language as the training page's existing pathway list). Horizontal renders a numbered-circle row with a static connecting line on `md:` and up, and auto-collapses to the same vertical markup below `md` (one shared `verticalList` JSX value, no duplication). Column count for the horizontal grid is set via inline `gridTemplateColumns` since Tailwind JIT can't resolve a dynamically-interpolated `grid-cols-N` class, and step count is arbitrary (C7 needs 6, existing precedent had 4).
+- Animation: reuses the existing `useInView` hook (`src/hooks/use-in-view.ts`, already reduced-motion safe) and the existing `.pop-item`/`.pop-item.in-view` CSS (already in `globals.css`), staggered via inline `transitionDelay = index * 90ms` — the exact pattern `CircularCycle`/`HubAndSpoke` already use. No new CSS, no new library.
+- `src/components/timeline/index.ts` (new) — barrel, mirrors `src/components/blob/index.ts`.
+- `stories/ui/Timeline.stories.tsx` (new) — `Vertical` (4-step fixture) and `Horizontal` (6-step fixture) stories, CSF3, autodocs, `orientation` radio control.
+- Scope deliberately limited to building/documenting the component per the card and user decision: `ProcessTimeline` (careers/how-we-hire) and the training page's inline pathway list are both left untouched — migrating them is C7's and C5's job respectively, since both depend on C6 rather than the reverse.
 
-Verified: `npm run build`, `npx tsc --noEmit`, and `npx storybook build` all pass; all Storybook stories render correctly with visually distinct, clearly organic (non-circular) shapes in both real brand colors.
+Verified: `npx tsc --noEmit`, `npm run lint`, `npm run build`, and `npm run build-storybook` all pass. Manually checked in a live Storybook instance via Playwright: `Vertical` and `Horizontal` stories render correctly with real brand colors; resizing the `Horizontal` story's canvas to 400px confirmed it collapses to the vertical layout; emulating `prefers-reduced-motion: reduce` confirmed steps render at `opacity: 1` immediately with `transition-duration` collapsed to ~0 (no stagger).
