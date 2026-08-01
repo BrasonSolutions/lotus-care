@@ -1,37 +1,35 @@
-# F2 — Layout width system
+# F4 — Decorative palette "blobs"
 
-Card source: `docs/build-plan.md` (F2, on branch `feat/design-tokens` / PR #37 — not yet in `main`). Full plan: `C:\Users\andre\.claude\plans\enumerated-marinating-gray.md`.
+Card source: `docs/build-plan.md` (F4). Full plan: `C:\Users\andre\.claude\plans\enumerated-marinating-gray.md`.
 
 ## Tasks
-- [x] Add `--container-wide: 90rem;` token to `src/app/globals.css` `@theme` block
-- [x] Create `src/components/layout/Container.tsx` (`WideContainer` + `ReadingContainer`) and `src/components/layout/index.ts` barrel
-- [x] Group A — mechanical swap of `max-w-7xl mx-auto px-4 sm:px-6 lg:px-8` → `<WideContainer>` across ~30 files (Footer, Navbar, section components, careers/quality page wrappers, Open Roles)
-- [x] Group B — standalone reading sections → `<ReadingContainer padded>` (quality overview intro + testimonial, careers testimonial pull-quote)
-- [x] Group C — `ContentSection.tsx`: text variant → `<ReadingContainer>`; image/50-50 variant → drop inner `max-w-6xl` cap
-- [x] Resolve individual-judgment spots: open-roles/[slug] job header → `WideContainer`; careers/training, careers/benefits intros left as Group D (short, not genuinely long-form)
-- [x] Leave Group D bespoke display copy untouched (HeroSection, CareersHero, SectionTitle, CareersCtaStrip, RecruitmentSection, BoardSection, HomeModal)
-- [x] Add `stories/layout/WideContainer.stories.tsx` + `ReadingContainer.stories.tsx` (default + nested composition story)
-- [x] Verify: `npm run build` passes
-- [x] Verify: `npx tsc --noEmit` passes
-- [x] Verify: Storybook renders both new stories
-- [x] Verify: `npm run dev` visual check at 375px and 1440px — wide sections wider, Open Roles resolved, nested reading copy still comfortable
+- [x] Generate 3 static organic blob path variants (script-assisted, verified visually) — `src/components/blob/blob-geometry.ts`
+- [x] Build `Blob.tsx` (`color`, `variant`, `opacity`, `animate`, `className` props)
+- [x] Add `.blob-drift` `@keyframes` to `globals.css` (reduced-motion handled by existing global rule)
+- [x] `src/components/blob/index.ts` barrel
+- [x] `stories/ui/Blob.stories.tsx` — variants × colors, animated example, "behind text" contrast demo
+- [x] Verify: `npm run build` + `npx tsc --noEmit` pass
+- [x] Verify: Storybook renders all stories; reduced-motion confirmed via Playwright media emulation (animation-duration collapses to 0.01ms); contrast demo visually confirms AA-safe default opacity
+- [x] Verify: `npx storybook build` passes
 
-## Acceptance criteria (from build-plan F2)
-- [x] Two container primitives exist and are documented in Storybook
-- [x] Heroes/galleries/infographics use the wide container
-- [x] Long-form text stays within the reading measure
-- [x] Resolves the "Open Roles — use more width" request (no separate work)
-- [x] Verified at mobile / desktop breakpoints (Playwright, 375px + 1440px)
+## Acceptance criteria (from build-plan F4)
+- [x] Reusable blob component with position/colour/size props (position/size via `className`, consistent with `WideContainer`/`LotusMark` convention; `color` is a dedicated prop)
+- [x] Zero network cost (inline SVG, no raster images)
+- [x] Text over/near blobs still passes AA contrast (default opacity 0.12, matches existing safe precedent; demonstrated in Storybook's "Behind text" story)
+- [x] Reduced-motion respected if animated (verified — no bespoke JS needed, the existing global `prefers-reduced-motion` rule in `globals.css` already covers any `animation` on any element)
+
+## Explicitly out of scope (confirmed with user)
+- Migrating the 3 existing ad hoc decorative circles (CareersHero, HeroSection, AboutSection) to `<Blob>` — new component only, existing usages untouched
+- Replacing `<LotusMark tone="mono">`'s decorative use — both primitives remain valid, different purposes
 
 ## Review
 
-All acceptance criteria met. Summary of changes:
+All acceptance criteria met. Summary:
 
-- `src/app/globals.css` — added `--container-wide: 90rem` (1440px) to the `@theme` block, generating the `max-w-wide` Tailwind utility.
-- `src/components/layout/Container.tsx` (new) — `WideContainer` (`max-w-wide`, gutters on by default) and `ReadingContainer` (`max-w-prose` ≈ 65ch, gutters off by default since it's normally nested). Barrel at `src/components/layout/index.ts`.
-- **Group A** (~30 files): mechanical swap of the repeated `max-w-7xl mx-auto px-4 sm:px-6 lg:px-8` wrapper to `<WideContainer>` — Footer, Navbar (including normalizing the top contact strip's non-standard padding), every section component (About/Board/Team/Contact/Services/HomesCarousel/Recruitment), all careers/quality subnavs, breadcrumb, CTA strip, and every careers/quality page wrapper including `open-roles/page.tsx` and `open-roles/[slug]/page.tsx` (resolves the Open Roles width request).
-- **Deviation from the reviewed plan, called out here:** the plan's Group B assignment for the `quality/human-rights|mdt|safety-improvement` Framework/TeamStrip sections (`ReadingContainer`) was corrected to `WideContainer` during implementation. Those sections hold the `CircularCycle`/`HubAndSpoke` infographics and a team-member strip — not body prose — and the F2 acceptance criteria explicitly say infographics belong in the wide tier. Squeezing a diagram into a 65ch reading measure would have broken its layout. The genuine reading-measure cases (quality overview intro paragraph, two testimonial pull-quotes, `ContentSection`'s text-only variant) do use `ReadingContainer` as planned.
-- **Group C** — `ContentSection.tsx`: text-only variant now uses `ReadingContainer`; the image/50-50 variant's own inner `max-w-6xl` cap was dropped so it inherits the enclosing `WideContainer` directly (confirmed via Playwright screenshot — the widened media rows read as well-balanced, not overstretched).
-- `stories/layout/WideContainer.stories.tsx` + `ReadingContainer.stories.tsx` (new) — Default + a Nested story showing the compositional pattern from the spec, verified rendering in Storybook.
+- `src/components/blob/blob-geometry.ts` (new) — 3 organic blob silhouettes, procedurally generated (Catmull-Rom curves through randomized points around a center, seeded/deterministic) and committed as static path data, not randomized at render time (would break SSR/hydration).
+- `src/components/blob/Blob.tsx` (new) — `color` ("teal"|"purple", mapped to real brand tokens via inline `fill: var(--color-*)`, never arbitrary hex), `variant` (1-3), `opacity` (default 0.12), `animate` (drift), `className` for size/position (Tailwind utilities, matching `WideContainer`/`LotusMark` convention rather than bespoke numeric props). Always `aria-hidden` + `pointer-events-none` — baked in since it's never anything but decoration.
+- `.blob-drift` keyframes added to `globals.css`, reusing the existing global `prefers-reduced-motion` rule for free — verified via Playwright media emulation that `animation-duration` correctly collapses to 0.01ms under reduced motion.
+- `stories/ui/Blob.stories.tsx` (new) — all 6 variant×color combinations, an animated example, and a "Behind text" story demonstrating AA-safe contrast at the default opacity.
+- Scope deliberately limited to the new component per user decision: the 3 existing ad hoc decorative circles (CareersHero, HeroSection, AboutSection) and `LotusMark`'s existing watermark use are both left untouched.
 
-Verified: `npm run build` and `npx tsc --noEmit` both clean; Storybook renders both stories; Playwright checks at 375px (mobile gutters intact) and 1440px (Home, Open Roles, Quality/Human Rights) confirm the wider layout renders correctly with no console errors.
+Verified: `npm run build`, `npx tsc --noEmit`, and `npx storybook build` all pass; all Storybook stories render correctly with visually distinct, clearly organic (non-circular) shapes in both real brand colors.
