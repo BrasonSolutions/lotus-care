@@ -5,20 +5,28 @@ interface HubNavCardProps {
   title: string;
   description: string;
   href: string;
+  accent?: "teal" | "purple";
 }
+
+const ACCENT = {
+  teal: { border: "border-t-primary", chip: "bg-primary/15 text-primary" },
+  purple: { border: "border-t-purple-600", chip: "bg-purple-600/15 text-purple-600" },
+} as const;
 
 export function HubNavCard({
   icon,
   title,
   description,
   href,
+  accent = "teal",
 }: HubNavCardProps) {
+  const a = ACCENT[accent];
   return (
     <a
       href={href}
-      className="group flex flex-col p-6 bg-white rounded-2xl shadow-sm border border-gray-100 hover:shadow-md hover:-translate-y-1 transition-all duration-200 focus-ring"
+      className={`group flex flex-col p-6 bg-white rounded-2xl shadow-sm border-x border-b border-gray-100 border-t-[3px] ${a.border} hover:shadow-md hover:-translate-y-1 transition-all duration-200 focus-ring`}
     >
-      <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4 text-primary">
+      <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 ${a.chip}`}>
         {getCareersIcon(icon)}
       </div>
       <h3 className="text-lg font-semibold text-primary-dark mb-2 group-hover:text-primary transition-colors">

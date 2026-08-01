@@ -59,13 +59,6 @@ const hubCards = [
 
 const featuredJobs = jobs.filter((j) => j.featured);
 
-const stats = [
-  { value: "150+", label: "Team Members" },
-  { value: "8", label: "Homes" },
-  { value: "200+", label: "Lives Supported" },
-  { value: "24/7", label: "Care Provided" },
-];
-
 export default function CareersPage() {
   return (
     <>
@@ -75,29 +68,19 @@ export default function CareersPage() {
         ctaLabel="View Open Roles"
         ctaHref="/careers/open-roles"
         image="/images/stock/dignity-activity.jpg"
-        stat={{ value: "150+", label: "Team Members" }}
-        chips={["Person-Centred", "Compassionate"]}
-        avatarImages={[
-          "/images/staff/Mary-Bardin.png",
-          "/images/staff/Patrick-Troy.png",
-          "/images/staff/Danny-Scally.png",
-          "/images/staff/Teresa-McGuire-Cooke.webp",
-        ]}
-        avatarCaption="Join our growing team."
       />
 
-      {/* Impact stats */}
-      <section className="bg-white py-10 border-b border-gray-100">
+      {/* Team testimonials */}
+      <section className="bg-white py-16 sm:py-20 border-b border-gray-100">
         <Container>
-          <Reveal>
-            <dl className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-              {stats.map(({ value, label }) => (
-                <div key={label}>
-                  <dd className="text-3xl font-bold text-primary">{value}</dd>
-                  <dt className="text-sm text-muted mt-1">{label}</dt>
-                </div>
-              ))}
-            </dl>
+          <SectionTitle
+            title="Hear From Our Team"
+            subtitle="Real stories from the people who make Lotus Care what it is."
+          />
+          <Reveal className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            {testimonials.slice(0, 3).map((t) => (
+              <TestimonialCard key={t.name} testimonial={t} />
+            ))}
           </Reveal>
         </Container>
       </section>
@@ -110,8 +93,8 @@ export default function CareersPage() {
             subtitle="From open roles to our hiring process — explore what a career at Lotus Care looks like."
           />
           <Reveal className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {hubCards.map((card) => (
-              <HubNavCard key={card.title} {...card} />
+            {hubCards.map((card, i) => (
+              <HubNavCard key={card.title} {...card} accent={i % 2 === 0 ? "teal" : "purple"} />
             ))}
           </Reveal>
         </Container>
@@ -172,21 +155,6 @@ export default function CareersPage() {
             ))}
           </Reveal>
         </Container>
-      </section>
-
-      {/* Staff testimonial pull-quote */}
-      <section className="py-16 sm:py-20 bg-white">
-        <Reveal>
-          <Container width="reading" padded className="text-center">
-            <TestimonialCard testimonial={testimonials[0]} />
-            <a
-              href="/careers/why-us"
-              className="inline-block mt-6 text-sm font-medium text-primary hover:text-primary-dark transition-colors focus-ring rounded"
-            >
-              Hear more from our team →
-            </a>
-          </Container>
-        </Reveal>
       </section>
 
       <CareersCTAStrip
