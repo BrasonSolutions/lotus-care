@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { Container } from "@/components/layout";
 import type { NavItem } from "@/data/navigation";
 import { navItems as defaultNavItems, contactInfo as defaultContactInfo } from "@/data/navigation";
 import { HomesDropdown } from "@/components/homes-dropdown";

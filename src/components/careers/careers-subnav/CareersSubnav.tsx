@@ -1,6 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
+import { Container } from "@/components/layout";
 import { useScrolled } from "@/hooks/use-scrolled";
 import { useMediaQuery, NAV_BREAKPOINT_QUERY } from "@/hooks/use-media-query";
 

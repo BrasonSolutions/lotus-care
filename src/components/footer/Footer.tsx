@@ -1,4 +1,5 @@
 import { LogoWhite } from "@/components/logo-white";
+import { Container } from "@/components/layout";
 import { contactInfo as defaultContactInfo } from "@/data/navigation";
 import { quickLinks as defaultQuickLinks, serviceNames as defaultServiceNames } from "@/data/footer";
 
