@@ -95,8 +95,8 @@ export default function CareersPage() {
             title="Hear From Our Team"
             subtitle="Real stories from the people who make Lotus Care what it is."
           />
+          <TestimonialMarquee testimonials={[...testimonials, ...placeholderTestimonials]} />
         </Container>
-        <TestimonialMarquee testimonials={[...testimonials, ...placeholderTestimonials]} />
       </section>
 
       {/* Hub nav cards */}
