@@ -1,12 +1,18 @@
 import { LogoWhite } from "@/components/logo-white";
+import { contactInfo as defaultContactInfo } from "@/data/navigation";
+import { quickLinks as defaultQuickLinks, serviceNames as defaultServiceNames } from "@/data/footer";
 
 interface FooterProps {
-  contactInfo: { phone: string; email: string; address: string };
-  quickLinks: Array<{ label: string; href: string }>;
-  serviceNames: string[];
+  contactInfo?: { phone: string; email: string; address: string };
+  quickLinks?: Array<{ label: string; href: string }>;
+  serviceNames?: string[];
 }
 
-export function Footer({ contactInfo, quickLinks, serviceNames }: FooterProps) {
+export function Footer({
+  contactInfo = defaultContactInfo,
+  quickLinks = defaultQuickLinks,
+  serviceNames = defaultServiceNames,
+}: FooterProps) {
   return (
     <footer className="bg-primary-dark text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">

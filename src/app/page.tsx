@@ -9,7 +9,7 @@ import { RecruitmentSection } from "@/components/recruitment-section";
 import { ContactSection } from "@/components/contact-section";
 import { Footer } from "@/components/footer";
 
-import { navItems, contactInfo } from "@/data/navigation";
+import { contactInfo } from "@/data/navigation";
 import { services } from "@/data/services";
 import { homes } from "@/data/homes";
 import { teamMembers, departments, boardMembers } from "@/data/team";
@@ -22,15 +22,6 @@ const quickLinks = [
   { label: "Meet the Team", href: "#team" },
   { label: "Careers", href: "#careers" },
   { label: "Contact Us", href: "#contact" },
-];
-
-const serviceNames = [
-  "Community Residential Living",
-  "Residential Respite Care",
-  "MDT Pathways",
-  "Model of Care",
-  "Person Centred Planning",
-  "Community Integration",
 ];
 
 const aboutParagraphs = [
@@ -61,7 +52,7 @@ const recruitmentCtas = [
 export default function Home() {
   return (
     <>
-      <Navbar navItems={navItems} contactInfo={contactInfo} />
+      <Navbar />
       <main id="main">
         <HeroSection
           title="Enhanced Living,"
@@ -86,11 +77,7 @@ export default function Home() {
         />
         <ContactSection contactInfo={contactInfo} />
       </main>
-      <Footer
-        contactInfo={contactInfo}
-        quickLinks={quickLinks}
-        serviceNames={serviceNames}
-      />
+      <Footer quickLinks={quickLinks} />
     </>
   );
 }

@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { QualitySubnav } from "@/components/quality/quality-subnav";
-import { navItems, contactInfo } from "@/data/navigation";
 
 export const metadata: Metadata = {
   title: {
@@ -13,24 +12,6 @@ export const metadata: Metadata = {
     "Lotus Care's commitment to safe, rights-based, person-centred care — governance, oversight, and continuous improvement.",
 };
 
-const quickLinks = [
-  { label: "About Us", href: "/#about" },
-  { label: "Our Services", href: "/#services" },
-  { label: "Our Homes", href: "/#homes" },
-  { label: "Meet the Team", href: "/#team" },
-  { label: "Careers", href: "/careers" },
-  { label: "Contact Us", href: "/#contact" },
-];
-
-const serviceNames = [
-  "Community Residential Living",
-  "Residential Respite Care",
-  "MDT Pathways",
-  "Model of Care",
-  "Person Centred Planning",
-  "Community Integration",
-];
-
 export default function QualityLayout({
   children,
 }: {
@@ -38,18 +19,14 @@ export default function QualityLayout({
 }) {
   return (
     <>
-      <Navbar navItems={navItems} contactInfo={contactInfo} solidWhenTop />
-      {/* Subnav sits immediately below the 64px navbar */}
+      <Navbar solidWhenTop />
+      {/* Subnav only renders at the nav breakpoint — see QualitySubnav */}
       <QualitySubnav />
-      {/* pt-28 = 64px navbar + 48px subnav */}
-      <main id="main" className="pt-28 min-h-screen bg-warm-bg">
+      {/* pt-16 = 64px navbar (no subnav below the nav breakpoint); nav:pt-28 = navbar + subnav */}
+      <main id="main" className="pt-16 nav:pt-28 min-h-screen bg-warm-bg">
         {children}
       </main>
-      <Footer
-        contactInfo={contactInfo}
-        quickLinks={quickLinks}
-        serviceNames={serviceNames}
-      />
+      <Footer />
     </>
   );
 }

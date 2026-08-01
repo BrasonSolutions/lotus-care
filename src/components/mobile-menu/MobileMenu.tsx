@@ -1,7 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useSyncExternalStore } from "react";
+import { createPortal } from "react-dom";
+import { usePathname } from "next/navigation";
 import type { NavItem } from "@/data/navigation";
+
+const noopSubscribe = () => () => {};
 
 interface MobileMenuProps {
   scrolled: boolean;
@@ -18,39 +22,48 @@ export function MobileMenu({
   ctaLabel = "Get in Touch",
   ctaHref = "#contact",
 }: MobileMenuProps) {
+  const pathname = usePathname() ?? "";
   const [isOpen, setIsOpen] = useState(false);
   const [expandedItem, setExpandedItem] = useState<string | null>(null);
+  // Portal target (document.body) only exists on the client; this avoids
+  // the SSR/client markup mismatch that `typeof document` checks trigger.
+  const isClient = useSyncExternalStore(
+    noopSubscribe,
+    () => true,
+    () => false
+  );
 
   const close = () => {
     setIsOpen(false);
     setExpandedItem(null);
   };
 
+  const open = () => {
+    // Pre-expand whichever section the current page belongs to, so a
+    // careers-page visitor opening the menu sees the Careers submenu
+    // already open instead of having to tap it again.
+    const activeParent = navItems.find(
+      (item) => item.children && item.href !== "/" && pathname.startsWith(item.href)
+    );
+    setExpandedItem(activeParent?.label ?? null);
+    setIsOpen(true);
+  };
+
   const toggleItem = (label: string) => {
     setExpandedItem((prev) => (prev === label ? null : label));
   };
 
-  return (
-    <div className="lg:hidden">
-      {/* Hamburger button — p-3 gives ~50px tap area */}
-      <button
-        onClick={() => setIsOpen((prev) => !prev)}
-        className={`p-3 -mr-1 transition-colors focus-ring rounded ${
-          scrolled ? "text-foreground" : "text-white"
-        }`}
-        aria-label={isOpen ? "Close menu" : "Open menu"}
-        aria-expanded={isOpen}
-      >
-        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-          {isOpen ? (
-            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-          ) : (
-            <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-          )}
-        </svg>
-      </button>
+  // Anchor links (e.g. "/#about") point at homepage sections rather than
+  // distinct routes, so there's no reliable way to tell which is "current"
+  // without scroll-spy — only real routes get active styling.
+  const isCurrentPage = (href: string) => !href.includes("#") && pathname === href;
 
-      {/* Full-screen overlay */}
+  // Portaled to document.body: the navbar's entrance animation applies a
+  // transform to <nav>, which creates a new containing block for any
+  // `position: fixed` descendants — breaking this drawer's fixed
+  // positioning on small screens. Rendering outside <nav> avoids that.
+  const drawer = (
+    <>
       {isOpen && (
         <div
           className="fixed inset-0 bg-black/50 z-40"
@@ -59,7 +72,6 @@ export function MobileMenu({
         />
       )}
 
-      {/* Menu panel */}
       <div
         className={`fixed top-0 right-0 h-full w-80 max-w-[90vw] bg-white z-50 transform transition-transform duration-300 shadow-2xl ${
           isOpen ? "translate-x-0" : "translate-x-full"
@@ -108,7 +120,12 @@ export function MobileMenu({
                         key={child.label}
                         href={child.href}
                         onClick={close}
-                        className="block py-2.5 px-2 text-base text-muted hover:text-primary transition-colors focus-ring rounded"
+                        aria-current={isCurrentPage(child.href) ? "page" : undefined}
+                        className={`block py-2.5 px-2 text-base transition-colors focus-ring rounded ${
+                          isCurrentPage(child.href)
+                            ? "text-primary font-semibold underline underline-offset-4"
+                            : "text-muted hover:text-primary"
+                        }`}
                       >
                         {child.label}
                       </a>
@@ -121,7 +138,12 @@ export function MobileMenu({
                 key={item.label}
                 href={item.href}
                 onClick={close}
-                className="block py-3 px-2 text-foreground font-medium hover:text-primary transition-colors focus-ring rounded"
+                aria-current={isCurrentPage(item.href) ? "page" : undefined}
+                className={`block py-3 px-2 font-medium transition-colors focus-ring rounded ${
+                  isCurrentPage(item.href)
+                    ? "text-primary underline underline-offset-4"
+                    : "text-foreground hover:text-primary"
+                }`}
               >
                 {item.label}
               </a>
@@ -153,6 +175,30 @@ export function MobileMenu({
           </div>
         </nav>
       </div>
+    </>
+  );
+
+  return (
+    <div className="nav:hidden">
+      {/* Hamburger button — p-3 gives ~50px tap area */}
+      <button
+        onClick={() => (isOpen ? close() : open())}
+        className={`p-3 -mr-1 transition-colors focus-ring rounded ${
+          scrolled ? "text-foreground" : "text-white"
+        }`}
+        aria-label={isOpen ? "Close menu" : "Open menu"}
+        aria-expanded={isOpen}
+      >
+        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          {isOpen ? (
+            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+          ) : (
+            <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+          )}
+        </svg>
+      </button>
+
+      {isClient && createPortal(drawer, document.body)}
     </div>
   );
 }
