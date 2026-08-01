@@ -1,37 +1,26 @@
-# C1 — Careers Overview revamp
+# Careers Overview follow-up: hub card border + testimonial marquee
 
-Card source: `docs/build-plan.md` (C1). Full plan: `C:\Users\andre\.claude\plans\misty-chasing-sky.md`.
+Full plan: `C:\Users\andre\.claude\plans\misty-chasing-sky.md`. Direct user feedback on the just-shipped C1 work, same branch (`feat/careers-overview-revamp`).
 
 ## Tasks
-- [x] `src/app/careers/page.tsx` — drop hero `stat`/`chips`/`avatarImages`/`avatarCaption` props
-- [x] `src/app/careers/page.tsx` — replace stats `<dl>` section with 3-card testimonial grid (`Reveal` + `TestimonialCard`, `testimonials.slice(0, 3)`)
-- [x] `src/app/careers/page.tsx` — remove duplicate lower pull-quote testimonial section
-- [x] `src/app/careers/page.tsx` — pass alternating `accent` prop into `HubNavCard` map
-- [x] `src/components/careers/hub-nav-card/HubNavCard.tsx` — add `accent?: "teal" | "purple"` prop, top-border + tinted chip per Appendix B
+- [x] `src/components/careers/hub-nav-card/HubNavCard.tsx` — remove top-border accent, keep alternating tinted icon chip
+- [x] `src/app/globals.css` — `.testimonial-marquee-track` + `@keyframes marquee` (60s linear infinite, pause on hover)
+- [x] `src/components/careers/testimonial-marquee/TestimonialMarquee.tsx` — new component, full-bleed, edge-mask, duplicated track for seamless loop, duplicate copy `aria-hidden`
+- [x] `src/app/careers/page.tsx` — 2 obviously-fake placeholder testimonials (local const, not added to shared data file), swap static grid for `<TestimonialMarquee>`
 - [x] Verify: `npx tsc --noEmit`
 - [x] Verify: `npm run lint`
 - [x] Verify: `npm run build`
-- [x] Verify: manual check on `/careers` — hero plain, testimonial grid in place of stats, hub cards alternate teal/purple with top border, no duplicate testimonial section, values unchanged
-
-## Acceptance criteria (from build-plan C1)
-- [x] Hero buttons/cards removed
-- [x] Stats/info block replaced by testimonials section
-- [x] Benefit cards (hub nav grid) use palette accents, not flat white
-- [x] Values sourced from single config (swap-ready) — already true, confirmed only
-
-## Explicitly out of scope (confirmed with user / per plan)
-- `/careers/benefits` page / `BenefitCard` component — C4
-- `/careers/why-us` testimonial/gallery work — C3
-- `/careers/open-roles` width — C2 (next)
-- Values *content* changes — client hasn't revised them yet (B1, blocked)
+- [x] Verify: manual check — hub cards no top border, marquee loops seamlessly, hover pauses it, full-bleed, reduced-motion shows static clean row
 
 ## Review
 
-All acceptance criteria met. Summary:
+All requested changes done. Summary:
 
-- `src/app/careers/page.tsx` — hero call-site simplified to title/subtitle/CTA/image only (dropped the floating pill-badge/stat-card/avatar-cluster overlays). The stats `<dl>` block was replaced by a 3-testimonial grid (`testimonials.slice(0, 3)`: Sarah M., James O., Aoife N. — best role variety), reusing the existing `TestimonialCard` component and the same `Reveal`-wrapped-grid pattern already used elsewhere on this page. The now-redundant single pull-quote testimonial section further down the page was removed (its `/careers/why-us` link is still reachable via the "Why Work With Us" hub card). Hub cards now alternate an `accent` prop (`i % 2 === 0 ? "teal" : "purple"`).
-- `src/components/careers/hub-nav-card/HubNavCard.tsx` — added `accent?: "teal" | "purple"` (default `"teal"`), implementing Appendix B's style direction: 3px top border + ~15%-opacity tinted icon chip, alternating real brand teal (`--color-primary`) / real brand purple (`--color-purple-600`, confirmed a real `@theme` token, not the approximate placeholder hex from the build-plan doc). `rounded-2xl`/`p-6` already matched Appendix B's radius/padding spec, no change needed there.
-- Company Values section: no code change — `companyValues` in `src/data/careers.ts` was already a single-source array, B1's swap-ready bar was already met.
-- Resolved two ambiguities in the card text before implementing (confirmed with user): "hero buttons/cards" = the hero's floating overlay props (not the primary CTA button); "benefit cards" = the `HubNavCard` grid (not the separate `BenefitCard`/`Benefit` type used only on `/careers/benefits`, which is C4's page).
+- `HubNavCard.tsx` — dropped the `border-t-[3px]` accent + its `ACCENT[accent].border` field; reverted to a plain `border border-gray-100`. Kept the alternating teal/purple tinted icon chip (`ACCENT[accent].chip`) untouched.
+- `TestimonialMarquee.tsx` (new) — renders the testimonial list twice back-to-back in a flex track so the `translateX(-50%)` loop point is seamless by construction (verified live: no visible jump). Full-bleed via the standard `w-screen relative left-1/2 -translate-x-1/2` break-out technique (safe — `body{overflow-x:hidden}` already global), edge-fade via CSS `mask-image`. Second (duplicate) copy is `aria-hidden` so screen readers see each testimonial once. No arrows/dots — pure passive ticker per request.
+- `globals.css` — `.testimonial-marquee-track` (60s linear infinite) + hover-pause. Reduced motion needed no bespoke override: the existing global rule forces 1 iteration at ~0 duration, and since no `animation-fill-mode` is set, the element reverts to its unanimated base state — verified live that this shows a clean, correctly-ordered static row (Sarah M → James O → Aoife N → Michael T → Lorem Ipsum → Dolor Sit), not a jump-cut.
+- `page.tsx` — added 2 clearly-fake placeholder testimonials ("Lorem Ipsum"/"Dolor Sit", lorem-ipsum quotes) as a local const, deliberately kept out of the shared `src/data/careers.ts` export so they can't leak into a real-content context later (e.g. C3's Why-Us page). Combined with the 4 real testimonials for 6 total in the marquee.
 
-Verified: `npx tsc --noEmit`, `npm run lint`, `npm run build` all pass. Manually verified in a live dev server via Playwright (scrolled through to properly trigger scroll-reveal animations, since a one-shot full-page screenshot without scrolling under-triggers `useInView`/`.reveal` — not a bug, just a capture-timing artifact): hero is plain with no floating overlays, testimonial grid renders correctly where stats used to be, hub cards alternate teal/purple with visible top border and tinted icon chips (Open Roles/Benefits/How We Hire = teal, Why Work With Us/Training/Contact = purple), no duplicate testimonial section remains, Featured Roles and Values sections unchanged and rendering correctly.
+Verified: `npx tsc --noEmit`, `npm run lint`, `npm run build` all pass. Manually verified live via Playwright: hub cards show no top border with chips still alternating; marquee animation confirmed `running` by default and `paused` on hover (via computed `animationPlayState`); reduced-motion emulation confirmed the track lands on a static, fully-readable, correctly-ordered row with no visual glitch.
+
+Known trade-off flagged to user (not blocking): no dedicated pause button for keyboard/touch-only users (WCAG 2.2.2 asks for a persistent pause control) — per explicit "no arrows" request. Mouse hover-pause + full stop under reduced-motion are the mitigations in place; a small pause/play button can be added later if needed.

@@ -1,0 +1,1 @@
+export { TestimonialMarquee } from "./TestimonialMarquee";

@@ -3,14 +3,14 @@ import Link from "next/link";
 import { CareersHero } from "@/components/careers/careers-hero";
 import { HubNavCard } from "@/components/careers/hub-nav-card";
 import { JobCard } from "@/components/careers/job-card";
-import { TestimonialCard } from "@/components/careers/testimonial-card";
+import { TestimonialMarquee } from "@/components/careers/testimonial-marquee";
 import { CareersCTAStrip } from "@/components/careers/careers-cta-strip";
 import { SectionTitle } from "@/components/section-title";
 import { getCareersIcon } from "@/components/careers/careers-icons";
 import { Reveal } from "@/components/reveal";
 import { Container } from "@/components/layout";
 import { jobs } from "@/data/jobs";
-import { testimonials, companyValues } from "@/data/careers";
+import { testimonials, companyValues, type Testimonial } from "@/data/careers";
 
 export const metadata: Metadata = {
   title: "Careers",
@@ -59,6 +59,24 @@ const hubCards = [
 
 const featuredJobs = jobs.filter((j) => j.featured);
 
+// Placeholder — replace once more real testimonials are collected.
+const placeholderTestimonials: Testimonial[] = [
+  {
+    name: "Lorem Ipsum",
+    role: "Placeholder Role",
+    initials: "LI",
+    quote:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+  },
+  {
+    name: "Dolor Sit",
+    role: "Sample Testimonial",
+    initials: "DS",
+    quote:
+      "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+  },
+];
+
 export default function CareersPage() {
   return (
     <>
@@ -77,12 +95,8 @@ export default function CareersPage() {
             title="Hear From Our Team"
             subtitle="Real stories from the people who make Lotus Care what it is."
           />
-          <Reveal className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            {testimonials.slice(0, 3).map((t) => (
-              <TestimonialCard key={t.name} testimonial={t} />
-            ))}
-          </Reveal>
         </Container>
+        <TestimonialMarquee testimonials={[...testimonials, ...placeholderTestimonials]} />
       </section>
 
       {/* Hub nav cards */}
