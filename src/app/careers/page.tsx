@@ -8,6 +8,7 @@ import { CareersCTAStrip } from "@/components/careers/careers-cta-strip";
 import { SectionTitle } from "@/components/section-title";
 import { getCareersIcon } from "@/components/careers/careers-icons";
 import { Reveal } from "@/components/reveal";
+import { WideContainer, ReadingContainer } from "@/components/layout";
 import { jobs } from "@/data/jobs";
 import { testimonials, companyValues } from "@/data/careers";
 
@@ -87,7 +88,7 @@ export default function CareersPage() {
 
       {/* Impact stats */}
       <section className="bg-white py-10 border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <WideContainer>
           <Reveal>
             <dl className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
               {stats.map(({ value, label }) => (
@@ -98,12 +99,12 @@ export default function CareersPage() {
               ))}
             </dl>
           </Reveal>
-        </div>
+        </WideContainer>
       </section>
 
       {/* Hub nav cards */}
       <section className="py-16 sm:py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <WideContainer>
           <SectionTitle
             title="Everything You Need to Know"
             subtitle="From open roles to our hiring process — explore what a career at Lotus Care looks like."
@@ -113,12 +114,12 @@ export default function CareersPage() {
               <HubNavCard key={card.title} {...card} />
             ))}
           </Reveal>
-        </div>
+        </WideContainer>
       </section>
 
       {/* Featured Roles */}
       <section className="py-16 sm:py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <WideContainer>
           <div className="flex items-end justify-between mb-8">
             <div>
               <h2 className="text-2xl sm:text-3xl font-bold text-primary-dark mb-2">
@@ -149,12 +150,12 @@ export default function CareersPage() {
               View all open roles →
             </Link>
           </div>
-        </div>
+        </WideContainer>
       </section>
 
       {/* Company Values */}
       <section className="py-16 sm:py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <WideContainer>
           <SectionTitle title="Our Values" />
           <Reveal className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {companyValues.map((value) => (
@@ -170,19 +171,21 @@ export default function CareersPage() {
               </div>
             ))}
           </Reveal>
-        </div>
+        </WideContainer>
       </section>
 
       {/* Staff testimonial pull-quote */}
       <section className="py-16 sm:py-20 bg-white">
-        <Reveal className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <TestimonialCard testimonial={testimonials[0]} />
-          <a
-            href="/careers/why-us"
-            className="inline-block mt-6 text-sm font-medium text-primary hover:text-primary-dark transition-colors focus-ring rounded"
-          >
-            Hear more from our team →
-          </a>
+        <Reveal>
+          <ReadingContainer padded className="text-center">
+            <TestimonialCard testimonial={testimonials[0]} />
+            <a
+              href="/careers/why-us"
+              className="inline-block mt-6 text-sm font-medium text-primary hover:text-primary-dark transition-colors focus-ring rounded"
+            >
+              Hear more from our team →
+            </a>
+          </ReadingContainer>
         </Reveal>
       </section>
 

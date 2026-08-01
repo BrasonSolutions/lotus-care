@@ -5,6 +5,7 @@ import { TestimonialCard } from "@/components/careers/testimonial-card";
 import { CareersCTAStrip } from "@/components/careers/careers-cta-strip";
 import { Reveal } from "@/components/reveal";
 import { qualityHub, hubCards, anonymizedTestimonial } from "@/data/quality";
+import { WideContainer, ReadingContainer } from "@/components/layout";
 
 export const metadata: Metadata = {
   title: "Overview",
@@ -30,26 +31,30 @@ export default function QualityPage() {
 
       {/* Intro */}
       <section className="py-14 sm:py-16">
-        <Reveal className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-lg text-muted leading-relaxed">{qualityHub.intro}</p>
+        <Reveal>
+          <ReadingContainer padded className="text-center">
+            <p className="text-lg text-muted leading-relaxed">{qualityHub.intro}</p>
+          </ReadingContainer>
         </Reveal>
       </section>
 
       {/* Hub nav cards */}
       <section className="pb-16 sm:pb-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <WideContainer>
           <Reveal className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {hubCards.map((card) => (
               <HubNavCard key={card.title} {...card} />
             ))}
           </Reveal>
-        </div>
+        </WideContainer>
       </section>
 
       {/* Resident testimonial pull-quote (anonymized) */}
       <section className="py-16 sm:py-20 bg-white">
-        <Reveal className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <TestimonialCard testimonial={anonymizedTestimonial} />
+        <Reveal>
+          <ReadingContainer padded className="text-center">
+            <TestimonialCard testimonial={anonymizedTestimonial} />
+          </ReadingContainer>
         </Reveal>
       </section>
 

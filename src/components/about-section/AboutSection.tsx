@@ -2,6 +2,7 @@
 
 import { useInView } from "@/hooks/use-in-view";
 import { SectionTitle } from "@/components/section-title";
+import { WideContainer } from "@/components/layout";
 
 interface AboutSectionProps {
   title: string;
@@ -15,7 +16,7 @@ export function AboutSection({ title, subtitle, paragraphs, stats }: AboutSectio
 
   return (
     <section id="about" className="py-20 lg:py-28 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <WideContainer>
         <SectionTitle title={title} subtitle={subtitle} />
 
         <div ref={ref} className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center mt-8">
@@ -46,7 +47,7 @@ export function AboutSection({ title, subtitle, paragraphs, stats }: AboutSectio
             </div>
           </div>
         </div>
-      </div>
+      </WideContainer>
     </section>
   );
 }

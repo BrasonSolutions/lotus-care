@@ -3,6 +3,7 @@ import { CareersBreadcrumb } from "@/components/careers/careers-breadcrumb";
 import { CareersCTAStrip } from "@/components/careers/careers-cta-strip";
 import { OpenRolesClient } from "./OpenRolesClient";
 import { fetchLiveJobs } from "@/lib/occupop";
+import { WideContainer } from "@/components/layout";
 
 export default async function OpenRolesPage() {
   const jobs = await fetchLiveJobs().catch(() => null);
@@ -17,7 +18,7 @@ export default async function OpenRolesPage() {
       />
 
       <div className="py-10 sm:py-14">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <WideContainer>
           <CareersBreadcrumb />
 
           {jobs === null ? (
@@ -43,7 +44,7 @@ export default async function OpenRolesPage() {
               Register Your Interest
             </a>
           </div>
-        </div>
+        </WideContainer>
       </div>
 
       <CareersCTAStrip

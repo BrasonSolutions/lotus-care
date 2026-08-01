@@ -1,3 +1,5 @@
+import { WideContainer } from "@/components/layout";
+
 interface CareersCTAStripProps {
   heading?: string;
   body?: string;
@@ -17,7 +19,7 @@ export function CareersCTAStrip({
 }: CareersCTAStripProps) {
   return (
     <section className="bg-gradient-to-r from-primary-dark to-primary py-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <WideContainer className="text-center">
         <h2 className="text-2xl sm:text-3xl font-bold text-white mb-4">{heading}</h2>
         <p className="text-white/80 text-lg mb-8 max-w-xl mx-auto">{body}</p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -36,7 +38,7 @@ export function CareersCTAStrip({
             </a>
           )}
         </div>
-      </div>
+      </WideContainer>
     </section>
   );
 }

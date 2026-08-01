@@ -2,6 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
+import { WideContainer } from "@/components/layout";
 
 const links = [
   { label: "Overview", href: "/careers" },
@@ -31,7 +32,7 @@ export function CareersSubnav() {
         scrolled ? "top-16" : "top-16 lg:top-[6.5rem]"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <WideContainer>
         <div className="relative">
           <ul className="flex gap-1 overflow-x-auto scrollbar-hide py-2">
             {links.map(({ label, href }) => {
@@ -62,7 +63,7 @@ export function CareersSubnav() {
             aria-hidden="true"
           />
         </div>
-      </div>
+      </WideContainer>
     </nav>
   );
 }

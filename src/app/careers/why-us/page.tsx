@@ -6,6 +6,7 @@ import { CareersCTAStrip } from "@/components/careers/careers-cta-strip";
 import { SectionTitle } from "@/components/section-title";
 import { getCareersIcon } from "@/components/careers/careers-icons";
 import { testimonials, companyValues } from "@/data/careers";
+import { WideContainer } from "@/components/layout";
 
 export const metadata: Metadata = {
   title: "Why Work With Us",
@@ -24,14 +25,14 @@ export default function WhyUsPage() {
       />
 
       <div className="py-10 sm:py-14">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <WideContainer>
           <CareersBreadcrumb />
-        </div>
+        </WideContainer>
       </div>
 
       {/* Values */}
       <section className="pb-16 sm:pb-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <WideContainer>
           <SectionTitle title="What We Stand For" />
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {companyValues.map((value) => (
@@ -47,12 +48,12 @@ export default function WhyUsPage() {
               </div>
             ))}
           </div>
-        </div>
+        </WideContainer>
       </section>
 
       {/* Culture narrative */}
       <section className="py-16 sm:py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <WideContainer>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
               <h2 className="text-2xl sm:text-3xl font-bold text-primary-dark mb-6">
@@ -94,19 +95,19 @@ export default function WhyUsPage() {
               ))}
             </div>
           </div>
-        </div>
+        </WideContainer>
       </section>
 
       {/* Testimonials */}
       <section className="py-16 sm:py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <WideContainer>
           <SectionTitle title="Hear From Our Team" />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             {testimonials.map((t) => (
               <TestimonialCard key={t.name} testimonial={t} />
             ))}
           </div>
-        </div>
+        </WideContainer>
       </section>
 
       <CareersCTAStrip

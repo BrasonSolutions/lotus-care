@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useInView } from "@/hooks/use-in-view";
 import { SectionTitle } from "@/components/section-title";
+import { WideContainer } from "@/components/layout";
 
 interface ContactSectionProps {
   title?: string;
@@ -31,7 +32,7 @@ export function ContactSection({
 
   return (
     <section id="contact" className="py-20 lg:py-28 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <WideContainer>
         <SectionTitle title={title} subtitle={subtitle} />
 
         <div
@@ -194,7 +195,7 @@ export function ContactSection({
             </div>
           </div>
         </div>
-      </div>
+      </WideContainer>
     </section>
   );
 }
