@@ -283,6 +283,25 @@ body {
   animation: blobDrift 16s ease-in-out infinite;
 }
 
+/* Testimonial marquee: continuous slow scroll, seamless loop (track is
+   the testimonial list rendered twice, so translateX(-50%) end state is
+   pixel-identical in content to the 0% start state). Reduced-motion is
+   handled by the global @media rule below — same mechanism already
+   relied on by .blob-drift/.spoke-line-flow/.cycle-ring-flow. */
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.testimonial-marquee-track {
+  animation: marquee 60s linear infinite;
+}
+
+.testimonial-marquee-track:hover {
+  animation-play-state: paused;
+}
+
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   *,

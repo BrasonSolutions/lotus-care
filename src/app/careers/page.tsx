@@ -3,14 +3,14 @@ import Link from "next/link";
 import { CareersHero } from "@/components/careers/careers-hero";
 import { HubNavCard } from "@/components/careers/hub-nav-card";
 import { JobCard } from "@/components/careers/job-card";
-import { TestimonialCard } from "@/components/careers/testimonial-card";
+import { TestimonialMarquee } from "@/components/careers/testimonial-marquee";
 import { CareersCTAStrip } from "@/components/careers/careers-cta-strip";
 import { SectionTitle } from "@/components/section-title";
 import { getCareersIcon } from "@/components/careers/careers-icons";
 import { Reveal } from "@/components/reveal";
 import { Container } from "@/components/layout";
 import { jobs } from "@/data/jobs";
-import { testimonials, companyValues } from "@/data/careers";
+import { testimonials, companyValues, type Testimonial } from "@/data/careers";
 
 export const metadata: Metadata = {
   title: "Careers",
@@ -59,11 +59,22 @@ const hubCards = [
 
 const featuredJobs = jobs.filter((j) => j.featured);
 
-const stats = [
-  { value: "150+", label: "Team Members" },
-  { value: "8", label: "Homes" },
-  { value: "200+", label: "Lives Supported" },
-  { value: "24/7", label: "Care Provided" },
+// Placeholder — replace once more real testimonials are collected.
+const placeholderTestimonials: Testimonial[] = [
+  {
+    name: "Lorem Ipsum",
+    role: "Placeholder Role",
+    initials: "LI",
+    quote:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+  },
+  {
+    name: "Dolor Sit",
+    role: "Sample Testimonial",
+    initials: "DS",
+    quote:
+      "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+  },
 ];
 
 export default function CareersPage() {
@@ -75,30 +86,16 @@ export default function CareersPage() {
         ctaLabel="View Open Roles"
         ctaHref="/careers/open-roles"
         image="/images/stock/dignity-activity.jpg"
-        stat={{ value: "150+", label: "Team Members" }}
-        chips={["Person-Centred", "Compassionate"]}
-        avatarImages={[
-          "/images/staff/Mary-Bardin.png",
-          "/images/staff/Patrick-Troy.png",
-          "/images/staff/Danny-Scally.png",
-          "/images/staff/Teresa-McGuire-Cooke.webp",
-        ]}
-        avatarCaption="Join our growing team."
       />
 
-      {/* Impact stats */}
-      <section className="bg-white py-10 border-b border-gray-100">
+      {/* Team testimonials */}
+      <section className="bg-white py-16 sm:py-20 border-b border-gray-100">
         <Container>
-          <Reveal>
-            <dl className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-              {stats.map(({ value, label }) => (
-                <div key={label}>
-                  <dd className="text-3xl font-bold text-primary">{value}</dd>
-                  <dt className="text-sm text-muted mt-1">{label}</dt>
-                </div>
-              ))}
-            </dl>
-          </Reveal>
+          <SectionTitle
+            title="Hear From Our Team"
+            subtitle="Real stories from the people who make Lotus Care what it is."
+          />
+          <TestimonialMarquee testimonials={[...testimonials, ...placeholderTestimonials]} />
         </Container>
       </section>
 
@@ -110,8 +107,8 @@ export default function CareersPage() {
             subtitle="From open roles to our hiring process — explore what a career at Lotus Care looks like."
           />
           <Reveal className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {hubCards.map((card) => (
-              <HubNavCard key={card.title} {...card} />
+            {hubCards.map((card, i) => (
+              <HubNavCard key={card.title} {...card} accent={i % 2 === 0 ? "teal" : "purple"} />
             ))}
           </Reveal>
         </Container>
@@ -172,21 +169,6 @@ export default function CareersPage() {
             ))}
           </Reveal>
         </Container>
-      </section>
-
-      {/* Staff testimonial pull-quote */}
-      <section className="py-16 sm:py-20 bg-white">
-        <Reveal>
-          <Container width="reading" padded className="text-center">
-            <TestimonialCard testimonial={testimonials[0]} />
-            <a
-              href="/careers/why-us"
-              className="inline-block mt-6 text-sm font-medium text-primary hover:text-primary-dark transition-colors focus-ring rounded"
-            >
-              Hear more from our team →
-            </a>
-          </Container>
-        </Reveal>
       </section>
 
       <CareersCTAStrip
