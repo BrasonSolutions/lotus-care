@@ -22,22 +22,21 @@
   --color-teal-800: #094a4e;
   --color-teal-900: #073538;
 
-  /* Purple — PROVISIONAL. No real purple exists anywhere in the repo (logo,
-     raster assets, live site are all teal-only). Derived from build-plan.md's
-     explicitly-approximate mock stops (~#7F77DD / ~#534AB7 / ~#26215C / ~#EEEDFE)
-     as a swap-ready placeholder. Replace these 10 values in place once the
-     client provides the real brand purple — every purple-* consumer updates
-     automatically. Do not treat as colour truth. */
-  --color-purple-50: #f7f6fe;
-  --color-purple-100: #eeedfe;
-  --color-purple-200: #c9c6f3;
-  --color-purple-300: #a49ee8;
-  --color-purple-400: #7f77dd;
-  --color-purple-500: #6961ca;
-  --color-purple-600: #534ab7;
-  --color-purple-700: #443c99;
-  --color-purple-800: #352f7a;
-  --color-purple-900: #26215c;
+  /* Purple — real brand colour, sourced from the designer-authored logo
+     files (docs/brand-assets/Logo/*Purple*). #761948 is the exact real
+     value, anchoring purple-600; the other 9 stops are generated in HSL
+     (constant hue, lightness curve mirroring the teal scale's proportions)
+     rather than hand-picked. */
+  --color-purple-50: #f5dee9;
+  --color-purple-100: #eec5d9;
+  --color-purple-200: #e29dc0;
+  --color-purple-300: #d573a5;
+  --color-purple-400: #c94a8a;
+  --color-purple-500: #97205c;
+  --color-purple-600: #761948; /* real brand purple */
+  --color-purple-700: #551234;
+  --color-purple-800: #350b21;
+  --color-purple-900: #220715;
 
   /* Neutral — matches existing --color-muted (= Tailwind gray-500) exactly */
   --color-neutral-50: #f9fafb;

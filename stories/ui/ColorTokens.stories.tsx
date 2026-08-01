@@ -16,16 +16,16 @@ const SCALE_HEX: Record<string, Record<number, string>> = {
     900: "#073538",
   },
   purple: {
-    50: "#f7f6fe",
-    100: "#eeedfe",
-    200: "#c9c6f3",
-    300: "#a49ee8",
-    400: "#7f77dd",
-    500: "#6961ca",
-    600: "#534ab7",
-    700: "#443c99",
-    800: "#352f7a",
-    900: "#26215c",
+    50: "#f5dee9",
+    100: "#eec5d9",
+    200: "#e29dc0",
+    300: "#d573a5",
+    400: "#c94a8a",
+    500: "#97205c",
+    600: "#761948",
+    700: "#551234",
+    800: "#350b21",
+    900: "#220715",
   },
   neutral: {
     50: "#f9fafb",
@@ -92,10 +92,7 @@ function ColorTokensPalette() {
   return (
     <div className="max-w-4xl">
       <ScaleSection scale="teal" />
-      <ScaleSection
-        scale="purple"
-        note="Provisional — placeholder pending client brand value"
-      />
+      <ScaleSection scale="purple" />
       <ScaleSection scale="neutral" />
 
       <div>
