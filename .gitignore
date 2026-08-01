@@ -48,3 +48,6 @@ yarn-error.log*
 .vercel
 .claude/
 .playwright-mcp/
+
+# Local planning notes
+tasks/

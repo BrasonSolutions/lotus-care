@@ -1,8 +1,8 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { useState, useEffect } from "react";
-import { Container } from "@/components/layout";
+import { useScrolled } from "@/hooks/use-scrolled";
+import { useMediaQuery, NAV_BREAKPOINT_QUERY } from "@/hooks/use-media-query";
 
 const links = [
   { label: "Overview", href: "/careers" },
@@ -16,21 +16,19 @@ const links = [
 
 export function CareersSubnav() {
   const pathname = usePathname() ?? "";
-  const [scrolled, setScrolled] = useState(false);
+  const scrolled = useScrolled();
+  // The subnav duplicates links already in the main navbar's mobile
+  // "Careers" submenu, so it only exists at the desktop (nav) breakpoint
+  // where the main navbar shows its full inline layout instead of the
+  // hamburger menu.
+  const isDesktop = useMediaQuery(NAV_BREAKPOINT_QUERY);
 
-  useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50);
-    handleScroll();
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  if (!isDesktop || scrolled) return null;
 
   return (
     <nav
       aria-label="Careers sections"
-      className={`fixed left-0 right-0 z-30 bg-white border-b border-gray-100 shadow-sm transition-all duration-300 ${
-        scrolled ? "top-16" : "top-16 lg:top-[6.5rem]"
-      }`}
+      className="fixed left-0 right-0 top-[6.5rem] z-30 bg-white border-b border-gray-100 shadow-sm"
     >
       <Container>
         <div className="relative">
