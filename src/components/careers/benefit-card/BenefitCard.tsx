@@ -1,14 +1,21 @@
 import type { Benefit } from "@/data/careers";
 import { getCareersIcon } from "@/components/careers/careers-icons";
 
+const ACCENT = {
+  teal: { chip: "bg-primary/15 text-primary" },
+  purple: { chip: "bg-purple-600/15 text-purple-600" },
+} as const;
+
 interface BenefitCardProps {
   benefit: Benefit;
+  accent?: keyof typeof ACCENT;
 }
 
-export function BenefitCard({ benefit }: BenefitCardProps) {
+export function BenefitCard({ benefit, accent = "teal" }: BenefitCardProps) {
+  const a = ACCENT[accent];
   return (
-    <div className="flex gap-4 p-5 bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
-      <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0 mt-0.5 text-primary">
+    <div className="flex gap-4 p-6 sm:p-8 bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+      <div className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 ${a.chip}`}>
         {getCareersIcon(benefit.icon)}
       </div>
       <div>
