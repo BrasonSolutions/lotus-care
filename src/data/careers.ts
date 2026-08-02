@@ -285,3 +285,60 @@ export const companyValues: CompanyValue[] = [
     icon: "user-group",
   },
 ];
+
+export interface StatItem {
+  label: string;
+  value: string;
+}
+
+export interface GalleryImage {
+  src: string;
+  alt: string;
+  caption: string;
+}
+
+export interface VideoTestimonial {
+  name: string;
+  role: string;
+  poster: string;
+  /** Absent until real footage is provided. */
+  videoSrc?: string;
+  /** Absent until a real .vtt captions file is provided. */
+  captionsSrc?: string;
+}
+
+export const employerStats: StatItem[] = [
+  { label: "Staff retention rate", value: "87%" },
+  { label: "Internal promotions per year", value: "40%" },
+  { label: "Average tenure", value: "4+ yrs" },
+  { label: "Staff recommend Lotus Care", value: "9/10" },
+];
+
+export const cultureGalleryImages: GalleryImage[] = [
+  {
+    src: "/images/stock/team-meeting.jpg",
+    alt: "Lotus Care staff gathered for a team meeting",
+    caption: "Weekly team catch-ups",
+  },
+  {
+    src: "/images/stock/warm-home.jpg",
+    alt: "A warmly furnished Lotus Care residential home living room",
+    caption: "Homes designed to feel like home",
+  },
+  {
+    src: "/images/stock/dignity-activity.jpg",
+    alt: "Staff member supporting a resident during a group activity",
+    caption: "Person-centred activities",
+  },
+  {
+    src: "/images/stock/clinical-consultation.jpg",
+    alt: "Staff nurse in a clinical consultation with a colleague",
+    caption: "Strong clinical support",
+  },
+];
+
+export const videoTestimonials: VideoTestimonial[] = [
+  { name: "Sarah M.", role: "Residential Support Worker", poster: "/images/stock/dignity-activity.jpg" },
+  { name: "James O.", role: "Social Care Leader", poster: "/images/stock/team-meeting.jpg" },
+  { name: "Aoife N.", role: "Staff Nurse (RNID)", poster: "/images/stock/clinical-consultation.jpg" },
+];
