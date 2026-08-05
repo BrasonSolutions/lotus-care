@@ -7,6 +7,7 @@ import type { BoardMember } from "@/data/team";
 import { SectionTitle } from "@/components/section-title";
 import { TeamModal } from "@/components/team-modal";
 import { Container } from "@/components/layout";
+import { LotusPhotoMask } from "@/components/lotus-mark";
 
 interface BoardSectionProps {
   title?: string;
@@ -37,20 +38,29 @@ export function BoardSection({
               onClick={() => setSelectedMember(member)}
               className={`card-hover reveal-delay-${i + 1} bg-white/10 backdrop-blur-sm rounded-2xl p-8 text-center group border border-white/10 hover:border-accent/30 transition-colors focus-ring-white`}
             >
-              <div className="w-20 h-20 rounded-full mx-auto mb-4 overflow-hidden ring-2 ring-white/20 group-hover:scale-105 transition-transform">
-                {member.image ? (
-                  <Image
-                    src={member.image}
-                    alt={member.name}
-                    width={80}
-                    height={80}
-                    className="w-full h-full object-cover object-top"
-                  />
-                ) : (
-                  <div className="w-full h-full bg-gradient-to-br from-accent to-primary flex items-center justify-center text-white text-2xl font-bold">
-                    {member.initials}
-                  </div>
-                )}
+              <div className="relative w-20 h-20 mx-auto mb-4 group-hover:scale-105 transition-transform">
+                <div className="absolute inset-0">
+                  <LotusPhotoMask className="w-full h-full" aria-hidden="true">
+                    <div className="w-full h-full bg-accent" />
+                  </LotusPhotoMask>
+                </div>
+                <div className="absolute inset-[2px]">
+                  <LotusPhotoMask className="w-full h-full">
+                    {member.image ? (
+                      <Image
+                        src={member.image}
+                        alt={member.name}
+                        width={80}
+                        height={80}
+                        className="w-full h-full object-cover object-top"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-gradient-to-br from-accent to-primary flex items-center justify-center text-white text-2xl font-bold">
+                        {member.initials}
+                      </div>
+                    )}
+                  </LotusPhotoMask>
+                </div>
               </div>
               <h3 className="text-lg font-bold text-white group-hover:text-accent transition-colors">
                 {member.name}

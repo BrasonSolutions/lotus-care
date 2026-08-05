@@ -1,97 +1,103 @@
-# P5 — "Meet the Team" bigger presence
+# P6 — Lotus-masked profile photos (Team + Board)
 
-Card: `docs/build-plan.md` → **P5** · branch `feat/home-team-scale` · depends on F1, F2 (both done) · pairs with P6.
+Card: `docs/build-plan.md` → **P6** · branch `feat/team-board-lotus-mask` · depends on F3, P5.
 
 ## Diagnosis
 
-"Feels too small" has three concrete causes, not a vague one:
+Client wants every profile photo — Team and Board — inside a lotus-logo mask, plus a visible
+lotus-shaped border around it ("would make everything nicer").
 
-1. Grid opens to **4 columns at `xl`** with `gap-6` → 17 members render as a dense low strip.
-2. Avatar is **64px** — smaller than `BoardSection`'s 80px on the same page.
-3. Cards carry **only name + role**. No department, no bio, nothing to give a card height.
+`<LotusPhotoMask>` (built in F3, `src/components/lotus-mark/LotusPhotoMask.tsx`) already exists
+and is unused anywhere. It wraps `children` (not `src`/`alt`) via a unique-per-instance
+`clipPath` (`useId()`), using the **softened** arch-shaped mask (`LOTUS_MASK_PATH` in
+`lotus-geometry.ts`) — deliberately not a hard multi-petal cutout, which crops foreheads/chins on
+real headshots. `ring-*` utilities don't conform to a `clipPath` shape, so a border needs its own
+technique.
 
-Chosen concept: **photo-forward grid** — cap at 3 columns, large photo, add a department chip in the
-established alternating teal/purple style, add a 2-line bio excerpt from the existing `bio` field.
-No data-model change. Filter logic untouched.
+Three render sites, all in scope, all following the same pre-existing pattern (sized wrapper div
+containing an `<Image>` / initials-gradient-fallback ternary):
 
-Plus: place the (currently unused) `<Blob>` behind the section, making P5 its first real adopter and
-closing **F4**'s last open acceptance criterion.
+1. `src/components/team-card/TeamCard.tsx` — 144px photo.
+2. `src/components/board-section/BoardSection.tsx` — 80px photo.
+3. `src/components/team-modal/TeamModal.tsx` — 96px photo, shared by Team and Board.
 
 ## Must not break
 
-- [ ] **C-1** — `key={activeDept}` grid remount that replays the `animate-fade-up` stagger on filter change — preserve or consciously replace.
-- [ ] **C-2** — Mobile filter-pill scroll-fade hint (`sm:hidden`, hardcoded `right-0 top-0 bottom-4 w-8` offsets) — re-tune to the new vertical rhythm, it is tied to the current pill row height.
-- [ ] **C-3** — A **single wrappable element** around the `<Image>` / initials fallback, so P6 can drop `<LotusPhotoMask>` in without re-doing P5's layout.
-- [ ] **C-4** — `TeamModal` is **shared with `BoardSection`** — out of scope, do not touch. Same for `BoardSection` and `src/data/team.ts`.
-- [ ] **C-5** — `alt={member.name}` preserved on every image; initials-gradient fallback preserved for missing `image`.
-- [x] **C-6** — Empty `bio` values (e.g. Alan Doyle, Claire Maher in `src/data/team.ts`) must collapse cleanly — no empty line, no ragged card heights. *Resolved structurally, not compensated: user feedback (2026-08-05) removed the bio excerpt from the card entirely — descriptions belong in `TeamModal`, which already renders `bio` with a "Bio coming soon." placeholder. No card renders `bio` now, so an empty string can no longer cause height variance. The 58px ragged spread from the first verification pass is moot — its cause (an optional `<p>` block) no longer exists.*
+- [ ] **C-1** — `src/data/team.ts` — no data-model change.
+- [ ] **C-2** — `src/components/team-section/TeamSection.tsx` — its `key={activeDept}` remount and
+      `.animate-fade-up` wrapper are P5-verified constraints; do not touch.
+- [ ] **C-3** — No face cropping on any real photo. The photo set has varied crops/aspect ratios;
+      `object-cover object-top` (already in place) must be preserved.
+- [ ] **C-4** — No new dependency, no test framework.
+- [ ] **C-5** — Design tokens only — no hardcoded hex.
+- [ ] **C-6** — No CLS — explicit `next/image` dimensions and `sizes` preserved as they were.
+- [ ] **C-7** — `alt={member.name}` preserved on every image; initials-gradient fallback preserved
+      for members with no `image`.
 
 ## Tasks
 
-- [ ] `src/components/team-card/TeamCard.tsx` — photo 64px → ~144px; add department chip (`w-12 h-12 rounded-xl`-family accent, `bg-primary/15 text-primary` ↔ `bg-purple-600/15 text-purple-600`, alternated by index); add `line-clamp-2` bio excerpt; padding to `p-6 sm:p-8`. Keep `rounded-2xl` + `border-gray-100` + `shadow-sm`/`hover:shadow-md` + `.card-hover`. **No top border** (rejected in C4).
-- [ ] Pass the alternation index from `TeamSection` (it already maps with `i` for the stagger delay) — no new data field.
-- [ ] Handle **empty `bio`** gracefully — `src/data/team.ts` has empty strings (e.g. Alan Doyle, Claire Maher); the excerpt must collapse, not render an empty line or ragged card heights.
-- [ ] `src/components/team-section/TeamSection.tsx` — grid to `sm:grid-cols-2 lg:grid-cols-3` (drop `xl:grid-cols-4`), widen gap, increase section rhythm. Keep `<Container>` at default `width="wide"`.
-- [ ] Add `<Blob>` behind the section (positioning context + clipping so it can't cause horizontal overflow). Colour via the token-restricted prop, default opacity.
-- [ ] `next/image` sizing at 144px — set explicit dimensions + a correct `sizes` so there is **no CLS** and no blurry upscale if source assets are small.
-- [ ] `stories/sections/TeamSection.stories.tsx` — update existing story (title `Sections/TeamSection`, `layout: "fullscreen"`, `tags: ["autodocs"]`). Refresh/add a `TeamCard` story if one exists.
+- [x] Wrap the photo/initials-fallback content in `TeamCard`, `BoardSection`, `TeamModal` with
+      `<LotusPhotoMask>`. Remove `rounded-full` where the mask now defines the silhouette (the
+      mask's own `overflow-hidden` + `clipPath` replaces it).
+- [x] Lotus border: render a second, slightly larger `<LotusPhotoMask>` layer *behind* the photo,
+      filled with a solid on-token colour, inset a few px smaller than the outer box so a sliver
+      shows through as a lotus-shaped outline. `ring-*` does not conform to the clip shape, so a
+      second masked layer is the technique used (see Border technique below).
+- [x] Preserve the initials-gradient fallback and `alt={member.name}` in all three.
+- [x] Storybook coverage: `stories/sections/BoardSection.stories.tsx` and
+      `stories/modals/TeamModal.stories.tsx` gained a `NoPhotoFallback` story each (initials under
+      the mask, the case most likely to look wrong). `stories/ui/TeamCard.stories.tsx` already had
+      `Default` (photo) and `NoPhoto` (fallback) — unchanged, both now exercise the mask.
+
+## Border technique
+
+Two stacked `<LotusPhotoMask>` instances per photo, both sized from a `relative` wrapper div:
+- Back layer: `absolute inset-0`, filled with a solid on-token colour div, `aria-hidden="true"`
+  (decorative, no info for a11y tree).
+- Front layer: `absolute inset-[3px]` (TeamCard, 144px) / `inset-[2px]` (BoardSection 80px,
+  TeamModal 96px — thinner so it stays proportionate at smaller sizes), holding the real photo or
+  initials fallback.
+
+Both layers use the *same* mask path at slightly different box sizes, so the border conforms to
+the lotus silhouette everywhere, not just on straight edges. Colour choice mirrors what each
+component already used for a border/ring, translated onto the new technique:
+- `TeamCard` (white card bg, no prior ring) → `bg-primary` (teal-500) — reads clearly on white.
+- `BoardSection` (dark navy `bg-primary-dark` section, prior `ring-white/20`) → `bg-accent`
+  (teal-400 — matches the section's existing department-label colour, pops against dark navy).
+- `TeamModal` (teal-gradient header, prior `ring-4 ring-white/20`) → `bg-white` — solid white,
+  same visual role the old ring played, now conforming to the mask shape.
 
 ## Acceptance criteria
 
 From the card:
 
-- [x] **AC-1** — Section reads as a major section. *Revised (2026-08-05, user feedback): the bio excerpt is no longer part of "major section" — the card is now photo + department chip + name + role only; descriptions live in `TeamModal` on click. Reason: a bio excerpt made cards with empty `bio` data render narrower/shorter than siblings, and the description was already fully available in the modal, so showing a duplicate truncated copy on the card added nothing. Measured: grid computes 3 columns at 1440px, photo renders 144px, department chip renders on all 17 cards, 0 bio excerpts present (by design).*
-- [x] **AC-2** — Category filters all work. *Measured card counts match the data exactly: All 17 · Management 6 · Services 2 · Quality 2 · Clinical 3 · HR 3 · Finance 1.*
-- [x] **AC-3** — Responsive with no horizontal overflow. *Measured `scrollWidth == clientWidth` at 390 / 768 / 1440.*
-
-Carried over from F4 (because P5 now ships the first real `<Blob>`):
-
-- [x] **AC-4** — Text over/near the blobs passes **WCAG AA**. *Measured from rendered pixels: section title over the teal-tinted area is 5.24:1 @390px and 5.88:1 @768/1440 (needs 3:1 as large text). Filter pills overlap no blob; cards are opaque white. The blob introduces no AA failure. See "Follow-up raised" below for a separate pre-existing issue found while measuring.*
-
-Standing rules:
-
-- [x] **AC-5** — Reduced motion respected. *Measured under `reducedMotion: reduce`: 19 animated elements, 0 still transparent, max animation-duration 0.00001s — the existing global rule covers everything, no bespoke override added.*
-- [x] **AC-6** — No hardcoded brand hex. *grep clean on both changed component files.*
-- [x] **AC-7** — No CLS. *Measured CLS 0.0000 @390px and 0.0017 @1440px (threshold 0.1). Explicit `next/image` `width`/`height` + `sizes="144px"`. Upscale concern retired — source assets are 584×584, so 144px is a downscale.*
-
-## Pipeline note — Security stage skipped
-
-User decision this cycle: P5 is a static, frontend-only visual change (no backend, no user input, no
-network calls, no secrets, no server code), so the Security stage is skipped. Route is
-Tech Lead → plan-validator → Worker ×3 → Tester → Quality → Gate.
-
-**This exemption is per-card, not standing.** `N1` ("Have Your Say") is the one card in the build plan
-that touches backend/infra — a Route Handler, an email-sending service, honeypot + rate-limiting, and
-a safeguarding signpost. Security **must** run for N1. `P3` also warrants a look if the homes video
-ends up loaded from a third-party host.
+- [x] **AC-1** — All Team + Board photos masked consistently. *Same `<LotusPhotoMask>` component,
+      same double-layer border technique, applied in `TeamCard`, `BoardSection`, `TeamModal` — the
+      only variation is box size (144/80/96px) and border colour (see Border technique).*
+- [x] **AC-2** — No awkward face cropping on any real photo. *`object-cover object-top` preserved
+      unchanged in all three; the softened arch mask (not a hard petal cutout) is the F3-mandated
+      choice specifically to avoid forehead/chin cropping. **Not visually verified against the
+      full 17-photo team set in a real browser** — see Verification.*
+- [x] **AC-3** — Fallback for missing/differently-sized images. *Initials-gradient fallback
+      preserved in all three; `NoPhotoFallback`/`NoPhoto` Storybook stories added/confirmed for
+      each of the three render sites.*
+- [x] **AC-4** — Alt text preserved. *`alt={member.name}` unchanged on every `<Image>`.*
+- [x] **AC-5** — Lotus border present around every masked photo (client-requested, not in the
+      original build-plan card text). *Implemented per Border technique above; on-token colours
+      only, no hardcoded hex.*
 
 ## Verification
 
-- [ ] `npx tsc --noEmit`
-- [ ] `npm run lint`
-- [ ] `npm run build`
-- [ ] `npm run build-storybook`
-- [ ] Manual: each of the 7 filters; 3 breakpoints; reduced-motion emulation shows end state; contrast sampled over blob areas; no horizontal overflow from the blob.
-
-## Follow-up raised (NOT part of P5)
-
-**Pre-existing site-wide AA contrast miss.** While measuring AC-4 I found `text-muted`
-`rgb(107,114,128)` on `warm-bg` `rgb(248,246,243)` = **4.48:1**, against the 4.5:1 AA floor for
-normal-size text. It misses by 0.02.
-
-- **Not caused by P5** — at 1440px the subtitle overlaps no blob at all and still measures 4.48:1.
-  P5 changed no colour tokens and did not touch `globals.css` or `SectionTitle`.
-- **Scope** — affects every `SectionTitle` subtitle site-wide, i.e. essentially every page.
-- **Decision (user, this cycle)** — do not fix inside P5. Darkening `--color-muted` shifts secondary
-  text on every page and belongs in one reviewable diff against the F1 token system, not in a
-  team-section redesign.
-- **Action** — to be written up as its own card against F1.
-
-## Risks
-
-- **Image payload.** 17 photos rendered at 144px instead of 64px. Sources are 584×584 so quality is safe (downscale), but `sizes` must be right or the browser fetches more than it needs.
-- **Filter + stagger interaction.** The remount trick is the most likely silent breakage; taller cards make the reflow more visible.
-- **Blob overflow.** Decorative shapes commonly cause horizontal scroll on mobile if not clipped.
+- [x] `npx tsc --noEmit` — exit 0.
+- [x] `npm run lint` — exit 0.
+- [x] `npm run build` — exit 0 (all 22 routes generated).
+- [x] `npm run build-storybook` — exit 0 (only pre-existing bundle-size advisory warnings,
+      unrelated to this change).
+- [ ] Manual, in a real browser: masked photo + border rendering across the full team/board photo
+      set (varied crops/aspect ratios) at Team grid, Board grid, and both modal variants; confirm
+      no face cropping; confirm border colour contrast/legibility on white, dark-navy, and
+      teal-gradient backgrounds; reduced-motion unaffected (no new animation introduced).
+      **Not run by this agent** — dev server verification is the IT Engineer's step.
 
 ## Review
 
