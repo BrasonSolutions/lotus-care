@@ -99,6 +99,7 @@ Never do routing yourself. Never read result `status` fields to decide next step
 - Never mark a task complete without proving it works
 - Ask yourself: "Would a staff engineer approve this?"
 - Run tests, check logs, demonstrate correctness
+- **Always start the local dev server (`npm run dev`) when opening a new PR**, and leave it running at the end of the turn so the user can check the change in-browser without having to ask. Don't wait to be told — this is standing practice for every PR, not a one-off. Stop the server once the user confirms they're done reviewing, or before starting the next card's work.
 
 ### Demand Elegance (Balanced)
 - For non-trivial changes: pause and ask "is there a more elegant way?"
