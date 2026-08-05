@@ -1,19 +1,21 @@
-# C7: How We Hire
+# Q1: Quality Overview revamp
 
 Full plan: `C:\Users\andre\.claude\plans\dynamic-wishing-sunset.md`.
 
 ## Tasks
-- [x] `src/data/careers.ts` — expand `processSteps` from 4 to 6 entries (Apply Online, Screening Call, Interview, Offer, Pre-Employment Checks, Start)
-- [x] `how-we-hire/page.tsx` — replace `<ProcessTimeline>` with shared `<Timeline orientation="horizontal">` (C6), mapping `step` → `number`
-- [x] Delete unused `src/components/careers/process-timeline/` directory
-- [x] `FaqAccordion.tsx` — add `.faq-panel` transition class to `globals.css` (max-height + opacity fade, eased, ~300-400ms), swap onto the `<dd>`
+- [x] `quality/page.tsx` — remove `stat`/`chips`/`avatarImages`/`avatarCaption` from `<CareersHero>` call
+- [x] `quality/page.tsx` — add `<SectionTitle>` above the testimonial pull-quote
+- [x] `quality/page.tsx` — add alternating `accent={i % 2 === 0 ? "teal" : "purple"}` to `<HubNavCard>` map
 - [x] Verify: `npx tsc --noEmit`, `npm run lint`, `npm run build`
-- [x] Verify: manual check — 6-step horizontal animated timeline (desktop) collapses to vertical (mobile), FAQ accordion fades smoothly, reduced-motion respected, `git grep ProcessTimeline` clean
+- [x] Verify: manual check — clean hero, testimonial heading, alternating hub card accents, sub-pages unaffected
 
 ## Review
 
-Both C7 asks are done:
-- **Hiring timeline**: `processSteps` in `src/data/careers.ts` now has the full 6 steps (split the old combined "Offer & Start" into Offer / Pre-Employment Checks / Start, keeping the existing Garda Vetting/references/occupational-health detail). `how-we-hire/page.tsx` now renders these through the shared `<Timeline orientation="horizontal">` (C6) instead of the bespoke `<ProcessTimeline>`, mapping `step` → `number` at the call site — same pattern C5 used for the Training page. The now-unused `src/components/careers/process-timeline/` directory was deleted (`git grep ProcessTimeline` is clean). No changes needed to `Timeline` itself — its horizontal grid already sizes columns dynamically (`repeat(steps.length, ...)`), so 6 steps just work, complete with connecting line, scroll-triggered stagger animation, and automatic collapse to a vertical list below `md`.
-- **FAQ accordion**: added a `.faq-panel` class in `globals.css` (next to the existing `.card-hover`/`.reveal` convention) that transitions `max-height` (400ms) and `opacity` (300ms) on the site's standard `cubic-bezier(0.25, 0.1, 0.25, 1)` easing, replacing the old `transition-all duration-300` with no fade. `FaqAccordion.tsx`'s `<dd>` now toggles `max-h-96 opacity-100` / `max-h-0 opacity-0` against that class. Reduced motion needed no extra work — `globals.css`'s existing `@media (prefers-reduced-motion: reduce)` block already collapses `transition-duration` to near-zero on `*, *::before, *::after`, which covers this element automatically.
+Applied the same three changes C1 made to the Careers overview, to `src/app/quality/page.tsx`:
+- **Hero**: dropped the `stat`/`chips`/`avatarImages`/`avatarCaption` overlay props from `<CareersHero>` — matches Careers' current simplified hero (title/subtitle/image only).
+- **Testimonial section**: added a `<SectionTitle title="In Their Own Words" subtitle="...">` above the existing single anonymized resident pull-quote. Kept it as a single quote rather than building a `TestimonialMarquee` — Quality only has one real testimonial-shaped item (`anonymizedTestimonial` in `src/data/quality.ts`), unlike Careers' 4 real entries, so a marquee would require inventing content.
+- **Hub cards**: added index-based `accent={i % 2 === 0 ? "teal" : "purple"}` to the 3 `<HubNavCard>`s, matching Careers' alternation exactly (chip-only accent, no top border, per existing `HubNavCard` implementation).
 
-Verified: `npx tsc --noEmit`, `npm run lint`, `npm run build` all pass. Manually confirmed via Playwright at desktop (1440px — 6-step horizontal timeline with connecting line and correct copy/order) and mobile (390px — clean vertical collapse, all 6 steps present and readable, no clipping). Confirmed the FAQ panel's computed transition applies `max-height 0.4s, opacity 0.3s` (the `ease` timing-function shown is the literal serialization of `cubic-bezier(0.25, 0.1, 0.25, 1)`, which is mathematically identical to the `ease` keyword) and opens/closes correctly by clicking through several questions.
+Deliberately did not add a "pillars" grid analogous to Careers' "Our Values" section — that would duplicate Q2's explicit scope (the three-pillars infographic redesign with lotus-bloom animation), so it's left entirely to that card.
+
+Verified: `npx tsc --noEmit`, `npm run lint`, `npm run build` all pass. Manually confirmed via Playwright at desktop (1440px) and mobile (390px) — hero renders clean, hub cards alternate teal/purple, testimonial section has its new heading. Confirmed all three Quality sub-pages (`/quality/human-rights`, `/quality/mdt`, `/quality/safety-improvement`) still return 200 and are unaffected.

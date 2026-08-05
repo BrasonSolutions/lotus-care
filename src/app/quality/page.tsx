@@ -3,6 +3,7 @@ import { CareersHero } from "@/components/careers/careers-hero";
 import { HubNavCard } from "@/components/careers/hub-nav-card";
 import { TestimonialCard } from "@/components/careers/testimonial-card";
 import { CareersCTAStrip } from "@/components/careers/careers-cta-strip";
+import { SectionTitle } from "@/components/section-title";
 import { Reveal } from "@/components/reveal";
 import { qualityHub, hubCards, anonymizedTestimonial } from "@/data/quality";
 import { Container } from "@/components/layout";
@@ -19,14 +20,6 @@ export default function QualityPage() {
         title={qualityHub.heroTitle}
         subtitle={qualityHub.heroSubtitle}
         image="/images/stock/warm-home.jpg"
-        stat={{ value: "8", label: "Homes" }}
-        chips={["Rights-Based", "HIQA Registered"]}
-        avatarImages={[
-          "/images/staff/Louise-Kidney.png",
-          "/images/staff/Claire-Maher.png",
-          "/images/staff/Caithriona-Lynch.jpg",
-        ]}
-        avatarCaption="The people behind these standards."
       />
 
       {/* Intro */}
@@ -42,8 +35,8 @@ export default function QualityPage() {
       <section className="pb-16 sm:pb-20">
         <Container>
           <Reveal className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {hubCards.map((card) => (
-              <HubNavCard key={card.title} {...card} />
+            {hubCards.map((card, i) => (
+              <HubNavCard key={card.title} {...card} accent={i % 2 === 0 ? "teal" : "purple"} />
             ))}
           </Reveal>
         </Container>
@@ -53,6 +46,10 @@ export default function QualityPage() {
       <section className="py-16 sm:py-20 bg-white">
         <Reveal>
           <Container width="reading" padded className="text-center">
+            <SectionTitle
+              title="In Their Own Words"
+              subtitle="What the people we support say about life at Lotus Care."
+            />
             <TestimonialCard testimonial={anonymizedTestimonial} />
           </Container>
         </Reveal>
