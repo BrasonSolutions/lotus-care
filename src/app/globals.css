@@ -199,14 +199,14 @@ body {
   transform-box: fill-box;
   transform-origin: center;
   opacity: 0;
-  transform: scale(0.3);
+  scale: 0.3;
   transition: opacity 450ms cubic-bezier(0.34, 1.56, 0.64, 1),
-    transform 450ms cubic-bezier(0.34, 1.56, 0.64, 1);
+    scale 450ms cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .lotus-bloom.in-view [data-petal] {
   opacity: 1;
-  transform: scale(1);
+  scale: 1;
 }
 
 .lotus-bloom.in-view [data-petal="center"] {
@@ -222,6 +222,41 @@ body {
 .lotus-bloom.in-view [data-petal="upper-left"],
 .lotus-bloom.in-view [data-petal="upper-right"] {
   transition-delay: 480ms;
+}
+
+/* Outer petal tips: continuous idle sway once bloomed in, independent of
+   the entrance transition above (uses the standalone `rotate` property so
+   it never fights the bloom's `scale` transition on the same element). */
+@keyframes petal-sway {
+  0%,
+  100% {
+    rotate: -3deg;
+    scale: 1;
+  }
+  50% {
+    rotate: 3deg;
+    scale: 1.04;
+  }
+}
+
+.lotus-bloom.in-view [data-tier="outer"] {
+  animation: petal-sway 7s ease-in-out infinite;
+}
+
+.lotus-bloom.in-view [data-petal="bottom"] [data-tier="outer"] {
+  animation-delay: 0s;
+}
+.lotus-bloom.in-view [data-petal="left"] [data-tier="outer"] {
+  animation-delay: -1.4s;
+}
+.lotus-bloom.in-view [data-petal="right"] [data-tier="outer"] {
+  animation-delay: -2.8s;
+}
+.lotus-bloom.in-view [data-petal="upper-left"] [data-tier="outer"] {
+  animation-delay: -4.2s;
+}
+.lotus-bloom.in-view [data-petal="upper-right"] [data-tier="outer"] {
+  animation-delay: -5.6s;
 }
 
 .foundation-fade {
@@ -386,9 +421,14 @@ body {
   }
 
   .pillar-rise,
-  .lotus-bloom [data-petal],
   .foundation-fade {
     opacity: 1;
     transform: none;
+  }
+
+  .lotus-bloom [data-petal] {
+    opacity: 1;
+    scale: none;
+    rotate: none;
   }
 }
