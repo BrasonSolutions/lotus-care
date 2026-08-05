@@ -1,90 +1,87 @@
-# P6 — Lotus-masked profile photos (Team + Board)
+# P4 — Services section: animated lotus + blobs
 
-Card: `docs/build-plan.md` → **P6** · branch `feat/team-board-lotus-mask` · depends on F3, P5.
+Card: `docs/build-plan.md` → **P4** · branch `feat/home-services-lotus-anim` · depends on F1, F3, F4.
 
 ## Diagnosis
 
-Client wants every profile photo — Team and Board — inside a lotus-logo mask, plus a visible
-lotus-shaped border around it ("would make everything nicer").
+Services section (`src/components/services-section/ServicesSection.tsx`) is static: a centred
+`SectionTitle` followed by a 3-column `ServiceCard` grid (two teal image cards, four white icon
+cards, three of which link out to `/quality/*`). Client wants an animated lotus on the side, petals
+animating independently.
 
-`<LotusPhotoMask>` (built in F3, `src/components/lotus-mark/LotusPhotoMask.tsx`) already exists
-and is unused anywhere. It wraps `children` (not `src`/`alt`) via a unique-per-instance
-`clipPath` (`useId()`), using the **softened** arch-shaped mask (`LOTUS_MASK_PATH` in
-`lotus-geometry.ts`) — deliberately not a hard multi-petal cutout, which crops foreheads/chins on
-real headshots. `ring-*` utilities don't conform to a `clipPath` shape, so a border needs its own
-technique.
+Card Q2 (`src/components/quality/quality-pillars/QualityPillars.tsx`) already built this exact
+animation: `<LotusMark tone="color">` with a `lotus-bloom` class, toggled by `useInView()`, petals
+staggered via `.lotus-bloom [data-petal="…"]` attribute-selector delays in `globals.css`
+(lines ~198–225). That CSS is already wired into the global `@media (prefers-reduced-motion:
+reduce)` block, and `useInView` itself returns `inView: true` immediately when the user prefers
+reduced motion — both mechanisms are reused as-is, no new CSS added.
 
-Three render sites, all in scope, all following the same pre-existing pattern (sized wrapper div
-containing an `<Image>` / initials-gradient-fallback ternary):
-
-1. `src/components/team-card/TeamCard.tsx` — 144px photo.
-2. `src/components/board-section/BoardSection.tsx` — 80px photo.
-3. `src/components/team-modal/TeamModal.tsx` — 96px photo, shared by Team and Board.
+`ServicesSection` was not `relative overflow-hidden`, so it had no positioning ancestor for `<Blob>`
+(`src/components/blob/Blob.tsx`, built in F4) — same requirement `TeamSection` already satisfies for
+its two corner blobs.
 
 ## Must not break
 
-- [ ] **C-1** — `src/data/team.ts` — no data-model change.
-- [ ] **C-2** — `src/components/team-section/TeamSection.tsx` — its `key={activeDept}` remount and
-      `.animate-fade-up` wrapper are P5-verified constraints; do not touch.
-- [ ] **C-3** — No face cropping on any real photo. The photo set has varied crops/aspect ratios;
-      `object-cover object-top` (already in place) must be preserved.
+- [ ] **C-1** — `src/data/services.ts` — no data-model change.
+- [ ] **C-2** — `src/components/service-card/ServiceCard.tsx` — not touched; the grid, its cards,
+      and every `href` (`/quality/mdt`, `/quality/human-rights`, `/quality/safety-improvement`)
+      stay exactly as they render today.
+- [ ] **C-3** — Animate `transform`/`opacity` only — no width/height/top/left animation, no
+      layout-affecting properties.
 - [ ] **C-4** — No new dependency, no test framework.
 - [ ] **C-5** — Design tokens only — no hardcoded hex.
-- [ ] **C-6** — No CLS — explicit `next/image` dimensions and `sizes` preserved as they were.
-- [ ] **C-7** — `alt={member.name}` preserved on every image; initials-gradient fallback preserved
-      for members with no `image`.
+- [ ] **C-6** — No CLS — the lotus is absolutely positioned (out of flow), so it reserves no box
+      and cannot shift `SectionTitle` or the grid.
+- [ ] **C-9** — `SectionTitle` stays centred on the page, matching every other section
+      (Careers Overview, Quality Overview, Team, Board, Our Homes) — the lotus must never consume
+      horizontal layout width next to it.
+- [ ] **C-7** — No horizontal overflow from the new blobs — section has `relative overflow-hidden`,
+      exactly as `TeamSection` does.
+- [ ] **C-8** — `src/components/team-*`, `src/components/board-section/` untouched (out of scope
+      for this card).
 
 ## Tasks
 
-- [x] Wrap the photo/initials-fallback content in `TeamCard`, `BoardSection`, `TeamModal` with
-      `<LotusPhotoMask>`. Remove `rounded-full` where the mask now defines the silhouette (the
-      mask's own `overflow-hidden` + `clipPath` replaces it).
-- [x] Lotus border: render a second, slightly larger `<LotusPhotoMask>` layer *behind* the photo,
-      filled with a solid on-token colour, inset a few px smaller than the outer box so a sliver
-      shows through as a lotus-shaped outline. `ring-*` does not conform to the clip shape, so a
-      second masked layer is the technique used (see Border technique below).
-- [x] Preserve the initials-gradient fallback and `alt={member.name}` in all three.
-- [x] Storybook coverage: `stories/sections/BoardSection.stories.tsx` and
-      `stories/modals/TeamModal.stories.tsx` gained a `NoPhotoFallback` story each (initials under
-      the mask, the case most likely to look wrong). `stories/ui/TeamCard.stories.tsx` already had
-      `Default` (photo) and `NoPhoto` (fallback) — unchanged, both now exercise the mask.
-
-## Border technique
-
-Two stacked `<LotusPhotoMask>` instances per photo, both sized from a `relative` wrapper div:
-- Back layer: `absolute inset-0`, filled with a solid on-token colour div, `aria-hidden="true"`
-  (decorative, no info for a11y tree).
-- Front layer: `absolute inset-[3px]` (TeamCard, 144px) / `inset-[2px]` (BoardSection 80px,
-  TeamModal 96px — thinner so it stays proportionate at smaller sizes), holding the real photo or
-  initials fallback.
-
-Both layers use the *same* mask path at slightly different box sizes, so the border conforms to
-the lotus silhouette everywhere, not just on straight edges. Colour choice mirrors what each
-component already used for a border/ring, translated onto the new technique:
-- `TeamCard` (white card bg, no prior ring) → `bg-primary` (teal-500) — reads clearly on white.
-- `BoardSection` (dark navy `bg-primary-dark` section, prior `ring-white/20`) → `bg-accent`
-  (teal-400 — matches the section's existing department-label colour, pops against dark navy).
-- `TeamModal` (teal-gradient header, prior `ring-4 ring-white/20`) → `bg-white` — solid white,
-  same visual role the old ring played, now conforming to the mask shape.
+- [x] Add `relative overflow-hidden` to the `<section>` and `relative` to the `<Container>`, same
+      positioning-ancestor pattern as `TeamSection`.
+- [x] Add two `<Blob>` instances at opposite corners (teal + purple, default opacity, no drift —
+      matches `TeamSection`'s existing non-animated precedent).
+- [x] Place `<LotusMark tone="color">` beside the heading. **Revised after IT Engineer verification**
+      (see Review): the original flex-row wrapper centred the lotus+title *pair* as a unit, pushing
+      the heading ~90px off page-centre versus every other `SectionTitle` on the site. Fixed by
+      wrapping `SectionTitle` in a plain `relative` div and giving the lotus
+      `absolute left-0 top-1/2 -translate-y-1/2`, `hidden` below `lg` — out of flow entirely, so it
+      can't affect `SectionTitle`'s width or centring, and can't overlap the heading/subtitle text.
+      `SectionTitle` itself remains untouched — still a self-contained component with its own
+      `reveal` animation, still the sole element in normal flow so it centres exactly as before.
+- [x] Give the lotus wrapper its own `useInView()` call (separate from the grid's existing one) and
+      reuse `.lotus-bloom`/`in-view` verbatim — same pattern as `QualityPillars`, not a new class.
+      Kept as its own hook call (rather than sharing the grid's) so the cards' existing
+      reveal-on-scroll timing is untouched.
+- [x] Leave the `ServiceCard` grid and its `useInView`/`ref` exactly as they were.
 
 ## Acceptance criteria
 
 From the card:
 
-- [x] **AC-1** — All Team + Board photos masked consistently. *Same `<LotusPhotoMask>` component,
-      same double-layer border technique, applied in `TeamCard`, `BoardSection`, `TeamModal` — the
-      only variation is box size (144/80/96px) and border colour (see Border technique).*
-- [x] **AC-2** — No awkward face cropping on any real photo. *`object-cover object-top` preserved
-      unchanged in all three; the softened arch mask (not a hard petal cutout) is the F3-mandated
-      choice specifically to avoid forehead/chin cropping. **Not visually verified against the
-      full 17-photo team set in a real browser** — see Verification.*
-- [x] **AC-3** — Fallback for missing/differently-sized images. *Initials-gradient fallback
-      preserved in all three; `NoPhotoFallback`/`NoPhoto` Storybook stories added/confirmed for
-      each of the three render sites.*
-- [x] **AC-4** — Alt text preserved. *`alt={member.name}` unchanged on every `<Image>`.*
-- [x] **AC-5** — Lotus border present around every masked photo (client-requested, not in the
-      original build-plan card text). *Implemented per Border technique above; on-token colours
-      only, no hardcoded hex.*
+- [x] **AC-1** — Petals animate independently on entrance/scroll. *`.lotus-bloom [data-petal]` in
+      `globals.css` staggers `center` → `bottom` → `left`/`right` → `upper-left`/`upper-right`,
+      toggled by the lotus wrapper's own `useInView()` — unchanged CSS, reused verbatim.*
+- [x] **AC-2** — Reduced-motion shows a static bloomed lotus (end state, not hidden/half-open).
+      *`useInView` returns `inView: true` immediately under `prefers-reduced-motion: reduce`, and
+      the existing global reduced-motion block snaps `.lotus-bloom [data-petal]` to
+      `opacity: 1; transform: none`. Both mechanisms pre-existed this card and needed no change.*
+- [x] **AC-3** — No CLS / jank; 60fps target. *Only `transform`/`opacity` animated; lotus is
+      `absolute`, out of flow, fixed size (`w-32 h-32`, `lg`+ only), no async image load. **Verified
+      by the IT Engineer in-browser: CLS 0.0000–0.0017 at 390/768/1440.***
+- [x] **AC-4** — Services cross-links to the Quality pages preserved. *`ServiceCard.tsx` and
+      `data/services.ts` untouched; confirmed post-build via `curl` against the rendered homepage —
+      `/quality/mdt`, `/quality/human-rights`, `/quality/safety-improvement` all present. **Verified
+      by the IT Engineer in-browser: all 3 links intact.***
+- [x] **AC-5** — (client-requested, verification round) `SectionTitle` stays centred on the page,
+      matching the other sections. *Lotus is out of flow (`absolute`), so `SectionTitle` is the sole
+      in-flow child of its wrapper and centres exactly as it did before this card. Hidden below `lg`
+      so it never risks overlapping the heading/subtitle on narrower viewports.*
 
 ## Verification
 
@@ -93,11 +90,18 @@ From the card:
 - [x] `npm run build` — exit 0 (all 22 routes generated).
 - [x] `npm run build-storybook` — exit 0 (only pre-existing bundle-size advisory warnings,
       unrelated to this change).
-- [ ] Manual, in a real browser: masked photo + border rendering across the full team/board photo
-      set (varied crops/aspect ratios) at Team grid, Board grid, and both modal variants; confirm
-      no face cropping; confirm border colour contrast/legibility on white, dark-navy, and
-      teal-gradient backgrounds; reduced-motion unaffected (no new animation introduced).
-      **Not run by this agent** — dev server verification is the IT Engineer's step.
+- [x] `curl` against the running dev server homepage — 200, `lotus-bloom` class present in the
+      rendered HTML, all three `/quality/*` cross-links present (checked before and after the
+      centring fix).
+- [x] Manual, in a real browser (IT Engineer, both rounds): 6 `[data-petal]` elements blooming with
+      staggered delays (0.30/0.36/0.42/0.48s) at 390/768/1440, all 3 Quality cross-links intact,
+      zero horizontal overflow, CLS 0.0000–0.0017, grid still 1/2/3 columns, reduced-motion snaps
+      all 6 petals to bloomed (maxDur 0.00001s). Second round confirmed the centring fix: `h2`
+      centre-x now agrees with viewport centre at 1440.
+- [ ] Not measured by either agent: contrast of card text against the low-opacity blobs, and
+      whether the lotus (hidden below `lg`) reappearing at exactly the `lg` breakpoint ever grazes
+      a longer custom `title`/`subtitle` than the defaults used in this build. Both are visual
+      calls best made by eye in the actual browser session.
 
 ## Review
 
