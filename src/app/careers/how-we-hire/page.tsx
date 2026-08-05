@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { CareersHero } from "@/components/careers/careers-hero";
 import { CareersBreadcrumb } from "@/components/careers/careers-breadcrumb";
-import { ProcessTimeline } from "@/components/careers/process-timeline";
+import { Timeline } from "@/components/timeline";
 import { FaqAccordion } from "@/components/careers/faq-accordion";
 import { CareersCTAStrip } from "@/components/careers/careers-cta-strip";
 import { processSteps, faqs } from "@/data/careers";
@@ -32,7 +32,14 @@ export default function HowWeHirePage() {
             <h2 className="text-2xl font-bold text-primary-dark mb-8">
               From Application to First Day
             </h2>
-            <ProcessTimeline steps={processSteps} />
+            <Timeline
+              orientation="horizontal"
+              steps={processSteps.map((s) => ({
+                number: s.step,
+                title: s.title,
+                description: s.description,
+              }))}
+            />
           </section>
 
           {/* Compliance note */}

@@ -113,6 +113,12 @@ body {
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
 }
 
+/* FAQ accordion panel open/close */
+.faq-panel {
+  transition: max-height 400ms cubic-bezier(0.25, 0.1, 0.25, 1),
+    opacity 300ms cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
 /* Input glow */
 .input-glow:focus {
   border-color: var(--color-primary);
