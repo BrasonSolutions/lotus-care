@@ -1,136 +1,205 @@
-# P2: Hero quick-action buttons
+# P3: Homes 50/50 row (video + existing carousel)
 
-Branch: `feat/home-hero-cta` (based on `feat/home-hero-redesign`, which stacks on `main`).
+Branch: `feat/home-homes-split-row`.
 
 ## Diagnosis
 
-P1 left the hero with a single CTA (`ctaLabel`/`ctaHref`, defaulting to "Read More" → `#about`)
-and a known, flagged contrast defect: the CTA's white label text on `bg-primary` (`#1badb2`)
-measured **~2.74:1** against its own fill — below the WCAG AA text minimum (4.5:1) — and the
-fill itself measured **2.31:1** against the `bg-primary-dark` section background — below the
-WCAG 2.1 SC 1.4.11 non-text/UI-component boundary minimum (3:1). P1 explicitly deferred both
-to this card. The hero also had no fast entry point to Services or the Careers hub.
+`HomesCarousel.tsx` was not a bare carousel widget — it owned its own section
+chrome (`<SectionTitle>`, `<Container>`, `id="homes"`) as well as all the
+interactive behaviour (scroll container, `scrollToIndex`/`scrollBy`, arrows,
+dots, `activeIndex`, auto-scroll gated on `prefers-reduced-motion`,
+`HomeModal`, `useInView`). "Drop it into the right half" could not mean
+nesting that whole section inside a half-width column — it needed an
+opt-in escape hatch for the chrome only, leaving every interactive piece
+untouched.
+
+There was also no homes montage video and no `public/videos/` directory —
+the client has not supplied one. The row had to be built swap-ready from a
+single config point rather than shipping a `<video>` with a missing `src`.
 
 ## Must not break
 
-- C-1: P1's layout, imagery, `HERO_IMAGE` constant, and message/subtitle contrast results
-  stay intact — this card adds CTAs, it does not re-do the hero.
-- C-2: `title` / `titleHighlight` / `subtitle` props unchanged.
-- C-3: Design tokens only — no hardcoded hex in the component.
+- C-1: `HomesCarousel`'s interactive behaviour (scroll, `scrollToIndex`,
+  `scrollBy`, arrows, dots, `activeIndex`, auto-scroll, `HomeModal`,
+  `useInView`) stays byte-for-byte identical for any existing caller that
+  passes no `embedded` prop.
+- C-2: `src/data/homes.ts` (the `Home` interface and the `homes` array) is
+  untouched — no data-model changes.
+- C-3: Design tokens only — no hardcoded hex in new/changed components.
 - C-4: No new dependencies, no test framework.
-- C-5: Every animation stays covered by the existing global `prefers-reduced-motion` block —
-  no bespoke per-component override.
-- C-6: No CLS. No horizontal overflow at 390px — CTAs wrap/stack gracefully.
-- C-7: Do not touch team, board, or quality components. `ServicesSection.tsx` may only gain
-  an anchor `id` if one is missing (it already has one — see Tasks).
-- C-8: Both CTAs keyboard-focusable with a visible focus indicator, using the project's
-  existing `focus-ring` / `focus-ring-white` utilities — no bespoke focus style.
+- C-5: Video/motion is gated on `prefers-reduced-motion` via JS (CSS cannot
+  stop `<video autoplay>`), reusing the project's existing reduced-motion
+  detection rather than a bespoke per-component check.
+- C-6: No layout shift — the video/poster panel reserves its aspect ratio
+  up front.
+- C-7: Do not touch team, board, hero, services, or quality components.
+- C-8: Keep `src/app/page.tsx` working — the eight homes still reach the
+  carousel.
+- C-9 (added after browser verification): the split row must not scroll
+  the page horizontally at any breakpoint — `document.documentElement.
+  scrollWidth <= clientWidth` at 390/768/1440.
 
 ## Tasks
 
-- [x] Checked `ServicesSection.tsx` — already has `id="services"` (line 23). No edit needed;
-      `ServicesSection.tsx` was not touched.
-- [x] Verified `/careers` route exists (`src/app/careers/page.tsx`, confirmed by `npm run build`
-      emitting a static `/careers` route).
-- [x] Replaced `HeroSectionProps`' single `ctaLabel`/`ctaHref` with
-      `primaryCtaLabel`/`primaryCtaHref` (default `"Our Services"` → `#services`) and
-      `secondaryCtaLabel`/`secondaryCtaHref` (default `"Careers"` → `/careers`). All four
-      remain optional with sensible defaults — `src/app/page.tsx` passes none of them
-      already, so it needed no change.
-- [x] Rendered two `<a>` CTAs in a `flex flex-col sm:flex-row gap-4 justify-center
-      lg:justify-start` wrapper (stacks under 640px, sits inline from `sm:` up, no overflow).
-- [x] Primary ("Our Services") — solid fill, reusing the `rounded-full` / generous padding /
-      `focus-ring` idiom: `bg-white text-primary-dark hover:bg-teal-100`.
-- [x] Secondary ("Careers") — outline/ghost on the dark hero, matching
-      `CareersCTAStrip.tsx`'s existing dark-background outline CTA pattern exactly:
-      `border-2 border-white text-white hover:bg-white/10 focus-ring-white`.
-- [x] Updated `stories/sections/HeroSection.stories.tsx` args to pass explicit primary/secondary
-      CTA label/href so the story documents both buttons rather than relying silently on
-      component defaults.
+- [x] Read `HomesCarousel.tsx`, `src/hooks/use-in-view.ts`, `src/app/page.tsx`,
+      `Container.tsx`, `SectionTitle.tsx`, `VideoTestimonialCard.tsx` (the
+      codebase's existing poster/video swap-ready pattern), `ContentSection.tsx`
+      (the codebase's existing 50/50 media-row grid pattern), and
+      `HomeModal.tsx` before editing anything.
+- [x] `src/hooks/use-in-view.ts` — extracted the existing
+      `prefersReducedMotion` `useSyncExternalStore` wiring into a new
+      exported `usePrefersReducedMotion()` hook; `useInView` now calls it
+      internally. No behaviour change to `useInView` — pure extraction so
+      the new video panel can reuse the same SSR-safe reduced-motion signal
+      instead of a duplicate `matchMedia` check.
+- [x] `HomesCarousel.tsx` — added an opt-in `embedded?: boolean` prop
+      (default `false`). When `true`, the component returns only the
+      interactive fragment (reveal wrapper, arrows, cards, dots, CTA,
+      `HomeModal`) and skips `<section>`/`<Container>`/`<SectionTitle>`.
+      Every hook, ref, and handler is unchanged — only the outer JSX
+      wrapping branches.
+- [x] New `src/components/homes-split-row/HomesSplitRow.tsx` — owns the
+      `id="homes"` section chrome (`<SectionTitle>` + `<Container>`) and a
+      `grid lg:grid-cols-2 gap-10 lg:gap-16 items-center` row: left = video
+      montage panel, right = `<HomesCarousel homes={homes} embedded />`.
+      Mobile (`< lg`) falls back to a single column, video first in
+      document order → stacks video-over-carousel per the card.
+- [x] Video montage config: a single `HOMES_MONTAGE` constant
+      (`{ src?, poster, alt }`) at the top of `HomesSplitRow.tsx`. Today
+      `src` is unset (client-pending) so only the poster `<Image>` branch
+      ever renders; dropping a file at `public/videos/<name>.mp4` and
+      setting `HOMES_MONTAGE.src` in that one constant is the only edit
+      needed to activate the real `<video muted loop playsInline autoPlay
+      controls>` branch — no other file changes.
+      **Client-pending asset — drops in at
+      `src/components/homes-split-row/HomesSplitRow.tsx:22` (`src:` field
+      on `HOMES_MONTAGE`).**
+- [x] Poster image: `/images/houses/apple_hill/Ah-Picture1.jpg` — an
+      existing real photo (bungalow exterior, driveway, front garden),
+      794×529, not referenced anywhere else in the codebase. Reserved via
+      `aspect-[3/2]` (matches the poster's own ~3:2 ratio) on a `relative
+      rounded-2xl overflow-hidden` wrapper, `<Image fill sizes="(min-width:
+      1024px) 50vw, 100vw" className="object-cover">` — no CLS regardless
+      of which branch (poster or video) renders.
+- [x] Reduced-motion gating on the eventual `<video>`: `autoPlay={!
+      prefersReducedMotion}` and `controls={prefersReducedMotion}`, using
+      the new `usePrefersReducedMotion()` hook — under reduced motion the
+      poster shows with native controls so the user can start playback
+      deliberately, matching the card's guidance.
+- [x] `src/app/page.tsx` — swapped `<HomesCarousel homes={homes} />` for
+      `<HomesSplitRow homes={homes} />` (import updated to match). The
+      eight `homes` records flow through unchanged.
+- [x] Added `stories/sections/HomesSplitRow.stories.tsx` (fullscreen layout,
+      `homes` data, single `Default` story) — matches every other
+      `Sections/*` story's convention. `stories/sections/HomesCarousel.stories.tsx`
+      left untouched; its `Default` story still documents the
+      non-embedded, standalone-section behaviour, unchanged.
+- [x] **Post-verification fix (390px horizontal overflow, C-9):** browser
+      measurement found `document.documentElement.scrollWidth` at 2852px on
+      a 390px viewport — the poster panel, the carousel's card row, and the
+      dots row were all pinned to 2828px. Root cause: CSS Grid's automatic
+      minimum size for grid items defaults to their content size; the
+      carousel's horizontally-scrolling card row (`overflow-x-auto`) was
+      contributing its full, un-scrolled content width as the grid item's
+      min-content, forcing the shared grid track — and therefore its
+      sibling item too — wider instead of letting the row scroll within
+      itself. Fixed entirely inside `HomesSplitRow.tsx` (no change to
+      `HomesCarousel.tsx`, so its scroll/arrow/dot/modal internals are
+      untouched): added `min-w-0` to the poster panel's wrapper div, and
+      wrapped `<HomesCarousel homes={homes} embedded />` in a new
+      `<div className="min-w-0">` so the actual grid item carries the
+      explicit minimum rather than the carousel's fragment root. Did not
+      use `overflow-hidden` on the section (would clip the scroller) or
+      re-wrap the carousel in `<Container>` (would undo the point of the
+      `embedded` prop).
 
 ## Acceptance criteria
 
-- AC-1: Two CTAs in the hero, in a clear primary vs secondary visual hierarchy (solid fill vs
-  outline), not two identical buttons.
-- AC-2: Primary links to the Services section (`#services`); secondary links to the Careers
-  hub (`/careers`).
-- AC-3: Both CTAs are genuinely keyboard-focusable with a visible focus indicator
-  (`focus-ring` / `focus-ring-white`).
-- AC-4: Accessible labels — visible text ("Our Services", "Careers") makes the destination
-  clear without relying on surrounding context.
-- AC-5 (contrast fix): each button's fill/border reaches ≥3:1 against `bg-primary-dark`, and
-  each button's label text reaches ≥4.5:1 against its own fill (see computed ratios below).
-
-## Contrast — computed (WCAG relative-luminance formula), not eyeballed
-
-Tokens used: `--color-teal-700` (`#0d6a70`, = `bg-primary-dark`, the section background),
-`--color-teal-100` (`#d4f1f5`, hover fill), and `white`. No hex invented — all three come
-from the existing `@theme` scale in `globals.css`.
-
-| Button | State | Pair | Ratio | Requirement |
-|---|---|---|---|---|
-| Primary (`Our Services`) | idle | fill `white` vs section bg `teal-700` | **6.34:1** | ≥3:1 (non-text) |
-| Primary | idle | text `teal-700` vs fill `white` | **6.34:1** | ≥4.5:1 (text) |
-| Primary | hover | fill `teal-100` vs section bg `teal-700` | **5.34:1** | ≥3:1 (non-text) |
-| Primary | hover | text `teal-700` vs fill `teal-100` | **5.34:1** | ≥4.5:1 (text) |
-| Secondary (`Careers`) | idle | border `white` vs section bg `teal-700` | **6.34:1** | ≥3:1 (non-text) |
-| Secondary | idle | text `white` vs effective bg `teal-700` | **6.34:1** | ≥4.5:1 (text) |
-
-Both P1-flagged defects (2.74:1 text, 2.31:1 fill boundary) are resolved — every combination
-above clears its WCAG threshold with margin.
+- AC-1: 50/50 row on desktop (`lg+`), stacks video-over-carousel on mobile.
+- AC-2: Existing carousel behaviour preserved — interactive exactly as
+  today (arrows, dots, snap-scroll, auto-scroll, modal).
+- AC-3: Video muted, has a poster frame, respects `prefers-reduced-motion`
+  (no autoplay motion under reduced motion; poster + a deliberate way to
+  play remain available).
+- AC-4: No layout shift on load (reserved aspect ratio on the media panel).
+- AC-5 (added after browser verification): no horizontal page scroll at
+  390/768/1440 — see C-9 and the post-verification fix above.
 
 ## Verification
 
-- [x] `npx tsc --noEmit` — exit 0
-- [x] `npm run lint` — exit 0
-- [x] `npm run build` — exit 0 (confirms `/careers` route exists and is statically generated)
-- [x] `npm run build-storybook` — exit 0 (pre-existing bundle-size advisories, unrelated)
-- [ ] Manual/browser verification (measured contrast on real pixels, breakpoint layout, CLS,
-      reduced-motion computed styles) — done by the IT Engineer (main session) per the
-      `agents-frontend` contract, not by this agent. Dev server running at
-      `http://localhost:3000`.
+- [x] `npx tsc --noEmit` — exit 0 (re-run after the overflow fix)
+- [x] `npm run lint` — exit 0 (re-run after the overflow fix)
+- [x] `npm run build` — exit 0 (re-run after the overflow fix)
+- [x] `npm run build-storybook` — exit 0 (pre-existing bundle-size
+      advisories only, unrelated to this change — same as prior cards; not
+      re-run after the overflow fix since it touches Tailwind classes only,
+      no story/build-graph change)
+- [x] Manual/browser verification (IT Engineer, first pass): confirmed at
+      1440 — 2-column grid, poster panel 656px of 1440px (true 50/50), no
+      overflow, CLS 0.0017, carousel genuinely interactive (`scrollLeft`
+      changes on control click). At 390 — grid correctly collapses to 1
+      column, video panel above carousel, poster renders with no `<video>`
+      element, CLS 0.0000. Flagged **2462px of horizontal overflow at
+      390px** as a shipping blocker — fixed, see C-9 / Tasks above.
+- [ ] Re-verification of the overflow fix (`scrollWidth <= clientWidth` at
+      390/768/1440, 2-column split still holds at `lg`, `aspect-[3/2]`
+      still reserved so CLS stays ~0, carousel `scrollLeft` still changes
+      on control click) — pending, IT Engineer to re-check in browser. Dev
+      server running at `http://localhost:3000`.
 
 ## Review
 
-Replaced the hero's single CTA with two, in a primary/secondary hierarchy, and fixed the
-contrast defect P1 flagged and deferred.
+Replaced the standalone `HomesCarousel` section on the homepage with a new
+`HomesSplitRow` section: a video montage panel (poster-only until the
+client supplies the file) on the left, the existing carousel — now
+`embedded` to skip its own section chrome — on the right, 50/50 at `lg+`
+and stacked video-over-carousel below that.
 
-`HeroSectionProps` gained `primaryCtaLabel`/`primaryCtaHref`/`secondaryCtaLabel`/
-`secondaryCtaHref` (all optional, defaulting to "Our Services" → `#services` and
-"Careers" → `/careers`) in place of the old single `ctaLabel`/`ctaHref`. `src/app/page.tsx`
-passes neither the old nor the new props — it already relied entirely on defaults — so it
-required no edit.
+`HomesCarousel.tsx` gained one opt-in prop (`embedded`, default `false`).
+Existing callers that pass nothing get byte-for-byte the same output as
+before — verified by reading the diff: the branch only changes which JSX
+wraps the same fragment (reveal div → arrows → cards → dots → CTA →
+`HomeModal`); no hook, ref, handler, or effect was touched.
 
-`ServicesSection.tsx` already carries `id="services"` (added well before this card), so no
-component beyond `HeroSection.tsx` and its story needed touching — the card's allowance to
-add an anchor id there turned out to be unnecessary.
+`src/hooks/use-in-view.ts` gained one exported hook,
+`usePrefersReducedMotion()`, extracted from logic `useInView` already had
+— `useInView`'s own behaviour is unchanged (it now just calls the new
+hook internally instead of inlining the same `useSyncExternalStore` call).
+This is what the new video panel uses for its reduced-motion decision,
+instead of a duplicate `matchMedia` check.
 
-Primary CTA reuses the site's established "solid fill" idiom (`rounded-full`, `px-8 py-4`,
-`focus-ring`) but swaps the fill from `bg-primary` (the defective pairing) to `bg-white` with
-`text-primary-dark` — the same token pairing used for primary buttons on dark sections
-elsewhere in the codebase is `bg-white`/`text-primary` (`CareersCTAStrip.tsx`), but that
-pairing's `text-primary` still fails 4.5:1 (2.74:1, the exact defect this card exists to fix),
-so `text-primary-dark` was chosen instead — same idiom, corrected token, verified by
-computation rather than assumed correct because a sibling component does it.
+The video montage is a single `HOMES_MONTAGE` constant at the top of
+`HomesSplitRow.tsx` — `{ src?, poster, alt }`. `src` is unset today (no
+asset exists yet), so the component renders the poster image alone,
+styled as a deliberate panel (rounded corners, reserved aspect ratio) —
+not an error state. When the client supplies the file, setting
+`HOMES_MONTAGE.src` at `src/components/homes-split-row/HomesSplitRow.tsx:22`
+is the only edit required; the same component then renders
+`<video muted loop playsInline poster autoPlay={!prefersReducedMotion}
+controls={prefersReducedMotion}>`.
 
-Secondary CTA reuses `CareersCTAStrip.tsx`'s dark-background outline pattern verbatim
-(`border-2 border-white text-white hover:bg-white/10 focus-ring-white`) — an existing pattern
-already proven at ≥3:1/4.5:1 against a similar dark gradient background, and not a new
-dialect for this component to invent.
+Poster image chosen: `/images/houses/apple_hill/Ah-Picture1.jpg` — a real
+photo of a home exterior (bungalow, driveway, garden), not used anywhere
+else in the codebase. The panel reserves `aspect-[3/2]`, matching that
+image's own ~3:2 ratio, so there is no layout shift whichever branch
+(poster or, later, video) renders.
 
-Both CTAs are `<a>` elements throughout (no button-as-link), each with sensible standalone
-label text ("Our Services", "Careers") that names its destination without depending on
-surrounding copy. `focus-ring` and `focus-ring-white` are the pre-existing global utilities
-(`globals.css`) — no bespoke focus style added. Layout wraps via `flex flex-col sm:flex-row
-gap-4`, matching the wrap pattern `RecruitmentSection.tsx` already uses for its own two-CTA
-row, so there is no new responsive-wrap convention introduced either.
+Reused two existing local patterns rather than inventing new ones:
+`VideoTestimonialCard.tsx`'s poster/video swap-ready branch (same shape:
+optional `src`, always-present `poster`, conditional render), and
+`ContentSection.tsx`'s 50/50 media-row grid (`grid ... gap-10 lg:gap-16`,
+`relative rounded-2xl overflow-hidden aspect-[…]` + `<Image fill>`).
 
-**Could not verify in this run (no browser automation available to this agent):** actual
-rendered contrast on real pixels, `getBoundingClientRect()` layout at 390px/breakpoints,
-CLS via `PerformanceObserver`, and reduced-motion computed styles. These are the IT
-Engineer's verification responsibility per the `agents-frontend` contract; the dev server is
+`src/app/page.tsx` now imports and renders `HomesSplitRow` instead of
+`HomesCarousel`, passing the same `homes` data straight through.
+
+**Could not verify in this run (no browser automation available to this
+agent):** actual rendered 50/50 vs stacked layout at breakpoints, measured
+column widths/overflow, CLS via `PerformanceObserver`, and computed styles
+under `reducedMotion: "reduce"`. These are the IT Engineer's verification
+responsibility per the `agents-frontend` contract; the dev server is
 running at `http://localhost:3000`.
 
-Verified: `npx tsc --noEmit` (exit 0), `npm run lint` (exit 0), `npm run build` (exit 0,
-`/careers` confirmed as a real statically-generated route), `npm run build-storybook`
-(exit 0, pre-existing bundle-size warnings unrelated to this change).
+Verified: `npx tsc --noEmit` (exit 0), `npm run lint` (exit 0),
+`npm run build` (exit 0), `npm run build-storybook` (exit 0, pre-existing
+bundle-size warnings unrelated to this change).
