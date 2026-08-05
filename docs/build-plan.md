@@ -58,11 +58,11 @@ These are deferred by the client and **will change later**. Build them so the co
 - If a canonical scale doesn't exist yet, derive it from the real logo/existing usage — not from this doc's placeholder hex.
 - Replace one-off/hardcoded colours in existing components with tokens.
 **Acceptance criteria:**
-- [ ] Real brand values sourced from the repo/logo, not from this document's placeholder hex.
-- [ ] Purple + teal + neutral scales defined as tokens in one place.
-- [ ] No hardcoded brand hex left in component files (grep clean).
-- [ ] Existing pages render unchanged except where intentionally re-themed.
-- [ ] Documented in Storybook (a colour-tokens story).
+- [x] Real brand values sourced from the repo/logo, not from this document's placeholder hex.
+- [x] Purple + teal + neutral scales defined as tokens in one place.
+- [x] No hardcoded brand hex left in component files (grep clean) — *`src/data/homes.ts` still has 8 raw per-home marker hex values, but those are home-identity colours, not brand purple/teal.*
+- [x] Existing pages render unchanged except where intentionally re-themed.
+- [x] Documented in Storybook (a colour-tokens story).
 **Depends on:** nothing. **Blocks:** F4, and every visual card.
 
 ## F2 — Layout width system
@@ -75,11 +75,11 @@ These are deferred by the client and **will change later**. Build them so the co
 - **Reading container** (comfortable max measure, ~65–75ch) for body copy nested inside wide sections.
 - Provide as reusable layout primitives/components.
 **Acceptance criteria:**
-- [ ] Two container primitives exist and are documented in Storybook.
-- [ ] Heroes/galleries/infographics use the wide container.
-- [ ] Long-form text stays within the reading measure.
-- [ ] Resolves the "Open Roles — use more width" request (no separate work).
-- [ ] Verified at mobile / tablet / desktop breakpoints.
+- [x] Two container primitives exist and are documented in Storybook.
+- [x] Heroes/galleries/infographics use the wide container.
+- [x] Long-form text stays within the reading measure.
+- [x] Resolves the "Open Roles — use more width" request (no separate work).
+- [x] Verified at mobile / tablet / desktop breakpoints.
 **Depends on:** nothing. **Blocks:** most page cards; C2 (Open Roles).
 
 ## F3 — Lotus mark as reusable SVG (separable petals)
@@ -93,11 +93,11 @@ These are deferred by the client and **will change later**. Build them so the co
 - Provide a **softened lotus-inspired mask** (`clipPath`) variant — see F3 note.
 **F3 note (design decision):** Use a *softened* lotus mask for faces, **not** a hard multi-petal cutout. Hard petal notches crop chins/foreheads on real headshots. The soft mask still reads as the lotus. (Two options were mocked; soft mask chosen.)
 **Acceptance criteria:**
-- [ ] `<LotusMark>` component renders the mark from separable petal paths.
-- [ ] Each petal is independently targetable for animation.
-- [ ] `<LotusPhotoMask>` (soft variant) clips an `<img>`/photo without cropping faces awkwardly.
-- [ ] Storybook stories for both.
-- [ ] Works in light/dark contexts as used on site.
+- [x] `<LotusMark>` component renders the mark from separable petal paths.
+- [x] Each petal is independently targetable for animation.
+- [ ] `<LotusPhotoMask>` (soft variant) clips an `<img>`/photo without cropping faces awkwardly. *Built + has a Storybook story, but not actually wired into any Team/Board photo yet — `TeamCard`/`TeamModal`/`BoardSection` all still use plain `rounded-full`. Blocked on P5/P6.*
+- [x] Storybook stories for both.
+- [x] Works in light/dark contexts as used on site. *(`LotusMark` confirmed in both; `LotusPhotoMask` moot until P5/P6 wire it up.)*
 **Depends on:** F1. **Blocks:** P4 (Services animation), P6 (Team/Board masks), F4 (blobs may reuse petal forms).
 
 ## F4 — Decorative palette "blobs"
@@ -110,10 +110,10 @@ These are deferred by the client and **will change later**. Build them so the co
 - Never reduce text contrast below AA; never behind dense body copy at high opacity.
 - If animated (drift), gate behind `prefers-reduced-motion` and keep subtle.
 **Acceptance criteria:**
-- [ ] Reusable blob component with position/colour/size props.
-- [ ] Zero network cost (inline SVG/CSS, no raster images).
-- [ ] Text over/near blobs still passes AA contrast.
-- [ ] Reduced-motion respected if animated.
+- [x] Reusable blob component with position/colour/size props. *(size/position via `className`, colour via a token-restricted prop — no discrete numeric props, but fully configurable.)*
+- [x] Zero network cost (inline SVG/CSS, no raster images).
+- [ ] Text over/near blobs still passes AA contrast. *Component is designed for this (0.12 default opacity, dedicated `BehindText` Storybook story) but `<Blob>` isn't placed on any real page yet — only pre-existing, unrelated ad hoc shapes appear on the live site. Waiting on P4 (or another card) to actually deploy it.*
+- [x] Reduced-motion respected if animated.
 **Depends on:** F1. **Blocks:** cosmetic only.
 
 ---
@@ -218,10 +218,10 @@ These are deferred by the client and **will change later**. Build them so the co
 3. Redesign benefit cards using the palette (see C4 style direction / Appendix B).
 4. Values block: keep current copy but swap-ready (B1).
 **Acceptance criteria:**
-- [ ] Hero buttons/cards removed.
-- [ ] Stats/info block replaced by testimonials section.
-- [ ] Benefit cards use palette accents, not flat white.
-- [ ] Values sourced from single config (swap-ready).
+- [x] Hero buttons/cards removed.
+- [x] Stats/info block replaced by testimonials section.
+- [ ] Benefit cards use palette accents, not flat white. *This page's own "Our Values" grid is still flat white/bordered — the palette-accented cards this refers to live on the separate Benefits page (C4's scope), not here.*
+- [x] Values sourced from single config (swap-ready).
 **Depends on:** F1, F2. **Related:** C4 (Benefits), C3 (Why-Us testimonials/gallery).
 
 ## C2 — Open Roles width
@@ -230,7 +230,7 @@ These are deferred by the client and **will change later**. Build them so the co
 **Problem:** Open Roles feels narrow.
 **Scope:** Apply F2 wide container. **No bespoke work — this is just adopting the width system.**
 **Acceptance criteria:**
-- [ ] Open Roles uses the wide container consistently with the rest of the site.
+- [x] Open Roles uses the wide container consistently with the rest of the site.
 **Depends on:** F2.
 
 ## C3 — Why Work With Us
@@ -243,10 +243,10 @@ These are deferred by the client and **will change later**. Build them so the co
 3. **Update stats** — BLOCKED (B2); build swap-ready.
 4. **Remove the values block**; add **video testimonials at the bottom** of the page.
 **Acceptance criteria:**
-- [ ] Accessible gallery carousel (keyboard + reduced-motion).
-- [ ] "Respect" section visibly higher-contrast / stands out.
-- [ ] Stats from single config (swap-ready).
-- [ ] Values block removed; video testimonials section at page bottom with captions + poster frames.
+- [x] Accessible gallery carousel (keyboard + reduced-motion). *Native keyboard-focusable prev/next + dot buttons, autoplay gated behind `prefers-reduced-motion`; doesn't have full ARIA carousel semantics (`role="region"`, `aria-live`) but is keyboard-operable and motion-safe.*
+- [x] "Respect" section visibly higher-contrast / stands out.
+- [x] Stats from single config (swap-ready).
+- [x] Values block removed; video testimonials section at page bottom with captions + poster frames. *Poster always renders; `<track>` captions render once a real `captionsSrc` is provided — currently showing the documented "coming soon" placeholder state since real footage/captions are still pending from the client.*
 **Depends on:** F1, F2. **Assets needed:** culture photo set; testimonial video files + captions + posters.
 
 ## C4 — Benefits redesign
@@ -256,10 +256,10 @@ These are deferred by the client and **will change later**. Build them so the co
 **Scope:** Fewer, roomier cards; one brand accent per card; cut filler.
 **Approach:** See Appendix B / the approved style direction — tinted icon chip, top-border colour hit, generous padding, calm everything-else. Content stays current unless client provides new.
 **Acceptance criteria:**
-- [ ] Tighter grid, generous spacing, one palette accent per card.
-- [ ] Icons + accents from brand tokens; AA contrast in light/dark.
-- [ ] Filler content removed ("less is more").
-- [ ] Responsive (stacks to 1 column on mobile).
+- [x] Tighter grid, generous spacing, one palette accent per card. *Chip-only accent, no top border — dropped per user feedback despite Appendix B specifying one.*
+- [x] Icons + accents from brand tokens; AA contrast in light/dark. *No dark mode exists anywhere in this site, so "dark" is inapplicable; tokens + light-mode contrast confirmed.*
+- [ ] Filler content removed ("less is more"). *Layout/spacing/accent styling changed, but the benefit count/copy is untouched (10 items, same text) — matches the card's own scope note ("content stays current unless client provides new") but isn't a content trim.*
+- [x] Responsive (stacks to 1 column on mobile).
 **Depends on:** F1, F2.
 
 ## C5 — Training page
@@ -271,10 +271,10 @@ These are deferred by the client and **will change later**. Build them so the co
 2. Convert the timeline to **horizontal**, larger, animated, palette-driven.
 **Approach:** Use the **shared timeline component** (see C6 — build once, two variants).
 **Acceptance criteria:**
-- [ ] Career Progression is the first major section.
-- [ ] Horizontal timeline, animated on scroll, brand palette.
-- [ ] **Mobile fallback**: horizontal-scroll or collapse-to-vertical (must not break on phones).
-- [ ] Reduced-motion respected.
+- [x] Career Progression is the first major section.
+- [x] Horizontal timeline, animated on scroll, brand palette.
+- [x] **Mobile fallback**: horizontal-scroll or collapse-to-vertical (must not break on phones).
+- [x] Reduced-motion respected.
 **Depends on:** F1, F2, C6.
 
 ## C6 — Shared animated timeline component
@@ -283,10 +283,10 @@ These are deferred by the client and **will change later**. Build them so the co
 **Problem:** Training (C5) and How We Hire (C7) both need animated timelines — build one, reuse.
 **Scope:** One `<Timeline>` component with horizontal and vertical variants, animated, palette-driven.
 **Acceptance criteria:**
-- [ ] Horizontal + vertical variants, prop-driven steps.
-- [ ] Scroll/entrance animation, reduced-motion safe.
-- [ ] Documented in Storybook.
-- [ ] Used by both C5 and C7.
+- [x] Horizontal + vertical variants, prop-driven steps.
+- [x] Scroll/entrance animation, reduced-motion safe.
+- [x] Documented in Storybook.
+- [x] Used by both C5 and C7.
 **Depends on:** F1. **Blocks:** C5, C7. *(Build this before C5/C7.)*
 
 ## C7 — How We Hire
@@ -297,9 +297,9 @@ These are deferred by the client and **will change later**. Build them so the co
 1. Animate the 6-step timeline (via C6): **Apply → Screening call → Interview → Offer → Pre-employment checks → Start.**
 2. Soften the **FAQ accordion** animation — fade in/out with proper easing + sensible duration (not snappy).
 **Acceptance criteria:**
-- [ ] 6-step timeline animated, correct order/labels.
-- [ ] FAQ open/close uses fade + eased transition (no snap).
-- [ ] Reduced-motion respected.
+- [x] 6-step timeline animated, correct order/labels.
+- [x] FAQ open/close uses fade + eased transition (no snap).
+- [x] Reduced-motion respected.
 **Depends on:** F1, C6.
 
 ---
@@ -312,8 +312,8 @@ These are deferred by the client and **will change later**. Build them so the co
 **Problem:** Overview needs the same uplift as the Careers overview.
 **Scope:** Apply the C1 overview treatment to the Quality hub for cross-hub consistency (layout, palette, removal of dated blocks, testimonial/quote where appropriate).
 **Acceptance criteria:**
-- [ ] Visual/structural consistency with the revamped Careers overview.
-- [ ] Uses width system + tokens.
+- [x] Visual/structural consistency with the revamped Careers overview.
+- [x] Uses width system + tokens.
 **Depends on:** F1, F2, C1 (as reference).
 
 ## Q2 — Infographics: "more WOW and intuitive"
@@ -323,11 +323,11 @@ These are deferred by the client and **will change later**. Build them so the co
 **Scope:** Redesign the quality infographics so a first-time visitor understands the three pillars / MDT model at a glance; the "wow" comes from motion + the lotus motif, not complexity.
 **Approach:** See Appendix C concept — three pillars (Human Rights, MDT, Board oversight) supporting "a culture of quality & safety," lotus blooming above, foundation strip (least restrictive practice · dignity of risk · supported decision-making) below. Animate: pillars rise on scroll, lotus blooms petal-by-petal, foundation fades in. Pillars clickable through to existing detail pages.
 **Acceptance criteria:**
-- [ ] Concept is legible at a glance (intuitive priority).
-- [ ] Entrance/scroll animation, `transform`/`opacity` only, reduced-motion safe.
-- [ ] Reuses `<LotusMark>` (F3) for the motif.
-- [ ] Existing infographic content/links preserved or improved, not lost.
-- [ ] Storybook story.
+- [x] Concept is legible at a glance (intuitive priority).
+- [x] Entrance/scroll animation, `transform`/`opacity` only, reduced-motion safe.
+- [x] Reuses `<LotusMark>` (F3) for the motif.
+- [x] Existing infographic content/links preserved or improved, not lost.
+- [x] Storybook story.
 **Depends on:** F1, F3.
 
 ---
