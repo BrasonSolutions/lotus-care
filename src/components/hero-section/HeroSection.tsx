@@ -20,16 +20,20 @@ interface HeroSectionProps {
   title: string;
   titleHighlight: string;
   subtitle: string;
-  ctaLabel?: string;
-  ctaHref?: string;
+  primaryCtaLabel?: string;
+  primaryCtaHref?: string;
+  secondaryCtaLabel?: string;
+  secondaryCtaHref?: string;
 }
 
 export function HeroSection({
   title,
   titleHighlight,
   subtitle,
-  ctaLabel = "Read More",
-  ctaHref = "#about",
+  primaryCtaLabel = "Our Services",
+  primaryCtaHref = "#services",
+  secondaryCtaLabel = "Careers",
+  secondaryCtaHref = "/careers",
 }: HeroSectionProps) {
   return (
     <section className="relative bg-primary-dark overflow-hidden pt-32 pb-20 lg:pt-40 lg:pb-28">
@@ -54,13 +58,28 @@ export function HeroSection({
             >
               {subtitle}
             </p>
-            <a
-              href={ctaHref}
-              className="inline-block bg-primary text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-accent transition-colors focus-ring animate-fade-up"
+            <div
+              className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start animate-fade-up"
               style={{ animationDelay: "300ms" }}
             >
-              {ctaLabel}
-            </a>
+              {/* Primary — white fill clears 3:1 against bg-primary-dark (6.34:1);
+                  teal-700 label clears 4.5:1 against the white fill (6.34:1). */}
+              <a
+                href={primaryCtaHref}
+                className="inline-block bg-white text-primary-dark px-8 py-4 rounded-full text-lg font-semibold hover:bg-teal-100 transition-colors focus-ring text-center"
+              >
+                {primaryCtaLabel}
+              </a>
+              {/* Secondary — outline on the dark hero; white border/text clears
+                  both the 3:1 boundary and 4.5:1 text ratios (6.34:1) against
+                  bg-primary-dark. Matches CareersCTAStrip's dark-bg outline CTA. */}
+              <a
+                href={secondaryCtaHref}
+                className="inline-block border-2 border-white text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-white/10 transition-colors focus-ring-white text-center"
+              >
+                {secondaryCtaLabel}
+              </a>
+            </div>
           </div>
 
           {/* Image — contained, supporting element, never the background */}

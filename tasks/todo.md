@@ -1,137 +1,136 @@
-# P1: Hero redesign (rebalance + activity imagery)
+# P2: Hero quick-action buttons
 
-Branch: `feat/home-hero-redesign` (based on `main`).
+Branch: `feat/home-hero-cta` (based on `feat/home-hero-redesign`, which stacks on `main`).
 
 ## Diagnosis
 
-`HeroSection.tsx` uses the photo (`/images/home-bg.jpg`, 5192×3466, 1.5MB) as a full-bleed
-`<Image fill>` background under a heavy teal overlay, with logo + headline + subtitle + CTA
-centred on top. The photo is structurally the dominant element — it cannot help but swallow
-the message — and the overlay reduces it to texture rather than showing people doing
-something. `home-bg.jpg` is also heavy for the LCP element.
+P1 left the hero with a single CTA (`ctaLabel`/`ctaHref`, defaulting to "Read More" → `#about`)
+and a known, flagged contrast defect: the CTA's white label text on `bg-primary` (`#1badb2`)
+measured **~2.74:1** against its own fill — below the WCAG AA text minimum (4.5:1) — and the
+fill itself measured **2.31:1** against the `bg-primary-dark` section background — below the
+WCAG 2.1 SC 1.4.11 non-text/UI-component boundary minimum (3:1). P1 explicitly deferred both
+to this card. The hero also had no fast entry point to Services or the Careers hub.
 
 ## Must not break
 
-- C-1: `title` / `titleHighlight` / `subtitle` / `ctaLabel` / `ctaHref` props unchanged — no
-  new required props, no signature change to `HeroSectionProps`.
-- C-2: Single CTA only — do not add a second CTA (that's card P2).
-- C-3: `src/app/page.tsx` untouched (no prop signature change needed).
-- C-4: No files outside `src/components/hero-section/` and `stories/sections/HeroSection.stories.tsx`.
-- C-5: No hardcoded hex — design tokens only.
-- C-6: No new dependencies, no test framework.
-- C-7: `home-bg.jpg` stays in `public/` (unused asset left in place, not deleted).
-- C-8: Every animation stays covered by the existing global `prefers-reduced-motion` block
-  in `globals.css` — no bespoke per-component override.
+- C-1: P1's layout, imagery, `HERO_IMAGE` constant, and message/subtitle contrast results
+  stay intact — this card adds CTAs, it does not re-do the hero.
+- C-2: `title` / `titleHighlight` / `subtitle` props unchanged.
+- C-3: Design tokens only — no hardcoded hex in the component.
+- C-4: No new dependencies, no test framework.
+- C-5: Every animation stays covered by the existing global `prefers-reduced-motion` block —
+  no bespoke per-component override.
+- C-6: No CLS. No horizontal overflow at 390px — CTAs wrap/stack gracefully.
+- C-7: Do not touch team, board, or quality components. `ServicesSection.tsx` may only gain
+  an anchor `id` if one is missing (it already has one — see Tasks).
+- C-8: Both CTAs keyboard-focusable with a visible focus indicator, using the project's
+  existing `focus-ring` / `focus-ring-white` utilities — no bespoke focus style.
 
 ## Tasks
 
-- [x] Rebalance layout: two-column grid at `lg+` (message left, image right), stacking to
-      message-above-image on mobile (natural DOM order under `grid lg:grid-cols-2`, no
-      `order-*` needed).
-- [x] Swap imagery to `/images/stock/community-friends.jpg` (activity-based, licensed
-      Unsplash stock), path + alt in one named constant (`HERO_IMAGE`) with an art-direction
-      comment for future swap-in of commissioned photography.
-- [x] Contain the image (`aspect-[4/3]` card, `rounded-2xl`, `overflow-hidden`, `ring`,
-      `shadow-xl`) instead of full-bleed background — image supports, does not swallow.
-- [x] Move text off the photo entirely onto the section's solid `bg-primary-dark` — the
-      safest contrast structure, and keeps the fixed transparent `Navbar`'s white
-      logo/links readable against the still-dark hero top (Navbar isn't part of this
-      card's scope and its `bg-transparent`-over-dark-hero assumption must not be broken).
-- [x] Drop `LogoWhite` from the hero body — `Navbar` already renders a logo directly above
-      it on every load; a second logo beside a strengthened headline is redundant, not a
-      hierarchy aid.
-- [x] Drop `min-h-screen` and the bouncing scroll indicator — the section is no longer
-      full viewport height, so a "scroll for more" affordance no longer reads correctly.
-      Replace with explicit `pt/pb` that clears the fixed `Navbar` at all breakpoints.
-- [x] Reuse `Container` (`width="wide"`, default) instead of the ad hoc `max-w-4xl mx-auto px-4`.
-- [x] Keep `.animate-fade-up` / `.animate-fade-in` with the existing staggered
-      `animationDelay` pattern (already covered by the global reduced-motion rule) —
-      no `useInView` needed, hero is always above the fold on first paint.
-- [x] Update `stories/sections/HeroSection.stories.tsx` subtitle to match the real copy
-      shipped in `page.tsx` (was leftover "Victoria" text) while touching this file anyway.
+- [x] Checked `ServicesSection.tsx` — already has `id="services"` (line 23). No edit needed;
+      `ServicesSection.tsx` was not touched.
+- [x] Verified `/careers` route exists (`src/app/careers/page.tsx`, confirmed by `npm run build`
+      emitting a static `/careers` route).
+- [x] Replaced `HeroSectionProps`' single `ctaLabel`/`ctaHref` with
+      `primaryCtaLabel`/`primaryCtaHref` (default `"Our Services"` → `#services`) and
+      `secondaryCtaLabel`/`secondaryCtaHref` (default `"Careers"` → `/careers`). All four
+      remain optional with sensible defaults — `src/app/page.tsx` passes none of them
+      already, so it needed no change.
+- [x] Rendered two `<a>` CTAs in a `flex flex-col sm:flex-row gap-4 justify-center
+      lg:justify-start` wrapper (stacks under 640px, sits inline from `sm:` up, no overflow).
+- [x] Primary ("Our Services") — solid fill, reusing the `rounded-full` / generous padding /
+      `focus-ring` idiom: `bg-white text-primary-dark hover:bg-teal-100`.
+- [x] Secondary ("Careers") — outline/ghost on the dark hero, matching
+      `CareersCTAStrip.tsx`'s existing dark-background outline CTA pattern exactly:
+      `border-2 border-white text-white hover:bg-white/10 focus-ring-white`.
+- [x] Updated `stories/sections/HeroSection.stories.tsx` args to pass explicit primary/secondary
+      CTA label/href so the story documents both buttons rather than relying silently on
+      component defaults.
 
 ## Acceptance criteria
 
-- AC-1: Message (headline/subtitle/CTA) reads first — owns its own column on solid brand
-  background, not layered under/behind imagery.
-- AC-2: Image supports, doesn't swallow — contained card, not a full-bleed background.
-- AC-3: Activity-focused imagery in place (`community-friends.jpg` — candid, people
-  engaged, no posed hand-holding / wheelchair-from-behind / pity framing / uniformed staff).
-- AC-4: Any text over imagery passes WCAG AA. (In this design no text sits over the photo —
-  text lives on solid `bg-primary-dark`; verify that combination separately.)
-- AC-5: Responsive — clean stack on mobile, two-column on `lg+`, no CLS from the image.
+- AC-1: Two CTAs in the hero, in a clear primary vs secondary visual hierarchy (solid fill vs
+  outline), not two identical buttons.
+- AC-2: Primary links to the Services section (`#services`); secondary links to the Careers
+  hub (`/careers`).
+- AC-3: Both CTAs are genuinely keyboard-focusable with a visible focus indicator
+  (`focus-ring` / `focus-ring-white`).
+- AC-4: Accessible labels — visible text ("Our Services", "Careers") makes the destination
+  clear without relying on surrounding context.
+- AC-5 (contrast fix): each button's fill/border reaches ≥3:1 against `bg-primary-dark`, and
+  each button's label text reaches ≥4.5:1 against its own fill (see computed ratios below).
 
-## Note — imagery is a placeholder, not a build decision
+## Contrast — computed (WCAG relative-luminance formula), not eyeballed
 
-`community-friends.jpg` is licensed Unsplash stock (see `public/images/stock/CREDITS.md`),
-used here as a swap-ready placeholder — the path and alt text live in one named constant
-(`HERO_IMAGE`) specifically so it's a single edit point. Commissioned photography of real
-Lotus Care service users is expected eventually, but that requires **documented consent
-under HIQA** before any such image can be used — that is a client decision to make, not
-something this build implements or assumes.
+Tokens used: `--color-teal-700` (`#0d6a70`, = `bg-primary-dark`, the section background),
+`--color-teal-100` (`#d4f1f5`, hover fill), and `white`. No hex invented — all three come
+from the existing `@theme` scale in `globals.css`.
+
+| Button | State | Pair | Ratio | Requirement |
+|---|---|---|---|---|
+| Primary (`Our Services`) | idle | fill `white` vs section bg `teal-700` | **6.34:1** | ≥3:1 (non-text) |
+| Primary | idle | text `teal-700` vs fill `white` | **6.34:1** | ≥4.5:1 (text) |
+| Primary | hover | fill `teal-100` vs section bg `teal-700` | **5.34:1** | ≥3:1 (non-text) |
+| Primary | hover | text `teal-700` vs fill `teal-100` | **5.34:1** | ≥4.5:1 (text) |
+| Secondary (`Careers`) | idle | border `white` vs section bg `teal-700` | **6.34:1** | ≥3:1 (non-text) |
+| Secondary | idle | text `white` vs effective bg `teal-700` | **6.34:1** | ≥4.5:1 (text) |
+
+Both P1-flagged defects (2.74:1 text, 2.31:1 fill boundary) are resolved — every combination
+above clears its WCAG threshold with margin.
 
 ## Verification
 
-- [x] `npx tsc --noEmit`
-- [x] `npm run lint`
-- [x] `npm run build`
-- [x] `npm run build-storybook`
-- [ ] Manual/browser verification (contrast measurement, CLS, breakpoints, reduced-motion) —
-      done by the IT Engineer (main session) per `agents-frontend` contract, not by this agent.
+- [x] `npx tsc --noEmit` — exit 0
+- [x] `npm run lint` — exit 0
+- [x] `npm run build` — exit 0 (confirms `/careers` route exists and is statically generated)
+- [x] `npm run build-storybook` — exit 0 (pre-existing bundle-size advisories, unrelated)
+- [ ] Manual/browser verification (measured contrast on real pixels, breakpoint layout, CLS,
+      reduced-motion computed styles) — done by the IT Engineer (main session) per the
+      `agents-frontend` contract, not by this agent. Dev server running at
+      `http://localhost:3000`.
 
 ## Review
 
-Rebuilt `HeroSection` as a two-column `grid lg:grid-cols-2` (message left, image right,
-stacking to message-above-image on mobile via natural DOM order — no `order-*` needed).
-Message column sits on the section's solid `bg-primary-dark`, never on the photo, so
-contrast is a property of one fixed colour pair rather than of image content. Image is now
-a contained `aspect-[4/3] rounded-2xl` card with `shadow-xl ring-1 ring-white/10`, not a
-full-bleed background — it can no longer swallow the message by construction.
+Replaced the hero's single CTA with two, in a primary/secondary hierarchy, and fixed the
+contrast defect P1 flagged and deferred.
 
-Imagery swapped to `/images/stock/community-friends.jpg` (264KB vs `home-bg.jpg`'s 1.5MB),
-path/alt in one `HERO_IMAGE` constant with an art-direction + HIQA-consent comment for the
-future swap. `home-bg.jpg` left in `public/` untouched (C-7).
+`HeroSectionProps` gained `primaryCtaLabel`/`primaryCtaHref`/`secondaryCtaLabel`/
+`secondaryCtaHref` (all optional, defaulting to "Our Services" → `#services` and
+"Careers" → `/careers`) in place of the old single `ctaLabel`/`ctaHref`. `src/app/page.tsx`
+passes neither the old nor the new props — it already relied entirely on defaults — so it
+required no edit.
 
-Dropped `LogoWhite`: `Navbar` already renders a logo directly above the hero on every load
-(fixed, transparent-until-scrolled) — a second logo beside a strengthened headline was
-redundant, not a hierarchy aid. Kept `bg-primary-dark` as the section background specifically
-so `Navbar`'s `bg-transparent`-when-unscrolled + white logo/nav-text still has the dark
-backdrop it depends on for contrast — that assumption lives in `Navbar.tsx`, which is out of
-this card's scope, so I preserved it rather than touch it.
+`ServicesSection.tsx` already carries `id="services"` (added well before this card), so no
+component beyond `HeroSection.tsx` and its story needed touching — the card's allowance to
+add an anchor id there turned out to be unnecessary.
 
-Dropped `min-h-screen` and the bounce scroll indicator (per the card's own hint) — the
-section is no longer full-viewport height, so a "scroll for more" affordance no longer
-reads correctly. Replaced with explicit `pt-32 pb-20 lg:pt-40 lg:pb-28` to clear the fixed
-`Navbar` (h-16, plus a `nav:` contact strip) at every breakpoint without depending on
-viewport height.
+Primary CTA reuses the site's established "solid fill" idiom (`rounded-full`, `px-8 py-4`,
+`focus-ring`) but swaps the fill from `bg-primary` (the defective pairing) to `bg-white` with
+`text-primary-dark` — the same token pairing used for primary buttons on dark sections
+elsewhere in the codebase is `bg-white`/`text-primary` (`CareersCTAStrip.tsx`), but that
+pairing's `text-primary` still fails 4.5:1 (2.74:1, the exact defect this card exists to fix),
+so `text-primary-dark` was chosen instead — same idiom, corrected token, verified by
+computation rather than assumed correct because a sibling component does it.
 
-Reused `Container` (`src/components/layout/Container.tsx`, default `width="wide"`) instead
-of the old ad hoc `max-w-4xl mx-auto px-4`. Reused the file's own existing
-`.animate-fade-up` / `.animate-fade-in` + staggered inline `animationDelay` pattern
-unchanged (already covered by the global `prefers-reduced-motion` rule in `globals.css`) —
-no `useInView` needed since the hero is always above the fold on first paint, unlike
-`AboutSection`'s scroll-triggered `reveal` pattern.
+Secondary CTA reuses `CareersCTAStrip.tsx`'s dark-background outline pattern verbatim
+(`border-2 border-white text-white hover:bg-white/10 focus-ring-white`) — an existing pattern
+already proven at ≥3:1/4.5:1 against a similar dark gradient background, and not a new
+dialect for this component to invent.
 
-`title` / `titleHighlight` / `subtitle` / `ctaLabel` / `ctaHref` props, and the single CTA's
-markup/classes, are untouched — P2 will add the second CTA. `src/app/page.tsx` was not
-touched; no prop signature changed.
-
-**Contrast — computed (WCAG relative-luminance formula), not eyeballed:**
-- Headline (`text-white` on `bg-primary-dark` #0d6a70): **6.33:1** — passes AA (≥4.5) and AAA.
-- Subtitle (`text-white/80` effective-blended on #0d6a70): **4.68:1** — passes AA (≥4.5) for
-  normal text, unchanged from the class combination the previous shipped hero already used.
-- CTA button (`text-white` on `bg-primary` #1badb2): **~2.74:1** — fails AA. This is a
-  **pre-existing** condition, not introduced here: the card explicitly requires the single
-  CTA be kept "exactly as they are" (P2 owns the CTA rework). Flagging it rather than
-  silently fixing or silently shipping it.
-- No text sits over the photo in this design at all, so AC-4's "text over imagery" case is
-  structurally avoided rather than merely passing.
+Both CTAs are `<a>` elements throughout (no button-as-link), each with sensible standalone
+label text ("Our Services", "Careers") that names its destination without depending on
+surrounding copy. `focus-ring` and `focus-ring-white` are the pre-existing global utilities
+(`globals.css`) — no bespoke focus style added. Layout wraps via `flex flex-col sm:flex-row
+gap-4`, matching the wrap pattern `RecruitmentSection.tsx` already uses for its own two-CTA
+row, so there is no new responsive-wrap convention introduced either.
 
 **Could not verify in this run (no browser automation available to this agent):** actual
-rendered layout at breakpoints, measured `getBoundingClientRect()`, CLS via
-`PerformanceObserver`, and reduced-motion computed styles. These are the IT Engineer's
-verification responsibility per the `agents-frontend` contract, browser dev server is
+rendered contrast on real pixels, `getBoundingClientRect()` layout at 390px/breakpoints,
+CLS via `PerformanceObserver`, and reduced-motion computed styles. These are the IT
+Engineer's verification responsibility per the `agents-frontend` contract; the dev server is
 running at `http://localhost:3000`.
 
-Verified: `npx tsc --noEmit` (exit 0), `npm run lint` (exit 0), `npm run build` (exit 0),
-`npm run build-storybook` (exit 0, pre-existing bundle-size warnings unrelated to this change).
+Verified: `npx tsc --noEmit` (exit 0), `npm run lint` (exit 0), `npm run build` (exit 0,
+`/careers` confirmed as a real statically-generated route), `npm run build-storybook`
+(exit 0, pre-existing bundle-size warnings unrelated to this change).
