@@ -119,9 +119,21 @@ export const processSteps: ProcessStep[] = [
   },
   {
     step: 4,
-    title: "Offer & Start",
+    title: "Offer",
     description:
-      "We make a verbal offer, followed by a formal contract. Pre-employment checks (Garda Vetting, references, occupational health) are completed before your first day.",
+      "Once interviews are complete, we make a verbal offer followed by a formal contract of employment.",
+  },
+  {
+    step: 5,
+    title: "Pre-Employment Checks",
+    description:
+      "Garda Vetting, two professional references, and occupational health clearance are completed before your start date — we guide you through every step.",
+  },
+  {
+    step: 6,
+    title: "Start",
+    description:
+      "You begin a structured induction covering our values, safeguarding, and role-specific training alongside your new team.",
   },
 ];
 
