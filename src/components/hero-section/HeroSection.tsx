@@ -1,5 +1,20 @@
 import Image from "next/image";
-import { LogoWhite } from "@/components/logo-white";
+import { Container } from "@/components/layout";
+
+/**
+ * Art direction: warm, candid, natural light — real people engaged in an
+ * activity together, real homes. Avoid posed hand-holding, wheelchair-
+ * from-behind framing, pity framing, or uniformed staff.
+ *
+ * This is licensed Unsplash stock used as a swap-ready placeholder (see
+ * public/images/stock/CREDITS.md). Commissioned photography of real
+ * service users requires documented consent under HIQA before use — a
+ * client decision, not a build decision. Single edit point below.
+ */
+const HERO_IMAGE = {
+  src: "/images/stock/community-friends.jpg",
+  alt: "Friends laughing together while spending time outdoors",
+};
 
 interface HeroSectionProps {
   title: string;
@@ -17,53 +32,53 @@ export function HeroSection({
   ctaHref = "#about",
 }: HeroSectionProps) {
   return (
-    <section className="relative min-h-screen flex items-center justify-center bg-primary-dark overflow-hidden">
-      {/* Background image */}
-      <Image
-        src="/images/home-bg.jpg"
-        alt=""
-        fill
-        className="object-cover opacity-100"
-        priority
-      />
-      {/* Teal colour overlay — keeps brand colour while letting image show through */}
-      <div className="absolute inset-0 bg-gradient-to-b from-primary-dark/75 via-primary-dark/65 to-primary-dark/80" />
-
+    <section className="relative bg-primary-dark overflow-hidden pt-32 pb-20 lg:pt-40 lg:pb-28">
       {/* Decorative circles */}
       <div className="absolute top-20 left-10 w-64 h-64 rounded-full bg-accent/10 blur-3xl pointer-events-none" aria-hidden="true" />
       <div className="absolute bottom-20 right-10 w-96 h-96 rounded-full bg-primary/10 blur-3xl pointer-events-none" aria-hidden="true" />
 
-      {/* Content */}
-      <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
-        <LogoWhite className="mx-auto mb-8 h-16 md:h-20 w-auto animate-fade-in" />
-        <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight animate-fade-up" style={{ animationDelay: "100ms" }}>
-          {title}{" "}
-          <span className="text-accent">{titleHighlight}</span>
-        </h1>
-        <p className="text-lg md:text-xl text-white/80 mb-10 max-w-2xl mx-auto leading-relaxed animate-fade-up" style={{ animationDelay: "200ms" }}>
-          {subtitle}
-        </p>
-        <a
-          href={ctaHref}
-          className="inline-block bg-primary text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-accent transition-colors focus-ring animate-fade-up"
-          style={{ animationDelay: "300ms" }}
-        >
-          {ctaLabel}
-        </a>
-      </div>
+      <Container className="relative z-10">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+          {/* Message — owns the hierarchy, sits on solid brand background */}
+          <div className="text-center lg:text-left">
+            <h1
+              className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight animate-fade-up"
+              style={{ animationDelay: "100ms" }}
+            >
+              {title}{" "}
+              <span className="text-accent">{titleHighlight}</span>
+            </h1>
+            <p
+              className="text-lg md:text-xl text-white/80 mb-10 max-w-xl mx-auto lg:mx-0 leading-relaxed animate-fade-up"
+              style={{ animationDelay: "200ms" }}
+            >
+              {subtitle}
+            </p>
+            <a
+              href={ctaHref}
+              className="inline-block bg-primary text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-accent transition-colors focus-ring animate-fade-up"
+              style={{ animationDelay: "300ms" }}
+            >
+              {ctaLabel}
+            </a>
+          </div>
 
-      {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 motion-safe:animate-bounce" aria-hidden="true">
-        <svg
-          className="w-6 h-6 text-white/60"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          strokeWidth={2}
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" d="M19 14l-7 7m0 0l-7-7" />
-        </svg>
-      </div>
+          {/* Image — contained, supporting element, never the background */}
+          <div
+            className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-xl ring-1 ring-white/10 animate-fade-in"
+            style={{ animationDelay: "150ms" }}
+          >
+            <Image
+              src={HERO_IMAGE.src}
+              alt={HERO_IMAGE.alt}
+              fill
+              sizes="(min-width: 1024px) 45vw, (min-width: 640px) 80vw, 100vw"
+              className="object-cover"
+              priority
+            />
+          </div>
+        </div>
+      </Container>
     </section>
   );
 }
