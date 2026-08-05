@@ -3,6 +3,7 @@ import { CareersHero } from "@/components/careers/careers-hero";
 import { CareersBreadcrumb } from "@/components/careers/careers-breadcrumb";
 import { CareersCTAStrip } from "@/components/careers/careers-cta-strip";
 import { SectionTitle } from "@/components/section-title";
+import { Timeline } from "@/components/timeline";
 import { trainingPrograms } from "@/data/careers";
 import { Container } from "@/components/layout";
 
@@ -48,6 +49,22 @@ export default function TrainingPage() {
             </p>
           </div>
 
+          {/* Career progression pathway */}
+          <section className="mb-16">
+            <SectionTitle
+              title="Career Progression Pathway"
+              subtitle="From Support Worker to Senior Services Manager — a clear path forward."
+            />
+            <Timeline
+              orientation="horizontal"
+              steps={pathway.map((step) => ({
+                number: step.level,
+                title: step.title,
+                description: step.description,
+              }))}
+            />
+          </section>
+
           {/* Training programmes grouped by type */}
           {(["mandatory", "professional", "leadership"] as const).map((type) => {
             const programs = trainingPrograms.filter((p) => p.type === type);
@@ -76,22 +93,6 @@ export default function TrainingPage() {
               </section>
             );
           })}
-
-          {/* Career progression pathway */}
-          <section className="mt-16">
-            <SectionTitle title="Career Progression Pathway" />
-            <ol className="relative border-l-2 border-primary/30 ml-4 space-y-8">
-              {pathway.map((step) => (
-                <li key={step.level} className="relative pl-8">
-                  <span className="absolute -left-4 flex items-center justify-center w-8 h-8 rounded-full bg-primary text-white font-bold text-sm">
-                    {step.level}
-                  </span>
-                  <h3 className="font-semibold text-primary-dark mb-1">{step.title}</h3>
-                  <p className="text-sm text-muted">{step.description}</p>
-                </li>
-              ))}
-            </ol>
-          </section>
         </Container>
       </div>
 
