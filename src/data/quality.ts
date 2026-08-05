@@ -66,6 +66,12 @@ export const hubCards = [
   },
 ];
 
+export const qualityFoundationPrinciples: string[] = [
+  "Least restrictive practice",
+  "Dignity of risk",
+  "Supported decision-making",
+];
+
 // Anonymized per client decision — no name/initials attribution.
 export const anonymizedTestimonial: Testimonial = {
   name: "A Lotus Care Resident",

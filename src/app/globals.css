@@ -180,6 +180,59 @@ body {
   transform: scale(1);
 }
 
+/* QualityPillars (Q2): pillars rise, lotus blooms petal-by-petal, foundation
+   fades in — one coordinated cascade driven by QualityPillars' own
+   useInView, same reasoning as .pop-item above. */
+.pillar-rise {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 500ms cubic-bezier(0.25, 0.1, 0.25, 1),
+    transform 500ms cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.pillar-rise.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.lotus-bloom [data-petal] {
+  transform-box: fill-box;
+  transform-origin: center;
+  opacity: 0;
+  transform: scale(0.3);
+  transition: opacity 450ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    transform 450ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.lotus-bloom.in-view [data-petal] {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.lotus-bloom.in-view [data-petal="center"] {
+  transition-delay: 300ms;
+}
+.lotus-bloom.in-view [data-petal="bottom"] {
+  transition-delay: 360ms;
+}
+.lotus-bloom.in-view [data-petal="left"],
+.lotus-bloom.in-view [data-petal="right"] {
+  transition-delay: 420ms;
+}
+.lotus-bloom.in-view [data-petal="upper-left"],
+.lotus-bloom.in-view [data-petal="upper-right"] {
+  transition-delay: 480ms;
+}
+
+.foundation-fade {
+  opacity: 0;
+  transition: opacity 500ms cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.foundation-fade.in-view {
+  opacity: 1;
+}
+
 /* CircularCycle: flowing marching-dash ring */
 @keyframes ring-flow {
   to {
@@ -328,6 +381,13 @@ body {
   }
 
   .pop-item {
+    opacity: 1;
+    transform: none;
+  }
+
+  .pillar-rise,
+  .lotus-bloom [data-petal],
+  .foundation-fade {
     opacity: 1;
     transform: none;
   }
