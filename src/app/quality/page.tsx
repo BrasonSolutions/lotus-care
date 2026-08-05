@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import { CareersHero } from "@/components/careers/careers-hero";
-import { HubNavCard } from "@/components/careers/hub-nav-card";
 import { TestimonialCard } from "@/components/careers/testimonial-card";
 import { CareersCTAStrip } from "@/components/careers/careers-cta-strip";
 import { SectionTitle } from "@/components/section-title";
 import { Reveal } from "@/components/reveal";
-import { qualityHub, hubCards, anonymizedTestimonial } from "@/data/quality";
+import { QualityPillars } from "@/components/quality/quality-pillars";
+import { qualityHub, hubCards, qualityFoundationPrinciples, anonymizedTestimonial } from "@/data/quality";
 import { Container } from "@/components/layout";
 
 export const metadata: Metadata = {
@@ -31,14 +31,10 @@ export default function QualityPage() {
         </Reveal>
       </section>
 
-      {/* Hub nav cards */}
+      {/* Quality pillars infographic */}
       <section className="pb-16 sm:pb-20">
         <Container>
-          <Reveal className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {hubCards.map((card, i) => (
-              <HubNavCard key={card.title} {...card} accent={i % 2 === 0 ? "teal" : "purple"} />
-            ))}
-          </Reveal>
+          <QualityPillars pillars={hubCards} foundation={qualityFoundationPrinciples} />
         </Container>
       </section>
 
