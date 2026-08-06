@@ -1,0 +1,19 @@
+{
+  "task_id": "P5",
+  "feature_slug": "home-team-scale",
+  "pipeline_variant": "specified",
+  "current_state": "testing",
+  "cycle_counts": { "worker_tester": 1, "worker_quality": 0, "worker_security": 0, "ra_dlr": 0 },
+  "agent_invocation_count": 6,
+  "last_agent": "tester",
+  "last_status": "fail",
+  "parallel_context": null,
+  "lean_mode": { "level": "full", "rungs": null },
+  "graph_snapshot": {
+    "graph_path": "/home/diogobarros/Documents/brason_solutions/lotus-care/graphify-out/graph.json",
+    "vocab_path": "/home/diogobarros/Documents/brason_solutions/lotus-care/graphify-out/.vocab.txt",
+    "refreshed_at": "2026-08-05T22:14:27+01:00",
+    "commit_sha": "c13ebef5501705acd1cb2aa594737a3828ede0cd",
+    "staleness": "fresh"
+  }
+}
