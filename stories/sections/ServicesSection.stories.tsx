@@ -14,4 +14,7 @@ const meta: Meta<typeof ServicesSection> = {
 export default meta;
 type Story = StoryObj<typeof ServicesSection>;
 
+// P4: also renders the side lotus motif + corner blobs — no new props, so
+// the existing render covers it. Petals bloom via a real IntersectionObserver
+// (see .storybook/preview.tsx) — scroll the canvas to trigger it.
 export const Default: Story = {};

@@ -51,3 +51,7 @@ yarn-error.log*
 
 # Local planning notes
 tasks/
+
+# Generated
+graphify-out/
+results/

@@ -23,3 +23,9 @@ export const ClinicalMember: Story = {
 export const BoardMember: Story = {
   args: { member: boardMembers[0] },
 };
+
+// No `image` on the member — initials fallback under the lotus mask.
+export const NoPhotoFallback: Story = {
+  name: "No Photo (Initials Fallback)",
+  args: { member: { ...teamMembers[0], image: undefined } },
+};

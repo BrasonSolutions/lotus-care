@@ -21,16 +21,21 @@ interface UseInViewOptions {
   triggerOnce?: boolean;
 }
 
+/** Live `prefers-reduced-motion: reduce` state, safe for SSR/hydration. */
+export function usePrefersReducedMotion() {
+  return useSyncExternalStore(
+    subscribePrefersReducedMotion,
+    getPrefersReducedMotion,
+    getPrefersReducedMotionServer
+  );
+}
+
 export function useInView({
   threshold = 0.2,
   triggerOnce = true,
 }: UseInViewOptions = {}) {
   const ref = useRef<HTMLDivElement>(null);
-  const prefersReducedMotion = useSyncExternalStore(
-    subscribePrefersReducedMotion,
-    getPrefersReducedMotion,
-    getPrefersReducedMotionServer
-  );
+  const prefersReducedMotion = usePrefersReducedMotion();
   const [inView, setInView] = useState(prefersReducedMotion);
 
   useEffect(() => {
