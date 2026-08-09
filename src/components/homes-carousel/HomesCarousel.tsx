@@ -78,6 +78,11 @@ export function HomesCarousel({
 
     const handleScroll = () => {
       const scrollLeft = container.scrollLeft;
+      const maxScrollLeft = container.scrollWidth - container.clientWidth;
+      if (scrollLeft >= maxScrollLeft - 1) {
+        setActiveIndex(homes.length - 1);
+        return;
+      }
       const cardWidth = (container.children[0] as HTMLElement)?.offsetWidth ?? 300;
       const gap = 24;
       const index = Math.round(scrollLeft / (cardWidth + gap));

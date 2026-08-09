@@ -44,7 +44,7 @@ export function HomesSplitRow({ homes }: HomesSplitRowProps) {
           subtitle="Eight unique homes across Co. Offaly and the Midlands, each designed to feel like home."
         />
 
-        <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+        <div className="grid lg:grid-cols-2 gap-10 lg:gap-24 items-center">
           <div className="relative rounded-2xl overflow-hidden aspect-[3/2] min-w-0">
             {HOMES_MONTAGE.src ? (
               <video
