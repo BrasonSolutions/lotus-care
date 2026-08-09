@@ -633,3 +633,345 @@ Step 1 plan (mark→SVG, keep wordmark as text, explicit `text-white` on
 the mono mark, `text-xs`/`text-white/80` on the caption) was right on
 first pass and the coordinator's independent Chrome measurement confirmed
 every number computed during planning.
+
+---
+
+# F6: Full-width lotus-pattern band
+
+Branch: `feat/lotus-band-component`.
+
+## Diagnosis
+
+Not a bug fix — a new component. Plan 2.0 asks for a full-width rectangle of
+the lotus pattern in brand colours as a recurring section device (p.1
+sketch). Two reference screenshots in `docs/brand-assets/Logo/`
+(`screenshot-2.png`/`screenshot-3.png` — see the F5 section below for why
+those filenames, not the ones the card originally named) show a solid-colour
+band tiled with `LotusMarkAlt`'s outline motif, overlapping horizontally and
+cropped top/bottom by the band's own edges.
+
+`LotusMarkAlt` (`src/components/lotus-mark/LotusMarkAlt.tsx`, added in F7)
+is a single compound-fill path that already traces the outline shape the
+reference shows — confirmed from the path data itself (~30 subpaths of
+closed loops filled `nonzero`) before writing any code, so it is reused
+as-is (`fill="currentColor"`); stroking it would double-draw already-thin
+geometry.
+
+## Must not break
+
+- C-1: `src/components/lotus-mark/*` untouched — `LotusMarkAlt` is consumed
+  via its public component export only, never a deep import of
+  `lotus-geometry.ts`. Zero risk of a mistyped/rounded path coordinate.
+- C-2: No page placement. This card builds the component and its Storybook
+  story only; placement is a separate card (G2).
+- C-3: No new dependency, no CSS module — Tailwind + inline SVG only, same
+  convention as the existing `Blob`/`LotusMarkAlt` components.
+- C-4: `globals.css` untouched — every colour is a `var(--color-*)`
+  reference to a token that already exists.
+- C-5: No `npm run build`/`build-storybook` (coordinator runs those
+  centrally); `npx tsc --noEmit` and `npm run lint` only.
+
+## Tasks
+
+- [x] Read `LotusMarkAlt.tsx`, `lotus-geometry.ts`, `globals.css` (`@theme`
+      token block), `Blob.tsx`/`Blob.stories.tsx` (prop/token-map
+      convention), `Container.tsx` (width-system precedent), and
+      `LotusPhotoMask.tsx` (`useId()`-scoped id convention) before writing
+      anything.
+- [x] Created `src/components/lotus-band/LotusBand.tsx` — seamless tiling:
+      the inner `<svg>` carries **no `viewBox`**, so per the SVG spec 1 user
+      unit = 1 real CSS px of its own rendered box; a `<pattern
+      patternUnits="userSpaceOnUse" width={tileSize} height={height}>`
+      inside it then repeats pixel-exact at any container width, zero
+      distortion, no `ResizeObserver`.
+- [x] **Two-copies-per-tile overlap construction** (`LotusBand.tsx:126-135`)
+      — `<pattern>`'s default `overflow:hidden` clips *each repeated tile
+      independently* to its own `[0,tileSize]×[0,height]` box. A single
+      `LotusMarkAlt` copy per cell wider than `tileSize` doesn't "spill into
+      the neighbour" — it just loses its clipped tail in every repeat, the
+      same clipped tail, forever (a real defect this card avoided rather
+      than shipped: "why does the pattern look chopped" was flagged
+      explicitly during planning as the failure mode of a naive single-copy
+      implementation). Fix: each tile draws `LotusMarkAlt` **twice** — once
+      at local `x=0` (this cell's motif) and once at local `x=-tileSize`
+      (the visible remainder of the *previous* cell's motif) — so with
+      `motifSize > tileSize` the interlocking look is real, undistorted
+      geometry, not a clipped illusion.
+- [x] Sized `LotusMarkAlt` inside the pattern without touching
+      `lotus-mark/*`: `LotusMarkAlt`'s props are `{ className }` only (no
+      `style`, no rest-spread), and a Tailwind arbitrary-value class built
+      from a runtime prop (`w-[${motifSize}px]`) isn't picked up by
+      Tailwind's static JIT scan. Wrapped each copy in a plain nested `<svg
+      x={} y={} width={motifSize} height={motifHeight} style={{ color }}>`
+      (native SVG attributes, numbers as JSX props, no Tailwind involved)
+      and gave `<LotusMarkAlt className="h-full w-full" />` inside it.
+- [x] Top/bottom crop: `motifHeight = motifSize * (141.48/148.47)`
+      (`LotusMarkAlt`'s own viewBox ratio, hardcoded as a local constant
+      with a comment pointing at the source, not imported) comes out taller
+      than `height`; each copy's `y={-(motifHeight-height)/2}` centres it,
+      so the pattern's own clip crops it symmetrically top and bottom.
+- [x] `useId()`-scoped pattern id (`lotus-band-${useId()...}`,
+      `LotusBand.tsx:115`) — same convention as `LotusPhotoMask`'s
+      `clipPath` id — so multiple band instances on one page/Storybook
+      canvas don't collide.
+- [x] Numeric `height` prop (default 96), not a Tailwind height class on
+      `className` — the crop math needs a real number synchronously, and
+      this repo has no `tailwind-merge`, so a caller height class and a
+      component-default height class on the same element would race
+      unpredictably. Also makes CLS zero by construction: the wrapper's
+      `style.height` is set synchronously from a prop, no async asset load,
+      no JS-driven resize.
+- [x] Token-driven colours only, verified via WCAG relative-luminance
+      formula against the real hexes (not eyeballed) — teal band
+      `var(--color-teal-700)`, purple band `var(--color-purple-600)`,
+      neutral spacer `var(--color-warm-bg)` (the site's existing
+      established neutral-surface token, reused rather than introducing an
+      unused `neutral-*` shade).
+- [x] "Neutral" variant = plain spacer, no motif at all (the correct
+      reading of Plan 2.0's "neutral spacer" wording, confirmed by the
+      coordinator) — skips rendering the whole `<svg>`/`<pattern>` for that
+      variant rather than an invisible/zero-opacity one.
+- [x] `stories/ui/LotusBand.stories.tsx` — `Teal`/`Purple`/`NeutralSpacer`
+      (the 3 F6 ACs) plus `WithOverlayText` (AA contrast demo, same role as
+      `Blob`'s existing `BehindText` story). No test framework exists in
+      this repo (`package.json` has no `test` script, zero `*.test.tsx`
+      files anywhere) — Storybook stories are this project's verification
+      artifact for UI components.
+- [x] Ponytail self-review of the diff: one real finding — the optional
+      `children` wrapper had `relative z-10 h-full`; established precedent
+      for "content over an absolute decorative layer"
+      ([[lotus_mark_alt_card_motif]] memory / `BenefitCard`) uses only
+      `relative`. Fixed. Everything else (two-copy overlap, the three
+      numeric tiling props) is required by the technique itself, not
+      speculative.
+
+## Acceptance criteria
+
+- AC-1 (seamless full-width tiling, no visible seams, zero CLS): **met.**
+  Coordinator measured periodicity directly against a static Storybook
+  build, not by eyeballing boundaries: every pixel column at 1440px
+  compared against the column one tile (112px) to its right, 49,956 sample
+  pairs, **maxPeriodDiff = 0** — byte-identical repeats. Full-bleed and
+  zero page overflow confirmed at 390/768/1440/1920. `rgb(13,106,112)`
+  measured = teal-700, tile 112px, no `viewBox` present, as designed.
+- AC-2 (band colour(s) driven by tokens; AA contrast for any overlaid
+  text): **met.** All colours are `var(--color-*)` references (verified —
+  no raw hex in the component); white overlay text measured contrast
+  teal-700 ≈ 6.34:1, purple-600 ≈ 10.48:1, warm-bg/foreground ≈ 11.76:1 —
+  all clear AA.
+- AC-3 (Storybook story: teal, purple, neutral-spacer variants): **met** —
+  see Tasks above.
+- Additional, unplanned-for confirmation: vertical bleed is real, not
+  shrunk-to-fit — coordinator measured 274 ink pixels on the band's top row
+  and 144 on the bottom row, i.e. the motif genuinely gets cropped by the
+  band edges rather than scaled to avoid it, matching the reference art.
+
+## Verification
+
+- [x] `npx tsc --noEmit` — exit 0.
+- [x] `npm run lint` — exit 0.
+- [x] `npm run build`/`npm run build-storybook` — not run by this agent
+      (coordinator runs both centrally per standing instruction).
+- [x] Browser verification: coordinator, Chrome, against a static
+      Storybook build (`storybook-static` served on :6007 — the webpack dev
+      server never finished bundling, so the coordinator built once and
+      served the output) — see the measured numbers under AC-1/AC-2 above.
+
+## Review
+
+One new component (`src/components/lotus-band/LotusBand.tsx`, `index.ts`)
+plus one Storybook story file — no edits to any existing file, no page
+placement, no dependency added. The seamless-tiling mechanism (no-`viewBox`
+SVG + `userSpaceOnUse` `<pattern>`) and the two-copies-per-tile overlap
+construction are the two pieces of real technique here; both were reasoned
+through from the SVG spec's actual clipping behaviour before implementation
+rather than trial-and-error in the browser, and both were then independently
+confirmed by the coordinator's pixel-level measurement (maxPeriodDiff = 0;
+274/144 ink-pixel bleed counts).
+
+One self-caught defect during ponytail-review (the `children` wrapper's
+redundant `z-10`/`h-full`) — fixed before this went to verification, not
+after.
+
+`tasks/lessons.md` not touched — no user correction occurred in this round;
+see the F5 section below for the two corrections that *did* land, both
+self-caught or coordinator-relayed before implementation, not after.
+
+---
+
+# F5: Shape-divider component set (6 colourways)
+
+Branch: `feat/shape-divider-components`.
+
+## Diagnosis
+
+**The card's stated asset location was wrong, and this was caught before
+implementation, not silently worked around.** F5 as written says the 6
+divider assets live in `docs/brand-assets/logo/`; that directory contains
+only the raw logomark exports (`Lotus Care Alternative Logomark -
+Black/Green/Purple/White.svg`/`.png`), no divider art. The coordinator
+reported this gap to the user; the user then identified the *reference
+screenshots already used for F6* as the divider art — three motif
+colourways tiled on a teal band, three more on a purple band, "three plus
+three is the six shape dividers." Re-opened both images myself rather than
+taking that reading on trust; it holds up exactly.
+
+**F5 and F6 are the same artwork serving two different jobs, not two
+components.** F5 therefore widened the F6 `LotusBand` component (added a
+second, independent colour axis) rather than building a parallel divider
+component family. **This is a deliberate, permanent design decision, not an
+in-progress state** — a future reader searching for a separate
+`ShapeDivider`/`LotusDivider` component should find this note instead: it
+does not exist by design, `LotusBand` covers both jobs.
+
+**Reference files were renamed mid-task.** The original
+`Screenshot 2026-08-08 195730/195757/195811.png` were deleted from
+`docs/brand-assets/Logo/` and replaced by untracked `screenshot-1/2/3.png`
+(`195730`→`screenshot-1`, the CR2 benefit-card reference; `195757`→
+`screenshot-2`, teal band; `195811`→`screenshot-3`, purple band) — caught by
+re-checking `git status` when a `Read` on the old path failed, not assumed.
+The coordinator confirmed the rename is intentionally uncommitted and will
+be staged alongside this work.
+
+**Pixel-sampled the two reference images rather than eyeballing colour
+names**, using ImageMagick (`identify`/`convert` histograms — available in
+this environment, no new tool installed):
+
+| Screenshot | Row | Sampled hex | Token used |
+|---|---|---|---|
+| screenshot-2 (teal band) | bg | `#096972` | `--color-teal-700` (closest by far) |
+| screenshot-2 | row 1 | `#FFFFFF` | `--color-background` (exact) |
+| screenshot-2 | row 2 | `#000000` | `--color-neutral-900` (closest defined token) |
+| screenshot-2 | row 3 | `#761948` | `--color-purple-600` (**exact byte match**) |
+| screenshot-3 (purple band) | bg | `#761948` | `--color-purple-600` (**exact byte match**) |
+| screenshot-3 | row 1 | `#096972` | `--color-teal-700` (same value as the teal band's own bg — **not** teal-500) |
+| screenshot-3 | row 2 | `#000000` | `--color-neutral-900` |
+| screenshot-3 | row 3 | `#FFFFFF` | `--color-background` (exact) |
+
+Two things the sampling found that colour *names* alone could not carry:
+
+1. **`--color-neutral-900` (`#111827`), not `--color-foreground`
+   (`#2d3436`), for "black."** `#111827` is measurably closer to the
+   reference's pure `#000000` by luminance distance. This is a **deliberate
+   divergence from the designer's export** — a token over a raw value — not
+   an attempt to reproduce `#000000` exactly. Recorded as a decision.
+2. **Self-caught bug in F6's own shipped code.** The purple band's motif
+   had used `--color-teal-500`; the pixel sample showed the true value is
+   `--color-teal-700` (byte-identical to the teal band's own background).
+   Fixed in this same diff, found before the coordinator's browser
+   verification, not after.
+
+## Must not break
+
+- C-1 (carried over from F6): `src/components/lotus-mark/*` untouched;
+  `globals.css` untouched; no page placement; no new dependency; no
+  `npm run build`/`build-storybook`.
+- C-2: `variant`'s existing 3 values (`teal`/`purple`/`neutral`) and their
+  meaning completely unchanged — the 4 existing F6 stories needed zero
+  edits.
+- C-3: No second component family. The divider requirement is served by
+  widening `LotusBand`'s prop surface, confirmed explicitly with the
+  coordinator before implementation (Step 1 plan, approved as written).
+
+## User's design decision
+
+Two independent props (`variant` for band colour, new `motifColor` for
+outline colour) rather than a 7-member widened `variant` union
+(`"teal"`/`"teal-black"`/`"teal-purple"`/`"purple"`/`"purple-black"`/
+`"purple-white"`/`"neutral"`). Justification, by size: the 6 combos are a
+clean cross product — `variant ∈ {teal, purple}` × `motifColor ∈ {white,
+black, teal, purple} \ {variant's own hue}` (a colour can't be its own
+band's motif, it would be invisible) = 2×4−2 = 6. A widened union would
+repeat each band's `bg` value across 3 entries (3× `teal-700`, 3×
+`purple-600`); the two-axis design declares each `bg` once. `motifColor` is
+documented as "must differ from `variant`'s hue" rather than
+runtime-validated — a compile-time developer choice between two decorative
+props, not a trust boundary crossed by user input, so a doc comment is
+proportionate (confirmed with the coordinator).
+
+## Tasks
+
+- [x] Re-opened both reference screenshots (at their renamed paths) and
+      independently confirmed the coordinator's relayed colour-name list —
+      correct, with the two additional pixel-level facts above.
+- [x] `LotusBand.tsx:6-7` — added `LotusBandMotifColor` type
+      (`"white"|"black"|"teal"|"purple"`).
+- [x] `LotusBand.tsx:29-47` — added `MOTIF_COLOR` (the 4-value token map,
+      with the pixel-sampling provenance recorded in the comment) and
+      `DEFAULT_MOTIF` (each band's reference default when `motifColor` is
+      omitted: teal→white, purple→teal, matching F6's original look
+      exactly — zero visual change to the 4 existing stories' default
+      renders beyond the teal-500→teal-700 bug fix).
+- [x] `LotusBand.tsx:23-26` — fixed purple band's motif default from
+      `--color-teal-500` to `--color-teal-700` (the self-caught bug above).
+- [x] `LotusBand.tsx:49-79` — added `motifColor` to `LotusBandProps` with
+      the "must differ from `variant`" doc note.
+- [x] `LotusBand.tsx:82-105` — doc comment states the AA assumption
+      explicitly: "contrast is checked against the band background only —
+      the outline motif is decorative and low-coverage (thin strokes, not a
+      fill), the same convention already used for `Blob`/`BenefitCard`" —
+      recorded as a decision, not an oversight, per the coordinator's
+      instruction.
+- [x] `LotusBand.tsx:106-117` — component body resolves `motif` as
+      `variant === "neutral" ? undefined : MOTIF_COLOR[motifColor ??
+      DEFAULT_MOTIF[variant]]` — `DEFAULT_MOTIF`'s narrower
+      `Record<"teal"|"purple", ...>` type (rather than folding it into
+      `BAND_STYLE`'s `Record<LotusBandVariant, ...>`) is what keeps this
+      lookup provably non-`undefined` in the already-narrowed branch;
+      considered merging the two maps in ponytail-review and rejected it —
+      a few lines saved for a real type-safety loss.
+- [x] `stories/ui/LotusBand.stories.tsx` — added `AllSixDividers` (F5's
+      "one story showing all 6" AC): a 6-entry `DIVIDERS` array of
+      `{variant, motifColor}` pairs mapped to stacked `<LotusBand>`
+      instances, reusing the component with no new markup complexity.
+- [x] Ponytail self-review of the diff: one candidate considered
+      (`DEFAULT_MOTIF`→`BAND_STYLE` merge, see above) and rejected with a
+      stated reason. `net: -0 lines applied.`
+
+## Acceptance criteria
+
+- AC-1 (all 6 dividers available from one component, selectable by prop,
+  sourced from the reference art): **met.** Coordinator verified by pixel
+  histogram of the `AllSixDividers` story: teal-700 band with white /
+  `#111827` / `#761948` motifs, and purple-600 band with teal-700 /
+  `#111827` / `#ffffff` motifs — exactly the reference mapping, and the
+  teal-500→teal-700 self-correction is visibly present in divider 4.
+- AC-2 (colours come from brand tokens; no hardcoded hex): **met.** Every
+  value in `MOTIF_COLOR`/`BAND_STYLE` is a `var(--color-*)` reference; the
+  "black" mapping is `neutral-900`, never raw `#000`.
+- AC-3 (full-width, responsive, zero CLS; AA contrast where a divider
+  carries text/edges over content): **met.** Inherited from F6's numeric
+  `height` prop and no-`viewBox` tiling (unchanged by this card). AA
+  assumption stated explicitly in the component doc comment per the
+  coordinator's instruction (see Tasks).
+- AC-4 (Storybook story showing all 6): **met** — `AllSixDividers`.
+
+## Verification
+
+- [x] `npx tsc --noEmit` — exit 0.
+- [x] `npm run lint` — exit 0.
+- [x] `npm run build`/`npm run build-storybook` — not run by this agent
+      (coordinator runs both centrally).
+- [x] Browser verification: coordinator, Chrome, against the same static
+      Storybook build as F6 — see the measured colourway table under AC-1
+      above.
+
+## Review
+
+Two files touched, both already owned by F6
+(`src/components/lotus-band/LotusBand.tsx`,
+`stories/ui/LotusBand.stories.tsx`) — no new component file, no second
+divider component family. The net new surface is one prop (`motifColor`)
+and two small token maps, plus one bug fix inherited forward from F6
+(teal-500→teal-700) that pixel-sampling caught before it reached a page.
+
+Two corrections landed in this round, both caught before implementation
+completed rather than after: the card's asset-location statement was wrong
+(resolved by the user identifying the real reference, verified independently
+by re-opening the images rather than trusting the relay); and F6's own
+shipped purple-motif colour was wrong (caught by this agent's own
+pixel-sampling during the F5 investigation, fixed in the same diff).
+
+`tasks/lessons.md` not touched per the coordinator's explicit instruction —
+both corrections above are recorded here instead, scoped to this component,
+not generalized into a repo-wide lesson.
