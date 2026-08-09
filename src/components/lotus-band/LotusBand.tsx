@@ -30,6 +30,22 @@ const TILE_TO_HEIGHT_RATIO = 2;
 // position change only, not a re-scale).
 const MOTIF_TO_TILE_RATIO = 0.972;
 
+// Extra downward drop of the midline anchor below "flush with the band's
+// bottom edge" (which is what a 1x multiplier on `height` would give — see
+// `motifY` below). User-confirmed: +8px at height=72. 8/72 = 1/9, so the
+// multiplier on `height` becomes 1 + 1/9 = 10/9. Expressed as a ratio (not
+// the literal 8px) so it scales proportionally at any `height`, same
+// reasoning as `TILE_TO_HEIGHT_RATIO`.
+const MIDLINE_Y_TO_HEIGHT_RATIO = 10 / 9;
+
+// "75° counter-clockwise" (was 30°, then briefly 90°, settled at 75° — same
+// confirmed direction, "to the left"). SVG's y-axis points down, so a
+// POSITIVE `rotate()` angle turns clockwise on screen — the sign here is
+// therefore negative. Direction confirmed visually with an isolated
+// dot-rotation test (a point at 12 o'clock moved toward 11/10 o'clock under
+// a negative angle), not just trusted from the sign convention.
+const ROTATION_DEG = -75;
+
 // Contrast (WCAG relative luminance, verified against the real token
 // hexes): white on teal-700 (#0d6a70) ≈ 6.34:1; white on purple-600
 // (#761948) ≈ 10.48:1; foreground on warm-bg (#f8f6f3) ≈ 11.76:1 — all
@@ -122,13 +138,21 @@ export interface LotusBandProps {
  * clipped illusion.
  *
  * Crop position: only the motif's TOP HALF is shown — its own horizontal
- * midline is aligned to sit exactly on the band's bottom edge
- * (`motifY = height - motifHeight / 2`), so the bottom half is clipped away
- * below the band and the flower reads as rising out of / hiding behind the
- * strip. The motif is NOT rescaled to fit — at the reference size
- * (`MOTIF_TO_TILE_RATIO`), its half-height is a little less than most
- * `height`s in use, so there's a small clear gap between the band's top
- * edge and the topmost petal tip; that gap is intentional, not a bug.
+ * midline is aligned `MIDLINE_Y_TO_HEIGHT_RATIO * height` down from the
+ * band's top edge (i.e. below the band's own bottom edge, not flush with
+ * it), so the bottom half is clipped away below the band and the flower
+ * reads as rising out of / hiding behind the strip. The motif is NOT
+ * rescaled to fit — at the reference size (`MOTIF_TO_TILE_RATIO`), its
+ * half-height is a little less than most `height`s in use, so there's a
+ * clear gap between the band's top edge and the topmost petal tip; that gap
+ * is intentional, not a bug.
+ *
+ * Rotation: each motif copy is rotated `ROTATION_DEG` about its OWN centre
+ * (a `<g transform="rotate(angle cx cy)">` wrapper per copy, cx/cy computed
+ * from that copy's own x/y/size) — never the tiled field as a whole, which
+ * would turn the band itself off-axis. Rotating in place keeps every tile
+ * bit-for-bit identical to its neighbour (just shifted by `tileSize`), so
+ * periodicity is unaffected by the rotation.
  *
  * `motifSize`/`tileSize` default to `height`-relative ratios
  * (`TILE_TO_HEIGHT_RATIO`, `MOTIF_TO_TILE_RATIO`), not fixed pixel numbers —
@@ -152,9 +176,25 @@ export function LotusBand({
   const resolvedTileSize = tileSize ?? Math.round(height * TILE_TO_HEIGHT_RATIO);
   const resolvedMotifSize = motifSize ?? Math.round(resolvedTileSize * MOTIF_TO_TILE_RATIO);
   const motifHeight = resolvedMotifSize * ALT_ASPECT_RATIO;
-  // Motif's own vertical midline lands on the band's bottom edge — see the
-  // "Crop position" doc above.
-  const motifY = height - motifHeight / 2;
+  // Motif's own vertical midline lands below the band's bottom edge — see
+  // the "Crop position" doc above.
+  const motifY = height * MIDLINE_Y_TO_HEIGHT_RATIO - motifHeight / 2;
+  const motifCy = motifY + motifHeight / 2; // = height * MIDLINE_Y_TO_HEIGHT_RATIO, same for both copies
+
+  // Renders one motif copy at local x=`xOffset`, rotated about its own
+  // centre — factored out so the two copies (this cell's motif, and the
+  // previous cell's tail, per the class doc's "Overlap/interlocking look")
+  // can't drift out of sync with each other.
+  const renderMotif = (xOffset: number) => {
+    const cx = xOffset + resolvedMotifSize / 2;
+    return (
+      <g key={xOffset} transform={`rotate(${ROTATION_DEG} ${cx} ${motifCy})`}>
+        <svg x={xOffset} y={motifY} width={resolvedMotifSize} height={motifHeight} style={{ color: motif }}>
+          <LotusMarkAlt className="h-full w-full" />
+        </svg>
+      </g>
+    );
+  };
 
   return (
     <div
@@ -164,12 +204,8 @@ export function LotusBand({
       {motif && (
         <svg className="absolute inset-0 h-full w-full" aria-hidden="true">
           <pattern id={patternId} patternUnits="userSpaceOnUse" width={resolvedTileSize} height={height}>
-            <svg x={0} y={motifY} width={resolvedMotifSize} height={motifHeight} style={{ color: motif }}>
-              <LotusMarkAlt className="h-full w-full" />
-            </svg>
-            <svg x={-resolvedTileSize} y={motifY} width={resolvedMotifSize} height={motifHeight} style={{ color: motif }}>
-              <LotusMarkAlt className="h-full w-full" />
-            </svg>
+            {renderMotif(0)}
+            {renderMotif(-resolvedTileSize)}
           </pattern>
           <rect width="100%" height="100%" fill={`url(#${patternId})`} />
         </svg>
