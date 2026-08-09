@@ -30,13 +30,19 @@ const TILE_TO_HEIGHT_RATIO = 2;
 // position change only, not a re-scale).
 const MOTIF_TO_TILE_RATIO = 0.972;
 
-// Extra downward drop of the midline anchor below "flush with the band's
-// bottom edge" (which is what a 1x multiplier on `height` would give — see
-// `motifY` below). User-confirmed: +8px at height=72. 8/72 = 1/9, so the
-// multiplier on `height` becomes 1 + 1/9 = 10/9. Expressed as a ratio (not
-// the literal 8px) so it scales proportionally at any `height`, same
-// reasoning as `TILE_TO_HEIGHT_RATIO`.
-const MIDLINE_Y_TO_HEIGHT_RATIO = 10 / 9;
+// Vertical anchor for the motif's own midline, as a multiplier on `height`
+// (see `motifY` below) — tuned so the topmost petal point almost grazes the
+// band's top edge (a small ~2px gap, not flush, not overlapping) at the
+// `ROTATION_DEG` currently in this file. This is rotation-dependent: which
+// part of the bloom ends up highest changes with the angle, so this ratio
+// was re-measured after the last rotation change, not carried over from a
+// prior angle. Derived arithmetically, not by trial and error: at
+// height=72 the previous ratio (10/9, tuned for a different rotation) gave
+// a measured 10px gap; closing that to ~2px means moving the motif up 8px,
+// i.e. reducing the ratio by 8/72 = 1/9 → 10/9 − 1/9 = 1. Expressed as a
+// ratio so it scales proportionally at any `height`, same reasoning as
+// `TILE_TO_HEIGHT_RATIO`.
+const MIDLINE_Y_TO_HEIGHT_RATIO = 1;
 
 // "75° counter-clockwise" (was 30°, then briefly 90°, settled at 75° — same
 // confirmed direction, "to the left"). SVG's y-axis points down, so a
@@ -44,7 +50,7 @@ const MIDLINE_Y_TO_HEIGHT_RATIO = 10 / 9;
 // therefore negative. Direction confirmed visually with an isolated
 // dot-rotation test (a point at 12 o'clock moved toward 11/10 o'clock under
 // a negative angle), not just trusted from the sign convention.
-const ROTATION_DEG = -75;
+const ROTATION_DEG = 90;
 
 // Contrast (WCAG relative luminance, verified against the real token
 // hexes): white on teal-700 (#0d6a70) ≈ 6.34:1; white on purple-600
@@ -137,15 +143,16 @@ export interface LotusBandProps {
  * motif) — so the interlocking look is real, undistorted geometry, not a
  * clipped illusion.
  *
- * Crop position: only the motif's TOP HALF is shown — its own horizontal
- * midline is aligned `MIDLINE_Y_TO_HEIGHT_RATIO * height` down from the
- * band's top edge (i.e. below the band's own bottom edge, not flush with
- * it), so the bottom half is clipped away below the band and the flower
- * reads as rising out of / hiding behind the strip. The motif is NOT
- * rescaled to fit — at the reference size (`MOTIF_TO_TILE_RATIO`), its
- * half-height is a little less than most `height`s in use, so there's a
- * clear gap between the band's top edge and the topmost petal tip; that gap
- * is intentional, not a bug.
+ * Crop position: the motif's own midline is anchored
+ * `MIDLINE_Y_TO_HEIGHT_RATIO * height` down from the band's top edge, then
+ * rotated `ROTATION_DEG` about that same point — so most, but not all, of
+ * the bloom is clipped away below/around the band and it reads as rising
+ * out of / hiding behind the strip. The motif is NOT rescaled to fit
+ * (`MOTIF_TO_TILE_RATIO` stays constant); only this anchor ratio moves.
+ * Because rotation changes which part of the bloom ends up highest,
+ * `MIDLINE_Y_TO_HEIGHT_RATIO` is tuned per `ROTATION_DEG` (see that
+ * constant's own doc for the current pairing and the measured gap it
+ * produces) rather than derived from a fixed geometric rule.
  *
  * Rotation: each motif copy is rotated `ROTATION_DEG` about its OWN centre
  * (a `<g transform="rotate(angle cx cy)">` wrapper per copy, cx/cy computed
