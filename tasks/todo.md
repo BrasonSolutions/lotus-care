@@ -442,3 +442,194 @@ by re-reading the source harder — see the new lesson in `tasks/lessons.md`.
 there only because 8 homes always overflow at every breakpoint the M3 card
 measured. Recorded as a known, deliberate non-fix — in scope for a future
 card if that assumption ever stops holding, not for CR1.
+
+---
+
+# NB1: Navbar logo + typography
+
+Branch: `fix/navbar-logo-typography`.
+
+## Diagnosis
+
+Two independent defects, both confined to `LogoDark.tsx` and
+`LogoWhite.tsx` — `Navbar.tsx` itself was already correct.
+
+**Mark was raster, not SVG.** `LogoDark.tsx`/`LogoWhite.tsx` rendered
+`next/image` against `/images/logo-icon-color.png` (intrinsic 90×94) and
+`/images/logo-white-notext.png` (intrinsic 80×80) respectively, scaled into
+a 42×40 CSS box (`h-10 w-auto` on the wrapper). Coordinator's independent
+measurement of the pre-fix white PNG: intrinsic 85×81 rendered into a
+42×40 box — at `devicePixelRatio` 2 that box needs 84×80 device pixels
+against 85×81 available, i.e. **zero headroom**, soft on any retina
+display. This is the literal thing card NB1's "use SVG!!" problem
+statement was naming.
+
+**Typography had two scale violations, one of them an AA failure.** The
+"ENHANCED LIVING" caption (`LogoDark.tsx:16`, `LogoWhite.tsx:16`) was set
+at `text-[9px]` — a repo-wide grep for `text-\[[0-9]*px\]` across `src/`
+returned only these two lines; it is the only raw-pixel font size
+anywhere in the codebase, below Tailwind's own floor (`text-xs` = 12px).
+On `LogoWhite.tsx:16` specifically, that same caption was also
+`text-white/70`. Computed via the WCAG relative-luminance formula: white
+at 70% opacity over `bg-primary-dark` (`#0d6a70`) blends to an effective
+contrast ratio of **3.98:1** — fails AA (needs 4.5:1) for normal text.
+This is not a hypothetical: `LogoWhite` sits directly on solid
+`bg-primary-dark` whenever `Navbar`'s `solidWhenTop` prop is set and the
+page is unscrolled (`Navbar.tsx:59`), which is live on `/careers` and
+`/quality` (`src/app/careers/layout.tsx:22`,
+`src/app/quality/layout.tsx:22`), and in the footer, which shares the
+same `LogoWhite` component (`Footer.tsx:23`). `LogoDark.tsx:16`'s caption
+(`text-muted` on white, no opacity applied) computed to 4.83:1 — already
+passing, so only its raw-pixel size needed correcting, not its color.
+
+## User's design decision
+
+Swap the mark to a real SVG and keep the wordmark ("LOTUS CARE" /
+"ENHANCED LIVING") as live HTML text, rather than adopting the full
+designer lockup file (`docs/brand-assets/Logo/Lotus Care Logo -
+*.svg`/`Stacked *.svg`, which bakes mark + "Lotus Care" wordmark into one
+outlined-path SVG). Two reasons: the text stays selectable and
+screen-reader friendly as real DOM text instead of opaque vector paths;
+and no lockup file contains the "ENHANCED LIVING" tagline anyway — both
+the horizontal and stacked lockups measured exactly 36 `<path>` elements
+(16 mark facets + 20 wordmark-letter paths for "Lotus Care" only), too
+few to also encode a second word, confirming the tagline has always been
+site-authored text, not brand artwork being reproduced badly.
+
+## Must not break
+
+- No change to `Navbar.tsx` — already correct: right components, right
+  wrapper sizing (`h-10 w-auto`), right scrolled/unscrolled branch logic.
+  Confirmed by reading in full before editing anything.
+- No change to `MobileMenu.tsx` — read in full; it renders no logo at
+  all (hamburger + drawer with a text-only "Menu" header). Not affected
+  by this card.
+- No change to `Footer.tsx` — it consumes the shared `LogoWhite`
+  component but was not itself edited; see shared-surface note below.
+- No change to `LotusMark.tsx`, `LotusMarkAlt.tsx`, or
+  `lotus-geometry.ts` — reused as-is (F7 work), zero edits.
+- No new dependency, no new CSS variable — the mark reuses the existing
+  `LotusMark` component's `tone` prop; the caption fix uses Tailwind's
+  own scale steps (`text-xs`, `text-white/80`).
+- `tracking-[0.14em]` / `tracking-[0.2em]` on both wordmark lines left
+  unchanged — deliberate brand letter-spacing, not a scale bug (see
+  Review).
+
+## Shared-component disclosure
+
+`LogoWhite` is consumed by **both** `Navbar.tsx:71` (unscrolled state)
+and `Footer.tsx:23`. Fixing `LogoWhite.tsx` therefore fixes the footer's
+logo (raster→SVG, and the same AA-failing caption) as a direct
+consequence — `Footer.tsx` itself carries no edit. Flagged up front
+during planning, not discovered after the fact.
+
+## Tasks
+
+- [x] Read `Navbar.tsx`, `LogoDark.tsx`, `LogoWhite.tsx`,
+      `LotusMark.tsx`/`LotusMarkAlt.tsx`/`lotus-geometry.ts`,
+      `MobileMenu.tsx`, `Footer.tsx`, and every file in
+      `docs/brand-assets/Logo/` (opened the actual SVGs — path counts,
+      viewBox, fill structure) before editing anything.
+- [x] `LogoDark.tsx` — replaced the `next/image` raster `<Image>` with
+      `<LotusMark tone="color" className="h-full w-auto" />` (real
+      per-facet brand teals, matches the old color PNG's intent); caption
+      `text-[9px]` → `text-xs`.
+- [x] `LogoWhite.tsx` — replaced the raster `<Image>` with `<LotusMark
+      tone="mono" className="h-full w-auto text-white" />`; explicit
+      `text-white` is load-bearing here — `tone="mono"` renders
+      `fill="currentColor"`, and the parent `<Link>` in `Navbar.tsx:67`
+      sets no color class, so without it `currentColor` would resolve to
+      the inherited dark body foreground and silently render an invisible
+      mark on the dark navbar state, passing `tsc` and `build` while
+      doing it; caption `text-[9px]` → `text-xs` and `text-white/70` →
+      `text-white/80` (the AA fix).
+- [x] Verified no other reference to the two raster PNGs before deleting:
+      grepped `src/` (including `src/app` metadata exports),
+      `.storybook/`, `stories/`, `public/` (no manifest/webmanifest/
+      browserconfig files exist in this repo), every root `*.json`/
+      `*.md`, and a final repo-wide sweep excluding `node_modules`/
+      `.next`/`.git`. Both filenames appeared only in the two files just
+      edited.
+- [x] Deleted `public/images/logo-icon-color.png` and
+      `public/images/logo-white-notext.png` (`git rm`).
+- [x] Ponytail self-review of the diff: `Lean already. Ship. net: -14
+      lines possible.` — raster `<Image>` block removed outright, mark
+      reuses the existing `LotusMark` component (no new geometry, no new
+      file), only two Tailwind utility values changed per caption line.
+
+## Acceptance criteria
+
+- AC-1 (navbar logo is the correct SVG, crisp at all sizes): **met.**
+  Coordinator-verified in Chrome on a fresh production build: mark is
+  vector on every page state (`viewBox 0 0 148.47 141.48`, 16 paths, no
+  `<img>` element left anywhere in the navbar); rendered box 42×40px
+  identical at 390/768/1440/1600. Unscrolled/transparent navbar: mark
+  computes to `rgb(255,255,255)` — the explicit `text-white` did its job,
+  the `currentColor` inheritance trap did not fire. Scrolled navbar
+  (white bg): path fills sample as `rgb(9,105,114)`, `rgb(97,195,215)`,
+  `rgb(230,244,249)` — the real per-facet brand teals from the designer
+  file, not an approximation.
+- AC-2 (navbar typography corrected and consistent with the type
+  system): **met.** Caption renders at 12px, one line, at every measured
+  width; navbar height stays 64px at every width; `document
+  .documentElement` overflow is 0 — the 33% size jump from 9px→12px did
+  not wrap the caption, push the nav controls, or change navbar height,
+  which the coordinator flagged as the specific risk to watch before
+  measuring.
+- AC-3 (AA contrast in the navbar): **met, with a margin note for the
+  record.** Measured by decoding the rendered screenshot and running the
+  WCAG formula on actual pixels (background vs. brightest fully-covered
+  glyph pixel), not token math: **`/careers` 4.69:1** — exactly the
+  planning-stage computed figure (white/80 over solid `#0d6a70`) — and
+  **homepage 4.52:1**. Both clear AA (4.5:1). The homepage figure is
+  lower because the hero overlay there lightens the effective bar color
+  to roughly `rgb(16,109,116)` rather than solid `#0d6a70`. `LogoDark`'s
+  caption is unchanged in color (`rgb(107,114,128)` on white), still
+  passing. **Recorded for the record, not actioned:** the homepage's
+  4.52:1 has very little margin above the 4.5:1 AA floor — if a future
+  card lightens that hero overlay further, the tagline could drop below
+  AA. Nothing changed now; it passes today.
+
+## Verification
+
+- [x] `npx tsc --noEmit` — exit 0.
+- [x] `npm run lint` — exit 0.
+- [x] `npm run build` — exit 0 (Next.js 16.2.6, Turbopack, all 22 routes
+      generated).
+- [x] Browser verification: coordinator, Chrome, fresh production build —
+      see the measured figures under AC-1/AC-2/AC-3 above.
+
+## Review
+
+Two files changed (`LogoDark.tsx`, `LogoWhite.tsx`), two dead raster
+assets deleted after a repo-wide reference sweep, net **-14 lines**. No
+new component, no new geometry extraction — the mark reuses the existing
+`LotusMark` component's `tone` prop exactly as F7 intended it to be
+reused, and the wordmark stays real HTML text rather than being folded
+into the designer's combined mark+wordmark lockup SVG, per the user's
+explicit decision (selectable/screen-reader-friendly text, and no lockup
+file contains the tagline regardless).
+
+Two things deliberately **not** changed, both flagged during planning and
+confirmed by the coordinator rather than decided unilaterally:
+
+- `tracking-[0.14em]` / `tracking-[0.2em]` on both wordmark lines — the
+  only genuinely ambiguous item in the diagnosis. They don't match any
+  Tailwind tracking step, but they also don't match anything measurably
+  broken (no AA angle, no illegibility angle at 12px+), and collapsing
+  them to `tracking-wide`/`tracking-widest` would visibly retighten a
+  wordmark that reads as a deliberate brand choice. Left alone.
+- `Navbar.tsx` — already correct on inspection (right components, right
+  sizing, right branch logic); no defect to fix there.
+
+The one AA number worth carrying forward: homepage caption contrast is
+4.52:1, only 0.02:1 above the AA floor, because the hero overlay under
+the transparent navbar is lighter there than the solid `bg-primary-dark`
+case. Not a defect today — recorded so a future hero-overlay change
+doesn't silently regress it below AA.
+
+`tasks/lessons.md` not touched — no correction occurred this round; the
+Step 1 plan (mark→SVG, keep wordmark as text, explicit `text-white` on
+the mono mark, `text-xs`/`text-white/80` on the caption) was right on
+first pass and the coordinator's independent Chrome measurement confirmed
+every number computed during planning.
