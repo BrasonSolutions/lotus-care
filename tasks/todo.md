@@ -975,3 +975,151 @@ pixel-sampling during the F5 investigation, fixed in the same diff).
 `tasks/lessons.md` not touched per the coordinator's explicit instruction —
 both corrections above are recorded here instead, scoped to this component,
 not generalized into a repo-wide lesson.
+
+---
+
+# M2: Our Homes — themed card border
+
+Branch: `feat/our-homes-themed-border`.
+
+## Diagnosis
+
+Card wants a themed border for the Our Homes cards, either "the pattern the
+shape divider uses, or brand colours" (p.2 sketch: thick brand border with a
+dashed inner edge). The divider pattern (F5/F6) lives entirely in
+`LotusBand.tsx`, which was mid-edit by a concurrent agent and out of scope —
+so this card takes the card's own stated fallback, brand-token borders, not
+the divider art.
+
+`HomesCarousel.tsx`'s card `<button>` (`~L137`) had no border at all before
+this change — `rounded-2xl overflow-hidden` only, `.card-hover` supplies a
+hover-only `box-shadow`, `.focus-ring` supplies a `:focus-visible` `outline`.
+
+## Decision: two pseudo-elements, not a real border, and `border` not `outline`
+
+**Pseudo-elements over a real `border-4`.** `HomesCarousel.tsx` was already
+carrying M3's fix, whose index arithmetic (`handleScroll`, `scrollToIndex`,
+`scrollBy`) derives from each card's *measured* `offsetWidth`. A real
+`border-4` on the button is width-neutral under Tailwind Preflight's
+`box-sizing: border-box` — the button's width is explicitly set
+(`w-[calc(85vw)] sm:w-[300px] md:w-[320px]`), so border-box shrinks the
+content box to compensate and the rendered width stays pinned. **It is not
+height-neutral**: the button's height is `auto` (sized by its header +
+`p-5` content), and `box-sizing: border-box` only subtracts border/padding
+from a dimension that is explicitly specified — on an `auto` dimension the
+border is added on top, uncompensated. A real `border-4` would therefore
+have added 8px (4px × 2) to every card's height. Wrapping both border layers
+in absolutely-positioned pseudo-elements (`::before`/`::after`) on a
+`relative` parent sidesteps the asymmetry entirely: neither pseudo
+participates in the button's box layout, in either axis, so there is nothing
+for M3's `offsetWidth`-based arithmetic to react to. **Do not "simplify"
+this into a plain `border-4 border-primary` later** — it looks equivalent at
+a glance and silently reintroduces the 8px height growth this card was
+built to avoid.
+
+**`border` on the pseudo-elements, not `outline` on the button itself.**
+`.focus-ring:focus-visible` (`globals.css:93-97`) already sets `outline: 2px
+solid var(--color-primary); outline-offset: 2px` on this same button for
+keyboard focus visibility. Painting a decorative ring via `outline` on the
+button would put two rules fighting over the same CSS property on the same
+node — cascade-order dependent, and exactly the kind of collision that only
+surfaces when someone tabs through the carousel rather than clicking it.
+Real `border` on the pseudo-elements avoids the property collision
+entirely; `outline` stays owned by keyboard focus alone.
+
+## Must not break
+
+- C-1: `handleScroll`, `scrollToIndex`, `scrollBy`, the `maxScrollLeft`
+  guard, the `embedded` prop, and the dots/arrows JSX and wiring —
+  untouched. The diff is confined to one `className` string on the card
+  `<button>`.
+- C-2: `src/components/lotus-band/*`, `src/components/lotus-mark/*`,
+  `src/app/quality/*`, `src/components/quality/*` — untouched (owned by
+  concurrent agents).
+- C-3: Design tokens only — `border-primary` (`--color-teal-500`) and
+  `border-teal-300`, both existing `@theme` tokens. No hardcoded hex.
+- C-4: No `npm run build`/`build-storybook` (concurrent agents were live);
+  `npx tsc --noEmit` and `npm run lint` only.
+
+## Tasks
+
+- [x] Read `HomesCarousel.tsx` in full, the M2 card in
+      `docs/lotus-care-build-plan-2.md`, `tasks/lessons.md` (lesson 4, the
+      `min-w-0`/overflow constraint), `globals.css` (`@theme` token block,
+      `.card-hover`, `.focus-ring`), and `LotusBand.tsx` (to confirm the
+      divider pattern is genuinely out of reach, not just inconvenient)
+      before editing anything.
+- [x] `HomesCarousel.tsx:137` — card `<button>` `className`: added
+      `relative`, `after:content-[''] after:absolute after:inset-0
+      after:rounded-2xl after:border-4 after:border-primary
+      after:pointer-events-none` (outer solid ring), and `before:content-['']
+      before:absolute before:inset-2 before:rounded-xl before:border
+      before:border-dashed before:border-teal-300 before:pointer-events-none`
+      (inner dashed ring). One line changed, nothing else touched.
+- [x] Ponytail self-review of the diff: `Lean already. Ship.` — one
+      `className` line, no new file, no wrapper element, no new dependency,
+      no boilerplate beyond the `content-['']` Tailwind requires to render a
+      pseudo-element.
+
+## Acceptance criteria
+
+- AC-1 (border uses the divider pattern or brand tokens; no hardcoded hex):
+  **met.** Brand-token path taken (divider component out of scope, per
+  Diagnosis). Both ring colours are `@theme` tokens — `border-primary`
+  (teal-500) and `border-teal-300` — no raw hex anywhere in the diff.
+- AC-2 (matches the sketched intent; AA maintained): **met.** Coordinator
+  verified in Chrome on a fresh production build:
+  - Rings render as specified: `::after` = `4px solid rgb(27,173,178)`
+    (teal-500 / `border-primary`), `::before` = `1px dashed
+    rgb(127,213,224)` (teal-300), both `position: absolute` — thick solid
+    outer, dashed inner, per the sketch.
+  - Card box: **332×266 at 390, 320×266 at 768 and 1440** — widths
+    byte-identical to the pre-change numbers (332/320/320). **0px delta**
+    confirms the pseudo-element approach added nothing to the box in either
+    axis; a real `border-4` would have added 8px of height to every card
+    (see Decision above).
+  - Page overflow 0 at 390/768/1440 — lesson 4 holds.
+  - M3 sequence intact at 390 and 1440: `[1,2,3,4,5,6,7,0]`.
+
+**Observed during this card's verification, not a regression from it —
+tracked separately:** at 768 the sequence measures
+`[1,2,3,4,5,7,0,1]` — index 6 is skipped; Garnet House is reachable by its
+dot but not by the "Next" arrow at that width. Nothing dimensional changed
+by this diff (both rings are non-participating overlays, confirmed by the
+0px box delta above), and the skip is a pure function of the 720px scroller
+viewport: `maxScrollLeft` measures 2016 while card 7's snap-start is 2064,
+so the M3 ceiling guard clamps and correctly reports index 7, one index
+past 6. This is a pre-existing M3 behaviour at a breakpoint that card's own
+verification didn't measure, not something introduced here. The coordinator
+is tracking it as a separate M3 follow-up — do not attribute it to the
+border work in this section.
+
+## Verification
+
+- [x] `npx tsc --noEmit` — exit 0.
+- [x] `npm run lint` — exit 0.
+- [x] `npm run build`/`npm run build-storybook` — not run by this agent
+      (concurrent agents were active; coordinator verified on a fresh
+      production build separately).
+- [x] Browser verification: coordinator, Chrome, production build — see the
+      measured figures under AC-2 above.
+
+## Review
+
+One file changed, one `className` line:
+`src/components/homes-carousel/HomesCarousel.tsx`. No new file, no wrapper
+`<div>`, no CSS module, no new dependency. Ponytail-review: `Lean already.
+Ship.` — nothing to cut.
+
+The two decisions worth a future reader's attention are both captured above
+rather than left implicit in the diff: pseudo-elements instead of a real
+border (the `box-sizing: border-box` width-vs-height asymmetry on an
+`auto`-height element), and `border` on the pseudo-elements instead of
+`outline` on the button (avoiding a property collision with
+`.focus-ring:focus-visible`, which already owns `outline` on that node).
+
+`tasks/lessons.md` not touched per the coordinator's explicit instruction —
+no new global lesson; the reasoning specific to this card is recorded above
+instead. The 768px M3 index-6 skip is explicitly not this card's finding to
+own — recorded here only so it isn't mistakenly attributed to the border
+work, with the actual follow-up tracked by the coordinator separately.

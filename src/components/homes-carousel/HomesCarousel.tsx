@@ -134,7 +134,7 @@ export function HomesCarousel({
                 <button
                   key={home.name}
                   onClick={() => setSelectedHome(home)}
-                  className="card-hover snap-start shrink-0 w-[calc(85vw)] sm:w-[300px] md:w-[320px] bg-warm-bg rounded-2xl overflow-hidden text-left group focus-ring"
+                  className="card-hover relative snap-start shrink-0 w-[calc(85vw)] sm:w-[300px] md:w-[320px] bg-warm-bg rounded-2xl overflow-hidden text-left group focus-ring after:content-[''] after:absolute after:inset-0 after:rounded-2xl after:border-4 after:border-primary after:pointer-events-none before:content-[''] before:absolute before:inset-2 before:rounded-xl before:border before:border-dashed before:border-teal-300 before:pointer-events-none"
                 >
                   {/* Color header */}
                   <div
