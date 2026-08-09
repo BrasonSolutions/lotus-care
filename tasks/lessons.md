@@ -39,3 +39,9 @@
    Security review was skipped for the P cards because they are static frontend changes with no backend, input, network, or secrets. Card N1 ("Have Your Say") is the one card that touches a Route Handler, an email service, spam protection and a safeguarding signpost.
    **Rule:** record exemptions against the card that earned them, and name the cards they do not cover.
    **Scope:** project.
+
+9. **A carousel with no overflow is a carousel whose controls lie, and source arithmetic could not see it.**
+   Card CR1's `CultureGallery` carousel went through two source-based diagnoses in a row that both put the defect in the index-rounding maths, copying the M3 `HomesCarousel` ceiling-guard pattern. Only a real-browser measurement showed the actual defect: `scrollWidth == clientWidth` at 1440px (four fixed-width cards exactly fit the container), so arrows and dots cycled their own highlight while nothing on screen moved. "The indicator is wrong" and "there is nothing to scroll" read identically in the source — only the DOM tells them apart.
+   **Rule:** for any scroller, measure `scrollWidth` against `clientWidth` at every breakpoint before theorising about index maths.
+   **Corollary trap:** a ceiling guard of the form `scrollLeft >= maxScrollLeft - 1` is unconditionally true when `maxScrollLeft` is `0`, so it must be written `maxScrollLeft > 0 && scrollLeft >= maxScrollLeft - 1` — applied bare, it would have pinned `activeIndex` to the last dot permanently at rest. `HomesCarousel.tsx` carries this exact unguarded form today; it is dormant only because 8 homes always overflow at every breakpoint that's been measured. Recorded as a known, deliberate non-fix — out of CR1's scope, worth a guard the day that assumption stops holding.
+   **Scope:** global.

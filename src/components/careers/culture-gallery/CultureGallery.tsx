@@ -69,6 +69,11 @@ export function CultureGallery({
 
     const handleScroll = () => {
       const scrollLeft = container.scrollLeft;
+      const maxScrollLeft = container.scrollWidth - container.clientWidth;
+      if (maxScrollLeft > 0 && scrollLeft >= maxScrollLeft - 1) {
+        setActiveIndex(images.length - 1);
+        return;
+      }
       const cardWidth = (container.children[0] as HTMLElement)?.offsetWidth ?? 300;
       const gap = 24;
       const index = Math.round(scrollLeft / (cardWidth + gap));
@@ -120,14 +125,14 @@ export function CultureGallery({
             {images.map((image) => (
               <figure
                 key={image.src}
-                className="snap-start shrink-0 w-[calc(85vw)] sm:w-[300px] md:w-[320px] bg-warm-bg rounded-2xl overflow-hidden"
+                className="snap-start shrink-0 w-[min(85vw,800px)] bg-warm-bg rounded-2xl overflow-hidden"
               >
                 <div className="relative aspect-[4/3]">
                   <Image
                     src={image.src}
                     alt={image.alt}
                     fill
-                    sizes="(min-width: 768px) 320px, 85vw"
+                    sizes="(min-width: 941px) 800px, 85vw"
                     className="object-cover"
                   />
                 </div>

@@ -275,3 +275,170 @@ no spacer, no `min-height`, no fabricated pill.
 `tasks/lessons.md` not touched — nothing here contradicted a prior lesson;
 lesson 7's "look at the image, don't invent" principle was applied by
 analogy (don't invent a pill either) rather than corrected.
+
+---
+
+# CR1: "Why work with us" carousel fix
+
+Branch: `fix/careers-why-work-carousel`.
+
+## Diagnosis
+
+Corrected mid-plan, twice, by real-browser measurement — recorded honestly
+because both prior rounds of source arithmetic were wrong about where the
+defect lived.
+
+**First hypothesis (rejected):** `CultureGallery.tsx`'s `handleScroll` looked
+like the pre-fix `HomesCarousel.tsx` — no `scrollWidth - clientWidth` ceiling
+guard, so the M3 fix (copy the guard clause in isolation) looked like the
+obvious reuse. **This was the wrong root cause and, applied alone, would have
+been a regression.** `cultureGalleryImages` has exactly 4 entries at
+`sm:w-[300px] md:w-[320px]` inside a 1440px-capped container — at 1440px,
+`scrollWidth === clientWidth` (1376 vs 1376, confirmed by the coordinator's
+Chrome measurement): the row never overflows, so there is nothing to scroll.
+A bare ceiling guard of the form `scrollLeft >= maxScrollLeft - 1` is
+unconditionally true when `maxScrollLeft` is `0` (`0 >= -1`), which would
+have pinned `activeIndex` to `images.length - 1` **permanently**, at rest,
+before any click — turning "the last dot never lights up" into "only the
+last dot ever lights up." Caught before implementation, not after.
+
+**Real root cause:** card sizing, not index rounding. Four fixed-width cards
+(320px at `md:`) inside a container whose content width is 1376px at 1440px
+leaves zero scroll room — `scrollWidth == clientWidth`. Below that, at 768px,
+the same fixed 320px card leaves *some* overflow but not enough: the last two
+card positions both clamp to the same `maxScrollLeft` (640px pre-fix),
+so dots 3 and 4 rested at the identical `scrollLeft` — indistinguishable on
+screen even though `activeIndex` correctly advanced. Arrows and dots were
+updating their own highlight state while the photos underneath either didn't
+move at all (1440) or stopped moving one step early (768). The controls were
+lying, not miscounting.
+
+## User's design decision
+
+Coordinator/user chose "one large photo per view at all three breakpoints"
+from three options costed during planning (fluid-width overflow vs. a small
+multi-card grid vs. hiding arrows/dots when non-scrolling). With exactly 4
+photos, this keeps the four dot indicators honest — each dot maps to a
+materially different scroll position at every width — and serves Plan 2's
+brand-presence intent (larger photos) as a side effect of the correctness
+fix rather than a separate change.
+
+## Must not break
+
+- No change to `page.tsx`'s stats block (D1, deferred) or the
+  testimonials/video-testimonials sections (D2, deferred).
+- No change to `src/data/careers.ts` (`employerStats`, `testimonials`,
+  `videoTestimonials`, `cultureGalleryImages` — image count/content
+  untouched, this is a sizing fix not a content change).
+- No change to `HomesCarousel.tsx` — it carries the identical
+  `maxScrollLeft > 0`-less ceiling-guard trap today, dormant only because 8
+  homes always overflow at every measured breakpoint. Left alone, out of
+  CR1 scope; recorded as a known latent defect, not fixed here.
+- 4:3 aspect ratio kept — not changed to buy back card height without first
+  looking at the four source images (lesson 7); height was solved entirely
+  via the width cap instead.
+
+## Tasks
+
+- [x] Read `CultureGallery.tsx`, its story (none exists), `page.tsx`,
+      `src/data/careers.ts`, `Container.tsx`, `HomesCarousel.tsx` (the M3
+      reference), and `globals.css` (`--container-wide`) before editing
+      anything.
+- [x] `CultureGallery.tsx` card `className` (`~L123`): `w-[calc(85vw)]
+      sm:w-[300px] md:w-[320px]` → `w-[min(85vw,800px)]`. Single fluid
+      expression, no breakpoint variants, reused the file's own existing
+      `85vw` mobile value instead of inventing a new one.
+- [x] `CultureGallery.tsx` `Image` `sizes` (`~L130`): `"(min-width: 768px)
+      320px, 85vw"` → `"(min-width: 941px) 800px, 85vw"` — moved in
+      lockstep with the width cap (941px is the exact viewport where `85vw`
+      crosses 800px), otherwise Next would serve an under-sized image into
+      a much larger box.
+- [x] `CultureGallery.tsx` `handleScroll` (`~L70-83`): added
+      `const maxScrollLeft = container.scrollWidth - container.clientWidth;
+      if (maxScrollLeft > 0 && scrollLeft >= maxScrollLeft - 1) {
+      setActiveIndex(images.length - 1); return; }` before the
+      `cardWidth`/`gap` division — the `maxScrollLeft > 0` guard is what the
+      rejected first hypothesis was missing.
+- [x] Ponytail self-review of the diff: `net: 0 lines possible`, "Lean
+      already. Ship." — one file, three value/logic edits, no new
+      abstraction, no new file, no new dependency.
+
+**Why the ceiling guard is load-bearing at an 800px cap (not dead code):**
+for `n = 4`, `gap = 24px`, `padding ≈ 8px`, container `clientWidth = 1376`
+at 1440px: `scrollWidth = 4×800 + 3×24 + 8 = 3280`, `maxScrollLeft = 3280 -
+1376 = 1904`, `slot = 800 + 24 = 824`, `r = maxScrollLeft / slot = 1904 /
+824 ≈ 2.31`. Index 3's naive `Math.round(scrollLeft / slot)` at the clamped
+`scrollLeft` rounds `2.31` down to `2` — one dot short — because `r < 2.5`.
+`k = cardWidth / clientWidth = 800 / 1376 ≈ 0.58`, below the `≈0.667` floor
+under which the plain rounding logic (relied on at the first, rejected
+1200px-cap proposal, where `k ≈ 0.87` and rounding alone was sufficient)
+stops resolving correctly on its own. The guard replaces that rounding for
+the boundary case with the DOM's actual ceiling, and `maxScrollLeft > 0`
+stops it from ever firing when there's nothing to scroll — the exact failure
+mode of the first, rejected hypothesis.
+
+## Acceptance criteria
+
+- AC-1 (carousel works correctly across breakpoints): **met.** Verified by
+  the coordinator in Chrome on a fresh production build:
+  - 390: card 332×301, client/scroll/max 358/1406/1048, Next×4 →
+    `[1,360] [2,715] [3,1048] [0,4]`.
+  - 768: card 653×542, 720/2691/1971, Next×4 →
+    `[1,681] [2,1358] [3,1971] [0,4]`.
+  - 1440: card 800×652, 1376/3280/1904, Next×4 →
+    `[1,828] [2,1652] [3,1904] [0,4]`.
+  - Page overflow 0 at all three widths. Reduced motion: `scrollLeft` 4→4
+    over 7s, active index stable (auto-scroll correctly does not start).
+  - Keyboard: 6 controls, all `tabIndex >= 0`; focusing "Next photo" and
+    pressing Enter moved `scrollLeft` 4→828; dot buttons carry
+    `focus-ring`.
+  - The 1440 defect is gone by construction: `scrollWidth` 3280 vs
+    `clientWidth` 1376, where it was 1376/1376 (zero overflow) before. All
+    four dots rest on distinct positions; closest consecutive pair is
+    1652→1904 = 252px, clear of the 150px floor set during planning. The
+    guard fires correctly at the true ceiling (index 3 lands exactly at
+    1904 = max) and cannot misfire, since `maxScrollLeft > 0` holds at
+    every measured breakpoint.
+- AC-2 (no change to deferred copy, D1/D2): **met.** `page.tsx`'s stats
+  block and testimonials/video-testimonials sections, and every field in
+  `src/data/careers.ts` other than the fix being purely CSS/logic on
+  `CultureGallery.tsx`, are untouched.
+
+**Deliberate, recorded deviation — accepted, not a miss:** card height at
+1440 measured **652px** against the coordinator's own **≤620px** planning
+bound. The photo itself is 600px (4:3 at 800px wide, exactly as predicted);
+the extra 52px is the `figcaption` caption row, which the 620px bound didn't
+account for. The coordinator reviewed the real number and accepted it —
+recorded here as the actual measurement, not adjusted to fit the original
+bound.
+
+## Verification
+
+- [x] `npx tsc --noEmit` — exit 0.
+- [x] `npm run lint` — exit 0.
+- [x] `npm run build` — exit 0 (Next.js 16.2.6, Turbopack, all 22 routes
+      generated, `/careers/why-us` included).
+- [x] Browser verification: production build, Chrome, by the coordinator —
+      see the measured table under AC-1.
+
+## Review
+
+One file changed: `src/components/careers/culture-gallery/CultureGallery.tsx`
+— a width-cap class, a matching `Image` `sizes` value, and a 4-line
+conditional guard in `handleScroll`. No new file, no new dependency, no
+shared hook extracted despite real duplication with `HomesCarousel.tsx`'s
+scroll logic (out of this card's scope, which named only the culture
+gallery).
+
+The plan went through two real-browser corrections before this diff was
+approved: source arithmetic first misidentified the defect as index-rounding
+(the M3 pattern, applied in isolation it would have been a regression at
+`maxScrollLeft === 0`), then under-shot the height cost of a fluid width fix
+by not accounting for the caption row. Both were caught by measurement, not
+by re-reading the source harder — see the new lesson in `tasks/lessons.md`.
+
+`HomesCarousel.tsx` is not touched. It carries the same
+`maxScrollLeft > 0`-less trap in its own ceiling guard today; it is dormant
+there only because 8 homes always overflow at every breakpoint the M3 card
+measured. Recorded as a known, deliberate non-fix — in scope for a future
+card if that assumption ever stops holding, not for CR1.
