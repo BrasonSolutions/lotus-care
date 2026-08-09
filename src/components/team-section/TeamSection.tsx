@@ -37,6 +37,7 @@ export function TeamSection({
     <section id="team" className="relative overflow-hidden py-24 lg:py-32 bg-warm-bg">
       <Blob color="teal" variant={1} className="absolute -top-10 -right-10 w-72 h-72" />
       <Blob color="purple" variant={3} className="absolute -bottom-16 -left-16 w-64 h-64" />
+      <Blob color="teal" variant={2} className="absolute -bottom-12 -right-12 w-48 h-48" />
       <Container className="relative">
         <SectionTitle title={title} subtitle={subtitle} />
 

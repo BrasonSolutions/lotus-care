@@ -1,9 +1,10 @@
 import type { Benefit } from "@/data/careers";
 import { getCareersIcon } from "@/components/careers/careers-icons";
+import { LotusMarkAlt } from "@/components/lotus-mark";
 
 const ACCENT = {
-  teal: { chip: "bg-primary/15 text-primary" },
-  purple: { chip: "bg-purple-600/15 text-purple-600" },
+  teal: { card: "bg-primary-dark", chip: "bg-teal-800" },
+  purple: { card: "bg-purple-600", chip: "bg-purple-700" },
 } as const;
 
 interface BenefitCardProps {
@@ -14,13 +15,18 @@ interface BenefitCardProps {
 export function BenefitCard({ benefit, accent = "teal" }: BenefitCardProps) {
   const a = ACCENT[accent];
   return (
-    <div className="flex gap-4 p-6 sm:p-8 bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
-      <div className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 ${a.chip}`}>
-        {getCareersIcon(benefit.icon)}
-      </div>
-      <div>
-        <h3 className="font-semibold text-primary-dark mb-1">{benefit.title}</h3>
-        <p className="text-sm text-foreground leading-relaxed">
+    <div
+      className={`relative overflow-hidden rounded-3xl p-6 sm:p-10 text-white hover:shadow-lg transition-shadow ${a.card}`}
+    >
+      <LotusMarkAlt className="pointer-events-none absolute -right-10 sm:-right-14 top-0 h-full w-auto text-white opacity-[0.08]" />
+      <div className="relative">
+        <div
+          className={`w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center text-white ${a.chip}`}
+        >
+          {getCareersIcon(benefit.icon)}
+        </div>
+        <h3 className="mt-6 text-2xl sm:text-3xl font-bold text-white">{benefit.title}</h3>
+        <p className="mt-2 text-sm sm:text-base text-white/90 leading-relaxed">
           {benefit.description}
         </p>
       </div>

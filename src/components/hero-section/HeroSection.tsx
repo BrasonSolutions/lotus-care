@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Container } from "@/components/layout";
+import { LotusMark, LotusMarkAlt } from "@/components/lotus-mark";
 
 /**
  * Art direction: warm, candid, natural light — real people engaged in an
@@ -37,9 +38,18 @@ export function HeroSection({
 }: HeroSectionProps) {
   return (
     <section className="relative bg-primary-dark overflow-hidden pt-32 pb-20 lg:pt-40 lg:pb-28">
+      {/* Lotus-alternate watermark — behind everything, anchored top-right and
+          away from the top-left navbar tagline so it can't affect that
+          overlay's measured contrast. */}
+      <LotusMarkAlt className="absolute -top-16 -right-24 w-[28rem] h-[28rem] sm:w-[36rem] sm:h-[36rem] text-white opacity-[0.04] pointer-events-none" />
+
       {/* Decorative circles */}
       <div className="absolute top-20 left-10 w-64 h-64 rounded-full bg-accent/10 blur-3xl pointer-events-none" aria-hidden="true" />
       <div className="absolute bottom-20 right-10 w-96 h-96 rounded-full bg-primary/10 blur-3xl pointer-events-none" aria-hidden="true" />
+
+      {/* Original logomark, low-opacity alongside the blobs — same proven
+          pattern as CareersHero's non-image variant. */}
+      <LotusMark className="absolute -right-12 -bottom-16 w-80 h-80 text-white opacity-[0.06] pointer-events-none" />
 
       <Container className="relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
