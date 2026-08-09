@@ -140,3 +140,138 @@ breakpoints.
 `tasks/lessons.md` not touched — nothing here contradicted a prior lesson;
 lesson 4's `min-w-0` constraint was re-verified intact (0px overflow at
 390px), not corrected.
+
+---
+
+# M5: Our Board — match team-card size
+
+Branch: `fix/our-board-card-size`.
+
+## Diagnosis
+
+Three independent, additive causes, all in `BoardSection.tsx`, none in the
+reference `TeamCard.tsx`/`TeamSection.tsx` (column count was already
+identical — `sm:grid-cols-2 lg:grid-cols-3` on both — so this was never a
+grid-density mismatch):
+
+1. **Extra width cap at `lg`.** `BoardSection.tsx:33`'s grid carried
+   `max-w-4xl mx-auto` (56rem/896px) on top of the shared `<Container>`
+   (`width="wide"` → `max-w-wide` = `--container-wide: 90rem`,
+   `globals.css:64`) that `TeamSection.tsx:68`'s grid also sits in but
+   without any extra cap. Below ~944px viewport the 896px cap doesn't bind
+   (Container's own content width is already narrower), so board and team
+   columns were coincidentally close at `sm`; at `lg` it does bind hard —
+   computed column width at 1440px: team (1376−64)/3 ≈ 437px vs board
+   (896−48)/3 ≈ 283px, ~35% narrower.
+2. **Gap mismatch.** `gap-6` (24px, `BoardSection.tsx:33`) vs `gap-8` (32px,
+   `TeamSection.tsx:68`) — a secondary few-px drift on top of (1), visible
+   even where the 896px cap doesn't bind.
+3. **Half-scale, non-responsive photo/padding.** Board's photo wrapper was
+   `w-20 h-20` (80px, `BoardSection.tsx:41`) against `TeamCard.tsx:26`'s
+   `w-36 h-36` (144px) — 44% of the linear size, ~31% of the area — with a
+   proportionally thin `inset-[2px]` mask border (`BoardSection.tsx:47`) vs
+   `TeamCard.tsx:32`'s `inset-[3px]`, plus a flat `p-8` card padding
+   (`BoardSection.tsx:39`) that doesn't shrink on mobile the way
+   `TeamCard.tsx:23`'s `p-6 sm:p-8` does.
+
+Reference card (`TeamCard.tsx`) was correct throughout — nothing about it
+was suspected or changed; the fix is confined to `BoardSection.tsx` reusing
+its numbers.
+
+## Must not break
+
+- C-1: `TeamCard.tsx` and `TeamSection.tsx` untouched — Board moves to match
+  Team, not the other way around (explicit instruction; also protects the
+  shared component `TeamModal` depends on per
+  `.claude/agent-memory/skill-worker-frontend/team_card_scope_boundaries.md`).
+- C-2: `src/data/team.ts` untouched — no new `department`-equivalent field
+  added to `BoardMember` to force a fabricated pill (see exception below).
+- C-3: Board grid stays `sm:grid-cols-2 lg:grid-cols-3` — column *count*
+  unchanged, only column *width*; 5 board members still wrap 3+2 at `lg`.
+- C-4: Design tokens only — every changed value (`gap-8`, `p-6 sm:p-8`,
+  `w-36 h-36`, `inset-[3px]`, `144`, `sizes="144px"`) is a literal already in
+  use by `TeamCard.tsx`, no new CSS variable, no new dependency.
+- C-5: No test framework introduced (none exists in this repo, confirmed via
+  `.claude/agent-memory/skill-worker-frontend/team_card_scope_boundaries.md`)
+  — verification is `tsc`/`lint`/`build` + browser measurement.
+
+## Tasks
+
+- [x] Read `BoardSection.tsx`, `TeamCard.tsx`, `TeamSection.tsx`,
+      `Container.tsx`, `globals.css` (`--container-wide`), and
+      `src/data/team.ts` (`BoardMember` shape) before editing anything.
+- [x] `BoardSection.tsx:33` — grid className: removed `max-w-4xl mx-auto`,
+      `gap-6` → `gap-8`.
+- [x] `BoardSection.tsx:39` — card className: `p-8` → `p-6 sm:p-8`.
+- [x] `BoardSection.tsx:41` — photo wrapper: `w-20 h-20` → `w-36 h-36`.
+- [x] `BoardSection.tsx:47` — mask inset: `inset-[2px]` → `inset-[3px]`.
+- [x] `BoardSection.tsx:53-55` — `<Image>`: `width={80} height={80}` →
+      `width={144} height={144}`, added `sizes="144px"`.
+- [x] Ponytail self-review of the diff: pure Tailwind value substitution
+      copied from an existing pattern (`TeamCard.tsx`), no new abstraction,
+      no new file, no new dependency. `net: 0 lines possible.` "Lean
+      already. Ship."
+
+One file changed: `src/components/board-section/BoardSection.tsx`. Six value
+substitutions, nothing else.
+
+## Acceptance criteria
+
+- AC-1 (Our Board cards match Meet-the-Team card dimensions): **met.**
+  Measured in Chrome on a production build (`next start -p 3100`), team vs
+  board:
+  - 390px: `358×296` vs `358×262` — width delta 0px.
+  - 768px: `344×312` vs `344×278` — width delta 0px.
+  - 1440px: `437×312` vs `437×278` — width delta 0px.
+  - Photo box 138×138 in both sections; grid gap 32px in both.
+  Width matches exactly at all three measured breakpoints — the fix
+  eliminated the pre-fix 1440px defect (283px vs 437px, ~35% narrower).
+- AC-2 (consistent across breakpoints): **met.** The width delta is 0px at
+  390/768/1440 alike (not just at one breakpoint), board still lays out 3+2
+  at `lg` (row count unchanged from pre-fix), and
+  `document.documentElement.scrollWidth - clientWidth = 0` at all three
+  widths — no horizontal-overflow regression introduced.
+
+**Deliberate, documented exception — do not "fix" this later:** a flat
+34px height delta remains at every breakpoint (296 vs 262, 312 vs 278, 312
+vs 278 — height delta 34px on all three, the signature of one fixed-height
+element, not a scaling error). This is `TeamCard.tsx`'s department pill
+(`ACCENT` chip, `TeamCard.tsx:52-56`), which `BoardSection.tsx` does not and
+should not render: `BoardMember` (`src/data/team.ts`) carries no
+`department` field, and inventing a placeholder pill or a spacer/`min-height`
+to force pixel-parity would mean fabricating content that doesn't exist —
+rejected explicitly during planning (Step 1) and confirmed by the coordinator
+during verification. A real content difference is allowed to show. If a
+future card gives board members a genuine second data field to display in
+that slot, closing the 34px gap is a side effect of that change, not a
+reason to add a fake one now.
+
+## Verification
+
+- [x] `npx tsc --noEmit` — exit 0.
+- [x] `npm run lint` — exit 0.
+- [x] `npm run build` — exit 0 (Next.js 16.2.6, Turbopack, all 22 routes
+      generated).
+- [x] Browser verification: production build (`next start -p 3100`), Chrome,
+      team vs board measured at 390/768/1440px (see AC-1/AC-2 numbers
+      above). `document.documentElement.scrollWidth - clientWidth = 0` at
+      all three widths.
+
+## Review
+
+Three additive causes, one file, six literal value substitutions copied from
+the already-correct reference card (`TeamCard.tsx`) — no new abstraction, no
+shared token file introduced for values that only appear twice. The dominant
+defect (896px `max-w-4xl` cap making board columns ~35% narrower than team's
+at `lg`) is gone; the secondary `gap-6`/`gap-8` drift is gone; photo and
+padding now scale identically to `TeamCard`.
+
+The 34px residual card-height difference was predicted before implementation
+(the ~28-36px estimate for the missing department-pill row) and confirmed
+flat across all three breakpoints post-fix — consistent with one fixed-height
+element, not a leftover scaling defect. Left as-is per explicit instruction:
+no spacer, no `min-height`, no fabricated pill.
+
+`tasks/lessons.md` not touched — nothing here contradicted a prior lesson;
+lesson 7's "look at the image, don't invent" principle was applied by
+analogy (don't invent a pill either) rather than corrected.
