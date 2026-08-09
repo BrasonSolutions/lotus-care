@@ -8,6 +8,7 @@ import { CareersCTAStrip } from "@/components/careers/careers-cta-strip";
 import { SectionTitle } from "@/components/section-title";
 import { getCareersIcon } from "@/components/careers/careers-icons";
 import { Reveal } from "@/components/reveal";
+import { LotusBand } from "@/components/lotus-band";
 import { Container } from "@/components/layout";
 import { jobs } from "@/data/jobs";
 import { testimonials, companyValues, type Testimonial } from "@/data/careers";
@@ -98,6 +99,10 @@ export default function CareersPage() {
           <TestimonialMarquee testimonials={[...testimonials, ...placeholderTestimonials]} />
         </Container>
       </section>
+
+      <div aria-hidden="true">
+        <LotusBand variant="teal" height={72} />
+      </div>
 
       {/* Hub nav cards */}
       <section className="py-16 sm:py-20">
