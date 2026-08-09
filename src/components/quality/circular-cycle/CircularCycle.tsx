@@ -79,7 +79,9 @@ export function CircularCycle({ steps, centerLabel }: CircularCycleProps) {
                 style={{ transitionDelay: `${i * STAGGER_MS}ms` }}
               >
                 <div
-                  className="mx-auto rounded-full bg-primary text-white flex items-center justify-center font-semibold text-lg mb-2"
+                  className={`mx-auto rounded-full text-white flex items-center justify-center font-semibold text-lg mb-2 ${
+                    i % 2 === 0 ? "bg-primary-dark" : "bg-purple-600"
+                  }`}
                   style={{ width: BADGE_SIZE, height: BADGE_SIZE }}
                 >
                   {i + 1}
@@ -104,7 +106,11 @@ export function CircularCycle({ steps, centerLabel }: CircularCycleProps) {
             className={`flex gap-4 pop-item ${inView ? "in-view" : ""}`}
             style={{ transitionDelay: `${i * STAGGER_MS}ms` }}
           >
-            <div className="w-10 h-10 shrink-0 rounded-full bg-primary text-white flex items-center justify-center font-semibold">
+            <div
+              className={`w-10 h-10 shrink-0 rounded-full text-white flex items-center justify-center font-semibold ${
+                i % 2 === 0 ? "bg-primary-dark" : "bg-purple-600"
+              }`}
+            >
               {i + 1}
             </div>
             <div>
