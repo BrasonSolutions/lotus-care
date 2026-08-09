@@ -70,7 +70,7 @@ export function TeamModal({ member, onClose }: TeamModalProps) {
             </div>
           </div>
           <h3 className="text-xl font-bold text-white">{member.name}</h3>
-          <p className="text-accent text-sm mt-1">{member.role}</p>
+          <p className="text-white/80 text-sm mt-1">{member.role}</p>
         </div>
 
         {/* Bio */}
@@ -86,7 +86,7 @@ export function TeamModal({ member, onClose }: TeamModalProps) {
           )}
           <button
             onClick={onClose}
-            className="w-full bg-primary text-white py-3 rounded-full font-semibold hover:bg-primary-dark transition-colors focus-ring"
+            className="w-full bg-primary-dark text-white py-3 rounded-full font-semibold hover:bg-teal-800 transition-colors focus-ring"
           >
             Close
           </button>

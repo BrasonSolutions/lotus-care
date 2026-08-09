@@ -19,7 +19,7 @@ export function TestimonialCard({ testimonial, clampQuote = false }: Testimonial
         &ldquo;{testimonial.quote}&rdquo;
       </blockquote>
       <figcaption className="flex items-center gap-3">
-        <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white font-bold text-sm shrink-0">
+        <div className="w-10 h-10 rounded-full bg-primary-dark flex items-center justify-center text-white font-bold text-sm shrink-0">
           {testimonial.initials}
         </div>
         <div>

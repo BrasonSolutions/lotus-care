@@ -47,7 +47,13 @@ export function ServicesSection({
           className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mt-8"
         >
           {services.map((service, i) => (
-            <ServiceCard key={service.title} service={service} index={i} inView={inView} />
+            <ServiceCard
+              key={service.title}
+              service={service}
+              index={i}
+              inView={inView}
+              accent={i % 2 === 0 ? "teal" : "purple"}
+            />
           ))}
         </div>
       </Container>

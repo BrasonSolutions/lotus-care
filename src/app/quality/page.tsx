@@ -63,6 +63,7 @@ export default function QualityPage() {
         ctaHref="/#contact"
         secondaryLabel="Explore Careers"
         secondaryHref="/careers"
+        tone="purple"
       />
     </>
   );

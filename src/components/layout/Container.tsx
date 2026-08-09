@@ -4,7 +4,11 @@ const GUTTERS = "px-4 sm:px-6 lg:px-8";
 
 const MAX_WIDTH = {
   wide: "max-w-wide",
-  reading: "max-w-prose",
+  // max-w-prose (65ch) measures ~86 real characters at 16px Inter — ch is
+  // the "0" glyph's advance, not the average character width, so it never
+  // capped anything. max-w-lg (512px) is CR3's measured fix for the same
+  // font/size, landing at ~67 real characters.
+  reading: "max-w-lg",
 } as const;
 
 const DEFAULT_PADDED = {
@@ -25,8 +29,9 @@ interface ContainerProps extends ComponentPropsWithoutRef<"div"> {
 
 /**
  * Layout width primitive. "wide" caps at 90rem for sections that should use
- * most of the viewport; "reading" caps at ~65ch (max-w-prose) for
- * comfortable long-form body copy, typically nested inside a wide section.
+ * most of the viewport; "reading" caps at 512px (~67 real characters at
+ * 16px Inter) for comfortable long-form body copy, typically nested inside
+ * a wide section.
  */
 export function Container({
   width = "wide",

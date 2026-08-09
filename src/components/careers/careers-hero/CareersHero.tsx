@@ -80,7 +80,7 @@ export function CareersHero({
               <div className="mt-8 animate-fade-up" style={{ animationDelay: "200ms" }}>
                 <a
                   href={ctaHref}
-                  className="inline-block bg-white text-primary font-semibold px-8 py-4 rounded-full hover:bg-accent hover:text-white transition-colors focus-ring"
+                  className="inline-block bg-white text-primary-dark font-semibold px-8 py-4 rounded-full hover:bg-accent hover:text-white transition-colors focus-ring"
                 >
                   {ctaLabel}
                 </a>
@@ -95,7 +95,7 @@ export function CareersHero({
                   key={chip}
                   className={`animate-fade-up text-sm font-medium px-5 py-2 rounded-full border ${
                     i === 1
-                      ? "bg-white text-primary border-white self-center"
+                      ? "bg-white text-primary-dark border-white self-center"
                       : "bg-white/15 text-white border-white/25 backdrop-blur-md self-end"
                   }`}
                   style={{ animationDelay: `${300 + i * 100}ms` }}
@@ -154,7 +154,7 @@ export function CareersHero({
           >
             <a
               href={ctaHref}
-              className="inline-block bg-white text-primary font-semibold px-8 py-4 rounded-full hover:bg-accent hover:text-white transition-colors focus-ring"
+              className="inline-block bg-white text-primary-dark font-semibold px-8 py-4 rounded-full hover:bg-accent hover:text-white transition-colors focus-ring"
             >
               {ctaLabel}
             </a>

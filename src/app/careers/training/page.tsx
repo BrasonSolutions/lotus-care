@@ -14,8 +14,8 @@ export const metadata: Metadata = {
 };
 
 const typeConfig = {
-  mandatory: { label: "Mandatory", color: "bg-primary/10 text-primary" },
-  professional: { label: "Professional Development", color: "bg-accent/10 text-accent" },
+  mandatory: { label: "Mandatory", color: "bg-primary/10 text-primary-dark" },
+  professional: { label: "Professional Development", color: "bg-accent/10 text-primary-dark" },
   leadership: { label: "Leadership", color: "bg-yellow-100 text-yellow-700" },
 };
 

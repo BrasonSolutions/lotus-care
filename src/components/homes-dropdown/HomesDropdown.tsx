@@ -59,7 +59,7 @@ export function HomesDropdown({ item, scrolled }: HomesDropdownProps) {
             <div className="border-t border-gray-100 mt-1 pt-1">
               <a
                 href={item.viewAllHref}
-                className="block px-4 py-3 text-sm font-semibold text-primary hover:bg-warm-bg transition-colors focus-ring"
+                className="block px-4 py-3 text-sm font-semibold text-primary-dark hover:bg-warm-bg transition-colors focus-ring"
                 onClick={() => setOpen(false)}
               >
                 {item.viewAllLabel ?? "View All"}

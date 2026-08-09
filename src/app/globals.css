@@ -82,7 +82,10 @@ body {
   left: 0;
   z-index: 100;
   padding: 0.5rem 1rem;
-  background: var(--color-primary);
+  /* primary (teal-500) measures 2.74:1 against white and fails AA — this
+     element exists purely for accessibility, so primary-dark (6.33:1) is
+     the only acceptable background here. */
+  background: var(--color-primary-dark);
   color: white;
 }
 
@@ -155,9 +158,15 @@ body {
   transition-delay: 400ms;
 }
 
-/* Scale-settle variant, layered on top of .reveal for images/media */
+/* Scale-settle variant, layered on top of .reveal for images/media.
+   1.05 overflowed the viewport at 1440px: Reveal renders a single element
+   (no separate clipping wrapper), so a scaled element's own overflow
+   isn't contained by anything, and at the widest Container (1376px
+   content inside the 32px lg gutter) 1.05 bled ~34px past the gutter's
+   32px. 1.03 keeps the bleed (~21px) inside the gutter at every
+   breakpoint measured. */
 .reveal.reveal-scale {
-  transform: translateY(24px) scale(1.05);
+  transform: translateY(24px) scale(1.03);
 }
 
 .reveal.reveal-scale.in-view {

@@ -123,7 +123,7 @@ export function MobileMenu({
                         aria-current={isCurrentPage(child.href) ? "page" : undefined}
                         className={`block py-2.5 px-2 text-base transition-colors focus-ring rounded ${
                           isCurrentPage(child.href)
-                            ? "text-primary font-semibold underline underline-offset-4"
+                            ? "text-primary-dark font-semibold underline underline-offset-4"
                             : "text-muted hover:text-primary"
                         }`}
                       >
@@ -141,7 +141,7 @@ export function MobileMenu({
                 aria-current={isCurrentPage(item.href) ? "page" : undefined}
                 className={`block py-3 px-2 font-medium transition-colors focus-ring rounded ${
                   isCurrentPage(item.href)
-                    ? "text-primary underline underline-offset-4"
+                    ? "text-primary-dark underline underline-offset-4"
                     : "text-foreground hover:text-primary"
                 }`}
               >
@@ -154,7 +154,7 @@ export function MobileMenu({
             <a
               href={ctaHref}
               onClick={close}
-              className="block w-full text-center bg-primary text-white py-3 rounded-full font-semibold hover:bg-primary-dark transition-colors focus-ring"
+              className="block w-full text-center bg-primary-dark text-white py-3 rounded-full font-semibold hover:bg-teal-800 transition-colors focus-ring"
             >
               {ctaLabel}
             </a>

@@ -122,7 +122,7 @@ export default async function JobDetailPage({ params }: Params) {
                     </div>
                   ))}
                 </div>
-                <a href="/careers/benefits" className="mt-4 inline-block text-sm text-primary hover:text-primary-dark transition-colors focus-ring rounded font-medium">
+                <a href="/careers/benefits" className="mt-4 inline-block text-sm text-primary-dark hover:text-teal-800 transition-colors focus-ring rounded font-medium">
                   View all benefits →
                 </a>
               </section>
@@ -137,7 +137,7 @@ export default async function JobDetailPage({ params }: Params) {
                 </p>
                 <a
                   href={`/careers/contact?role=${encodeURIComponent(job.title)}`}
-                  className="block text-center bg-primary text-white py-3 rounded-full font-semibold hover:bg-primary-dark transition-colors focus-ring mb-3"
+                  className="block text-center bg-primary-dark text-white py-3 rounded-full font-semibold hover:bg-teal-800 transition-colors focus-ring mb-3"
                 >
                   Apply Now
                 </a>

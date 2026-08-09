@@ -33,7 +33,7 @@ export function HubNavCard({
         {title}
       </h3>
       <p className="text-sm text-muted leading-relaxed flex-1">{description}</p>
-      <span className="mt-4 flex items-center gap-1 text-sm font-medium text-primary">
+      <span className="mt-4 flex items-center gap-1 text-sm font-medium text-primary-dark">
         Learn more
         <svg
           className="w-4 h-4 group-hover:translate-x-1 transition-transform"

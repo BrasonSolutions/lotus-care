@@ -21,7 +21,7 @@ export function JobFilter({ filters, active, onChange }: JobFilterProps) {
             onClick={() => onChange(value)}
             className={`shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-colors focus-ring ${
               active === value
-                ? "bg-primary text-white"
+                ? "bg-primary-dark text-white"
                 : "bg-white text-foreground border border-gray-200 hover:border-primary hover:text-primary"
             }`}
           >

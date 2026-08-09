@@ -93,7 +93,7 @@ export function Navbar({
               )}
               <a
                 href={ctaHref}
-                className="bg-primary text-white px-5 py-2.5 rounded-full text-base font-semibold hover:bg-primary-dark transition-colors focus-ring"
+                className="bg-primary-dark text-white px-5 py-2.5 rounded-full text-base font-semibold hover:bg-teal-800 transition-colors focus-ring"
               >
                 {ctaLabel}
               </a>

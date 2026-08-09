@@ -54,7 +54,7 @@ export default function CareersContactPage() {
                   </p>
                   <button
                     onClick={() => setSubmitted(false)}
-                    className="mt-6 text-sm text-primary hover:text-primary-dark transition-colors focus-ring rounded font-medium"
+                    className="mt-6 text-sm text-primary-dark hover:text-teal-800 transition-colors focus-ring rounded font-medium"
                   >
                     Send another message
                   </button>
@@ -140,7 +140,7 @@ export default function CareersContactPage() {
 
                   <button
                     type="submit"
-                    className="w-full bg-primary text-white py-3.5 rounded-full font-semibold text-base hover:bg-primary-dark transition-colors focus-ring"
+                    className="w-full bg-primary-dark text-white py-3.5 rounded-full font-semibold text-base hover:bg-teal-800 transition-colors focus-ring"
                   >
                     Send Message
                   </button>
@@ -187,7 +187,7 @@ export default function CareersContactPage() {
                 </p>
                 <a
                   href="/careers/how-we-hire"
-                  className="text-sm font-medium text-primary hover:text-primary-dark transition-colors focus-ring rounded"
+                  className="text-sm font-medium text-primary-dark hover:text-teal-800 transition-colors focus-ring rounded"
                 >
                   Learn about our process →
                 </a>

@@ -181,7 +181,7 @@ export function HomeModal({ home, onClose }: HomeModalProps) {
             {/* Close */}
             <button
               onClick={onClose}
-              className="w-full bg-primary text-white py-3 rounded-full font-semibold hover:bg-primary-dark transition-colors focus-ring"
+              className="w-full bg-primary-dark text-white py-3 rounded-full font-semibold hover:bg-teal-800 transition-colors focus-ring"
             >
               Close
             </button>

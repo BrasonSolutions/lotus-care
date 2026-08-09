@@ -39,7 +39,7 @@ export default async function OpenRolesPage() {
             </p>
             <a
               href="/careers/contact"
-              className="inline-block bg-primary text-white px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-primary-dark transition-colors focus-ring"
+              className="inline-block bg-primary-dark text-white px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-teal-800 transition-colors focus-ring"
             >
               Register Your Interest
             </a>

@@ -1123,3 +1123,778 @@ no new global lesson; the reasoning specific to this card is recorded above
 instead. The 768px M3 index-6 skip is explicitly not this card's finding to
 own — recorded here only so it isn't mistakenly attributed to the border
 work, with the actual follow-up tracked by the coordinator separately.
+
+---
+
+# CR3: Human Rights / MDT / Safety page revamp
+
+Branch: `feat/safety-page-revamp`.
+
+## Diagnosis
+
+**Target identification.** The card names "Human Rights / MDT / Safety," and
+`src/app/quality/` has four routes: the hub (`page.tsx`) plus three detail
+pages (`human-rights/`, `mdt/`, `safety-improvement/`). Resolved by evidence,
+not assumption:
+
+- `QualitySubnav.tsx:8-13` labels exactly these three routes "Human Rights /
+  MDT / Safety & Improvement" — verbatim match to the card title.
+- The card states "Team part is good." Only the three detail pages render a
+  `TeamStrip` (`human-rights/page.tsx`, `mdt/page.tsx`,
+  `safety-improvement/page.tsx`, each ending in a `TeamStrip` section); the
+  hub has a testimonial pull-quote instead, no team section at all.
+
+**The one interpretive leap, flagged rather than silently resolved:**
+Appendix A's Option A text says "each *pillar* (Human Rights Committee / MDT
+/ Safety) is its own full-width block" — "pillar" is the hub page's own
+vocabulary (`QualityPillars.tsx`, the hub's 3-card infographic). Read
+literally, Option A would touch the hub, which has no team section and isn't
+named as broken anywhere else in the card. Read as "each *content block
+within* a detail page is its own full-width block," it fits every other
+sentence in the card. Took the second reading — confirmed with the
+coordinator before implementation, not decided unilaterally.
+
+**The `max-w-prose` no-op — the core defect, and the one worth generalizing.**
+`ContentSection.tsx`'s image-paired blocks rendered their text column with no
+width cap at all (`grid md:grid-cols-2` only); the no-image blocks routed
+through `<Container width="reading">`, which resolves to Tailwind's
+`max-w-prose` (65ch). First attempt: added `max-w-prose` to the image-variant
+column too, for consistency. **This measured byte-identical before and
+after** — the coordinator's `canvas.measureText` pass against each element's
+real computed font returned the same 86/86/91/85 characters (656/656/689/656px)
+whether or not the class was present. Root cause: Tailwind's `ch` unit is the
+width of the font's `"0"` glyph, not the font's average character width — at
+16px Inter, `65ch` computes to ≈656px, which was already the image-variant
+grid column's natural width (and already the no-image variant's rendered
+width, since that was routing through the same `max-w-prose`). The cap was
+never binding; it just happened to equal what was already there. **A class
+whose name describes a target ("reading measure," implicitly ~65 characters)
+is not the same thing as a cap that hits that target** — see the new
+`tasks/lessons.md` entry.
+
+Fix: derived the real px-per-character ratio from the coordinator's own
+measurement (2657px ÷ 348 chars ≈ 7.635 px/char) and picked `max-w-lg`
+(32rem/512px, an existing Tailwind scale step — no arbitrary value) as the
+cap, predicting ≈67 characters at 1440px. Applied uniformly to (a) the
+image-variant text column, (b) the no-image variant (which now bypasses
+`Container`'s `"reading"` width entirely — see Must-not-break), and (c) the
+intro-row text column duplicated at the top of all three pages. Because 512px
+is below every natural width measured (656-689px), all elements converge on
+the same real character count regardless of which grid arithmetic produced
+their pre-fix width — this is what resolved the 689px outlier without any
+element-specific handling.
+
+**Infographic contrast, found while touching the file for something else.**
+`CircularCycle.tsx`/`HubAndSpoke.tsx`'s numbered badges and hub core used
+`bg-primary text-white` uniformly — `--color-primary` is `teal-500`
+(`#1badb2`), and white text on it measures ≈2.74:1 (documented in
+`LotusBand.tsx`'s own contrast comment, and the same pairing
+`tasks/lessons.md` lesson 6 already flags elsewhere in this codebase) — an
+AA failure regardless of this card. Refining the infographic's "missing
+something" (flat, single-colour, no brand-colour variety despite the rest of
+the site alternating teal/purple per the established
+`accent={i % 2 === 0 ? "teal" : "purple"}` convention —
+`.claude/agent-memory/skill-worker-frontend/accent_chip_convention.md`)
+meant editing these exact classNames anyway, so the contrast fix rode along
+with the alternation rather than being a separate change: `bg-primary` →
+`i % 2 === 0 ? "bg-primary-dark" : "bg-purple-600"` on the step badges
+(`CircularCycle.tsx`, desktop + mobile), and `bg-primary` → `bg-primary-dark`
+on `HubAndSpoke`'s single (non-alternating) hub core and its mobile banner.
+Spoke cards (`HubAndSpoke.tsx`) got a matching `border-l-4` accent alternating
+the same two colours, since they had no numbered badge to alternate.
+
+## User's design decision
+
+Option A — divider-segmented — chosen by the user from the three sketched
+directions in Appendix A (B: two-column editorial with a sticky label
+column; C: card-and-band hybrid on the full `LotusBand` pattern). Confirmed
+before implementation; this plan did not re-litigate the choice.
+
+## Divider placement and colourways
+
+Two `LotusBand` dividers per page (three content groups), identical pattern
+on all three detail pages — consistency over per-page variation, per the
+build plan's "not a different treatment every section" principle. Each
+`<LotusBand>` sits full-bleed, outside any `<Container>`, wrapped in a plain
+`<div aria-hidden="true">` (decorative — `LotusBand`'s own prop surface has
+no `aria-hidden`, and it was out of scope to edit, so the wrapper carries it
+instead). `height={72}` on every instance — a starting value, tunable, not
+argued over before rendering.
+
+| Page | Group A | ↓ divider 1 | Group B | ↓ divider 2 | Group C |
+|---|---|---|---|---|---|
+| human-rights | `purpose` (primary heading) | `variant="teal"` | `approach`, `champions` | `variant="purple"` | `governance`, `culture` |
+| mdt | `approach` (primary heading) | `variant="teal"` | `partnership`, `governance` | `variant="purple"` | `commitment` |
+| safety-improvement | `commitment` (primary heading) | `variant="teal"` | `governance`, `improvement` | `variant="purple"` | `broaderView`, `culture` |
+
+Both dividers use `LotusBand`'s own reference defaults (`teal`→white motif,
+`purple`→teal motif) — no `motifColor` override, zero new colourway invented.
+Group A's `ContentSection` gets the new `primary` prop (larger heading scale,
+`text-2xl sm:text-3xl` vs the original `text-xl sm:text-2xl`) since it now
+reads as each page's lead section, not one block among five in a flat list.
+
+## Must not break
+
+- C-1: `TeamStrip.tsx` untouched — "team part is good" per the card; no
+  cascade required by the restructure above it.
+- C-2: `src/data/quality.ts` untouched — every `ContentBlock` regrouped in
+  JSX, no copy changed, no field added or removed.
+- C-3: Hub page (`src/app/quality/page.tsx`, `QualityPillars.tsx`) untouched
+  — the one interpretive leap above was resolved *against* touching it.
+- C-4: `src/components/lotus-band/*`, `src/components/lotus-mark/*`,
+  `src/components/homes-carousel/*` — untouched (owned by concurrent
+  agents/out of surface). `LotusBand` is imported, never edited.
+- C-5: `Container.tsx`'s shared `width="reading"` → `max-w-prose` mapping
+  left unchanged, even though it carries the identical no-op defect. That
+  primitive is also consumed by the hub page's intro paragraph
+  (`quality/page.tsx`, `width="reading" padded`), outside this card's
+  Quality/Safety-page surface — fixing the shared constant would silently
+  change a page this card doesn't own. `ContentSection.tsx`'s no-image
+  branch instead stopped routing through `Container` for this cap (plain
+  `max-w-lg mx-auto` div; the now-unused `Container` import was dropped).
+  The coordinator is taking the shared-primitive fix into card G1, where the
+  whole site is in scope.
+- C-6: No new dependency, no CSS module — Tailwind utility classes only,
+  same convention as every other component in this file.
+- C-7: No `npm run build`/`build-storybook` (coordinator runs those
+  centrally, and other agents were concurrently active on `LotusBand`/the
+  Our Homes carousel); `npx tsc --noEmit` and `npm run lint` only.
+
+## Tasks
+
+- [x] Read all four `src/app/quality/*` routes, every component under
+      `src/components/quality/`, `Container.tsx`, `globals.css` (`@theme`
+      token block, reduced-motion block, `.pop-item`/`.pillar-rise`
+      keyframes), `src/data/quality.ts`, `tasks/lessons.md`,
+      `.claude/agent-memory/skill-worker-frontend/accent_chip_convention.md`,
+      and `LotusBand.tsx` (read-only — confirmed its finished `variant`/
+      `motifColor`/`height` API before importing it) before writing anything.
+- [x] `ContentSection.tsx` — added optional `primary?: boolean` prop
+      (larger heading scale for a group's lead block); image-variant text
+      wrapper `max-w-prose` → `max-w-lg`; no-image branch rewritten from
+      `<Container width="reading">` to a plain `<div className="max-w-lg
+      mx-auto">`, `Container` import dropped (now unused).
+- [x] `CircularCycle.tsx` — step badges (desktop + mobile) alternate
+      `bg-primary-dark`/`bg-purple-600` by `i % 2`, replacing the flat,
+      AA-failing `bg-primary`.
+- [x] `HubAndSpoke.tsx` — hub core and its mobile banner: `bg-primary` →
+      `bg-primary-dark`. Spoke cards (desktop + mobile): added
+      `border border-gray-100 border-l-4`, alternating
+      `border-l-primary-dark`/`border-l-purple-600` by `i % 2`.
+- [x] `human-rights/page.tsx`, `mdt/page.tsx`, `safety-improvement/page.tsx`
+      — imported `LotusBand`; intro-row text `max-w-prose` → `max-w-lg`;
+      each page's flat `ContentSection` stack (previously one
+      `<Container className="space-y-16">` of 4-5 blocks) split into 3
+      `<section className="py-16 sm:py-20">` groups per the table above,
+      with two `<div aria-hidden="true"><LotusBand .../></div>` dividers
+      between them; Group A's `ContentSection` passed `primary`.
+- [x] Ponytail self-review of the diff (`ponytail:ponytail-review` skill,
+      run against the 6-file diff): one finding —
+      `border-t border-r border-b border-gray-100 border-l-4` on
+      `HubAndSpoke.tsx`'s spoke cards shrinks to `border border-gray-100
+      border-l-4` (Tailwind's `border` shorthand already sets all four
+      sides; `border-l-4`/`border-l-{color}` only override the left side).
+      Applied. `net: -2 lines`.
+
+## Acceptance criteria
+
+- AC-1 (one Appendix-A direction implemented, confirmed in Phase 1): **met.**
+  Option A, user-confirmed before implementation (see User's design
+  decision).
+- AC-2 (text layout uses dividers, corrected margins/spacing, and a
+  comfortable measure): **met, after one revision.** Dividers: coordinator
+  verified two `LotusBand` mounts per page, all three pages, full-bleed at
+  390/768/1440, `aria-hidden="true"`, CLS = 0 across both mounts. Measure:
+  coordinator's `canvas.measureText` pass (real computed font per element)
+  on `/quality/human-rights` at 1440 read **67 / 67 / 71 / 66 characters**
+  (was 86 / 86 / 91 / 85 before the `max-w-prose`→`max-w-lg` fix — the first
+  attempt, `max-w-prose` alone, measured byte-identical to baseline and did
+  not count as meeting this AC). At 390: 46-49 characters. At 768: 44-47
+  characters. All in the 45-75 comfortable band; the 689px outlier
+  (a fourth, differently-sized element the first fix didn't cover) converged
+  to the same band as the other three once the cap was expressed in real
+  px rather than `ch`.
+- AC-3 (infographic refined; animation still gated behind reduced-motion; AA
+  throughout): **met.** Badge/core/border-accent contrast, computed by the
+  coordinator from the solid, alpha-free colour pairs (exact, not sampled):
+  `purple-600` + white = **10.48:1**; `primary-dark` (teal-700) + white =
+  **6.34:1** — both matching the values predicted during planning. Reduced
+  motion: coordinator's computed-style check under
+  `prefers-reduced-motion: reduce` showed `.pop-item`/`.cycle-ring-flow`/
+  `.spoke-line-flow` elements at `opacity: 1`, `transform: none`, ring
+  `animation-duration` `1e-05s` — the existing global mechanism, untouched
+  by this card, still holds with the new colours layered on top. No new
+  keyframes added; only static colour classes changed.
+- AC-4 (team section unchanged unless the revamp required it): **met, and
+  it did not require it.** `TeamStrip.tsx` and its three call sites are
+  byte-identical to `HEAD`.
+
+**Two things confirmed pre-existing and explicitly out of this card's
+scope — recorded here so a later reader doesn't attribute them to CR3:**
+
+- **2px page overflow at 1440 on `/quality/human-rights`.** The coordinator
+  traced it to `matrix(1.05, ...)` from the pre-existing `.reveal-scale` on
+  the intro grid (`human-rights/page.tsx` line 30-ish in `HEAD`, before this
+  card touched the file), which renders 1445px inside a 1376px container
+  before it scrolls into view. A stashed-`CR3`, rebuilt baseline measurement
+  showed the identical 2px overflow with none of this card's changes
+  applied. Left untouched per explicit instruction; tracked separately by
+  the coordinator.
+- **95-character/720px paragraph at 768px.** Flagged by this agent as a
+  possible fourth affected element; the coordinator traced it to the
+  **footer's** blurb (`text-white/70`, inside the footer's
+  `grid sm:grid-cols-2 lg:grid-cols-4`) — identical on every page, including
+  ones CR3 never touched. Not pulled into scope.
+
+## Verification
+
+- [x] `npx tsc --noEmit` — exit 0 (checked after each revision round).
+- [x] `npm run lint` — exit 0 (checked after each revision round).
+- [x] `npm run build`/`build-storybook` — not run by this agent (other
+      agents were concurrently active on `LotusBand`/the Our Homes
+      carousel; coordinator verified on production builds separately).
+- [x] Browser verification: coordinator, Chrome, production builds — see
+      the measured figures under AC-2/AC-3 above.
+
+## Review
+
+Six files changed: three page files (regrouped JSX, no data/content
+changes), `ContentSection.tsx` (one new optional prop, one cap-value fix,
+one now-simpler no-image branch with `Container` dropped), `CircularCycle.tsx`
+and `HubAndSpoke.tsx` (className-only colour/border changes, no new markup
+elements beyond one `border-l-4` accent, no new state, no new animation).
+No new component, no new dependency, no new CSS file — the `LotusBand`
+divider is a straight import of a component another card already finished
+and verified.
+
+This card went through one real revision, caught by measurement rather than
+by re-reading the source: the first `max-w-prose` fix looked plausible (the
+class is *named* for a reading measure) but changed nothing, because
+Tailwind's `ch` unit measures a glyph's advance width, not the font's
+average character width, and 65ch happened to equal the already-existing
+column width almost exactly. The fix only became real once the cap was
+derived from measured px-per-character rather than trusted by class name —
+see the new `tasks/lessons.md` entry, which generalizes this beyond CR3: the
+same `Container.tsx` `"reading"` constant this card deliberately did not
+touch (C-5) carries the identical overshoot everywhere else it's used.
+
+Two findings surfaced during this card's verification are recorded above as
+explicitly not CR3's to own — the pre-existing 2px `.reveal-scale` overflow
+and the footer's 95-character paragraph — so neither gets silently
+attributed to this diff by a later reader. Also noted for card G1, not
+actioned here: the coordinator flagged the global "Skip to main content"
+link on `bg-primary` at 2.74:1, the same lesson-6 pairing, on an
+accessibility-only element.
+
+---
+
+# G2: Apply shape dividers across pages
+
+Branch: `feat/apply-shape-dividers`.
+
+## Diagnosis
+
+The build plan explicitly leaves placement to the agent ("where it seems
+fit"), which makes over-placement the real failure mode — a divider after
+every colour change reads as noise, and the card names this risk directly.
+The only fixed anchor is CR3's own precedent, already shipped on the three
+`quality/` detail pages:
+
+```tsx
+<div aria-hidden="true">
+  <LotusBand variant="teal" height={72} />
+</div>
+...
+<div aria-hidden="true">
+  <LotusBand variant="purple" height={72} />
+</div>
+```
+
+Two bands per page, `height={72}`, no `motifColor` override (teal band →
+white motif, purple band → teal motif, `LotusBand`'s own reference
+defaults), each wrapped in a plain `<div aria-hidden="true">`, rendered as a
+full-bleed sibling outside any `<Container>`, teal always before purple.
+This card's job was pure placement using that exact call signature — no new
+`LotusBand` prop, no new colourway — because "consistent usage (not a
+different treatment every section)" is an explicit AC, and CR3 already set
+what "consistent" means on this site.
+
+**Scope carve-out.** `quality/human-rights`, `quality/mdt`, and
+`quality/safety-improvement` were done under CR3 and are untouched by this
+card — they already carry two dividers each, in the pattern quoted above.
+Treating them as G2's precedent (rather than re-deriving a placement
+convention from scratch) is what keeps the site-wide usage consistent, per
+the AC.
+
+## Placement and colourways
+
+Five new placements across four page-composition files — every other page
+in the surface was read and a placement decision made, not skipped by
+omission (see Rejected boundaries below).
+
+| Page | Boundary | Variant | Why this boundary |
+|---|---|---|---|
+| `src/app/page.tsx` (homepage) | `HomesSplitRow` → `TeamSection` | `teal` | Closes the "what we do" chapter (About/Services/Homes) and opens the "who we are" chapter (Team/Board) — the single biggest content pivot on the page. |
+| `src/app/page.tsx` (homepage) | `BoardSection` → `RecruitmentSection` | `purple` | Closes the "people" chapter (Team/Board) and opens the "get involved" chapter (Recruitment CTA/Contact) — mirrors CR3's second-divider position relative to its first. |
+| `src/app/careers/page.tsx` | Testimonials section → Hub-nav-cards section | `teal` | Pivots from "voices" (testimonial marquee) into "structured reference" content (nav cards → featured roles → values) — the clearest tonal shift on the page. |
+| `src/app/quality/page.tsx` | Pillars-infographic section → Testimonial section | `teal` | Pivots from "our framework" (pillars) into "resident voice" (anonymized testimonial) — the clearest content-type shift on a short page. |
+| `src/app/careers/why-us/page.tsx` | Culture-narrative section → Testimonials section | `teal` | Pivots from "who we are as an employer" (culture narrative + stats) into "hear from our team" (testimonials + video testimonials) — the page's one clear voice-shift. |
+
+The homepage gets two dividers (teal then purple), matching CR3's own
+per-page count and spacing rhythm on its longest pages. The three hub/detail
+pages each get one — a shorter, single-seam page doesn't need a second
+divider to hit a quota; forcing one would be the mechanical-insertion
+failure mode the card warns against.
+
+## Rejected boundaries
+
+The rejected list is longer than the accepted list, deliberately — every
+candidate boundary on every touched page was considered, not silently
+skipped. Two recurring reasons:
+
+**An existing strong seam already does the job — a second device there is
+redundant, not additive:**
+
+- Homepage, Contact → Footer: `Footer` already renders on `bg-primary-dark`;
+  that colour flip is already a clear structural end-of-page seam.
+- Careers hub, Company Values → CTA strip; Quality hub, Testimonial → CTA
+  strip; Why-us, Video testimonials → CTA strip: `CareersCTAStrip` already
+  carries its own `bg-gradient-to-r from-primary-dark to-primary` on every
+  page that uses it — an existing strong seam, not a gap.
+- Why-us, CultureGallery → Culture narrative: `CultureGallery` is already a
+  rich, visually distinct full-bleed carousel, and the narrative section's
+  own dark background is already a strong seam — stacking a divider there
+  would be two visual breaks back-to-back for one job.
+
+**Sections that are one continuous chapter, not two — dividing every colour
+change is exactly the "stacking so close it reads as noise" failure mode:**
+
+- Homepage: Hero→About (Hero is already a strongly differentiated,
+  motif-heavy dark section; a divider right under it crowds the top of the
+  page before any content is read), About→Services, Services→Homes (one
+  continuous "what we do" chapter), Team→Board (would sandwich Team between
+  two dividers, adjacent to the Homes→Team one already chosen; Team+Board
+  read as one "our people" chapter), Recruitment→Contact (same "get
+  involved" chapter, no thematic shift).
+- Careers hub: Hub-nav-cards→Featured-Roles, Featured-Roles→Company-Values
+  (all three are the same "informational grid" chapter).
+- Quality hub: Intro→Pillars (both are the opening "what quality means"
+  statement, too close together / same chapter).
+- Why-us: Testimonials→Video-testimonials (same "hear from our team"
+  chapter, split only by media type — mechanical, not thematic).
+
+## Structural-risk skips (not "no boundary exists")
+
+`/careers/training` and `/careers/how-we-hire` were skipped for a third,
+distinct reason from the two above, and it is recorded explicitly so
+neither reads as an oversight: both pages **do** have a real thematic seam
+(`training`: career-progression pathway → training programmes grouped by
+type; `how-we-hire`: process timeline → compliance-checks card → FAQ), but
+in both pages every section lives inside **one continuous
+`<div className="py-10 sm:py-14"><Container>...</Container></div>`
+wrapper**, not top-level page siblings the way the homepage/careers-hub/
+quality-hub/why-us sections do. `LotusBand` must render full-bleed, outside
+any `Container` (the hard constraint — a band nested inside a padded
+Container blows the page width, `tasks/lessons.md` lesson 4's class of
+failure). Fitting one into either page means splitting that single wrapper
+into two, changing the page's padding/wrapper structure for a fairly minor
+page, for marginal gain. Skipped for structural risk, not because no seam
+was found.
+
+`/careers/benefits`, `/careers/open-roles`, and `/careers/contact` were
+skipped for the plainer reason that they have no internal seam at all —
+each is a single homogeneous content block (benefit cards / job list / a
+contact form) between a hero and (for benefits and open-roles) an
+already-branded `CareersCTAStrip`; `contact` doesn't even carry a closing
+CTA strip.
+
+## Must not break
+
+- G-1: `src/components/lotus-band/LotusBand.tsx` — consumed only, never
+  edited.
+- G-2: `quality/human-rights/page.tsx`, `quality/mdt/page.tsx`,
+  `quality/safety-improvement/page.tsx` — CR3's scope, byte-identical to
+  `HEAD`.
+- G-3: `careers/benefits/page.tsx`, `careers/training/page.tsx`,
+  `careers/how-we-hire/page.tsx`, `careers/open-roles/page.tsx`,
+  `careers/contact/page.tsx` — no divider, no other edit; byte-identical to
+  `HEAD`.
+- G-4: No component internals touched (`HomesSplitRow`, `TeamSection`,
+  `BoardSection`, `RecruitmentSection`, `CultureGallery`, `QualityPillars`,
+  `TestimonialMarquee`, `HubNavCard`, `CareersCTAStrip`, etc.) — only the
+  four page-composition files change.
+- G-5: No `npm run build`/`build-storybook` (coordinator runs those
+  centrally); `npx tsc --noEmit` and `npm run lint` only.
+- G-6: No commit.
+
+## Tasks
+
+- [x] Read the G2 card in full, CR3's shipped divider treatment on all
+      three `quality/` detail pages (confirmed identical on all three, not
+      just `safety-improvement`), `LotusBand.tsx`'s finished prop surface
+      (read-only), and every page under the homepage/Careers/Quality
+      surface — `page.tsx`, `careers/page.tsx`, `careers/why-us/page.tsx`,
+      `careers/benefits/page.tsx`, `careers/training/page.tsx`,
+      `careers/how-we-hire/page.tsx`, `careers/open-roles/page.tsx`,
+      `careers/contact/page.tsx`, `quality/page.tsx` — before proposing any
+      placement.
+- [x] Plan written and approved by the coordinator before any edit (Step 1
+      gate) — 5 accepted placements, longer rejected list with reasons,
+      structural-risk skips named plainly.
+- [x] `src/app/page.tsx` — imported `LotusBand`; two `<div
+      aria-hidden="true"><LotusBand .../></div>` inserts (teal, purple) at
+      the two boundaries in the table above.
+- [x] `src/app/careers/page.tsx` — imported `LotusBand`; one teal divider
+      insert.
+- [x] `src/app/quality/page.tsx` — imported `LotusBand`; one teal divider
+      insert.
+- [x] `src/app/careers/why-us/page.tsx` — imported `LotusBand`; one teal
+      divider insert.
+- [x] Ponytail self-review of the diff (`ponytail:ponytail-review` skill,
+      run against the 4-file diff): no findings — "Lean already. Ship."
+      `net: 0 lines possible`. Every line is a required import or a divider
+      instance following `LotusBand`'s existing call signature; no
+      abstraction, no config, nothing to cut.
+
+## Acceptance criteria
+
+- AC-1 (dividers placed at sensible section boundaries on the main pages):
+  **met.** 5 placements across the homepage, Careers hub, Quality hub, and
+  `/careers/why-us`, each justified against a specific content pivot in the
+  table above.
+- AC-2 (consistent usage, not a different treatment every section): **met.**
+  Every instance uses `LotusBand`'s CR3 call signature verbatim —
+  `height={72}`, no `motifColor` override, `aria-hidden` wrapper, full-bleed
+  outside `Container`, teal-before-purple ordering on the one page with two.
+  Zero new colourways invented.
+- AC-3 (AA + reduced-motion respected): **met.** No new colour pairing
+  introduced (reused `LotusBand`'s already-verified variant/motif tokens);
+  no motion added by this card, so nothing new to gate behind
+  `prefers-reduced-motion`.
+
+**Coordinator verification, production build, 4 pages × 3 breakpoints (390/
+768/1440), 12 measurements — quoted verbatim:**
+
+> G2 VERIFIED on a production build — 12 measurements, 4 pages × 3
+> breakpoints, all clean:
+> - Band counts exactly as planned: 2 on the homepage, 1 each on
+>   `/careers`, `/quality`, `/careers/why-us`.
+> - **Full-bleed confirmed structurally**, not by eye: every band's width
+>   equals `document.documentElement.clientWidth` and its `x` is 0, at
+>   390/768/1440. This was the real risk in the card — one band nested
+>   inside a padded `Container` would have blown the page width — and all 5
+>   are correctly outside.
+> - Computed height 72px at every width on every band, so space is reserved
+>   and there is no CLS.
+> - `aria-hidden="true"` present on all 5 wrappers.
+> - Pattern element populated on every band, so the motif genuinely tiles
+>   rather than rendering as a flat colour stripe.
+> - **Page overflow 0 on all four pages at all three widths** — identical to
+>   the pre-change baselines. No page gained overflow.
+
+## Verification
+
+- [x] `npx tsc --noEmit` — exit 0.
+- [x] `npm run lint` — exit 0.
+- [x] `npm run build`/`build-storybook` — not run by this agent (coordinator
+      runs those centrally); coordinator verified on a production build
+      separately — see the quoted measurement block above.
+- [x] Browser verification: coordinator, production build, 4 pages × 3
+      breakpoints — see AC block above.
+
+## Review
+
+Four files changed, all page-composition files: `src/app/page.tsx`,
+`src/app/careers/page.tsx`, `src/app/quality/page.tsx`,
+`src/app/careers/why-us/page.tsx`. Each got one new import
+(`LotusBand`) and one or two `<div aria-hidden="true"><LotusBand
+variant="..." height={72} /></div>` inserts between existing top-level JSX
+siblings — no new component, no new `LotusBand` prop, no CSS change, no
+component-internal edit. `ponytail-review` found nothing to cut.
+
+This card's actual difficulty was never the code — it was judgement, which
+is why the rejected-boundary list above is longer than the accepted one and
+carries a reason for each entry. Two structurally different reasons back
+every rejection: an existing strong seam (CTA-strip gradients, the footer's
+`bg-primary-dark` flip, the culture gallery's own full-bleed carousel)
+already does the separating job a second device would duplicate; or the
+candidate sections are one continuous chapter, not two, and dividing every
+colour change inside it is the exact "stacking so close it reads as noise"
+failure the card warns against. `/careers/training` and
+`/careers/how-we-hire` are called out separately because their reason is
+neither of those — both pages have a genuine thematic seam, but it sits
+inside a single continuous `<Container>` wrapper that a full-bleed band
+cannot join without restructuring the page; skipped for structural risk,
+not for lack of a boundary, so a later reader doesn't "helpfully" add one on
+a false premise. No correction occurred on this card — the plan was
+approved as proposed and the coordinator's production-build measurements
+matched it exactly, so no new `tasks/lessons.md` entry.
+
+---
+
+# G1: Brand-colour saturation pass
+
+Branch: `feat/brand-colour-pass`.
+
+## Diagnosis
+
+The card's own warning — "not everywhere for its own sake," "no rainbow
+over-use" — is the hard part; a pass that tints everything is a failure of
+this card, not a success. Before any colour work, the coordinator named
+three site-wide defects found by measurement while verifying other cards,
+and required they be fixed as part of this deliverable (this card is the
+only one with the whole site in scope):
+
+**1. Skip-link contrast.** `.skip-link` in `globals.css` paired
+`background: var(--color-primary)` (teal-500, `#1badb2`) with white text —
+2.74:1 against white, failing AA on an element that exists purely for
+accessibility. `--color-primary-dark` (teal-700, `#0d6a70`) measures
+6.33:1 with white.
+
+**2. `Container`'s `width="reading"` overshoot.** `max-w-prose` is
+Tailwind's `65ch`, and `ch` is the "0" glyph's advance, not the average
+character width — at 16px Inter it computes to ≈656px, rendering ≈86 real
+characters per line (lesson 10's exact trap, now hitting the shared
+primitive rather than a page-local instance).
+
+**3. `.reveal-scale` 2px overflow.** `Reveal.tsx` renders one div carrying
+both the IntersectionObserver ref and, when passed in via `className`, the
+`reveal-scale` transform — there is no separate clipping wrapper.
+`overflow` on an element clips its *children*, never the box it's declared
+on, so nothing contained the pre-in-view `scale(1.05)`'s own paint bleed.
+Root cause, reusable beyond this card: **a scaled element cannot clip its
+own overflow; only a non-transformed ancestor can.** At 1440px, `Container`
+(`max-w-wide` = 1440px) plus its `lg:px-8` gutter (32px/side) leaves 1376px
+of content — `1376 × 1.05 = 1444.8px`, a ~34.4px bleed against a 32px
+gutter. Fixed at the single shared CSS rule, not per-page: `scale(1.03)`
+keeps the bleed (`1376 × 0.03 / 2 ≈ 20.6px`) inside the gutter with an 11px
+margin, at every breakpoint checked.
+
+## The systemic finding: teal-500 fails AA in both directions
+
+A precise re-grep (see lesson 11 — the first pass's `grep -v` silently
+dropped every line that also contained `hover:bg-primary-dark`) found the
+skip-link's defect was not an isolated instance: **`--color-primary`
+(teal-500) fails AA both as a background under white text (2.74:1) and as
+a foreground text colour on white (2.74:1, same math, direction-symmetric);
+`--color-accent` (teal-400) is worse as text-on-white (≈2.0:1).** ~28 files
+carried one of these pairings — active-state pills, avatar-initial circles,
+number badges, and, by far the largest group, the site's ~16 duplicated
+"primary button" instances (`bg-primary text-white … hover:bg-primary-dark`
+— Navbar, MobileMenu, JobCard, OccupopJobCard, TeamModal, ContactSection,
+RecruitmentSection, HomeModal, and four page files).
+
+**Fix pattern for buttons** (the reusable part): swap resting **and** hover
+together, not just resting — `bg-primary-dark text-white …
+hover:bg-teal-800`. Moving only the resting state to `-dark` while leaving
+`hover:bg-primary-dark` unchanged would collapse resting and hover to the
+same colour (no visible interactive feedback); moving hover to a *third*,
+still-safe step (`teal-800`, ≈10:1) keeps every state ≥6.3:1 instead of
+relocating the AA failure into the hover state. Active-state pills and
+static badges (no hover) went straight to `bg-primary-dark`/`text-primary-dark`.
+Two "outline → fills solid on hover" buttons (`RecruitmentSection.tsx`,
+`HomesCarousel.tsx`) got the same treatment on both the resting
+border/text and the hover fill. Hover-only colour dips that don't
+introduce a *background-fill* failure (e.g. `hover:bg-accent
+hover:text-white` on the white "bg-white text-primary" buttons) were left
+alone — reached only via an already-hovering pointer, not the primary way
+the label is read, and re-tuning them is a design opinion beyond an
+accessibility fix.
+
+**`CareersCTAStrip` gradient** (shared by 8 pages): `from-primary-dark
+to-primary` swept through the flat 2.74:1 fail at its teal end, and the
+interpolated midpoint under this strip's centred text still measured
+<4.5:1. Added a `tone?: "teal" | "purple"` prop (see purple section below);
+both tone gradients now stay inside the darkest two steps of their scale —
+`from-teal-800 to-primary-dark` (≥6.3:1 throughout) and `from-purple-700
+to-purple-600` (≥10.5:1 throughout).
+
+## Tier 2 — found, deliberately not fixed
+
+- `TeamCard.tsx`, `BoardSection.tsx` (department/role chip text, initials-
+  fallback gradients) — same failure pattern, but both files carry a
+  standing don't-touch boundary from card P6 (fragile card-height fix).
+  Flagged, not touched.
+- Initials-fallback gradients in `TeamCard`, `TeamModal`, `TeamStrip`,
+  `BoardSection` — unreachable: every team member and board member in
+  `src/data/team.ts` has an `image`, so the fallback branch never renders.
+- `HeroSection.tsx:63` hero highlight word (`text-accent` on
+  `bg-primary-dark`, ≈3.17:1) — passes the 3:1 large-bold-text threshold by
+  a narrow margin; left for the coordinator's pixel sample rather than
+  fixed on a source-only guess.
+- `why-us/page.tsx:70` stat number — presumed on a dark section background
+  (the `text-accent`/`text-purple-100` alternation only makes sense
+  there); left for the same pixel-sample check.
+- `CareersHero` (no-image variant) and `open-roles/[slug]` hero gradient
+  (`from-primary-dark via-primary to-accent/80`) — the failing corner is
+  diagonal and current markup places text away from it; not deterministic
+  like the flat CTA strip, so left for render-time measurement rather than
+  a source-only fix (lesson 9's exact trap).
+- All icon-only `bg-primary/10 text-primary` chips (`ServiceCard`,
+  `ContactSection` svgs, `HomeModal`, `FaqAccordion`, checkmark/chevron
+  icons across several career pages) — decorative, `aria-hidden` or paired
+  with an adjacent visible text label, exempt from WCAG 1.4.3/1.4.11.
+- `HomeModal`/`HomesCarousel`/`CultureGallery` progress dots (`bg-primary`,
+  no text) — non-text UI component contrast is a different criterion
+  (WCAG 1.4.11, 3:1 against adjacent colours), out of this card's explicit
+  "white-on-bg-primary" scope.
+- No shared `Button` component built to de-duplicate the ~16 repeated
+  button classNames — a real duplication smell, but an architectural
+  change this card didn't ask for.
+
+## Purple: two placements, not five
+
+Coordinator pixel-measurement (full-page screenshots, 1440px) showed the
+real gap: the site was already 29–50% brand-hued, but purple sat at
+0.01–0.54% on three of four key pages — a distribution problem, not a
+volume problem (lesson 12). Deepening teal for the AA fixes above would
+have made this worse, not better, so purple placement was scoped
+separately, extending the existing index-parity accent convention
+(`TeamCard`/`HubNavCard`) rather than inventing a new one:
+
+| Placement | Where | Token(s) | Predicted contrast | Measured |
+|---|---|---|---|---|
+| `ServiceCard`/`ServicesSection` accent alternation | Homepage — `accent={i % 2 === 0 ? "teal" : "purple"}` on all service cards; the 2 `hasImage` cards (indices 0, 1) split exactly one teal, one purple | `purple-600` (chip/overlay), `purple-400`/`purple-300` (illustration accents) | `purple-600` vs white ≈10.5:1 | Homepage purple 0.54% → 1.48% |
+| `CareersCTAStrip` `tone="purple"` | `/quality` and `/careers` hub CTA strips — 2 of the 3 near-zero-purple pages | `from-purple-700 to-purple-600` | 13.8:1 → 10.5:1, safe throughout | `/careers` purple 0.01% → 7.17%; `/quality` purple 0.01% → 10.37% |
+
+`/careers/benefits` (already 20.7% purple from CR2's alternating cards) got
+no additional placement — no gap to close. Footer was considered and
+rejected: one flat section, nothing to alternate against. Two good
+placements over five decorative ones, per the coordinator's own framing.
+
+**Net effect — the criterion that actually mattered:** total brand-colour
+share barely moved (homepage 29.09%→29.16%, `/careers` 36.20%→36.36%,
+`/quality` 50.55%→49.30%) while purple share rose 7–100×. The palette was
+rebalanced, not piled on — "no rainbow over-use" met in its strictest
+reading.
+
+## Must not break
+
+- G1-1: `src/components/lotus-band/LotusBand.tsx` — another agent was
+  concurrently editing this file during implementation; never touched,
+  confirmed via a diff scoped to only this card's files.
+- G1-2: `TeamCard.tsx`, `BoardSection.tsx` — standing P6 boundary; Tier-2
+  findings only, no edits.
+- G1-3: No component API changed without saying so — `CareersCTAStrip`'s
+  `tone` prop and `ServiceCard`'s `accent` prop are both new, additive,
+  default-preserving, and named here explicitly; every other change is a
+  same-shape className/value substitution.
+- G1-4: No `npm run build` (coordinator runs those centrally, and another
+  agent was concurrently running builds against `.next`); `npx tsc
+  --noEmit` and `npm run lint` only.
+- G1-5: No commit — the coordinator committed both passes as a single
+  commit after verification, with a message distinguishing the two.
+
+## Tasks
+
+- [x] Read the G1 card, `tasks/lessons.md` lessons 6 and 10, and the
+      current state of `globals.css`, `Container.tsx`, `Reveal.tsx` before
+      any edit.
+- [x] Audited the current brand-colour state (commits `fc12aed`, `69669be`,
+      `b5c348c`, `ac2e398`) rather than the pre-those-commits plan text.
+- [x] Plan written and approved by the coordinator before any edit (Step 1
+      gate), with one addition requested after approval — the purple
+      introduction, added as a second, separately-described pass.
+- [x] Fixed all three named defects at their single shared source
+      (`globals.css`, `Container.tsx`) — no per-page patching.
+- [x] Precise re-grep for `bg-primary`/`text-primary`/`text-accent`
+      (token-boundary regex, not whole-line `grep -v`) — caught the
+      `hover:bg-primary-dark` blind spot on `bg-primary`, then hit the same
+      blind spot again on `text-primary` and fixed it before trusting the
+      list (lesson 11).
+- [x] Applied the button resting+hover fix pattern across ~28 files (Pass
+      1) — `npx tsc --noEmit` and `npm run lint` both exit 0 after.
+- [x] Added `ServiceCard`/`ServicesSection` accent alternation and
+      `CareersCTAStrip`'s `tone` prop + two `tone="purple"` call sites
+      (Pass 2).
+- [x] Ponytail self-review of the diff (`ponytail:ponytail-review`): one
+      marginal 2-line shrink noted in `ServiceCard.tsx`'s illustration
+      dispatch (if/else vs. a lookup table), not worth taking; rest is
+      pure token substitution or the two new additive props. No
+      unnecessary abstraction found.
+- [x] Verified the diff was scoped to only this card's files (excluded the
+      concurrently-edited `LotusBand.tsx` and unrelated pre-existing
+      `tasks/lessons.md`/`tasks/todo.md` changes from another session).
+
+## Acceptance criteria
+
+- AC-1 (measurable increase in purposeful brand-colour use across key
+  pages): **met**, precisely — purple share rose 7–100× on the pages that
+  lacked it, while total brand share stayed flat, which is the
+  distribution fix the coordinator's measurement called for rather than a
+  blanket increase.
+- AC-2 (all colour from tokens; AA maintained everywhere): **met.** Every
+  value used is an existing `@theme` token (`primary-dark`, `teal-800`,
+  `purple-600`, `purple-700`, `purple-400`, `purple-300`); zero hardcoded
+  hex introduced. Zero white-text-on-teal-500/teal-400 AA failures remain
+  on the three pages the coordinator swept.
+- AC-3 (no "rainbow" over-use — colour still reads as intentional):
+  **met.** Two purple placements, both reusing the site's existing
+  index-parity accent convention; no new colourway invented.
+
+**Coordinator verification, production build — quoted verbatim:**
+
+> G1 VERIFIED on a production build. Measured:
+>
+> **The three defects, all fixed:**
+> - Skip link: `rgb(13,106,112)` with white = **6.34:1** (was 2.74:1).
+> - `/quality` reading measure: **58, 53, 41 characters** (was 86). In band.
+> - `.reveal-scale` overflow: `/quality/human-rights` now measures
+>   `scrollWidth - clientWidth` = **0** (was 2). Your root cause was right —
+>   overflow cannot clip an element's own transform, and 1376 × 1.05 =
+>   1444.8 matched the measured 1445 exactly.
+>
+> **AA remediation:** zero elements with white text on teal-500 or
+> teal-400 remain on `/`, `/careers`, or `/quality/human-rights`. Page
+> overflow 0 on all three.
+>
+> **Purple, the addition I asked for:**
+>
+> | Page | Purple before | Purple after | Total brand before → after |
+> |---|---|---|---|
+> | Homepage | 0.54% | 1.48% | 29.09% → 29.16% |
+> | /careers | 0.01% | 7.17% | 36.20% → 36.36% |
+> | /quality | 0.01% | 10.37% | 50.55% → 49.30% |
+>
+> Note what total brand share did: essentially nothing. You rebalanced the
+> palette toward purple rather than piling more colour on, which is the
+> "no rainbow over-use" criterion met in its strictest reading. Two
+> placements, not five, was the right call.
+
+## Verification
+
+- [x] `npx tsc --noEmit` — exit 0.
+- [x] `npm run lint` — exit 0.
+- [x] `npm run build`/`build-storybook` — not run by this agent (another
+      agent was concurrently editing `LotusBand.tsx` and running builds
+      against the same `.next`); coordinator verified on a production
+      build separately — see the quoted measurement block above.
+- [x] Browser verification: coordinator, production build — see AC block
+      above.
+
+## Review
+
+Thirty files changed. Three defects fixed at their single shared source
+(`globals.css`'s `.skip-link` background and `.reveal-scale` transform,
+`Container.tsx`'s `reading` width) rather than per-page. The systemic
+AA sweep touched ~28 files with the same two moves — a background/text
+token swap (`bg-primary`→`bg-primary-dark`, `text-primary`→
+`text-primary-dark`) and, on real buttons, a matching hover retune
+(`hover:bg-primary-dark`→`hover:bg-teal-800`) so the fix never just
+relocated the failure into the hover state. Two additive, default-
+preserving component props (`CareersCTAStrip.tone`, `ServiceCard.accent`)
+carried the purple pass, reusing `TeamCard`/`HubNavCard`'s existing
+index-parity convention rather than inventing a new one.
+
+Two corrections occurred on this card, both self-caught rather than
+found by review, and both are now `tasks/lessons.md` entries: the
+whole-line `grep -v` filter dropping real matches (bit twice, on two
+different tokens — lesson 11), and the "more colour" instruction being a
+distribution problem rather than a volume one, which pixel measurement
+caught after the plan had already proposed deepening teal everywhere
+(lesson 12). The coordinator's own addition mid-review — the purple
+placements — is the direct fix for the second correction; the plan as
+originally approved would have shipped a more monochrome site under a
+"use more brand colour" card, and would have looked correct doing it,
+since darkening ~28 teal instances reads exactly like "more colour" in a
+diff.

@@ -122,7 +122,7 @@ export function ContactSection({
                 </div>
                 <button
                   type="submit"
-                  className="w-full bg-primary text-white py-3.5 rounded-full font-semibold hover:bg-primary-dark transition-colors text-lg focus-ring"
+                  className="w-full bg-primary-dark text-white py-3.5 rounded-full font-semibold hover:bg-teal-800 transition-colors text-lg focus-ring"
                 >
                   Send Message
                 </button>
@@ -187,7 +187,7 @@ export function ContactSection({
                 <div className="text-sm text-muted space-y-1">
                   <p>Monday - Friday: 9:00 AM - 5:00 PM</p>
                   <p>Saturday - Sunday: Closed</p>
-                  <p className="text-primary font-medium mt-2">
+                  <p className="text-primary-dark font-medium mt-2">
                     Care services operate 24/7
                   </p>
                 </div>

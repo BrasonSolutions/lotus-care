@@ -53,7 +53,7 @@ export function TeamSection({
                 onClick={() => setActiveDept(dept)}
                 className={`px-6 py-3 rounded-full text-sm font-medium whitespace-nowrap transition-colors focus-ring ${
                   activeDept === dept
-                    ? "bg-primary text-white"
+                    ? "bg-primary-dark text-white"
                     : "bg-white text-foreground hover:bg-primary/10 border border-gray-200"
                 }`}
               >
