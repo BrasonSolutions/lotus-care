@@ -134,7 +134,7 @@ export function HomesCarousel({
                 <button
                   key={home.name}
                   onClick={() => setSelectedHome(home)}
-                  className="card-hover relative snap-start shrink-0 w-[calc(85vw)] sm:w-[300px] md:w-[320px] bg-warm-bg rounded-2xl overflow-hidden text-left group focus-ring after:content-[''] after:absolute after:inset-0 after:rounded-2xl after:border-4 after:border-primary after:pointer-events-none before:content-[''] before:absolute before:inset-2 before:rounded-xl before:border before:border-dashed before:border-teal-300 before:pointer-events-none"
+                  className="card-hover snap-start shrink-0 w-[calc(85vw)] sm:w-[300px] md:w-[320px] bg-warm-bg rounded-2xl overflow-hidden text-left group focus-ring"
                 >
                   {/* Color header */}
                   <div
@@ -190,7 +190,7 @@ export function HomesCarousel({
           <div className="text-center mt-8">
             <a
               href="#contact"
-              className="inline-block border-2 border-primary text-primary px-8 py-3 rounded-full font-semibold hover:bg-primary hover:text-white transition-colors focus-ring"
+              className="inline-block border-2 border-primary-dark text-primary-dark px-8 py-3 rounded-full font-semibold hover:bg-primary-dark hover:text-white transition-colors focus-ring"
             >
               Enquire About Our Homes
             </a>

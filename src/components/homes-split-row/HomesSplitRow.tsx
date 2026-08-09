@@ -45,7 +45,7 @@ export function HomesSplitRow({ homes }: HomesSplitRowProps) {
         />
 
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-24 items-center">
-          <div className="relative rounded-2xl overflow-hidden aspect-[3/2] min-w-0">
+          <div className="relative rounded-2xl overflow-hidden aspect-[3/2] min-w-0 after:content-[''] after:absolute after:inset-0 after:z-10 after:rounded-2xl after:border-4 after:border-primary after:pointer-events-none before:content-[''] before:absolute before:inset-2 before:z-10 before:rounded-xl before:border before:border-dashed before:border-teal-300 before:pointer-events-none">
             {HOMES_MONTAGE.src ? (
               <video
                 muted

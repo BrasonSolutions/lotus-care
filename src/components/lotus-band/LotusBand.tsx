@@ -11,6 +11,22 @@ type LotusBandMotifColor = "white" | "black" | "teal" | "purple";
 // public component export, never its internal geometry file.
 const ALT_ASPECT_RATIO = 141.48 / 148.47;
 
+// Reference-art density ratios, pixel-measured (ImageMagick pixel dumps +
+// autocorrelation for tile pitch, 4-connected blob analysis for motif width)
+// against the user's reference crop and docs/brand-assets/Logo/screenshot-2/
+// 3.png — not eyeballed. Four independent row samples gave tileSize/height
+// in [1.96, 2.04] (avg 2.01) and three gave motifSize/tileSize in
+// [0.971, 0.974] (avg 0.972) — i.e. the reference's motifs are tiled at
+// almost exactly their own rendered width, with only a hairline (~3%) gap
+// between neighbours, not the ~43%-oversized/overlapping tiling this
+// component shipped with before. Expressed as ratios (not fixed pixel
+// defaults) so `tileSize`/`motifSize` stay correct for whatever `height` a
+// caller passes, instead of only matching the one height they happened to
+// be tuned against — see the `height` prop doc for why a fixed pixel
+// default can't do that.
+const TILE_TO_HEIGHT_RATIO = 2;
+const MOTIF_TO_TILE_RATIO = 0.972;
+
 // Contrast (WCAG relative luminance, verified against the real token
 // hexes): white on teal-700 (#0d6a70) ≈ 6.34:1; white on purple-600
 // (#761948) ≈ 10.48:1; foreground on warm-bg (#f8f6f3) ≈ 11.76:1 — all
@@ -65,11 +81,15 @@ export interface LotusBandProps {
    * repo has no tailwind-merge, so two height utilities on one element
    * would race unpredictably. Default 96. */
   height?: number;
-  /** Rendered width (px) of one `LotusMarkAlt` copy in the pattern. Default 160. */
+  /** Rendered width (px) of one `LotusMarkAlt` copy in the pattern. Defaults
+   * to `tileSize * MOTIF_TO_TILE_RATIO` (reference-measured) when omitted,
+   * so it stays correct for whatever `tileSize`/`height` end up being used
+   * instead of a fixed number tuned for one specific height. */
   motifSize?: number;
-  /** Horizontal repeat distance (px). Must be less than `motifSize` for the
-   * interlocking look (see the overlap note below). Exact density can't be
-   * judged without rendering — tune per use if needed. Default 112. */
+  /** Horizontal repeat distance (px). Defaults to `height *
+   * TILE_TO_HEIGHT_RATIO` (reference-measured) when omitted — a fixed pixel
+   * default would only be correct for the one `height` it was tuned
+   * against, and every real caller in this repo passes its own `height`. */
   tileSize?: number;
   /** Width/margin/etc. on the root — not height (see `height` above). */
   className?: string;
@@ -102,20 +122,29 @@ export interface LotusBandProps {
  * (`motifSize * (141.48/148.47)` vs `height`) and vertically centred via
  * `y`, so the pattern's own clip crops it symmetrically top and bottom —
  * matching the reference screenshots' bleed-off-edge look.
+ *
+ * `motifSize`/`tileSize` default to `height`-relative ratios
+ * (`TILE_TO_HEIGHT_RATIO`, `MOTIF_TO_TILE_RATIO`), not fixed pixel numbers —
+ * see those constants' doc comment for the reference measurement they come
+ * from. Rounding them to the nearest px is cosmetic (sub-pixel `tileSize`
+ * would still tile correctly); it's done for readable devtools output, not
+ * because the math needs it.
  */
 export function LotusBand({
   variant = "teal",
   motifColor,
   height = 96,
-  motifSize = 160,
-  tileSize = 112,
+  motifSize,
+  tileSize,
   className = "",
   children,
 }: LotusBandProps) {
   const patternId = `lotus-band-${useId().replace(/:/g, "")}`;
   const { bg, text } = BAND_STYLE[variant];
   const motif = variant === "neutral" ? undefined : MOTIF_COLOR[motifColor ?? DEFAULT_MOTIF[variant]];
-  const motifHeight = motifSize * ALT_ASPECT_RATIO;
+  const resolvedTileSize = tileSize ?? Math.round(height * TILE_TO_HEIGHT_RATIO);
+  const resolvedMotifSize = motifSize ?? Math.round(resolvedTileSize * MOTIF_TO_TILE_RATIO);
+  const motifHeight = resolvedMotifSize * ALT_ASPECT_RATIO;
   const motifY = -(motifHeight - height) / 2;
 
   return (
@@ -125,11 +154,11 @@ export function LotusBand({
     >
       {motif && (
         <svg className="absolute inset-0 h-full w-full" aria-hidden="true">
-          <pattern id={patternId} patternUnits="userSpaceOnUse" width={tileSize} height={height}>
-            <svg x={0} y={motifY} width={motifSize} height={motifHeight} style={{ color: motif }}>
+          <pattern id={patternId} patternUnits="userSpaceOnUse" width={resolvedTileSize} height={height}>
+            <svg x={0} y={motifY} width={resolvedMotifSize} height={motifHeight} style={{ color: motif }}>
               <LotusMarkAlt className="h-full w-full" />
             </svg>
-            <svg x={-tileSize} y={motifY} width={motifSize} height={motifHeight} style={{ color: motif }}>
+            <svg x={-resolvedTileSize} y={motifY} width={resolvedMotifSize} height={motifHeight} style={{ color: motif }}>
               <LotusMarkAlt className="h-full w-full" />
             </svg>
           </pattern>
