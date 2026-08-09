@@ -11,20 +11,23 @@ type LotusBandMotifColor = "white" | "black" | "teal" | "purple";
 // public component export, never its internal geometry file.
 const ALT_ASPECT_RATIO = 141.48 / 148.47;
 
-// Reference-art density ratios, pixel-measured (ImageMagick pixel dumps +
-// autocorrelation for tile pitch, 4-connected blob analysis for motif width)
-// against the user's reference crop and docs/brand-assets/Logo/screenshot-2/
-// 3.png — not eyeballed. Four independent row samples gave tileSize/height
-// in [1.96, 2.04] (avg 2.01) and three gave motifSize/tileSize in
-// [0.971, 0.974] (avg 0.972) — i.e. the reference's motifs are tiled at
-// almost exactly their own rendered width, with only a hairline (~3%) gap
-// between neighbours, not the ~43%-oversized/overlapping tiling this
-// component shipped with before. Expressed as ratios (not fixed pixel
-// defaults) so `tileSize`/`motifSize` stay correct for whatever `height` a
-// caller passes, instead of only matching the one height they happened to
-// be tuned against — see the `height` prop doc for why a fixed pixel
-// default can't do that.
+// Tile pitch, pixel-measured (ImageMagick pixel dumps + windowed
+// autocorrelation) against the user's reference crop and
+// docs/brand-assets/Logo/screenshot-2/3.png — not eyeballed. Independently
+// re-verified twice now (2.01 avg over 4 row samples, then 1.96 via a
+// second, separate autocorrelation pass on the user's crop) — both cluster
+// tightly around 2, so this is settled. Expressed as a `height`-relative
+// ratio (not a fixed pixel default) so `tileSize` stays correct for
+// whatever `height` a caller passes — see the `height` prop doc.
 const TILE_TO_HEIGHT_RATIO = 2;
+
+// Motif size, pixel-measured the same way (4-connected blob analysis) —
+// the reference's motifs render at almost exactly their own tile-pitch
+// width, with only a hairline (~3%) gap between neighbours. Do not scale
+// this up: the user confirmed the flower stays this size even under the
+// bottom-edge-midline crop below (an earlier "motif height = 2x band
+// height" instruction was withdrawn — the visible fraction is a crop
+// position change only, not a re-scale).
 const MOTIF_TO_TILE_RATIO = 0.972;
 
 // Contrast (WCAG relative luminance, verified against the real token
@@ -118,10 +121,14 @@ export interface LotusBandProps {
  * motif) — so the interlocking look is real, undistorted geometry, not a
  * clipped illusion.
  *
- * Top/bottom crop: the motif is rendered taller than the band
- * (`motifSize * (141.48/148.47)` vs `height`) and vertically centred via
- * `y`, so the pattern's own clip crops it symmetrically top and bottom —
- * matching the reference screenshots' bleed-off-edge look.
+ * Crop position: only the motif's TOP HALF is shown — its own horizontal
+ * midline is aligned to sit exactly on the band's bottom edge
+ * (`motifY = height - motifHeight / 2`), so the bottom half is clipped away
+ * below the band and the flower reads as rising out of / hiding behind the
+ * strip. The motif is NOT rescaled to fit — at the reference size
+ * (`MOTIF_TO_TILE_RATIO`), its half-height is a little less than most
+ * `height`s in use, so there's a small clear gap between the band's top
+ * edge and the topmost petal tip; that gap is intentional, not a bug.
  *
  * `motifSize`/`tileSize` default to `height`-relative ratios
  * (`TILE_TO_HEIGHT_RATIO`, `MOTIF_TO_TILE_RATIO`), not fixed pixel numbers —
@@ -145,7 +152,9 @@ export function LotusBand({
   const resolvedTileSize = tileSize ?? Math.round(height * TILE_TO_HEIGHT_RATIO);
   const resolvedMotifSize = motifSize ?? Math.round(resolvedTileSize * MOTIF_TO_TILE_RATIO);
   const motifHeight = resolvedMotifSize * ALT_ASPECT_RATIO;
-  const motifY = -(motifHeight - height) / 2;
+  // Motif's own vertical midline lands on the band's bottom edge — see the
+  // "Crop position" doc above.
+  const motifY = height - motifHeight / 2;
 
   return (
     <div
