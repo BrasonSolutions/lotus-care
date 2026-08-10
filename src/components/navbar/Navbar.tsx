@@ -22,7 +22,7 @@ export function Navbar({
   navItems = defaultNavItems,
   contactInfo = defaultContactInfo,
   ctaLabel = "Get in Touch",
-  ctaHref = "#contact",
+  ctaHref = "/#contact",
   solidWhenTop = false,
 }: NavbarProps) {
   const scrolled = useScrolled();
@@ -78,7 +78,7 @@ export function Navbar({
                 item.children ? (
                   <HomesDropdown key={item.label} item={item} scrolled={scrolled} />
                 ) : (
-                  <a
+                  <Link
                     key={item.label}
                     href={item.href}
                     className={`text-base font-medium transition-colors focus-ring rounded ${
@@ -88,15 +88,15 @@ export function Navbar({
                     }`}
                   >
                     {item.label}
-                  </a>
+                  </Link>
                 )
               )}
-              <a
+              <Link
                 href={ctaHref}
                 className="bg-primary-dark text-white px-5 py-2.5 rounded-full text-base font-semibold hover:bg-teal-800 transition-colors focus-ring"
               >
                 {ctaLabel}
-              </a>
+              </Link>
             </div>
 
             {/* Mobile hamburger */}

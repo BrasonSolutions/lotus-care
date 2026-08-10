@@ -2,6 +2,7 @@
 
 import { useState, useSyncExternalStore } from "react";
 import { createPortal } from "react-dom";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { NavItem } from "@/data/navigation";
 
@@ -20,7 +21,7 @@ export function MobileMenu({
   navItems,
   contactInfo,
   ctaLabel = "Get in Touch",
-  ctaHref = "#contact",
+  ctaHref = "/#contact",
 }: MobileMenuProps) {
   const pathname = usePathname() ?? "";
   const [isOpen, setIsOpen] = useState(false);
@@ -116,7 +117,7 @@ export function MobileMenu({
                 >
                   <div className="pl-4 pb-2">
                     {item.children.map((child) => (
-                      <a
+                      <Link
                         key={child.label}
                         href={child.href}
                         onClick={close}
@@ -128,13 +129,13 @@ export function MobileMenu({
                         }`}
                       >
                         {child.label}
-                      </a>
+                      </Link>
                     ))}
                   </div>
                 </div>
               </div>
             ) : (
-              <a
+              <Link
                 key={item.label}
                 href={item.href}
                 onClick={close}
@@ -146,18 +147,18 @@ export function MobileMenu({
                 }`}
               >
                 {item.label}
-              </a>
+              </Link>
             )
           )}
 
           <div className="border-t border-gray-100 mt-4 pt-4">
-            <a
+            <Link
               href={ctaHref}
               onClick={close}
               className="block w-full text-center bg-primary-dark text-white py-3 rounded-full font-semibold hover:bg-teal-800 transition-colors focus-ring"
             >
               {ctaLabel}
-            </a>
+            </Link>
             <div className="mt-4 space-y-1 text-muted">
               <a
                 href={`tel:${contactInfo.phone}`}
