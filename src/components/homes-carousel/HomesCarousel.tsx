@@ -11,12 +11,18 @@ interface HomesCarouselProps {
   homes: Home[];
   title?: string;
   subtitle?: string;
+  /** Skips the section chrome (SectionTitle + Container) for use inside a
+   * parent-owned layout, e.g. the homes split row. Every interactive
+   * behaviour — scroll, arrows, dots, auto-scroll, modal — is unchanged.
+   * Defaults to false so existing callers keep today's behaviour. */
+  embedded?: boolean;
 }
 
 export function HomesCarousel({
   homes,
   title = "Our Homes",
   subtitle = "Eight unique homes across Co. Offaly and the Midlands, each designed to feel like home.",
+  embedded = false,
 }: HomesCarouselProps) {
   const { ref: sectionRef, inView } = useInView({ threshold: 0.1 });
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -72,6 +78,11 @@ export function HomesCarousel({
 
     const handleScroll = () => {
       const scrollLeft = container.scrollLeft;
+      const maxScrollLeft = container.scrollWidth - container.clientWidth;
+      if (scrollLeft >= maxScrollLeft - 1) {
+        setActiveIndex(homes.length - 1);
+        return;
+      }
       const cardWidth = (container.children[0] as HTMLElement)?.offsetWidth ?? 300;
       const gap = 24;
       const index = Math.round(scrollLeft / (cardWidth + gap));
@@ -82,14 +93,11 @@ export function HomesCarousel({
     return () => container.removeEventListener("scroll", handleScroll);
   }, [homes.length]);
 
-  return (
-    <section id="homes" className="py-20 lg:py-28 bg-white">
-      <Container>
-        <SectionTitle title={title} subtitle={subtitle} />
-
-        <div ref={sectionRef} className={`reveal ${inView ? "in-view" : ""}`}>
-          {/* Carousel container */}
-          <div className="relative">
+  const carousel = (
+    <>
+      <div ref={sectionRef} className={`reveal ${inView ? "in-view" : ""}`}>
+        {/* Carousel container */}
+        <div className="relative">
             {/* Arrows — visible on all screen sizes */}
             <button
               onClick={() => {
@@ -182,15 +190,25 @@ export function HomesCarousel({
           <div className="text-center mt-8">
             <a
               href="#contact"
-              className="inline-block border-2 border-primary text-primary px-8 py-3 rounded-full font-semibold hover:bg-primary hover:text-white transition-colors focus-ring"
+              className="inline-block border-2 border-primary-dark text-primary-dark px-8 py-3 rounded-full font-semibold hover:bg-primary-dark hover:text-white transition-colors focus-ring"
             >
               Enquire About Our Homes
             </a>
-          </div>
         </div>
-      </Container>
+      </div>
 
       <HomeModal home={selectedHome} onClose={() => setSelectedHome(null)} />
+    </>
+  );
+
+  if (embedded) return carousel;
+
+  return (
+    <section id="homes" className="py-20 lg:py-28 bg-white">
+      <Container>
+        <SectionTitle title={title} subtitle={subtitle} />
+        {carousel}
+      </Container>
     </section>
   );
 }

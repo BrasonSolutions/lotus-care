@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { LogoWhite } from "@/components/logo-white";
 import { Container } from "@/components/layout";
 import { contactInfo as defaultContactInfo } from "@/data/navigation";
@@ -33,12 +34,12 @@ export function Footer({
             <ul className="space-y-2.5">
               {quickLinks.map((link) => (
                 <li key={link.label}>
-                  <a
+                  <Link
                     href={link.href}
                     className="text-base text-white/70 hover:text-accent transition-colors focus-ring-white rounded"
                   >
                     {link.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>

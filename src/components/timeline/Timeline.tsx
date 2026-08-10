@@ -27,7 +27,7 @@ export function Timeline({ steps, orientation = "vertical", className = "" }: Ti
           className={`relative pl-8 pop-item ${inView ? "in-view" : ""}`}
           style={{ transitionDelay: `${i * STAGGER_MS}ms` }}
         >
-          <span className="absolute -left-4 flex items-center justify-center w-8 h-8 rounded-full bg-primary text-white font-bold text-sm">
+          <span className="absolute -left-4 flex items-center justify-center w-8 h-8 rounded-full bg-primary-dark text-white font-bold text-sm">
             {step.number}
           </span>
           <h3 className="font-semibold text-primary-dark mb-1">{step.title}</h3>
@@ -48,7 +48,7 @@ export function Timeline({ steps, orientation = "vertical", className = "" }: Ti
   return (
     <div ref={ref} className={className}>
       <div className="hidden md:block relative">
-        <div className="absolute top-8 left-0 right-0 h-0.5 bg-gray-200" aria-hidden="true" />
+        <div className="absolute top-8 left-0 right-0 h-0.5 bg-primary/20" aria-hidden="true" />
         <ol
           className="relative grid gap-8"
           style={{ gridTemplateColumns: `repeat(${steps.length}, minmax(0, 1fr))` }}
@@ -59,7 +59,7 @@ export function Timeline({ steps, orientation = "vertical", className = "" }: Ti
               className={`flex flex-col items-center text-center pop-item ${inView ? "in-view" : ""}`}
               style={{ transitionDelay: `${i * STAGGER_MS}ms` }}
             >
-              <div className="relative z-10 flex items-center justify-center w-16 h-16 shrink-0 rounded-full bg-primary text-white font-bold text-xl shadow-md">
+              <div className="relative z-10 flex items-center justify-center w-16 h-16 shrink-0 rounded-full bg-primary-dark text-white font-bold text-xl shadow-md">
                 {step.number}
               </div>
               <div className="mt-4">

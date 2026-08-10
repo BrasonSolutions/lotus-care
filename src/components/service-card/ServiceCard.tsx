@@ -40,45 +40,69 @@ const icons: Record<string, React.ReactNode> = {
   ),
 };
 
-/* SVG illustrations for image-style cards */
-const illustrations: Record<string, React.ReactNode> = {
-  home: (
-    <svg viewBox="0 0 400 200" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
-      <rect width="400" height="200" fill="var(--color-teal-700)" />
-      <circle cx="320" cy="60" r="80" fill="var(--color-teal-500)" opacity="0.2" />
-      <circle cx="80" cy="160" r="60" fill="var(--color-teal-400)" opacity="0.15" />
-      <g transform="translate(160, 40)">
-        <path d="M40 10L70 40V90H10V40L40 10Z" fill="white" opacity="0.15" />
-        <rect x="25" y="55" width="15" height="25" rx="2" fill="white" opacity="0.2" />
-        <rect x="48" y="45" width="12" height="12" rx="1" fill="white" opacity="0.2" />
-        <path d="M40 10L70 40H10L40 10Z" fill="white" opacity="0.1" />
-      </g>
-      <path d="M0 180 Q100 140 200 170 Q300 200 400 160 V200 H0Z" fill="white" opacity="0.05" />
-    </svg>
-  ),
-  heart: (
-    <svg viewBox="0 0 400 200" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
-      <rect width="400" height="200" fill="var(--color-teal-700)" />
-      <circle cx="100" cy="40" r="90" fill="var(--color-teal-500)" opacity="0.15" />
-      <circle cx="340" cy="140" r="70" fill="var(--color-teal-400)" opacity="0.1" />
-      <g transform="translate(155, 45)">
-        <path d="M45 25C45 10 30 0 22.5 0C15 0 0 10 0 25C0 55 45 80 45 80C45 80 90 55 90 25C90 10 75 0 67.5 0C60 0 45 10 45 25Z" fill="white" opacity="0.15" />
-      </g>
-      <circle cx="200" cy="150" r="3" fill="white" opacity="0.3" />
-      <circle cx="180" cy="160" r="2" fill="white" opacity="0.2" />
-      <circle cx="220" cy="155" r="2.5" fill="white" opacity="0.25" />
-      <path d="M0 170 Q100 150 200 165 Q300 180 400 155 V200 H0Z" fill="white" opacity="0.05" />
-    </svg>
-  ),
-};
+/* SVG illustrations for image-style cards. Fills come from ACCENT so the
+   same two shapes work for either brand colour — see G1's purple pass. */
+function getIllustration(icon: string, accent: "teal" | "purple") {
+  const [base, mid, light] = ACCENT[accent].illustrationFills;
+  if (icon === "home") {
+    return (
+      <svg viewBox="0 0 400 200" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+        <rect width="400" height="200" fill={base} />
+        <circle cx="320" cy="60" r="80" fill={mid} opacity="0.2" />
+        <circle cx="80" cy="160" r="60" fill={light} opacity="0.15" />
+        <g transform="translate(160, 40)">
+          <path d="M40 10L70 40V90H10V40L40 10Z" fill="white" opacity="0.15" />
+          <rect x="25" y="55" width="15" height="25" rx="2" fill="white" opacity="0.2" />
+          <rect x="48" y="45" width="12" height="12" rx="1" fill="white" opacity="0.2" />
+          <path d="M40 10L70 40H10L40 10Z" fill="white" opacity="0.1" />
+        </g>
+        <path d="M0 180 Q100 140 200 170 Q300 200 400 160 V200 H0Z" fill="white" opacity="0.05" />
+      </svg>
+    );
+  }
+  if (icon === "heart") {
+    return (
+      <svg viewBox="0 0 400 200" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+        <rect width="400" height="200" fill={base} />
+        <circle cx="100" cy="40" r="90" fill={mid} opacity="0.15" />
+        <circle cx="340" cy="140" r="70" fill={light} opacity="0.1" />
+        <g transform="translate(155, 45)">
+          <path d="M45 25C45 10 30 0 22.5 0C15 0 0 10 0 25C0 55 45 80 45 80C45 80 90 55 90 25C90 10 75 0 67.5 0C60 0 45 10 45 25Z" fill="white" opacity="0.15" />
+        </g>
+        <circle cx="200" cy="150" r="3" fill="white" opacity="0.3" />
+        <circle cx="180" cy="160" r="2" fill="white" opacity="0.2" />
+        <circle cx="220" cy="155" r="2.5" fill="white" opacity="0.25" />
+        <path d="M0 170 Q100 150 200 165 Q300 180 400 155 V200 H0Z" fill="white" opacity="0.05" />
+      </svg>
+    );
+  }
+  return null;
+}
+
+// Same two-token accent convention as TeamCard/HubNavCard. -dark/-600 are
+// the AA-safe strong shades (≥6.3:1 white text) used sitewide; teal keeps
+// today's exact look, purple is the new alternate.
+const ACCENT = {
+  teal: {
+    chip: "bg-primary/10 text-primary group-hover:bg-primary-dark group-hover:text-white",
+    overlay: "from-primary-dark/90 via-primary-dark/40 to-transparent",
+    illustrationFills: ["var(--color-teal-700)", "var(--color-teal-500)", "var(--color-teal-400)"],
+  },
+  purple: {
+    chip: "bg-purple-600/10 text-purple-600 group-hover:bg-purple-600 group-hover:text-white",
+    overlay: "from-purple-600/90 via-purple-600/40 to-transparent",
+    illustrationFills: ["var(--color-purple-600)", "var(--color-purple-400)", "var(--color-purple-300)"],
+  },
+} as const;
 
 interface ServiceCardProps {
   service: Service;
   index: number;
   inView: boolean;
+  accent?: "teal" | "purple";
 }
 
-export function ServiceCard({ service, index, inView }: ServiceCardProps) {
+export function ServiceCard({ service, index, inView, accent = "teal" }: ServiceCardProps) {
   const isImageCard = service.hasImage;
   const delayClass = `reveal-delay-${index + 1}`;
 
@@ -89,9 +113,9 @@ export function ServiceCard({ service, index, inView }: ServiceCardProps) {
       >
         {/* SVG illustration background */}
         <div className="absolute inset-0 transition-transform duration-500 group-hover:scale-105">
-          {illustrations[service.icon]}
+          {getIllustration(service.icon, accent)}
         </div>
-        <div className="absolute inset-0 bg-gradient-to-t from-primary-dark/90 via-primary-dark/40 to-transparent" />
+        <div className={`absolute inset-0 bg-gradient-to-t ${ACCENT[accent].overlay}`} />
         <div className="relative z-10 p-6">
           <h3 className="text-xl font-bold text-white mb-2">{service.title}</h3>
           <p className="text-white/80 text-sm leading-relaxed">
@@ -106,7 +130,7 @@ export function ServiceCard({ service, index, inView }: ServiceCardProps) {
     <div
       className={`card-hover reveal ${delayClass} ${inView ? "in-view" : ""} group bg-white rounded-2xl p-6 border border-gray-100 hover:border-primary/30 transition-colors`}
     >
-      <div className="w-14 h-14 rounded-xl bg-primary/10 text-primary flex items-center justify-center mb-4 transition-colors duration-300 group-hover:bg-primary group-hover:text-white">
+      <div className={`w-14 h-14 rounded-xl flex items-center justify-center mb-4 transition-colors duration-300 ${ACCENT[accent].chip}`}>
         {icons[service.icon]}
       </div>
       <h3 className="text-lg font-bold text-primary-dark mb-3 transition-colors group-hover:text-primary">
@@ -116,7 +140,7 @@ export function ServiceCard({ service, index, inView }: ServiceCardProps) {
       {service.href && (
         <a
           href={service.href}
-          className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary hover:text-primary-dark transition-colors focus-ring rounded"
+          className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary-dark hover:text-teal-800 transition-colors focus-ring rounded"
         >
           Learn more
           <svg

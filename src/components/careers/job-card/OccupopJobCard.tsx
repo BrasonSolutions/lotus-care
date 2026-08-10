@@ -6,8 +6,8 @@ interface OccupopJobCardProps {
 
 function contractColor(type: string): string {
   const t = type.toLowerCase();
-  if (t.includes("full")) return "bg-primary/10 text-primary";
-  if (t.includes("part")) return "bg-accent/10 text-accent";
+  if (t.includes("full")) return "bg-primary/10 text-primary-dark";
+  if (t.includes("part")) return "bg-accent/10 text-primary-dark";
   return "bg-gray-100 text-muted";
 }
 
@@ -51,7 +51,7 @@ export function OccupopJobCard({ job }: OccupopJobCardProps) {
         href={job.applyUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="block text-center bg-primary text-white py-2.5 rounded-full text-sm font-semibold hover:bg-primary-dark transition-colors focus-ring mt-auto"
+        className="block text-center bg-primary-dark text-white py-2.5 rounded-full text-sm font-semibold hover:bg-teal-800 transition-colors focus-ring mt-auto"
       >
         View Role
       </a>

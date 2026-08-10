@@ -4,6 +4,7 @@ import { TestimonialCard } from "@/components/careers/testimonial-card";
 import { CareersCTAStrip } from "@/components/careers/careers-cta-strip";
 import { SectionTitle } from "@/components/section-title";
 import { Reveal } from "@/components/reveal";
+import { LotusBand } from "@/components/lotus-band";
 import { QualityPillars } from "@/components/quality/quality-pillars";
 import { qualityHub, hubCards, qualityFoundationPrinciples, anonymizedTestimonial } from "@/data/quality";
 import { Container } from "@/components/layout";
@@ -38,6 +39,10 @@ export default function QualityPage() {
         </Container>
       </section>
 
+      <div aria-hidden="true">
+        <LotusBand variant="teal" height={72} />
+      </div>
+
       {/* Resident testimonial pull-quote (anonymized) */}
       <section className="py-16 sm:py-20 bg-white">
         <Reveal>
@@ -58,6 +63,7 @@ export default function QualityPage() {
         ctaHref="/#contact"
         secondaryLabel="Explore Careers"
         secondaryHref="/careers"
+        tone="purple"
       />
     </>
   );

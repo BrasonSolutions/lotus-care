@@ -63,7 +63,7 @@ export function RecruitmentSection({
                 <a
                   key={cta.label}
                   href={cta.href}
-                  className="inline-block bg-primary text-white px-8 py-4 rounded-full text-base font-semibold hover:bg-primary-dark transition-colors focus-ring text-center"
+                  className="inline-block bg-primary-dark text-white px-8 py-4 rounded-full text-base font-semibold hover:bg-teal-800 transition-colors focus-ring text-center"
                 >
                   {cta.label}
                 </a>
@@ -71,7 +71,7 @@ export function RecruitmentSection({
                 <a
                   key={cta.label}
                   href={cta.href}
-                  className="inline-block border-2 border-primary text-primary px-8 py-4 rounded-full text-base font-semibold hover:bg-primary hover:text-white transition-colors focus-ring text-center"
+                  className="inline-block border-2 border-primary-dark text-primary-dark px-8 py-4 rounded-full text-base font-semibold hover:bg-primary-dark hover:text-white transition-colors focus-ring text-center"
                 >
                   {cta.label}
                 </a>

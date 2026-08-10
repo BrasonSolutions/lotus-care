@@ -32,7 +32,7 @@ export default function BenefitsPage() {
               benefits package is designed to support your financial wellbeing, your
               career growth, and your life outside of work.
             </p>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {benefits.map((benefit, index) => (
                 <BenefitCard
                   key={benefit.title}

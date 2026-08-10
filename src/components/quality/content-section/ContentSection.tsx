@@ -1,16 +1,22 @@
 import Image from "next/image";
 import type { ContentBlock } from "@/data/quality";
-import { Container } from "@/components/layout";
 
 interface ContentSectionProps extends ContentBlock {
   image?: string;
   imagePosition?: "left" | "right";
+  /** Larger heading scale for a section's lead block (Option A's
+   * divider-segmented groups — CR3). Defaults to the original scale. */
+  primary?: boolean;
 }
 
-function Text({ heading, intro, body, bullets }: ContentBlock) {
+function Text({ heading, intro, body, bullets, primary }: ContentBlock & { primary?: boolean }) {
   return (
     <div>
-      <h2 className="text-xl sm:text-2xl font-bold text-primary-dark mb-4">
+      <h2
+        className={`font-bold text-primary-dark mb-4 ${
+          primary ? "text-2xl sm:text-3xl" : "text-xl sm:text-2xl"
+        }`}
+      >
         {heading}
       </h2>
       {intro && <p className="text-muted leading-relaxed mb-4">{intro}</p>}
@@ -31,19 +37,29 @@ function Text({ heading, intro, body, bullets }: ContentBlock) {
   );
 }
 
-export function ContentSection({ image, imagePosition = "right", ...content }: ContentSectionProps) {
+export function ContentSection({
+  image,
+  imagePosition = "right",
+  primary,
+  ...content
+}: ContentSectionProps) {
   if (!image) {
+    // max-w-lg (32rem/512px), not max-w-prose (65ch ≈ 656px at 16px Inter —
+    // "ch" is the "0" glyph's width, which measurably overshoots this
+    // font's real average character width; 656px rendered 85-91 real
+    // characters/line, verified in-browser). 512px lands ~65-70 real
+    // characters — see CR3 PR notes for the measured px-per-char ratio.
     return (
-      <Container width="reading">
-        <Text {...content} />
-      </Container>
+      <div className="max-w-lg mx-auto">
+        <Text {...content} primary={primary} />
+      </div>
     );
   }
 
   return (
     <div className="grid md:grid-cols-2 gap-10 lg:gap-16 items-center">
-      <div className={imagePosition === "left" ? "md:order-2" : ""}>
-        <Text {...content} />
+      <div className={`max-w-lg ${imagePosition === "left" ? "md:order-2" : ""}`}>
+        <Text {...content} primary={primary} />
       </div>
       <div
         className={`group relative rounded-2xl overflow-hidden aspect-[4/3] ${

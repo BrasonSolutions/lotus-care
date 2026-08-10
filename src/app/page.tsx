@@ -2,12 +2,13 @@ import { Navbar } from "@/components/navbar";
 import { HeroSection } from "@/components/hero-section";
 import { AboutSection } from "@/components/about-section";
 import { ServicesSection } from "@/components/services-section";
-import { HomesCarousel } from "@/components/homes-carousel";
+import { HomesSplitRow } from "@/components/homes-split-row";
 import { TeamSection } from "@/components/team-section";
 import { BoardSection } from "@/components/board-section";
 import { RecruitmentSection } from "@/components/recruitment-section";
 import { ContactSection } from "@/components/contact-section";
 import { Footer } from "@/components/footer";
+import { LotusBand } from "@/components/lotus-band";
 
 import { contactInfo } from "@/data/navigation";
 import { services } from "@/data/services";
@@ -66,9 +67,15 @@ export default function Home() {
           stats={aboutStats}
         />
         <ServicesSection services={services} />
-        <HomesCarousel homes={homes} />
+        <HomesSplitRow homes={homes} />
+        <div aria-hidden="true">
+          <LotusBand variant="teal" height={72} />
+        </div>
         <TeamSection members={teamMembers} departments={departments} />
         <BoardSection members={boardMembers} />
+        <div aria-hidden="true">
+          <LotusBand variant="purple" height={72} />
+        </div>
         <RecruitmentSection
           description={recruitmentDescription}
           note={recruitmentNote}

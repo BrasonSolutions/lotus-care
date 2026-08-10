@@ -82,7 +82,7 @@ export default function HowWeHirePage() {
             <p className="text-muted mb-4">Still have questions?</p>
             <a
               href="/careers/contact"
-              className="inline-block bg-primary text-white px-6 py-3 rounded-full font-semibold hover:bg-primary-dark transition-colors focus-ring"
+              className="inline-block bg-primary-dark text-white px-6 py-3 rounded-full font-semibold hover:bg-teal-800 transition-colors focus-ring"
             >
               Contact Our Recruitment Team
             </a>

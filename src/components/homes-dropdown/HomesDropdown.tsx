@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import type { NavItem } from "@/data/navigation";
 
 interface HomesDropdownProps {
@@ -46,24 +47,24 @@ export function HomesDropdown({ item, scrolled }: HomesDropdownProps) {
       >
         <div className="bg-white rounded-xl shadow-lg border border-gray-100 py-2 min-w-[200px]">
           {item.children?.map((child) => (
-            <a
+            <Link
               key={child.label}
               href={child.href}
               className="block px-4 py-3 text-sm text-foreground hover:bg-warm-bg hover:text-primary transition-colors focus-ring"
               onClick={() => setOpen(false)}
             >
               {child.label}
-            </a>
+            </Link>
           ))}
           {item.viewAllHref && (
             <div className="border-t border-gray-100 mt-1 pt-1">
-              <a
+              <Link
                 href={item.viewAllHref}
-                className="block px-4 py-3 text-sm font-semibold text-primary hover:bg-warm-bg transition-colors focus-ring"
+                className="block px-4 py-3 text-sm font-semibold text-primary-dark hover:bg-warm-bg transition-colors focus-ring"
                 onClick={() => setOpen(false)}
               >
                 {item.viewAllLabel ?? "View All"}
-              </a>
+              </Link>
             </div>
           )}
         </div>

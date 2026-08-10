@@ -6,6 +6,7 @@ import { CultureGallery } from "@/components/careers/culture-gallery";
 import { VideoTestimonialCard } from "@/components/careers/video-testimonial-card";
 import { CareersCTAStrip } from "@/components/careers/careers-cta-strip";
 import { SectionTitle } from "@/components/section-title";
+import { LotusBand } from "@/components/lotus-band";
 import { testimonials, employerStats, cultureGalleryImages, videoTestimonials } from "@/data/careers";
 import { Container } from "@/components/layout";
 
@@ -76,6 +77,10 @@ export default function WhyUsPage() {
           </div>
         </Container>
       </section>
+
+      <div aria-hidden="true">
+        <LotusBand variant="teal" height={72} />
+      </div>
 
       {/* Testimonials */}
       <section className="py-16 sm:py-20">

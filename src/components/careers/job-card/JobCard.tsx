@@ -12,8 +12,8 @@ const typeLabels: Record<JobRole["type"], string> = {
 };
 
 const typeColors: Record<JobRole["type"], string> = {
-  "full-time": "bg-primary/10 text-primary",
-  "part-time": "bg-accent/10 text-accent",
+  "full-time": "bg-primary/10 text-primary-dark",
+  "part-time": "bg-accent/10 text-primary-dark",
   casual: "bg-gray-100 text-muted",
 };
 
@@ -53,7 +53,7 @@ export function JobCard({ job }: JobCardProps) {
 
       <a
         href={`/careers/open-roles/${job.slug}`}
-        className="block text-center bg-primary text-white py-2.5 rounded-full text-sm font-semibold hover:bg-primary-dark transition-colors focus-ring"
+        className="block text-center bg-primary-dark text-white py-2.5 rounded-full text-sm font-semibold hover:bg-teal-800 transition-colors focus-ring"
       >
         View Role
       </a>

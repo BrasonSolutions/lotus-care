@@ -7,7 +7,7 @@ interface VideoTestimonialCardProps {
 }
 
 const BADGE = {
-  teal: "bg-primary",
+  teal: "bg-primary-dark",
   purple: "bg-purple-600",
 } as const;
 

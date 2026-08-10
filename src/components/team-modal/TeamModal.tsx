@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import Image from "next/image";
 import type { TeamMember, BoardMember } from "@/data/team";
+import { LotusPhotoMask } from "@/components/lotus-mark";
 
 interface TeamModalProps {
   member: TeamMember | BoardMember | null;
@@ -44,23 +45,32 @@ export function TeamModal({ member, onClose }: TeamModalProps) {
       <div className="bg-white rounded-2xl overflow-hidden shadow-2xl animate-scale-in">
         {/* Header */}
         <div className="bg-gradient-to-br from-primary-dark to-primary p-8 flex flex-col items-center">
-          <div className="w-24 h-24 rounded-full overflow-hidden mb-4 ring-4 ring-white/20">
-            {member.image ? (
-              <Image
-                src={member.image}
-                alt={member.name}
-                width={96}
-                height={96}
-                className="w-full h-full object-cover object-top"
-              />
-            ) : (
-              <div className="w-full h-full bg-white/20 flex items-center justify-center text-white text-2xl font-bold">
-                {member.initials}
-              </div>
-            )}
+          <div className="relative w-24 h-24 mb-4">
+            <div className="absolute inset-0">
+              <LotusPhotoMask className="w-full h-full" aria-hidden="true">
+                <div className="w-full h-full bg-white" />
+              </LotusPhotoMask>
+            </div>
+            <div className="absolute inset-[2px]">
+              <LotusPhotoMask className="w-full h-full">
+                {member.image ? (
+                  <Image
+                    src={member.image}
+                    alt={member.name}
+                    width={96}
+                    height={96}
+                    className="w-full h-full object-cover object-top"
+                  />
+                ) : (
+                  <div className="w-full h-full bg-white/20 flex items-center justify-center text-white text-2xl font-bold">
+                    {member.initials}
+                  </div>
+                )}
+              </LotusPhotoMask>
+            </div>
           </div>
           <h3 className="text-xl font-bold text-white">{member.name}</h3>
-          <p className="text-accent text-sm mt-1">{member.role}</p>
+          <p className="text-white/80 text-sm mt-1">{member.role}</p>
         </div>
 
         {/* Bio */}
@@ -76,7 +86,7 @@ export function TeamModal({ member, onClose }: TeamModalProps) {
           )}
           <button
             onClick={onClose}
-            className="w-full bg-primary text-white py-3 rounded-full font-semibold hover:bg-primary-dark transition-colors focus-ring"
+            className="w-full bg-primary-dark text-white py-3 rounded-full font-semibold hover:bg-teal-800 transition-colors focus-ring"
           >
             Close
           </button>

@@ -45,7 +45,7 @@ export function CareersSubnav() {
                     href={href}
                     className={`whitespace-nowrap px-4 py-1.5 rounded-full text-sm font-medium transition-colors focus-ring ${
                       isActive
-                        ? "bg-primary text-white"
+                        ? "bg-primary-dark text-white"
                         : "text-foreground hover:text-primary hover:bg-warm-bg"
                     }`}
                     aria-current={isActive ? "page" : undefined}

@@ -8,6 +8,7 @@ import { CareersCTAStrip } from "@/components/careers/careers-cta-strip";
 import { SectionTitle } from "@/components/section-title";
 import { getCareersIcon } from "@/components/careers/careers-icons";
 import { Reveal } from "@/components/reveal";
+import { LotusBand } from "@/components/lotus-band";
 import { Container } from "@/components/layout";
 import { jobs } from "@/data/jobs";
 import { testimonials, companyValues, type Testimonial } from "@/data/careers";
@@ -99,6 +100,10 @@ export default function CareersPage() {
         </Container>
       </section>
 
+      <div aria-hidden="true">
+        <LotusBand variant="teal" height={72} />
+      </div>
+
       {/* Hub nav cards */}
       <section className="py-16 sm:py-20">
         <Container>
@@ -126,7 +131,7 @@ export default function CareersPage() {
             </div>
             <Link
               href="/careers/open-roles"
-              className="hidden sm:flex items-center gap-1 text-sm font-medium text-primary hover:text-primary-dark transition-colors focus-ring rounded shrink-0"
+              className="hidden sm:flex items-center gap-1 text-sm font-medium text-primary-dark hover:text-teal-800 transition-colors focus-ring rounded shrink-0"
             >
               View all roles
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -142,7 +147,7 @@ export default function CareersPage() {
           <div className="mt-6 sm:hidden text-center">
             <Link
               href="/careers/open-roles"
-              className="inline-block text-sm font-medium text-primary hover:text-primary-dark transition-colors focus-ring rounded"
+              className="inline-block text-sm font-medium text-primary-dark hover:text-teal-800 transition-colors focus-ring rounded"
             >
               View all open roles →
             </Link>
@@ -178,6 +183,7 @@ export default function CareersPage() {
         ctaHref="/careers/open-roles"
         secondaryLabel="Contact Recruitment"
         secondaryHref="/careers/contact"
+        tone="purple"
       />
     </>
   );
