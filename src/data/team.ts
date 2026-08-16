@@ -16,7 +16,6 @@ export interface BoardMember {
 }
 
 export const departments = [
-  "All",
   "Management",
   "Services",
   "Quality",

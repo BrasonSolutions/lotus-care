@@ -17,11 +17,15 @@ type Story = StoryObj<typeof TeamSection>;
 
 export const Default: Story = {};
 
-// Services department only (2 members) — partial row in the 3-col grid, accent alternation visible.
+// Management department only, trimmed to 2 members — partial row in the 3-col grid, accent
+// alternation visible. TeamSection defaults its active tab to "Management", so the subset must
+// be drawn from that department for the story to render anything on load.
 export const FilteredSubset: Story = {
   name: "Filtered Subset (Partial Row)",
   args: {
-    members: teamMembers.filter((m) => m.department === "Services"),
+    members: teamMembers
+      .filter((m) => m.department === "Management")
+      .slice(0, 2),
   },
 };
 
