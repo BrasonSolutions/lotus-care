@@ -41,7 +41,7 @@ export function HomesSplitRow({ homes }: HomesSplitRowProps) {
       <Container>
         <SectionTitle
           title="Our Homes"
-          subtitle="Eight unique homes across Co. Offaly and the Midlands, each designed to feel like home."
+          subtitle="Unique homes across Co. Offaly and the Midlands, each designed to feel like home."
         />
 
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-24 items-center">
