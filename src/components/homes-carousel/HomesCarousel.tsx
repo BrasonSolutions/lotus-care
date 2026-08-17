@@ -21,7 +21,9 @@ interface HomesCarouselProps {
 export function HomesCarousel({
   homes,
   title = "Our Homes",
-  subtitle = "Eight unique homes across Co. Offaly and the Midlands, each designed to feel like home.",
+  // No count in the copy: the number of homes lives in `homes.ts` and in the
+  // About stat, and a third hardcoded figure here only drifts out of step.
+  subtitle = "Unique homes across Co. Offaly and the Midlands, each designed to feel like home.",
   embedded = false,
 }: HomesCarouselProps) {
   const { ref: sectionRef, inView } = useInView({ threshold: 0.1 });
