@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import type { Service } from "@/data/services";
 
 const icons: Record<string, React.ReactNode> = {
@@ -138,7 +139,7 @@ export function ServiceCard({ service, index, inView, accent = "teal" }: Service
       </h3>
       <p className="text-muted text-sm leading-relaxed">{service.description}</p>
       {service.href && (
-        <a
+        <Link
           href={service.href}
           className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary-dark hover:text-teal-800 transition-colors focus-ring rounded"
         >
@@ -152,7 +153,7 @@ export function ServiceCard({ service, index, inView, accent = "teal" }: Service
           >
             <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
           </svg>
-        </a>
+        </Link>
       )}
     </div>
   );
