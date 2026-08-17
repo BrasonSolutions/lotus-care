@@ -131,6 +131,20 @@ export function MobileMenu({
                         {child.label}
                       </Link>
                     ))}
+                    {/* Mirrors HomesDropdown's viewAll entry so the parent page
+                        (Careers / Quality overview, View All Homes) stays
+                        reachable on mobile — the collapsed parent is a
+                        disclosure button, not a link. */}
+                    {item.viewAllHref && (
+                      <Link
+                        href={item.viewAllHref}
+                        onClick={close}
+                        aria-current={isCurrentPage(item.viewAllHref) ? "page" : undefined}
+                        className="block py-2.5 px-2 text-base font-semibold text-primary-dark hover:text-primary transition-colors focus-ring rounded"
+                      >
+                        {item.viewAllLabel ?? "View All"}
+                      </Link>
+                    )}
                   </div>
                 </div>
               </div>
