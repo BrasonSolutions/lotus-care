@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { HashScroll } from "@/components/hash-scroll";
 import "./globals.css";
 
 const inter = Inter({
@@ -21,6 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en" data-scroll-behavior="smooth">
       <body className={`${inter.variable} font-sans antialiased`}>
+        <HashScroll />
         <a href="#main" className="skip-link">
           Skip to main content
         </a>
