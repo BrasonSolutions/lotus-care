@@ -58,9 +58,15 @@ export function FeatureSlab({
             <ul className="mt-2 space-y-3">
               {bullets.map((item) => (
                 <li key={item} className="flex gap-3 text-white/85 leading-relaxed">
-                  <span className={`${bullet} mt-1`} aria-hidden="true">
-                    &bull;
-                  </span>
+                  {/* A drawn circle rather than "&bull;": the glyph's optical
+                      centre sits well below its box centre, so it lands near
+                      the first line's baseline instead of its middle. At
+                      text-base/leading-relaxed the line box is 26px, so a 6px
+                      dot centres at (26-6)/2 = 10px — hence mt-2.5. */}
+                  <span
+                    className={`${bullet} mt-2.5 h-1.5 w-1.5 shrink-0 self-start rounded-full bg-current`}
+                    aria-hidden="true"
+                  />
                   <span>{item}</span>
                 </li>
               ))}
