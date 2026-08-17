@@ -44,11 +44,13 @@ export function FeatureSlab({
   return (
     <section className="grid md:grid-cols-2 items-stretch">
       <div
-        className={`${panel} px-6 py-12 sm:px-10 sm:py-14 lg:px-16 ${
+        className={`${panel} flex items-center justify-center px-6 py-12 sm:px-10 sm:py-14 lg:px-16 ${
           imagePosition === "left" ? "md:order-2" : ""
         }`}
       >
-        <div className="max-w-lg mx-auto md:mx-0 md:ml-auto md:mr-0 lg:max-w-xl">
+        {/* Centred in both axes within the panel. Text stays left-aligned —
+            centred bullet lists are markedly harder to scan. */}
+        <div className="w-full max-w-lg lg:max-w-xl">
           <h2 className="text-xl sm:text-2xl font-bold text-white mb-4">{heading}</h2>
           {intro && <p className="text-white/85 leading-relaxed mb-4">{intro}</p>}
           {body && <p className="text-white/85 leading-relaxed">{body}</p>}
