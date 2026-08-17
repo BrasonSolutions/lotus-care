@@ -1,0 +1,24 @@
+# Files excluded from the Vercel deployment upload. Nothing here is imported
+# by src/ or referenced from next.config.ts — verified before adding.
+
+# Docs, planning notes and brand source files
+docs/
+tasks/
+CLAUDE.md
+README.md
+team.md
+website-info.md
+homepage.png
+
+# Storybook — built separately, not part of `next build`
+stories/
+.storybook/
+
+# Repo tooling
+.github/
+.claude/
+
+# Generated locally (also gitignored; listed for CLI deploys)
+graphify-out/
+results/
+storybook-static/
