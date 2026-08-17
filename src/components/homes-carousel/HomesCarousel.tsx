@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback } from "react";
+import Image from "next/image";
 import type { Home } from "@/data/homes";
 import { useInView } from "@/hooks/use-in-view";
 import { SectionTitle } from "@/components/section-title";
@@ -138,19 +139,34 @@ export function HomesCarousel({
                   onClick={() => setSelectedHome(home)}
                   className="card-hover snap-start shrink-0 w-[calc(85vw)] sm:w-[300px] md:w-[320px] bg-warm-bg rounded-2xl overflow-hidden text-left group focus-ring"
                 >
-                  {/* Color header */}
-                  <div
-                    className="h-36 flex items-center justify-center"
-                    style={{
-                      background: `linear-gradient(135deg, ${home.color}30, ${home.color}15)`,
-                    }}
-                  >
-                    <div
-                      className="w-16 h-16 rounded-full flex items-center justify-center text-white text-xl font-bold"
-                      style={{ background: home.color }}
-                    >
-                      {home.name[0]}
-                    </div>
+                  {/* Exterior photo. Falls back to the coloured initial only
+                      if a home has no images yet — the placeholder this
+                      replaced, kept so an image-less entry can't render an
+                      empty box. */}
+                  <div className="relative h-36 overflow-hidden">
+                    {home.images[0] ? (
+                      <Image
+                        src={home.images[0]}
+                        alt=""
+                        fill
+                        sizes="(min-width: 768px) 320px, 85vw"
+                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                    ) : (
+                      <div
+                        className="h-full flex items-center justify-center"
+                        style={{
+                          background: `linear-gradient(135deg, ${home.color}30, ${home.color}15)`,
+                        }}
+                      >
+                        <div
+                          className="w-16 h-16 rounded-full flex items-center justify-center text-white text-xl font-bold"
+                          style={{ background: home.color }}
+                        >
+                          {home.name[0]}
+                        </div>
+                      </div>
+                    )}
                   </div>
                   <div className="p-5">
                     <h3 className="text-lg font-bold text-primary-dark mb-2 group-hover:text-primary transition-colors">

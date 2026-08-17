@@ -129,6 +129,12 @@ export function HomeModal({ home, onClose }: HomeModalProps) {
                       key={i}
                       src={src}
                       alt={`${home.name} — photo ${i + 1}`}
+                      // Houses carry up to 23 photos; without this every one
+                      // downloads the moment the modal opens (~5.8 MB for
+                      // Cedar Lodge). The first slide stays eager so the
+                      // gallery is never blank on open.
+                      loading={i === 0 ? "eager" : "lazy"}
+                      decoding="async"
                       className="w-full h-full object-cover shrink-0"
                     />
                   ))}

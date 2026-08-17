@@ -1,3 +1,5 @@
+import { homes } from "./homes";
+
 export interface NavItem {
   label: string;
   href: string;
@@ -14,16 +16,8 @@ export const navItems: NavItem[] = [
     href: "/#homes",
     viewAllHref: "/#homes",
     viewAllLabel: "View All Homes",
-    children: [
-      { label: "Amethyst House", href: "/#homes" },
-      { label: "Beryl House", href: "/#homes" },
-      { label: "Citrine House", href: "/#homes" },
-      { label: "Diamond House", href: "/#homes" },
-      { label: "Emerald House", href: "/#homes" },
-      { label: "Fluorite House", href: "/#homes" },
-      { label: "Garnet House", href: "/#homes" },
-      { label: "Heliodor House", href: "/#homes" },
-    ],
+    // Derived from homes.ts so the dropdown can't drift from the carousel.
+    children: homes.map((home) => ({ label: home.name, href: "/#homes" })),
   },
   { label: "Our Team", href: "/#team" },
   {
