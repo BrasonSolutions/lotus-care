@@ -29,6 +29,8 @@ export const navItems: NavItem[] = [
   {
     label: "Careers",
     href: "/careers",
+    viewAllHref: "/careers",
+    viewAllLabel: "Overview",
     children: [
       { label: "Open Roles", href: "/careers/open-roles" },
       { label: "Why Work With Us", href: "/careers/why-us" },
@@ -41,13 +43,15 @@ export const navItems: NavItem[] = [
   {
     label: "Quality & Governance",
     href: "/quality",
+    viewAllHref: "/quality",
+    viewAllLabel: "Overview",
     children: [
       { label: "Human Rights Committee", href: "/quality/human-rights" },
       { label: "Multidisciplinary Team", href: "/quality/mdt" },
       { label: "Quality, Safety & Improvement", href: "/quality/safety-improvement" },
     ],
   },
-  { label: "Contact", href: "/#contact" },
+  { label: "Have Your Say", href: "/#contact" },
 ];
 
 export const contactInfo = {
