@@ -1,3 +1,5 @@
+import { services } from "./services";
+
 export const quickLinks = [
   { label: "About Us", href: "/#about" },
   { label: "Our Services", href: "/#services" },
@@ -7,11 +9,6 @@ export const quickLinks = [
   { label: "Contact Us", href: "/#contact" },
 ];
 
-export const serviceNames = [
-  "Community Residential Living",
-  "Residential Respite Care",
-  "MDT Pathways",
-  "Model of Care",
-  "Person Centred Planning",
-  "Community Integration",
-];
+// Derived from the homepage cards so the two can never drift apart again
+// (issue #55 — footer was still listing services removed from "Our Services").
+export const serviceNames = services.map((service) => service.title);
