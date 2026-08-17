@@ -16,13 +16,13 @@ export interface BoardMember {
 }
 
 export const departments = [
-  "All",
   "Management",
   "Services",
   "Quality",
-  "Clinical",
-  "HR",
+  "MDT",
+  "People & Culture",
   "Finance",
+  "Persons in Charge",
 ] as const;
 
 export type Department = (typeof departments)[number];
@@ -62,10 +62,10 @@ export const teamMembers: TeamMember[] = [
     image: "/images/staff/Danny-Scally.png",
   },
   {
-    name: "Caithriona Lynch",
-    role: "QSPDT Manager",
+    name: "Caíthríona Lynch",
+    role: "Director of Quality Assurance",
     department: "Management",
-    bio: "Caithriona has over 18 years of experience in social care and leadership roles across adults & children's disability services and mainstream children's residential services. She brings a wealth of expertise to her role. Caithriona holds a BA in Applied Social Studies in Social Care in addition to a management qualification, ensuring a thorough academic grounding. She is committed to empowering individuals to make informed decisions, achieve personal goals, and live independently within their communities.\n\nCaithriona's leadership is shaped by the quality objectives set out in the HIQA National Standards and relevant legislation, which align with Lotus's commitment to delivering exceptional care and services. She focuses on person-centred care, individual choice, safeguarding, risk management and inclusion. By prioritizing continuous improvement, she will ensure responsive services that meet each service owner's unique needs while maintaining transparency and accountability.",
+    bio: "I am an experienced Social Care Worker with a passion for Human Rights and promoting high quality individualised supports. I have worked in the disability sector, starting in front line and working up to management roles, since 2017. During this time, I have led teams through change management processes, developed learning programs, led transitions, and supported people to achieve their individual goals through promotion of self-advocacy. My experience spans across residential, day service, respite and wrap around services.\n\nMy values and wealth of experience align strongly with Lotus Care's vision of empowering people to live as independently as possible in a high-quality, safe and person-centred service. I am committed to supporting and empowering staff teams to deliver consistent safe and effective services.",
     initials: "CL",
     image: "/images/staff/Caithriona-Lynch.jpg",
   },
@@ -79,12 +79,12 @@ export const teamMembers: TeamMember[] = [
   },
   // Senior Services Managers
   {
-    name: "Teresa McGuire Cooke",
+    name: "Claire Maher",
     role: "Senior Services Manager",
     department: "Services",
-    bio: "Teresa is a highly experienced professional in the field of social care, with a wealth of experience spanning over 16 years. Her expertise encompasses various areas including residential care, homecare, day services, and respite care for both adults and children. She holds a BA in Applied Social Care Studies, indicating a strong academic foundation in her field, and has also obtained a management qualification, highlighting her leadership capabilities. Teresa's enjoyment of her work reflects her passion for making a positive difference in the lives of others, fostering a compassionate and supportive environment for those she serves.",
-    initials: "TM",
-    image: "/images/staff/Teresa-McGuire-Cooke.webp",
+    bio: "I have worked within the disability sector for the past eight years, holding a variety of leadership roles, including Team Leader, Person in Charge of a high-support service, Dual Person in Charge, and Director of Operations, where I oversaw the day-to-day operations of seven Designated Centres.\n\nThroughout my career, I have gained extensive experience in operational management, governance, regulatory compliance, and staff leadership. I am passionate about ensuring that the people I support receive compassionate, person-centred care of the highest standard. I am committed to empowering each person to achieve their individual goals, and enjoy meaningful opportunities that reflect their unique needs, wishes, and aspirations.",
+    initials: "CM",
+    image: "/images/staff/Claire-Maher.png",
   },
   {
     name: "Emma Sweeney",
@@ -103,19 +103,11 @@ export const teamMembers: TeamMember[] = [
     initials: "LK",
     image: "/images/staff/Louise-Kidney.png",
   },
-  {
-    name: "Claire Maher",
-    role: "Quality Assurance Officer",
-    department: "Quality",
-    bio: "",
-    initials: "CM",
-    image: "/images/staff/Claire-Maher.png",
-  },
   // Multi-disciplinary Team
   {
     name: "Vaida Cheema",
     role: "Therapies Lead",
-    department: "Clinical",
+    department: "MDT",
     bio: "Vaida has been working in healthcare for over 10 years primarily with children and young adults on the ASD spectrum and with adults living with acquired brain injuries.\n\nShe completed a Masters in Cognitive Science (Psychology Postgrad) from UCD in 2016. Vaida also obtained a degree in English Philology in 2003 in Lithuania where she worked as an EFL teacher in a secondary school prior to moving to Ireland in 2004.",
     initials: "VC",
     image: "/images/staff/Vaida-Cheema.png",
@@ -123,24 +115,32 @@ export const teamMembers: TeamMember[] = [
   {
     name: "Nadeeka Pathirana",
     role: "Speech & Language Therapist",
-    department: "Clinical",
+    department: "MDT",
     bio: "Nadeeka worked as a SALT at the Sri Lankan Ministry of Health at Teaching hospital Peradeniya and Base Hospital Mahiyanganaya for over 11 years and recently volunteered as a SALT at the Bright Rainbow Day Care centre in Rwanda. She is also qualified with a master's degree in public health science and health Equality from the Institute of Medicine, Sahlgrenska University Hospital, University of Gothenburg, Sweden, for which she received the Swedish Institute Scholarship for Global Professionals in 2022.",
     initials: "NP",
     image: "/images/staff/Nadeeka-Pathirana.png",
   },
   {
-    name: "Tina Early",
-    role: "Psychotherapist & Play Therapist",
-    department: "Clinical",
-    bio: "Tina is a Humanistic & Integrative Psychotherapist and Play Therapist with 15 years' Social Work experience across Ireland & the UK, including team leadership.\n\nShe has supported children, adolescents & families through everything from everyday challenges to complex traumas.\n\nHer joy and passion is walking alongside young people and their families whilst supporting them to navigate life's challenges and come out thriving.",
-    initials: "TE",
-    image: "/images/staff/Tina-Early.png",
+    name: "Katie Kelly",
+    role: "Behaviour Support Specialist",
+    department: "MDT",
+    bio: "Katie is a Behaviour Support Specialist with an academic background in psychology, holding a BA in Psychological Studies and an MA in Psychology. She is also a Graduate Member of the Psychological Society of Ireland (PSI). Katie has experience supporting children and adults with a range of complex needs across residential, clinical and community settings.\n\nKatie is passionate about person-centred, rights-based approaches to Positive Behaviour Support (PBS), with a particular interest in developing educational, independence and life-skills supports for individuals living in residential settings. She believes that supportive environments, alongside person-centred approaches, can create meaningful opportunities to develop communication, independence and practical life skills, ultimately enhancing autonomy, participation and overall quality of life.\n\nKatie is committed to ensuring that each service owner's voice, preferences and individual needs remain central to the support they receive.",
+    initials: "KK",
+    image: "/images/staff/Katie-Kelly.png",
   },
-  // Human Resources Department
+  {
+    name: "Katjia Faria",
+    role: "Occupational Therapist",
+    department: "MDT",
+    bio: "Katjia is an Occupational Therapist with a background in paediatric Occupational Therapy and Sensory Integration. She is passionate about supporting individuals to develop greater independence, participation and quality of life through meaningful, person-centred interventions.\n\nIn her role at Lotus Care, Katjia works across residential services supporting both children and adults with a range of needs, including intellectual disabilities, autism and sensory processing difficulties. She focuses on understanding each person's individual sensory, functional and environmental needs and works collaboratively with individuals, families and staff to develop practical strategies and supportive environments.\n\nKatjia is particularly passionate about sensory regulation, functional independence and empowering staff with the knowledge and tools to support individuals in their everyday lives.",
+    initials: "KF",
+    image: "/images/staff/Katjia-Faria.jpg",
+  },
+  // People & Culture Department
   {
     name: "Tomasz Perkowski",
     role: "Senior HR Business Partner",
-    department: "HR",
+    department: "People & Culture",
     bio: "Tomasz brings extensive national HR leadership experience, with a strong background in Irish and EU employment law and people management. Over the past decade, he has worked in healthcare, manufacturing, and professional services, supporting managers, guiding complex employee relations matters, and driving HR initiatives. Tomasz is also a published author in employment law and currently serves as a Peace Commissioner for Co. Westmeath. He is passionate about building positive workplace cultures and supporting organisations through change.",
     initials: "TP",
     image: "/images/staff/Tomasz-Perkowski.png",
@@ -148,18 +148,25 @@ export const teamMembers: TeamMember[] = [
   {
     name: "Jess Dias",
     role: "Senior HR Generalist",
-    department: "HR",
+    department: "People & Culture",
     bio: "Jess is a people-focused HR professional with a Bachelor of Business and Associate CIPD membership. With experience working in the Athlone Chamber of Commerce, Jess has collaborated with a wide range of stakeholders to strengthen the local business community. She is passionate about building positive relationships, and finding practical solutions to workplace challenges. Known for her strong interpersonal skills and approachable style, Jess is committed to creating supportive workplaces where both people and organisations can thrive.",
     initials: "JD",
     image: "/images/staff/Jess-Dias.png",
   },
   {
-    name: "Jen Barber",
-    role: "Talent Acquisition Specialist",
-    department: "HR",
-    bio: "Jen Barber is a people-focused Talent Acquisition Specialist with a background in HR, social care and community leadership. She is passionate about values-based recruitment, creating positive candidate experiences and supporting managers to build strong, compassionate teams. Known for her warm, organised and empathetic approach, Jen brings both practical HR expertise and genuine care to her work. She is currently completing a Higher Diploma in Talent Management to grow her strategic skills.",
-    initials: "JB",
-    image: "/images/staff/Jen-Barber.jpg",
+    name: "Dale Cooper",
+    role: "Training & Development Coordinator",
+    department: "People & Culture",
+    bio: "Dale joined Lotus Care in September 2024 and quickly became passionate about supporting staff development and maintaining high standards of care. In January 2025, Dale began becoming more involved in training, initially qualifying as a Manual Handling Instructor before progressing to complete Train the Trainer later that year.\n\nAs his involvement in learning and development grew, Dale officially took on the role of Training & Development Coordinator in November 2025. Since then, he has played an active role in developing and delivering training programmes, induction resources and professional development opportunities for staff across Lotus Care.\n\nDale is passionate about making learning practical, accessible and relevant to the day-to-day experiences of staff working in social care. His approach focuses on building confidence, encouraging professional curiosity and supporting staff to continually develop their knowledge and skills so that the people supported by Lotus Care receive the highest possible standard of person-centred care.",
+    initials: "DC",
+    image: "/images/staff/Dale-Cooper.jpeg",
+  },
+  {
+    name: "Rianna Mannering",
+    role: "Recruitment Specialist",
+    department: "People & Culture",
+    bio: "I completed my law degree in 2019 and spent 6 years travelling and working in Australia. My experience included working across Customer Service, Australian Immigration and in 2022 entered the Recruitment industry assisting law firms with hiring needs. 2025 brought me back home to Ireland to friends and family. In my spare time I enjoy walks with my 3 year old Golden Doodle who came all the way from Australia, I love travelling Ireland, camping and the occasional drink with family and friends.",
+    initials: "RM",
   },
   // Finance Department
   {
@@ -169,6 +176,14 @@ export const teamMembers: TeamMember[] = [
     bio: "With over 20 years of extensive experience in administration, Michelle brings a wealth of knowledge and expertise to her role as Finance Administrator at Lotus Care Limited. Having pursued additional education in Financial Accounting and Human Resources through a higher certificate program, Michelle is well-equipped to navigate the complexities of finance administration. Michelle is deeply passionate about supporting individuals with intellectual disabilities and is excited to be a part of the Lotus Care team, where she can contribute to delivering invaluable services to this community.",
     initials: "MC",
     image: "/images/staff/Michelle-Cushen.webp",
+  },
+  // Persons in Charge
+  {
+    name: "Paula Lyons",
+    role: "Person in Charge",
+    department: "Persons in Charge",
+    bio: "I have five years' experience in the social care sector where I have developed a broad range of experience across mainstream residential services, as well as supporting both adults and children with intellectual disabilities in residential settings.\n\nI graduated in 2021 with an Honours Degree in Applied Social Studies in Social Care and have further developed my professional skills through a Certificate in Supervisory Management and Team Leadership.\n\nI joined Lotus Care in 2024 as a Team Leader and progressed to the role of Person in Charge in October 2025. Throughout my career, I have been committed to promoting high-quality, person-centred care and supporting individuals to have choice, independence, dignity and meaningful opportunities in their everyday lives.\n\nI am passionate about ensuring that every service owner is supported to reach their full potential and that their individual strengths, needs, goals and aspirations remain at the centre of the support they receive. I believe in creating a positive, respectful and inclusive environment where service owners can feel valued, safe and empowered to achieve their goals.\n\nIn my role as Person in Charge, I am committed to leading a dedicated team, promoting high standards of care and supporting the continued development of a service where every individual can thrive.",
+    initials: "PL",
   },
 ];
 

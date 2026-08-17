@@ -12,8 +12,8 @@ function pickTeam(names: string[]) {
 // Real staff, picked for genuine role overlap with each page's subject matter
 // (not asserted committee members — see PR notes).
 export const humanRightsTeam = pickTeam(["Louise Kidney", "Claire Maher"]);
-export const mdtTeam = pickTeam(["Vaida Cheema", "Nadeeka Pathirana", "Tina Early"]);
-export const safetyImprovementTeam = pickTeam(["Caithriona Lynch", "Louise Kidney"]);
+export const mdtTeam = pickTeam(["Vaida Cheema", "Nadeeka Pathirana", "Katjia Faria"]);
+export const safetyImprovementTeam = pickTeam(["Caíthríona Lynch", "Louise Kidney"]);
 
 export interface CycleStep {
   label: string;

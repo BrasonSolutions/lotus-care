@@ -23,15 +23,12 @@ export function TeamSection({
   departments,
 }: TeamSectionProps) {
   const { ref, inView } = useInView({ threshold: 0.1 });
-  const [activeDept, setActiveDept] = useState<string>("All");
+  const [activeDept, setActiveDept] = useState<string>("Management");
   const [selectedMember, setSelectedMember] = useState<
     TeamMember | BoardMember | null
   >(null);
 
-  const filtered =
-    activeDept === "All"
-      ? members
-      : members.filter((m) => m.department === activeDept);
+  const filtered = members.filter((m) => m.department === activeDept);
 
   return (
     <section id="team" className="relative overflow-hidden py-24 lg:py-32 bg-warm-bg">
@@ -72,7 +69,11 @@ export function TeamSection({
               <TeamCard
                 member={member}
                 onClick={() => setSelectedMember(member)}
-                accent={i % 2 === 0 ? "teal" : "purple"}
+                accent={
+                  departments.indexOf(member.department) % 2 === 0
+                    ? "teal"
+                    : "purple"
+                }
               />
             </div>
           ))}
