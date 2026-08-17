@@ -4,9 +4,11 @@ import { CareersHero } from "@/components/careers/careers-hero";
 import { SectionTitle } from "@/components/section-title";
 import { CircularCycle } from "@/components/quality/circular-cycle";
 import { ContentSection } from "@/components/quality/content-section";
+import { FeatureSlab } from "@/components/quality/feature-slab";
 import { TeamStrip } from "@/components/quality/team-strip";
 import { LotusBand } from "@/components/lotus-band";
 import { Reveal } from "@/components/reveal";
+import type { ContentBlock } from "@/data/quality";
 import { humanRightsFramework, humanRightsContent, humanRightsTeam } from "@/data/quality";
 import { Container } from "@/components/layout";
 
@@ -74,27 +76,59 @@ export default function HumanRightsPage() {
         </Container>
       </section>
 
+      {/* Two-tone feature run (issue #63). The bands cap the top and bottom
+          of the pair rather than separating sections, so the teal slab,
+          plum slab and their patterned edges read as one block. */}
       <div aria-hidden="true">
         <LotusBand variant="teal" height={72} />
       </div>
 
-      <section className="py-16 sm:py-20">
-        <Container className="space-y-16">
-          <Reveal><ContentSection {...humanRightsContent.approach} /></Reveal>
-          <Reveal className="reveal-scale">
-            <ContentSection {...humanRightsContent.champions} image="/images/stock/dignity-activity.jpg" imagePosition="right" />
-          </Reveal>
-        </Container>
-      </section>
+      <Reveal>
+        <FeatureSlab
+          {...humanRightsContent.approach}
+          tone="teal"
+          image="/images/stock/dignity-activity.jpg"
+          imagePosition="right"
+        />
+      </Reveal>
 
+      <Reveal>
+        <FeatureSlab
+          {...humanRightsContent.champions}
+          tone="purple"
+          image="/images/stock/team-meeting.jpg"
+          imagePosition="left"
+        />
+      </Reveal>
+
+      {/* Same motif orientation as the opening band — the design repeats it
+          rather than mirroring it. */}
       <div aria-hidden="true">
-        <LotusBand variant="purple" height={72} />
+        <LotusBand variant="purple" motifColor="white" height={72} />
       </div>
 
       <section className="py-16 sm:py-20">
-        <Container className="space-y-16">
-          <Reveal><ContentSection {...humanRightsContent.governance} /></Reveal>
-          <Reveal><ContentSection {...humanRightsContent.culture} /></Reveal>
+        <Container>
+          <Reveal className="grid md:grid-cols-2 gap-8 md:gap-0 relative">
+            {/* Teal-to-plum rule echoing the two slabs above. Sits in the
+                grid gutter on md+ and is dropped when the cards stack. */}
+            <div
+              aria-hidden="true"
+              className="hidden md:block absolute inset-y-0 left-1/2 w-px -translate-x-1/2 bg-gradient-to-b from-primary-dark to-purple-600"
+            />
+            {([humanRightsContent.governance, humanRightsContent.culture] as ContentBlock[]).map((block, i) => (
+              <div
+                key={block.heading}
+                className={`bg-white rounded-2xl border border-gray-100 shadow-sm p-8 lg:p-10 text-center ${
+                  i === 0 ? "md:mr-8" : "md:ml-8"
+                }`}
+              >
+                <h2 className="text-xl font-bold text-primary-dark mb-4">{block.heading}</h2>
+                {block.intro && <p className="text-muted leading-relaxed">{block.intro}</p>}
+                {block.body && <p className="text-muted leading-relaxed">{block.body}</p>}
+              </div>
+            ))}
+          </Reveal>
         </Container>
       </section>
 
