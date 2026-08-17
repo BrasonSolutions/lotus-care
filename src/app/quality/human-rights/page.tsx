@@ -101,10 +101,9 @@ export default function HumanRightsPage() {
         />
       </Reveal>
 
-      {/* Mirrored so the motif rises from the bottom edge, matching the
-          design's closing band. LotusBand has no flip prop and doesn't need
-          one for a single call site. */}
-      <div aria-hidden="true" className="-scale-y-100">
+      {/* Same motif orientation as the opening band — the design repeats it
+          rather than mirroring it. */}
+      <div aria-hidden="true">
         <LotusBand variant="purple" motifColor="white" height={72} />
       </div>
 
