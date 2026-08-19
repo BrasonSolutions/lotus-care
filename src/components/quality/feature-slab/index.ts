@@ -1,1 +1,1 @@
-export { FeatureSlab } from "./FeatureSlab";
+export { FeatureSlab, FeatureSlabGroup } from "./FeatureSlab";
