@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import Image from "next/image";
 import type { ContentBlock } from "@/data/quality";
 
@@ -27,8 +28,13 @@ interface FeatureSlabProps extends ContentBlock {
  *
  * Deliberately rendered outside `Container` — the colour and the photo
  * both bleed to the viewport edges, and only the text inside the panel is
- * inset. Panels stretch to a shared height so the colour block and the
- * photo always end on the same line.
+ * inset.
+ *
+ * Must be placed inside `FeatureSlabGroup`. On md+ the wrapping `<section>`
+ * becomes `display: contents`, so the panel and the photo are promoted into
+ * the group's grid — which is what lets sibling slabs share a row height
+ * instead of each sizing to its own copy (client feedback on #63). Below md
+ * it is a plain flex column and `order` puts the copy first.
  */
 export function FeatureSlab({
   image,
@@ -41,56 +47,80 @@ export function FeatureSlab({
 }: FeatureSlabProps) {
   const { panel, bullet } = TONE[tone];
 
-  return (
-    <section className="grid md:grid-cols-2 items-stretch">
-      <div
-        className={`${panel} flex items-center justify-center px-6 py-12 sm:px-10 sm:py-14 lg:px-16 ${
-          imagePosition === "left" ? "md:order-2" : ""
-        }`}
-      >
-        {/* Centred in both axes within the panel. Text stays left-aligned —
-            centred bullet lists are markedly harder to scan. */}
-        <div className="w-full max-w-lg lg:max-w-xl">
-          <h2 className="text-xl sm:text-2xl font-bold text-white mb-4">{heading}</h2>
-          {intro && <p className="text-white/85 leading-relaxed mb-4">{intro}</p>}
-          {body && <p className="text-white/85 leading-relaxed">{body}</p>}
-          {bullets && (
-            <ul className="mt-2 space-y-3">
-              {bullets.map((item) => (
-                <li key={item} className="flex gap-3 text-white/85 leading-relaxed">
-                  {/* A drawn circle rather than "&bull;": the glyph's optical
-                      centre sits well below its box centre, so it lands near
-                      the first line's baseline instead of its middle. At
-                      text-base/leading-relaxed the line box is 26px, so a 6px
-                      dot centres at (26-6)/2 = 10px — hence mt-2.5. */}
-                  <span
-                    className={`${bullet} mt-2.5 h-1.5 w-1.5 shrink-0 self-start rounded-full bg-current`}
-                    aria-hidden="true"
-                  />
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
+  const copy = (
+    <div
+      className={`${panel} max-md:order-1 flex items-center justify-center px-6 py-12 sm:px-10 sm:py-14 lg:px-16`}
+    >
+      {/* Centred in both axes within the panel. Text stays left-aligned —
+          centred bullet lists are markedly harder to scan. */}
+      <div className="w-full max-w-lg lg:max-w-xl">
+        <h2 className="text-2xl sm:text-3xl font-bold text-white mb-5">{heading}</h2>
+        {intro && <p className="text-lg text-white/85 leading-relaxed mb-5">{intro}</p>}
+        {body && <p className="text-lg text-white/85 leading-relaxed">{body}</p>}
+        {bullets && (
+          <ul className="mt-2 space-y-4">
+            {bullets.map((item) => (
+              <li key={item} className="flex gap-3 text-lg text-white/85 leading-relaxed">
+                {/* A drawn circle rather than "&bull;": the glyph's optical
+                    centre sits well below its box centre, so it lands near
+                    the first line's baseline instead of its middle. At
+                    text-lg/leading-relaxed the line box is 29px, so a 6px
+                    dot centres at (29-6)/2 ≈ 12px — hence mt-3. */}
+                <span
+                  className={`${bullet} mt-3 h-1.5 w-1.5 shrink-0 self-start rounded-full bg-current`}
+                  aria-hidden="true"
+                />
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
+    </div>
+  );
 
-      {/* Photo is decorative here — the panel beside it carries the meaning,
-          so an empty alt keeps it out of the accessibility tree rather than
-          making screen-reader users sit through a description of stock. */}
-      <div
-        className={`relative min-h-[260px] md:min-h-full ${
-          imagePosition === "left" ? "md:order-1" : ""
-        }`}
-      >
-        <Image
-          src={image}
-          alt=""
-          fill
-          sizes="(min-width: 768px) 50vw, 100vw"
-          className="object-cover"
-        />
-      </div>
+  // Photo is decorative here — the panel beside it carries the meaning, so
+  // an empty alt keeps it out of the accessibility tree rather than making
+  // screen-reader users sit through a description of stock.
+  const photo = (
+    <div className="max-md:order-2 relative min-h-[260px]">
+      <Image
+        src={image}
+        alt=""
+        fill
+        sizes="(min-width: 768px) 50vw, 100vw"
+        className="object-cover"
+      />
+    </div>
+  );
+
+  // DOM order is the column order on md+ (the grid places items as it reads
+  // them), so the swap happens here rather than via `order` — an `order`
+  // value under `display: contents` would reorder against every other
+  // slab's cells, not just this row's.
+  return (
+    <section className="flex flex-col md:contents">
+      {imagePosition === "left" ? (
+        <>
+          {photo}
+          {copy}
+        </>
+      ) : (
+        <>
+          {copy}
+          {photo}
+        </>
+      )}
     </section>
   );
+}
+
+/**
+ * Wraps a run of `FeatureSlab`s in the single grid they all share.
+ * `auto-rows-fr` sizes every row to the tallest one, so the slabs line up
+ * regardless of how much copy each carries — no fixed height to keep in
+ * sync with the content.
+ */
+export function FeatureSlabGroup({ children }: { children: ReactNode }) {
+  return <div className="md:grid md:grid-cols-2 md:auto-rows-fr">{children}</div>;
 }

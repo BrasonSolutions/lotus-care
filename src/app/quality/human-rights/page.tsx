@@ -3,10 +3,9 @@ import Image from "next/image";
 import { CareersHero } from "@/components/careers/careers-hero";
 import { SectionTitle } from "@/components/section-title";
 import { CircularCycle } from "@/components/quality/circular-cycle";
-import { ContentSection } from "@/components/quality/content-section";
-import { FeatureSlab } from "@/components/quality/feature-slab";
+import { FeatureSlab, FeatureSlabGroup } from "@/components/quality/feature-slab";
 import { TeamStrip } from "@/components/quality/team-strip";
-import { LotusBand } from "@/components/lotus-band";
+import { Blob } from "@/components/blob";
 import { Reveal } from "@/components/reveal";
 import type { ContentBlock } from "@/data/quality";
 import { humanRightsFramework, humanRightsContent, humanRightsTeam } from "@/data/quality";
@@ -28,8 +27,12 @@ export default function HumanRightsPage() {
         image="/images/stock/dignity-activity.jpg"
       />
 
-      <div className="py-14 sm:py-16">
-        <Container>
+      {/* Blobs live only on the light sections — the client asked for them
+          on #63 but explicitly not inside the coloured slabs. */}
+      <div className="relative overflow-hidden py-14 sm:py-16">
+        <Blob color="teal" variant={1} className="absolute -top-24 -left-24 w-80 h-80" />
+        <Blob color="purple" variant={3} className="absolute -bottom-20 -right-20 w-64 h-64" />
+        <Container className="relative">
           <Reveal className="grid md:grid-cols-2 gap-10 lg:gap-16 items-center reveal-scale">
             <div className="space-y-4 max-w-lg">
               {humanRightsContent.intro.map((paragraph) => (
@@ -63,55 +66,40 @@ export default function HumanRightsPage() {
         </Container>
       </section>
 
-      <section className="py-16 sm:py-20">
-        <Container>
-          <Reveal className="reveal-scale">
-            <ContentSection
-              {...humanRightsContent.purpose}
-              image="/images/stock/team-meeting.jpg"
-              imagePosition="left"
-              primary
-            />
-          </Reveal>
-        </Container>
-      </section>
-
-      {/* Two-tone feature run (issue #63). The bands cap the top and bottom
-          of the pair rather than separating sections, so the teal slab,
-          plum slab and their patterned edges read as one block. */}
-      <div aria-hidden="true">
-        <LotusBand variant="teal" height={72} />
-      </div>
-
+      {/* Three-slab run (issue #63). One shared grid so every row is the
+          height of the tallest, with the photo filling its column. The two
+          lotus shape dividers that used to cap this run were removed at the
+          client's request. */}
       <Reveal>
-        <FeatureSlab
-          {...humanRightsContent.approach}
-          tone="teal"
-          image="/images/stock/dignity-activity.jpg"
-          imagePosition="right"
-        />
+        <FeatureSlabGroup>
+          <FeatureSlab
+            {...humanRightsContent.purpose}
+            tone="purple"
+            image="/images/stock/team-meeting.jpg"
+            imagePosition="left"
+          />
+          <FeatureSlab
+            {...humanRightsContent.approach}
+            tone="teal"
+            image="/images/stock/dignity-activity.jpg"
+            imagePosition="right"
+          />
+          <FeatureSlab
+            {...humanRightsContent.champions}
+            tone="purple"
+            image="/images/stock/community-friends.jpg"
+            imagePosition="left"
+          />
+        </FeatureSlabGroup>
       </Reveal>
 
-      <Reveal>
-        <FeatureSlab
-          {...humanRightsContent.champions}
-          tone="purple"
-          image="/images/stock/team-meeting.jpg"
-          imagePosition="left"
-        />
-      </Reveal>
-
-      {/* Same motif orientation as the opening band — the design repeats it
-          rather than mirroring it. */}
-      <div aria-hidden="true">
-        <LotusBand variant="purple" motifColor="white" height={72} />
-      </div>
-
-      <section className="py-16 sm:py-20">
-        <Container>
+      <section className="relative overflow-hidden py-16 sm:py-20">
+        <Blob color="purple" variant={2} className="absolute -top-16 -right-24 w-72 h-72" />
+        <Blob color="teal" variant={3} className="absolute -bottom-24 -left-20 w-72 h-72" />
+        <Container className="relative">
           <Reveal className="grid md:grid-cols-2 gap-8 md:gap-0 relative">
-            {/* Teal-to-plum rule echoing the two slabs above. Sits in the
-                grid gutter on md+ and is dropped when the cards stack. */}
+            {/* Teal-to-plum rule echoing the slabs above. Sits in the grid
+                gutter on md+ and is dropped when the cards stack. */}
             <div
               aria-hidden="true"
               className="hidden md:block absolute inset-y-0 left-1/2 w-px -translate-x-1/2 bg-gradient-to-b from-primary-dark to-purple-600"
