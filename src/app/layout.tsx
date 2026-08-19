@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import { HashScroll } from "@/components/hash-scroll";
 import "./globals.css";
 
@@ -27,6 +28,10 @@ export default function RootLayout({
           Skip to main content
         </a>
         {children}
+        {/* Vercel Web Analytics. Cookieless and no cross-site identifiers, so
+            it needs no consent banner — worth keeping that way on a care
+            provider's site. Injects nothing outside production on Vercel. */}
+        <Analytics />
       </body>
     </html>
   );
