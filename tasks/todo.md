@@ -1898,3 +1898,167 @@ originally approved would have shipped a more monochrome site under a
 "use more brand colour" card, and would have looked correct doing it,
 since darkening ~28 teal instances reads exactly like "more colour" in a
 diff.
+
+---
+
+# #80: Homepage "Hear It From Our Own" quote section
+
+Branch: `feat/homepage-quote-section`.
+
+## Diagnosis
+
+Not a bug fix — client supplied a Figma screenshot + CSS export of a
+full-width teal quote band, asking for a bigger "wow" testimonial
+treatment on the homepage than the existing plain white card embedded in
+`ServicesSection`. The quote text in the Figma is word-for-word the
+site's existing testimonial (`serviceOwnerTestimonial.body`, the Pine
+Lodge / JW quote) — no client content blocker.
+
+Two real defects found in the Figma's own hex values, not this repo's
+choices: eyebrow purple (`#761944`) on the teal band (`#08656E`) measures
+1.65:1, and the pink blockquote/quote-mark colour (`#FFB7D1`) measures
+3.91:1 — both fail WCAG AA's 4.5:1 floor for their text size. No existing
+purple token clears it either (purple-100, the lightest stop, is only
+4.11:1). Fixed by lightening to one new token (`--color-blossom:
+#ffdce9`, 5.03:1 against `--color-teal-700`) used for both the eyebrow
+and the blockquote/quote-mark — real margin above the floor, not a
+paper-thin pass (lesson: NB1's 4.52:1 was flagged as risky-thin).
+
+## Must not break
+
+- C-1: `LotusBand` untouched — it's a thin decorative divider strip, not
+  a content-section wrapper, so this card built a new component
+  (`QuoteSection`) instead of bending `LotusBand` to fit.
+- C-2: `Blob` untouched — reused as-is (`color="teal"`, existing variant,
+  a rotate utility on `className`) for the corner decoration, no new
+  shape built from scratch.
+- C-3: `serviceOwnerTestimonial`'s only two consumers were
+  `testimonial.ts` itself and `ServicesSection.tsx` (confirmed via
+  repo-wide grep before editing) — safe to fully restructure the data
+  shape rather than keep both old and new fields side by side.
+- C-4: Every colour is a `var(--color-*)` token; the one new token
+  (`--color-blossom`) is documented in `globals.css` with its AA
+  provenance, not a bare hex dropped into the component.
+
+## Tasks
+
+- [x] Read `globals.css` (`@theme` tokens), `layout.tsx` (font setup),
+      `Blob.tsx`, `LotusBand.tsx` (props only), `ServicesSection.tsx`,
+      `testimonial.ts`, `SectionTitle.tsx`, `Container.tsx`,
+      `use-in-view.ts`, and the reveal-animation classes in `globals.css`
+      before writing anything.
+- [x] Rendered the client's actual SVG lockup file for a separate issue
+      (#77) mid-session and found my own earlier text-based read of it
+      wrong — corrected before it reached a plan. Applied the same
+      "render/measure it, don't infer" discipline here: computed AA
+      contrast in Node for every Figma colour against `teal-700` before
+      picking a fix, then re-verified against real rendered pixels in the
+      browser after implementation (both matched exactly: 5.03:1).
+- [x] `globals.css` — added `--font-dm-sans` (literal stack, same pattern
+      as the existing `--font-sans`) and `--color-blossom` (with AA
+      provenance comment).
+- [x] `layout.tsx` — added `DM_Sans` via `next/font/google`, same pattern
+      as the existing `Inter` setup (`variable`-only, applied on `body`).
+- [x] `src/data/testimonial.ts` — restructured `serviceOwnerTestimonial`
+      into `homeQuote` (`HomeQuote` type: eyebrow/heading/subtext/quote/
+      name/date), reusing the existing quote text verbatim.
+- [x] New `src/components/quote-section/QuoteSection.tsx` + `index.ts` —
+      full-bleed section, two-column grid (stacks on mobile, same pattern
+      as `AboutSection`/`HomesSplitRow`), `Blob` corner decoration,
+      `.reveal`/`.reveal-delay-2` scroll-in (existing sitewide convention,
+      already reduced-motion-safe via the hook it's built on).
+- [x] `ServicesSection.tsx` — removed the old embedded testimonial block
+      and its now-unused import.
+- [x] `page.tsx` — mounted `QuoteSection` in `ServicesSection`'s old
+      testimonial spot (between `ServicesSection` and `HomesSplitRow`).
+
+## Acceptance criteria
+
+- AC-1 (matches the Figma as closely as possible, using real tokens):
+  **met.** Every Figma colour maps to an existing token exactly or
+  near-exactly (background→`teal-700`, eyebrow→`purple-600` exact,
+  heading→`teal-50`, subtext→`teal-100`) except the pink, which needed a
+  new token for AA (see below). Verified visually against the Figma
+  screenshot side-by-side.
+- AC-2 (AA contrast maintained): **met, with a documented deviation from
+  the literal Figma hex.** Real rendered-pixel measurement: eyebrow and
+  blockquote both 5.03:1 (was 1.65:1 / 3.91:1 in the raw Figma values).
+- AC-3 (animations): **met.** Reuses the site's existing `.reveal`
+  scroll-in convention, staggered left-then-right column.
+- AC-4 (blobs added): **met.** One `Blob` instance, corner-positioned,
+  reusing the existing component and its established low-opacity
+  convention.
+- AC-5 (no overflow, any breakpoint): **met.** `scrollWidth - clientWidth
+  = 0` at 390/768/1440.
+
+## Verification
+
+- [x] `npx tsc --noEmit` — exit 0.
+- [x] `npm run lint` — exit 0.
+- [x] `npm run build` — exit 0 (Next.js 16.2.6, Turbopack, all 22 routes
+      generated).
+- [x] Browser verification: production build (`next start -p 3100`),
+      Playwright against system Chrome. 390/768/1440px: zero overflow,
+      correct column stacking. Real WCAG contrast measured on rendered
+      pixels (not just token math): 5.03:1 for both flagged colours.
+
+## Review
+
+Five files changed, two new (`QuoteSection.tsx`, its `index.ts`), one new
+CSS token, one new font. No component was reused where it didn't fit
+(`LotusBand`) and no component was rebuilt where it did (`Blob`). The
+one real finding — two of the Figma's own colours failing AA on its own
+background — was caught by computing contrast before implementing, not
+after, and fixed with a single new token carrying its own provenance
+comment rather than two separate one-off hex tweaks.
+
+`tasks/lessons.md` not touched — no user correction occurred this round.
+
+---
+
+## #80 follow-up: purple two-up variant (`TestimonialPair`)
+
+Same branch (`feat/homepage-quote-section`). Client sent a second Figma
+screenshot: same band mechanics, purple (`purple-600`, exact token match)
+instead of teal, no intro column — two testimonials side by side instead
+of one.
+
+**Refactor:** extracted the quote-mark/blockquote/figcaption markup out of
+`QuoteSection` into a shared `QuoteCard.tsx` (`tone: "teal" | "purple"`),
+so both variants render from one place instead of duplicating that block.
+`QuoteSection` now composes `QuoteCard`; new `TestimonialPair.tsx` renders
+two of them in a `grid-cols-1 md:grid-cols-2`. No AA fix needed this time
+— `purple-600` is darker than `teal-700`, so the existing `teal-50`/
+`teal-100` tokens clear AA on it with even more margin (9.77:1 measured,
+vs. 5.03:1 on the teal variant).
+
+**One real snag:** `Blob`'s `color="purple"` resolves to the exact same
+`purple-600` as this section's own background — at any opacity, a shape
+filled with a colour identical to what's behind it is invisible (not
+subtle, literally a no-op; opacity blending a colour with itself is still
+that colour). Rather than extend `Blob`'s fixed 2-colour palette for a
+one-off need, used `mix-blend-mode: multiply` on the existing `Blob`
+instance — same `purple-600` fill, but blended it reads as a visibly
+darker patch, matching the reference's subtle same-hue corner shape.
+`Blob.tsx` itself: untouched.
+
+No page placement yet (client hasn't said where this goes) — built with a
+Storybook story (`stories/sections/TestimonialPair.stories.tsx`) instead,
+same as F5/F6's "component + story, placement is a separate call" pattern.
+`QuoteSection.stories.tsx` was also added (it had none before this).
+
+Data: `src/data/testimonial.ts` gained `QuoteEntry` (the shared
+quote/name/date shape — `HomeQuote` now extends it) and `teamTestimonials`
+(the 2 entries from this screenshot — "Team Leader"/"Person in Charge",
+verbatim quote text transcribed from the image).
+
+Verification: `tsc`/`lint` exit 0. Storybook built successfully
+(`npm run build-storybook`, `storybook-static` served statically —
+**not** via `serve`, which turned out to 301-redirect `/iframe.html?...`
+→ `/iframe` and silently drop the query string, breaking direct story
+deep-links; switched to a plain Node static server with no URL rewriting).
+Verified in Chrome: 390/768/1440px zero overflow, two-column desktop /
+single-column mobile stacking, real pixel contrast 9.77:1.
+
+`tasks/lessons.md` not touched — no user correction, both findings above
+were self-caught before they reached the user.

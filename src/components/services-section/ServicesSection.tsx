@@ -2,7 +2,6 @@
 
 import { useInView } from "@/hooks/use-in-view";
 import type { Service } from "@/data/services";
-import { serviceOwnerTestimonial } from "@/data/testimonial";
 import { SectionTitle } from "@/components/section-title";
 import { ServiceCard } from "@/components/service-card";
 import { Container } from "@/components/layout";
@@ -56,20 +55,6 @@ export function ServicesSection({
               accent={i % 2 === 0 ? "teal" : "purple"}
             />
           ))}
-        </div>
-
-        {/* Service owner testimonial — spans the full grid width beneath the
-            cards. Copy is placeholder until the client's asset drive lands;
-            it lives in src/data/testimonial.ts so the swap is a one-file edit. */}
-        <div
-          className={`reveal reveal-delay-4 ${inView ? "in-view" : ""} bg-white rounded-2xl p-6 sm:p-8 border border-gray-100 mt-4 sm:mt-6`}
-        >
-          <h3 className="text-2xl font-bold text-purple-600 mb-4">
-            {serviceOwnerTestimonial.heading}
-          </h3>
-          <p className="text-muted text-sm leading-relaxed">
-            {serviceOwnerTestimonial.body}
-          </p>
         </div>
       </Container>
     </section>

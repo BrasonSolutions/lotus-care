@@ -2,6 +2,7 @@ import { Navbar } from "@/components/navbar";
 import { HeroSection } from "@/components/hero-section";
 import { AboutSection } from "@/components/about-section";
 import { ServicesSection } from "@/components/services-section";
+import { QuoteSection, TestimonialPair } from "@/components/quote-section";
 import { HomesSplitRow } from "@/components/homes-split-row";
 import { TeamSection } from "@/components/team-section";
 import { BoardSection } from "@/components/board-section";
@@ -15,6 +16,7 @@ import { services } from "@/data/services";
 import { homes } from "@/data/homes";
 import { teamMembers, departments, boardMembers } from "@/data/team";
 import { jobs } from "@/data/jobs";
+import { homeQuote, teamTestimonials } from "@/data/testimonial";
 
 const quickLinks = [
   { label: "About Us", href: "#about" },
@@ -67,6 +69,8 @@ export default function Home() {
           stats={aboutStats}
         />
         <ServicesSection services={services} />
+        <QuoteSection quote={homeQuote} />
+        <TestimonialPair testimonials={teamTestimonials} />
         <HomesSplitRow homes={homes} />
         <div aria-hidden="true">
           <LotusBand variant="teal" height={72} />

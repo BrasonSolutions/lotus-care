@@ -3,6 +3,9 @@
 @theme {
   --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     "Helvetica Neue", Arial, sans-serif;
+  /* QuoteSection (#80) — eyebrow/heading/name only, per the client's Figma. */
+  --font-dm-sans: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Arial, sans-serif;
 
   /* Navbar collapse breakpoint ("Laptop L") — deliberately separate from
      the default `lg` (1024px) scale used elsewhere for spacing/grids, so
@@ -37,6 +40,14 @@
   --color-purple-700: #551234;
   --color-purple-800: #350b21;
   --color-purple-900: #220715;
+
+  /* Blossom — QuoteSection (#80) only. The client's Figma uses #FFB7D1 for
+     the eyebrow/quote-mark/blockquote text on a teal-700 band; that raw hex
+     measures 1.65:1 (eyebrow) / 3.91:1 (blockquote) against teal-700 — both
+     fail WCAG AA's 4.5:1 floor for that text size, and no existing purple
+     stop clears it either (purple-100, the lightest, is 4.11:1). Lightened
+     to the nearest value with a real safety margin: 5.03:1. */
+  --color-blossom: #ffdce9;
 
   /* Neutral — matches existing --color-muted (= Tailwind gray-500) exactly */
   --color-neutral-50: #f9fafb;
