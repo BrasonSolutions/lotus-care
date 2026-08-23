@@ -2538,3 +2538,67 @@ reduced-motion-safe.
 - [x] Browser: confirmed via DOM query that each of the 4 cards carries a
       distinct `reveal-delay-1` through `-4` class (not eyeballed timing);
       screenshot confirms larger cards/icons; 390px zero overflow.
+
+---
+
+## #78 follow-up: Values cards — white + shadow + hover lift
+
+Same branch. Cards were `bg-neutral-50` with no shadow, styled ad hoc
+rather than against any existing pattern. Matched them to `HubNavCard`'s
+exact classlist (the closest sibling — icon/title/description info card
+in a grid): `bg-white shadow-sm border border-gray-100 hover:shadow-md
+hover:-translate-y-1 transition-all duration-200`.
+
+**One real dead end, corrected before it shipped wrong.** First attempt
+diagnosed the hover lift as broken — `getComputedStyle(el).transform`
+stayed `matrix(1,0,0,1,0,0)` even while `:hover` was confirmed matching —
+and "fixed" it by splitting the card into two nested divs (reveal wrapper
++ hover surface) on the theory that `.reveal.in-view`'s unlayered
+`transform: translateY(0)` was beating Tailwind's layered
+`hover:-translate-y-1` utility. That diagnosis was wrong: Tailwind v4
+compiles `-translate-y-*` to the standalone CSS `translate` property, not
+`transform` — checking `transform` was checking the wrong property
+entirely, there was no real conflict. Caught by re-verifying
+`getComputedStyle(el).translate` (`"0px -4px"` on hover, both before and
+after reverting the split), which confirmed the original single-div
+version already worked correctly. Reverted to one div, matching
+`HubNavCard`'s actual structure exactly — no unnecessary nesting shipped.
+
+## Verification
+
+- [x] `npx tsc --noEmit` / `npm run lint` / `npm run build` — all exit 0.
+- [x] Browser, Chrome: real `:hover` via Playwright (not just CSS
+      inspection) confirmed `translate: 0px -4px` and the shadow
+      escalating from `shadow-sm` to `shadow-md` on the actual rendered
+      card; screenshot shows the hovered card visibly lifted with a
+      shadow against its neighbours; 390px zero overflow.
+
+---
+
+## #78 follow-up: match "Join Our Team" animation, not ServiceCard's
+
+Same branch. User correction: this repo has *two* different reveal
+conventions for card grids — `ServiceCard`/`ServicesSection`'s per-card
+`reveal-delay-{index}` stagger, and `JobCard`/`RecruitmentSection`'s
+single `reveal` around the whole grid (cards only animate via hover, not
+individually on entrance). The values grid had been built against the
+former; the user pointed at the homepage's "Join Our Team" cards
+(`RecruitmentSection`) as the actual comparison point, and asked why it
+didn't match.
+
+Re-read `RecruitmentSection.tsx`/`JobCard.tsx` in full rather than
+guessing from memory. Rebuilt `ValuesGrid` to mirror that pattern
+exactly: one `reveal`/`in-view` on the grid container (no per-card
+`reveal-delay`), and `JobCard`'s literal hover classes
+(`hover:shadow-md hover:-translate-y-0.5 transition-all duration-200`) —
+previously `-translate-y-1` (4px), now `-translate-y-0.5` (2px) to match
+`JobCard`'s actual lift distance, not just its direction.
+
+## Verification
+
+- [x] `npx tsc --noEmit` / `npm run lint` / `npm run build` — all exit 0.
+- [x] Browser: confirmed via DOM query the grid container carries
+      `reveal in-view` (not the individual cards) and each card's
+      classlist is byte-identical to `JobCard`'s hover treatment; real
+      `:hover` confirmed `translate: 0px -2px` (was `-4px` before the
+      fix); 390px zero overflow.
