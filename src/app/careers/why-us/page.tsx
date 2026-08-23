@@ -71,11 +71,14 @@ export default function WhyUsPage() {
       <section className="py-16 sm:py-20 bg-teal-50">
         <Container>
           <SectionTitle
+            dmSans
             title="A career that blooms in stages"
             subtitle="At Lotus Care, learning never stops. From your first day, you'll receive comprehensive induction training and ongoing support. As you grow, we fund your qualifications, provide access to specialist development programmes, and actively promote from within."
           />
           <Timeline
             orientation="horizontal"
+            circleVariant="outline"
+            titleClassName="font-dm-sans"
             steps={pathway.map((step, i) => ({
               number: <LotusStageIcon stage={i + 1} className="w-9 h-9" />,
               title: step.title,
@@ -102,7 +105,7 @@ export default function WhyUsPage() {
       {/* Vision & Values */}
       <section className="py-16 sm:py-20 bg-white">
         <Container>
-          <SectionTitle title="Our Vision & Values" />
+          <SectionTitle dmSans title="Our Vision & Values" />
           <Reveal className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {whyUsValues.map((value) => (
               <div
@@ -112,7 +115,7 @@ export default function WhyUsPage() {
                 <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-4 text-primary">
                   {getCareersIcon(value.icon)}
                 </div>
-                <h3 className="font-semibold text-primary-dark mb-2">{value.title}</h3>
+                <h3 className="font-dm-sans font-semibold text-primary-dark mb-2">{value.title}</h3>
                 <p className="text-sm text-muted leading-relaxed">{value.description}</p>
               </div>
             ))}
@@ -123,7 +126,7 @@ export default function WhyUsPage() {
       {/* Featured video */}
       <section className="py-16 sm:py-20 bg-white">
         <Container>
-          <SectionTitle title="Hear from our own" />
+          <SectionTitle dmSans title="Hear from our own" />
           <Reveal className="max-w-3xl mx-auto">
             <VideoTestimonialCard
               testimonial={featuredVideo}

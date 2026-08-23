@@ -76,7 +76,7 @@ export function CareersHero({
               </div>
             )}
 
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 animate-fade-up">
+            <h1 className="font-dm-sans text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 animate-fade-up">
               {title}
               {titleHighlight && <span className="text-blossom"> {titleHighlight}</span>}
             </h1>
@@ -159,7 +159,7 @@ export function CareersHero({
       <LotusMark className="absolute -right-12 -bottom-16 w-80 h-80 text-white opacity-[0.06] pointer-events-none" />
 
       <Container className="relative text-center">
-        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 animate-fade-up">
+        <h1 className="font-dm-sans text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 animate-fade-up">
           {title}
           {titleHighlight && <span className="text-blossom"> {titleHighlight}</span>}
         </h1>

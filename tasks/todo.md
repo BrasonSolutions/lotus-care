@@ -2434,3 +2434,74 @@ components it's adjacent to (`Timeline`, `LotusMark`) stay exactly as
 every other page already relies on them.
 
 `tasks/lessons.md` not touched — no user correction this round.
+
+---
+
+## #78 follow-up: 5 corrections from user review
+
+Same branch. User caught 5 real defects in the shipped version:
+
+1. **Pathway circles were solid dark teal** — should be white with a
+   dark-teal stroke. Fixed via a new `Timeline` prop,
+   `circleVariant?: "solid" | "outline"` (default `"solid"`, so
+   `how-we-hire`'s existing circles are untouched — verified in-browser
+   after the change, still solid dark teal with white numerals).
+2. **Wrong SVG treatment** — `LotusStageIcon` was rendering every facet
+   flat white, discarding the real per-facet brand colours that were
+   sitting right there in `LOTUS_FACETS` (`lotus-geometry.ts`) the whole
+   time — the same colours `LotusMark tone="color"` uses. Fixed:
+   revealed petals now render in their real `facet.color`; unrevealed
+   ones in a flat muted grey (`--color-neutral-300`) instead of a
+   same-colour opacity fade, so they read clearly as "not yet bloomed"
+   against the now-white circle.
+3. **Last stage wasn't a full bloom** — `BLOOM_ORDER.slice(0, stage)`
+   with 5 stages against 6 petal-groups meant stage 5 only ever revealed
+   5 of 6 — an off-by-one from mapping stage count directly onto group
+   count without checking they matched. Fixed with an explicit
+   `REVEAL_COUNTS = [2, 3, 4, 5, 6]` spread across the 5 stages, so stage
+   5 always resolves to all 6 groups — verified by screenshot, the fifth
+   circle is now visibly the complete, real-colour mark.
+4. **DM Sans wasn't applied anywhere on the page** — despite being
+   explicitly specified in the same Figma export for the hero, both
+   `SectionTitle` headings, the pathway step titles, and the value-card
+   titles, none of it landed in the first pass. Fixed with the same
+   additive-prop pattern used elsewhere this session: `SectionTitle`
+   gained `dmSans?: boolean` (default off, every other caller on the
+   site unaffected), `Timeline` gained `titleClassName?: string`: both
+   confirmed via `getComputedStyle` on the live page, not just visually,
+   that `font-dm-sans` actually resolves to `"DM Sans", ...` — `Careers
+   Hero`'s `h1` got the class directly (applies to every `CareersHero`
+   page, a deliberate, not per-instance, call, since the display font is
+   a heading-level brand choice, not page-specific state like
+   `titleHighlight`). `CareersCTAStrip`'s heading deliberately left
+   alone — the Figma's own CSS specifies Inter for that one heading, not
+   DM Sans, confirmed by re-reading the export rather than assumed.
+5. **"Overview" still reachable** — removed `viewAllHref`/`viewAllLabel`
+   from the Careers entry in `src/data/navigation.ts` (the only two
+   fields controlling that link's render in both `HomesDropdown` and
+   `MobileMenu`, confirmed by reading both before editing) so it no
+   longer appears in either the desktop dropdown or the mobile drawer.
+   Per the user's explicit instruction not to remove the hub page from
+   the actual code, `src/app/careers/page.tsx` itself is untouched
+   except for one added line: an unconditional `redirect("/careers/
+   open-roles")` as the first statement in the component, so the bare
+   `/careers` URL also stops resolving to hub content (confirmed:
+   `curl` returns a 307 to `/careers/open-roles`) — the hub's own
+   JSX/data stays in the file below the redirect, unreachable but not
+   deleted, exactly matching "don't need to remove it on the actual
+   code, but remove it from being accessed."
+
+## Verification
+
+- [x] `npx tsc --noEmit` / `npm run lint` / `npm run build` — all exit 0
+      (one spurious "unused eslint-disable" warning surfaced and was
+      removed — the `no-unreachable` rule doesn't fire on this pattern in
+      this repo's config, confirmed by running lint rather than assumed).
+- [x] Browser, Chrome: pathway circles confirmed white/teal-stroke with
+      real per-facet colours via screenshot; DM Sans confirmed via
+      `getComputedStyle` on 4 separate headings (hero, both `SectionTitle`
+      instances, pathway titles, value-card titles) rather than eyeballed;
+      `/careers` redirect confirmed via `curl`; "Overview" absence
+      confirmed via DOM query on both the desktop dropdown and mobile
+      drawer; `how-we-hire`'s `Timeline` re-confirmed unaffected (solid
+      dark circle, white "1") after the `circleVariant` change.
