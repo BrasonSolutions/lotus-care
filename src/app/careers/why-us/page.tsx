@@ -8,6 +8,7 @@ import { SectionTitle } from "@/components/section-title";
 import { Timeline } from "@/components/timeline";
 import { Reveal } from "@/components/reveal";
 import { LotusStageIcon } from "@/components/lotus-mark";
+import { ValuesGrid } from "@/components/careers/values-grid";
 import { getCareersIcon } from "@/components/careers/careers-icons";
 import { Container } from "@/components/layout";
 import { whyUsValues, videoTestimonials } from "@/data/careers";
@@ -106,20 +107,7 @@ export default function WhyUsPage() {
       <section className="py-16 sm:py-20 bg-white">
         <Container>
           <SectionTitle dmSans title="Our Vision & Values" />
-          <Reveal className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            {whyUsValues.map((value) => (
-              <div
-                key={value.title}
-                className="text-center p-6 bg-neutral-50 rounded-2xl border border-gray-100"
-              >
-                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-4 text-primary">
-                  {getCareersIcon(value.icon)}
-                </div>
-                <h3 className="font-dm-sans font-semibold text-primary-dark mb-2">{value.title}</h3>
-                <p className="text-sm text-muted leading-relaxed">{value.description}</p>
-              </div>
-            ))}
-          </Reveal>
+          <ValuesGrid values={whyUsValues} />
         </Container>
       </section>
 

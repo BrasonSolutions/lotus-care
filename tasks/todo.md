@@ -2505,3 +2505,36 @@ Same branch. User caught 5 real defects in the shipped version:
       confirmed via DOM query on both the desktop dropdown and mobile
       drawer; `how-we-hire`'s `Timeline` re-confirmed unaffected (solid
       dark circle, white "1") after the `circleVariant` change.
+
+---
+
+## #78 follow-up: Vision & Values cards — scale up + stagger animation
+
+Same branch. Two small asks: bigger cards, and animation on them (they
+were already inside a `Reveal` but as one block — all 4 faded in
+together with no stagger, unlike every other card grid on the site).
+
+Scaled: `p-6`→`p-8`, icon box `w-12 h-12`→`w-16 h-16` (icon itself
+`w-6 h-6`→`w-8 h-8` via a `[&>svg]:` selector — `getCareersIcon`'s icons
+are hardcoded at a fixed size, so this overrides it per-instance rather
+than changing the shared icon set), title un-sized→`text-lg`,
+description `text-sm`→`text-base`, grid `gap-5`→`gap-6`.
+
+Staggering an entrance animation needs client-side state
+(`useInView`) per card, but `why-us/page.tsx` exports `metadata`, which
+requires it to stay a Server Component — can't add `"use client"` there.
+Extracted a new small client component, `ValuesGrid.tsx`
+(`src/components/careers/values-grid/`), mirroring the exact convention
+`ServiceCard`/`ServicesSection` already use elsewhere: one `useInView`
+on the grid container, each card gets `reveal reveal-delay-{index+1}`
+(the 4 cards land on `reveal-delay-1..4`, `globals.css`'s existing 1-5
+stagger steps) plus the sitewide `card-hover` hover-lift. No new
+animation CSS — reused what's already there and already
+reduced-motion-safe.
+
+## Verification
+
+- [x] `npx tsc --noEmit` / `npm run lint` / `npm run build` — all exit 0.
+- [x] Browser: confirmed via DOM query that each of the 4 cards carries a
+      distinct `reveal-delay-1` through `-4` class (not eyeballed timing);
+      screenshot confirms larger cards/icons; 390px zero overflow.
