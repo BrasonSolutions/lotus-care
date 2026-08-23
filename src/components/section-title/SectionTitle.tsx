@@ -6,12 +6,17 @@ interface SectionTitleProps {
   title: string;
   subtitle?: string;
   light?: boolean;
+  /** Renders `title` in the brand display font (DM Sans) instead of the
+   * default body font. Only changes anything when passed — every existing
+   * caller keeps today's font. */
+  dmSans?: boolean;
 }
 
 export function SectionTitle({
   title,
   subtitle,
   light,
+  dmSans,
 }: SectionTitleProps) {
   const { ref, inView } = useInView();
 
@@ -21,7 +26,7 @@ export function SectionTitle({
       className={`reveal text-center mb-12 ${inView ? "in-view" : ""}`}
     >
       <h2
-        className={`text-2xl md:text-3xl lg:text-4xl font-bold mb-4 ${light ? "text-white" : "text-primary-dark"}`}
+        className={`text-2xl md:text-3xl lg:text-4xl font-bold mb-4 ${dmSans ? "font-dm-sans" : ""} ${light ? "text-white" : "text-primary-dark"}`}
       >
         {title}
       </h2>

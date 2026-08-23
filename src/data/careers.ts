@@ -23,12 +23,6 @@ export interface Testimonial {
   yearsAtCompany?: number;
 }
 
-export interface TrainingProgram {
-  title: string;
-  description: string;
-  type: "mandatory" | "professional" | "leadership";
-}
-
 export interface CompanyValue {
   title: string;
   description: string;
@@ -220,57 +214,6 @@ export const testimonials: Testimonial[] = [
   },
 ];
 
-export const trainingPrograms: TrainingProgram[] = [
-  {
-    title: "Induction & Orientation",
-    description:
-      "A structured first week covering Lotus Care's values, HIQA standards, safeguarding, and your home's procedures.",
-    type: "mandatory",
-  },
-  {
-    title: "Manual Handling",
-    description:
-      "Accredited manual handling training covering safe techniques for supporting residents with mobility needs.",
-    type: "mandatory",
-  },
-  {
-    title: "Medication Management",
-    description:
-      "QQI-aligned medication administration training for all staff involved in supporting residents with medication.",
-    type: "mandatory",
-  },
-  {
-    title: "Safeguarding & Vulnerable Adults",
-    description:
-      "Training on identifying, reporting, and responding to safeguarding concerns in line with Irish legislation.",
-    type: "mandatory",
-  },
-  {
-    title: "Person-Centred Planning",
-    description:
-      "Practical skills for developing and implementing individual support plans that reflect each resident's goals.",
-    type: "professional",
-  },
-  {
-    title: "Positive Behaviour Support",
-    description:
-      "Understanding behaviours of concern and implementing proactive, person-centred support strategies.",
-    type: "professional",
-  },
-  {
-    title: "QQI Programmes",
-    description:
-      "Funding and study leave for QQI Level 5, 6, and 7 programmes in Social Care and related disciplines.",
-    type: "professional",
-  },
-  {
-    title: "Leadership & Management Development",
-    description:
-      "A blended development programme for aspiring and current Team Leaders covering operations, HR, and regulatory management.",
-    type: "leadership",
-  },
-];
-
 export const companyValues: CompanyValue[] = [
   {
     title: "Person-Centred",
@@ -292,6 +235,35 @@ export const companyValues: CompanyValue[] = [
   },
   {
     title: "Inclusive",
+    description:
+      "We champion diversity in our teams and actively support social inclusion for every person we support.",
+    icon: "user-group",
+  },
+];
+
+// "Our Vision & Values" — /careers/why-us only. A distinct set from
+// `companyValues` above (that one's flagged in docs/build-plan.md as
+// deferred/placeholder content pending client revision, used only on the
+// /careers hub page — left untouched, out of scope here).
+export const whyUsValues: CompanyValue[] = [
+  {
+    title: "Respect",
+    description: "We will uphold the dignity of every person.",
+    icon: "user-circle",
+  },
+  {
+    title: "Compassion",
+    description: "We will interact with each person in a caring and compassionate manner.",
+    icon: "heart",
+  },
+  {
+    title: "Quality",
+    description:
+      "Committed to the highest quality care and full accountability, backed by strong governance and open to learning",
+    icon: "shield-check",
+  },
+  {
+    title: "Hope",
     description:
       "We champion diversity in our teams and actively support social inclusion for every person we support.",
     icon: "user-group",

@@ -23,13 +23,14 @@ export const navItems: NavItem[] = [
   {
     label: "Careers",
     href: "/careers",
-    viewAllHref: "/careers",
-    viewAllLabel: "Overview",
+    // No viewAllHref/viewAllLabel — the hub page stays in the codebase
+    // (per docs/build-plan.md, its "Our Values" section is placeholder
+    // content pending client revision) but isn't linked from the nav for
+    // now; /careers itself also redirects, see src/app/careers/page.tsx.
     children: [
       { label: "Open Roles", href: "/careers/open-roles" },
       { label: "Why Work With Us", href: "/careers/why-us" },
       { label: "Benefits", href: "/careers/benefits" },
-      { label: "Training & Development", href: "/careers/training" },
       { label: "How We Hire", href: "/careers/how-we-hire" },
       { label: "Contact Recruitment", href: "/careers/contact" },
     ],

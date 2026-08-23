@@ -6,11 +6,9 @@ import { useScrolled } from "@/hooks/use-scrolled";
 import { useMediaQuery, NAV_BREAKPOINT_QUERY } from "@/hooks/use-media-query";
 
 const links = [
-  { label: "Overview", href: "/careers" },
   { label: "Open Roles", href: "/careers/open-roles" },
   { label: "Why Work With Us", href: "/careers/why-us" },
   { label: "Benefits", href: "/careers/benefits" },
-  { label: "Training", href: "/careers/training" },
   { label: "How We Hire", href: "/careers/how-we-hire" },
   { label: "Contact", href: "/careers/contact" },
 ];
@@ -35,10 +33,7 @@ export function CareersSubnav() {
         <div className="relative">
           <ul className="flex gap-1 overflow-x-auto scrollbar-hide py-2">
             {links.map(({ label, href }) => {
-              const isActive =
-                href === "/careers"
-                  ? pathname === "/careers"
-                  : pathname.startsWith(href);
+              const isActive = pathname.startsWith(href);
               return (
                 <li key={href}>
                   <a

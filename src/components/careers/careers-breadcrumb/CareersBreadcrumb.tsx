@@ -7,7 +7,6 @@ const pageLabels: Record<string, string> = {
   "open-roles": "Open Roles",
   "why-us": "Why Work With Us",
   benefits: "Benefits",
-  training: "Training & Development",
   "how-we-hire": "How We Hire",
   contact: "Contact Recruitment",
 };

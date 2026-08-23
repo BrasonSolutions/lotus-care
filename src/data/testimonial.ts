@@ -26,6 +26,20 @@ export const homeQuote: HomeQuote = {
   date: "With Lotus Care since 2018",
 };
 
+// /careers/why-us's quote section — the site's original "Hear it from our
+// own" copy (kept here since `homeQuote` above now carries the homepage's
+// newer "Real voices" revision). Same JW quote text, "Administrator" /
+// "10th June 2026" attribution as given in this page's Figma export.
+export const careersHearQuote: HomeQuote = {
+  eyebrow: "People of Lotus",
+  heading: "Hear it from our own.",
+  subtext: "Our colleagues are the drive of everything we work for.",
+  quote:
+    "When I first moved to Pine Lodge with Lotus Care, I was nervous because everything was new to me. I left my family behind and didn't know anybody. The staff were kind, friendly, and caring and gave me their time, sitting and talking to me. They really wanted to get to know me. They helped me settle into my new home. They listened to me and supported me with the things that were important to me. They helped me fill my day as my whole routine what I was used to had all changed. They encouraged me to make choices about my day-to-day life, and made sure I felt a part of my home.",
+  name: "Administrator",
+  date: "10th June 2026",
+};
+
 // #80's second Figma variant — purple band, two testimonials side by side.
 // Attribution/dates as given in the design; swap in real names if/when the
 // client supplies them.
