@@ -1,20 +1,18 @@
 import Image from "next/image";
 import { Container } from "@/components/layout";
-import { LotusMark, LotusMarkAlt } from "@/components/lotus-mark";
+import { LotusMarkAlt } from "@/components/lotus-mark";
 
 /**
  * Art direction: warm, candid, natural light — real people engaged in an
  * activity together, real homes. Avoid posed hand-holding, wheelchair-
  * from-behind framing, pity framing, or uniformed staff.
  *
- * This is licensed Unsplash stock used as a swap-ready placeholder (see
- * public/images/stock/CREDITS.md). Commissioned photography of real
- * service users requires documented consent under HIQA before use — a
- * client decision, not a build decision. Single edit point below.
+ * Licensed Pexels stock, chosen by the client's own Figma design (see
+ * public/images/stock/CREDITS.md). Single edit point below.
  */
 const HERO_IMAGE = {
-  src: "/images/stock/community-friends.jpg",
-  alt: "Friends laughing together while spending time outdoors",
+  src: "/images/stock/hero-finger-painting.jpg",
+  alt: "A mother and her daughter with Down syndrome finger-painting together at home",
 };
 
 interface HeroSectionProps {
@@ -47,20 +45,21 @@ export function HeroSection({
       <div className="absolute top-20 left-10 w-64 h-64 rounded-full bg-accent/10 blur-3xl pointer-events-none" aria-hidden="true" />
       <div className="absolute bottom-20 right-10 w-96 h-96 rounded-full bg-primary/10 blur-3xl pointer-events-none" aria-hidden="true" />
 
-      {/* Original logomark, low-opacity alongside the blobs — same proven
-          pattern as CareersHero's non-image variant. */}
-      <LotusMark className="absolute -right-12 -bottom-16 w-80 h-80 text-white opacity-[0.06] pointer-events-none" />
+      {/* Large rotated watermark, bleeding off the bottom-left corner — per
+          the client's Figma, a second, much bigger mark than the top-right
+          one above (that one stays small/subtle; this one is the dominant
+          background texture). `overflow-hidden` on the section clips it. */}
+      <LotusMarkAlt className="absolute -bottom-40 -left-56 w-[56rem] h-[56rem] lg:w-[64rem] lg:h-[64rem] rotate-[-23deg] text-white opacity-[0.06] pointer-events-none" />
 
       <Container className="relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Message — owns the hierarchy, sits on solid brand background */}
           <div className="text-center lg:text-left">
             <h1
-              className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight animate-fade-up"
+              className="font-dm-sans text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight animate-fade-up"
               style={{ animationDelay: "100ms" }}
             >
-              {title}{" "}
-              <span className="text-accent">{titleHighlight}</span>
+              {title} {titleHighlight}
             </h1>
             <p
               className="text-lg md:text-xl text-white/80 mb-10 max-w-xl mx-auto lg:mx-0 leading-relaxed animate-fade-up"

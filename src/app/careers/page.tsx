@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { CareersHero } from "@/components/careers/careers-hero";
 import { HubNavCard } from "@/components/careers/hub-nav-card";
 import { JobCard } from "@/components/careers/job-card";
@@ -39,12 +40,6 @@ const hubCards = [
     href: "/careers/benefits",
   },
   {
-    icon: "academic-cap",
-    title: "Training & Development",
-    description: "Funded training, career progression pathways, and a commitment to your growth.",
-    href: "/careers/training",
-  },
-  {
     icon: "clipboard-list",
     title: "How We Hire",
     description: "Understand our recruitment process and get answers to common questions.",
@@ -79,6 +74,13 @@ const placeholderTestimonials: Testimonial[] = [
 ];
 
 export default function CareersPage() {
+  // Not linked from the nav for now (see src/data/navigation.ts) — this
+  // hub's "Our Values" section is placeholder content pending client
+  // revision (docs/build-plan.md). Redirecting rather than deleting: the
+  // page/data below stays in the codebase for whenever it's ready to
+  // relink, per the request that made this change.
+  redirect("/careers/open-roles");
+
   return (
     <>
       <CareersHero

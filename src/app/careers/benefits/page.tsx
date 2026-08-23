@@ -50,8 +50,8 @@ export default function BenefitsPage() {
         body="Explore our open roles and start your journey with Lotus Care."
         ctaLabel="View Open Roles"
         ctaHref="/careers/open-roles"
-        secondaryLabel="Training & Development"
-        secondaryHref="/careers/training"
+        secondaryLabel="Career Growth"
+        secondaryHref="/careers/why-us"
       />
     </>
   );

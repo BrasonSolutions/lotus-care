@@ -1,0 +1,1 @@
+export { IrelandMap } from "./IrelandMap";

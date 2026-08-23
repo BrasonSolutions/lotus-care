@@ -7,10 +7,10 @@ const meta: Meta<typeof HeroSection> = {
   parameters: { layout: "fullscreen" },
   tags: ["autodocs"],
   args: {
-    title: "Enhanced Living,",
-    titleHighlight: "Empowered Lives",
+    title: "Enhanced living",
+    titleHighlight: "empowering lives.",
     subtitle:
-      "Providing quality respite and residential disability care services across Co. Offaly and the Midlands, supporting individuals to live their best lives with dignity and purpose.",
+      "Providing quality respite and residential disability care services across the Midlands, supporting individuals to live their best lives with dignity and purpose.",
     primaryCtaLabel: "Our Services",
     primaryCtaHref: "#services",
     secondaryCtaLabel: "Careers",

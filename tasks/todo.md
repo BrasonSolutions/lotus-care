@@ -2062,3 +2062,543 @@ single-column mobile stacking, real pixel contrast 9.77:1.
 
 `tasks/lessons.md` not touched — no user correction, both findings above
 were self-caught before they reached the user.
+
+---
+
+# Homepage reconciliation against Figma export (#79 / #56)
+
+Branch: `feat/homepage-figma-reconcile` (stacked on `feat/homepage-quote-section`
+— depends on that branch's `homeQuote` data shape, which isn't merged yet).
+
+## Diagnosis
+
+Client sent a full-page CSS export + screenshot from Figma, asking for
+"whatever changes there are" across the whole homepage. Diffed it
+section-by-section against live code (3 parallel research passes) before
+touching anything, because the first check — the About section's "150+"
+Staff Members figure — turned out to be the stale *pre-fix* value (commit
+`7d88da7` already corrected it to "200+" per the client). That proved
+this export is at least partly an older/mixed snapshot, not a clean new
+design, so only genuinely new/different information was acted on.
+
+**Confirmed already matching, zero changes:** About section, Services
+section (all 3 cards), Team section (real roster — issue #57 already
+resolved this), Board section (real 5-member roster), Careers/"Join Our
+Team" section (3 featured jobs), Contact section (form + real contact
+info), Footer.
+
+## Must not break
+
+- C-1: `aboutStats` in `src/app/page.tsx` stays at "200+" — the Figma's
+  "150+" is confirmed stale, not reverted.
+- C-2: `TestimonialPair` (the purple two-up variant from the prior card)
+  untouched — the client's explicit answer was "replace the title and
+  text only, the rest is fine," scoped to `QuoteSection`'s `homeQuote`
+  only.
+- C-3: `HomesCarousel.tsx` itself not rewritten — it already had a
+  non-embedded standalone mode (`embedded` prop, default `false`) that
+  renders exactly the Figma's separate carousel section (own `<section
+  id="homes">`, heading, arrows/dots, "Enquire About Our Homes" CTA) —
+  this was a wiring change (stop passing `embedded`), not new carousel
+  work.
+
+## User's design decisions
+
+- Quote section: keep the current #80 layout/colours exactly as shipped;
+  only swap in the new heading/subtext copy and the real attribution
+  ("JW, Service Owner" / "With Lotus Care since 2018", replacing the
+  "Administrator" placeholder) found in the export.
+- Ireland map: source a real, accurate open-license county map and
+  restyle it to brand — not a pixel clone of the Figma's raw vector
+  (that data isn't reconstructable from CSS position percentages alone).
+- No pins on the map — counties with homes render in a different fill
+  colour instead.
+- County data is client-pending beyond Offaly (the only county
+  confirmable from existing data — HQ address, site's own "Co. Offaly
+  and the Midlands" copy) — built swap-ready, not blocked on.
+
+## Tasks
+
+- [x] 3 parallel research passes confirmed the "already matching"
+      sections above before any edit was made.
+- [x] `src/data/testimonial.ts` — `homeQuote.heading`/`.subtext`/`.name`/
+      `.date` updated to the export's copy and real attribution;
+      `.eyebrow`/`.quote` unchanged (already matched).
+- [x] Sourced "Ireland complete.svg" (Wikimedia Commons, released into
+      the public domain by its author, no attribution required) — 32
+      county boundary paths, but the file's paths carry no id/name
+      attributes of their own. Matched each path to its county name via
+      nearest label-to-path-centroid distance (label layer has real
+      county names + positions; distances came out tight — Mayo 6,
+      Meath 4, Clare 4 units on an 800×1000 canvas — a few looked
+      larger, e.g. Monaghan 97, so **verified by rendering**, not
+      trusted blind: the matched "Offaly" path sits exactly where it
+      should, in the geographic midlands with no coastline).
+- [x] New `src/components/ireland-map/county-paths.ts` — the 32 matched
+      paths + source/method documented in a header comment — and
+      `IrelandMap.tsx`: renders all 32, `highlightedCounties` prop picks
+      the fill (`--color-teal-400` vs `--color-teal-800`), no pins, no
+      labels, `role="img"` + `aria-label` naming the highlighted
+      counties for screen readers since the visual distinction alone
+      wouldn't convey that.
+- [x] New `src/data/homes-map.ts` — `HIGHLIGHTED_COUNTIES` swap-ready
+      config, defaulted to `["Offaly"]`, comment flagging it as
+      client-pending for the full list.
+- [x] `src/components/homes-split-row/HomesSplitRow.tsx` — repurposed:
+      dropped the carousel entirely (moved to its own standalone
+      section), kept the existing video panel (`HOMES_MONTAGE`,
+      untouched, still poster-only), added `IrelandMap` in its place.
+      `id="homes"` moved with the carousel to its new standalone section
+      (via `HomesCarousel`'s own built-in `id="homes"`) — anchor links
+      unaffected.
+- [x] `src/app/page.tsx` — `<HomesSplitRow homes={homes} />` replaced
+      with `<HomesCarousel homes={homes} />` (standalone) directly
+      followed by `<HomesSplitRow />` (now prop-less: video + map only).
+- [x] `stories/sections/HomesSplitRow.stories.tsx` — dropped the now
+      unused `homes` arg.
+
+## Acceptance criteria
+
+- AC-1 (About/Services/Team/Board/Careers/Contact/Footer unchanged):
+  **met** — confirmed via research before implementation, zero edits to
+  any of those files.
+- AC-2 (quote section — copy only, layout/colour untouched): **met.**
+  `QuoteSection.tsx`/`QuoteCard.tsx`/`TestimonialPair.tsx` — zero edits,
+  only `testimonial.ts` data changed.
+- AC-3 (homes carousel split into its own section, unchanged behaviour):
+  **met.** Verified in-browser: still auto-rotates, arrows/dots/modal
+  all work, "Enquire About Our Homes" CTA present — this was `embedded`
+  wiring only, the component itself wasn't touched.
+- AC-4 (video + Ireland map row, no pins, county-colour highlight
+  instead): **met.** Verified in-browser at 390/768/1440px.
+
+## Verification
+
+- [x] `npx tsc --noEmit` — exit 0.
+- [x] `npm run lint` — exit 0.
+- [x] `npm run build` — exit 0 (Next.js 16.2.6, Turbopack, all 22 routes
+      generated).
+- [x] Browser verification: dev server, Chrome. 390/768/1440px: zero
+      page overflow (`scrollWidth - clientWidth = 0` at all three), map
+      renders inside its container at every width, video+map stack
+      correctly on mobile, quote-section copy renders correctly, homes
+      carousel section confirmed still full-width with heading/CTA.
+
+## Review
+
+Five files changed, three new (`IrelandMap.tsx`, `county-paths.ts`,
+`homes-map.ts`). The research-first approach (3 parallel passes before
+any edit) turned what looked like a full-homepage rebuild into a
+5-file change — 7 of 11 sections in the export needed nothing at all,
+and one figure (the stats "150+") would have been a real regression if
+adopted blindly. The map's county-to-path matching used a distance
+heuristic rather than trusted source ids (the source file has none) —
+flagged the larger-distance matches explicitly rather than silently
+trusting the algorithm, and confirmed by rendering before writing the
+matched geometry into the component.
+
+`tasks/lessons.md` not touched — no user correction; the "verify the
+150+ stat before reverting" catch and the map-matching verification were
+both self-driven, not corrections after the fact.
+
+---
+
+## Homepage reconciliation follow-up: the hero was under-checked
+
+Same branch. User correction: the initial reconciliation pass declared
+the hero "already matches, just needed the font" — wrong. Real diffs
+existed that a component-level skim missed entirely:
+
+- **Image**: still the old Unsplash placeholder (`community-friends.jpg`).
+  The user supplied the client's actual chosen photo directly (a Pexels
+  stock image, `pexels-shkrabaanthony-6288114.jpg`) — swapped in as
+  `hero-finger-painting.jpg`, resized 4000×6000 → 1600px wide via
+  `sharp` (already a dependency) to match this repo's other stock-photo
+  file sizes (~130–330KB, was 3.6MB), credited in
+  `public/images/stock/CREDITS.md` (Pexels License, no attribution
+  required, confirmed via the live Pexels page before use).
+- **Heading**: was still split into two colours (`text-accent` on the
+  second phrase) — Figma shows one solid white heading, different
+  wording/casing ("Enhanced living empowering lives.", not "Enhanced
+  Living, Empowered Lives"). Updated copy in `page.tsx` +
+  `HeroSection.stories.tsx`, dropped the accent-colour span, bumped
+  `text-3xl md:text-4xl lg:text-5xl` → `text-4xl md:text-5xl lg:text-6xl`
+  to get closer to the Figma's 55px display size without hardcoding a
+  literal px value.
+- **Subtitle**: had an extra "Co. Offaly and" the Figma's copy doesn't.
+- **Background decoration**: the big rotated bottom-left watermark in
+  the Figma (1069px, opacity 0.06) was being rendered as a small
+  (320px), unrotated, bottom-*right* `LotusMark` (the solid-bloom mark).
+  The Figma's shape — many small disconnected "Vector" pieces in
+  nested "Group"s — matches `LotusMarkAlt`'s construction (a compound
+  outline path), not `LotusMark`'s few solid petal facets. Swapped
+  component, went from `w-80` to `lg:w-[64rem]`, added
+  `rotate-[-23deg]`, repositioned to bottom-left with negative insets
+  so it bleeds off-canvas (matches the reference's off-canvas bleed);
+  `overflow-hidden` on the section (already present) clips it safely.
+  Kept the existing top-right `LotusMarkAlt` untouched — that one
+  already matched the Figma's smaller top-right motif.
+
+Font stayed DM Sans, not the Figma's literal 'Cactus Classical Serif' —
+that substitution was the user's own explicit instruction from an
+earlier message in this session, not a guess, so it wasn't re-litigated
+here.
+
+## Verification
+
+- [x] `npx tsc --noEmit` / `npm run lint` / `npm run build` — all exit 0.
+- [x] Browser: 390/1440px, zero overflow, image/heading/decoration all
+      confirmed visually against the reference screenshot.
+
+---
+
+# #78: Merge Training into Why Work With Us, remove Overview tab
+
+Branch: `feat/careers-why-us-revamp`.
+
+## Diagnosis
+
+Client sent a Figma CSS export + screenshot for a revamped `/careers/why-us`
+page, plus explicit instructions: remove "Overview" and "Training" from the
+careers navigation, delete the training page. This is issue #78 (long
+deferred, "Combine Training & Why Work With Us in Careers Hub") — the
+client's design finally answers it: the training page's career-pathway
+timeline and "Invest in Your Future" CTA move into `why-us`; its
+mandatory/professional/leadership training-card grid does not carry over —
+confirmed by the Figma export itself (that block is `display: none` in the
+source, not just visually absent from the screenshot).
+
+Two parallel research passes (careers nav/hub/training/CTA-strip;
+video-testimonials + a search for the new "Vision & Values" content)
+confirmed every reused piece below against the actual current code before
+any edit — several pieces turned out to be exact or near-exact matches
+already sitting in the codebase, not new builds:
+
+- `CareersHero`'s image-variant overlay gradient already matches the
+  Figma's stops.
+- `CareersCTAStrip`'s existing `tone="teal"` gradient
+  (`from-teal-800 to-primary-dark` = `#094a4e`→`#0d6a70`) is an *exact*
+  match to the Figma's `linear-gradient(90deg, #094A4E, #0D6A70)` — zero
+  component changes needed there.
+- `Timeline` (`orientation="horizontal"`) is literally the training page's
+  own "Career Progression Pathway" component — reused as-is, just fed 5
+  stages instead of 4.
+- `QuoteSection`/`TestimonialPair` (built earlier this session for the
+  homepage) — the Figma's two quote-section instances are, respectively,
+  the *original* pre-edit `homeQuote` copy (now living in this page's own
+  new `careersHearQuote` export, since `homeQuote` itself moved on to the
+  homepage's newer "Real voices" copy) and the *exact* existing
+  `teamTestimonials` data, verbatim. Zero new quote-section component
+  work.
+- `VideoTestimonialCard`'s fixed-px play-button/badge sizing coincidentally
+  already matches the Figma's numbers at the much larger "featured video"
+  size it's now used at.
+- All 4 "Vision & Values" icons (Respect/Compassion/Quality/Hope) already
+  exist in `careers-icons.tsx`'s dispatch (`user-circle`/`heart`/
+  `shield-check`/`user-group`) — same icons `companyValues` already uses
+  for a different, unrelated value set.
+
+## Must not break
+
+- C-1: `src/components/timeline/Timeline.tsx` is also used by
+  `careers/how-we-hire` — confirmed via grep before touching it. The one
+  change made (`TimelineStep.number: number | string` →
+  `ReactNode`, to accept an icon) is a pure type-widening, zero behaviour
+  change; `how-we-hire` still passes plain strings and still renders plain
+  numeral badges — verified in-browser after the change, not just assumed.
+- C-2: `LotusMark`/`LotusMarkAlt` untouched — the progressive-bloom stage
+  icon is a new, separate component (`LotusStageIcon`), not a prop bolted
+  onto the shared mark components every other page also uses.
+- C-3: `CareersHero`'s new `titleHighlight`/`secondaryCtaLabel`/
+  `secondaryCtaHref` props are additive-only (undefined unless passed) —
+  every other existing caller (`/careers`, `/careers/benefits` — training's
+  own call is now deleted along with the page) keeps its exact current
+  render, unverified by inspection alone: confirmed by reading each
+  remaining caller's props after the change, none pass the new props.
+- C-4: `VideoTestimonialCard`'s new `sizes` prop defaults to the exact
+  previous hardcoded value — the 3-up "In Their Own Words" grid pattern
+  isn't used on this page anymore (per your answer, only James O. features
+  here), but the component itself still behaves identically if reused
+  elsewhere at the old grid size.
+- C-5: `cultureGalleryImages`, `employerStats`, `testimonials` (the 4-person
+  "Hear From Our Team" set) — all dropped from this page's render (not in
+  the new design) but deliberately left in `src/data/careers.ts`, not
+  deleted — real content, just not rendered here anymore.
+- C-6: The hub page's own "Our Values" section (`companyValues` —
+  Person-Centred/Compassionate/Accountable/Inclusive) is explicitly flagged
+  in `docs/build-plan.md` as deferred/placeholder content the client said
+  would change — a separate, out-of-scope page. Not touched.
+
+## Tasks
+
+- [x] Navigation cleanup: removed the `Overview` entry from
+      `CareersSubnav.tsx`'s `links` (no `/careers/overview` route exists —
+      it was a nav label pointing at the hub, confirmed by directory
+      listing before removing); removed `Training` from the same list, from
+      `CareersBreadcrumb.tsx`'s `pageLabels`, from the hub page's
+      `hubCards`, and from the main navbar's mobile "Careers" submenu
+      (`src/data/navigation.ts`).
+- [x] Deleted `src/app/careers/training/` and `trainingPrograms`/
+      `TrainingProgram` from `src/data/careers.ts` (confirmed via grep: used
+      only by the deleted page).
+- [x] Fixed the one dangling internal link found during research —
+      `careers/benefits`'s CTA strip pointed `secondaryHref` at
+      `/careers/training`; repointed to `/careers/why-us` with a new label
+      ("Career Growth") matching where the progression content now lives.
+- [x] `CareersHero.tsx` — added `titleHighlight` (renders in
+      `text-blossom`), `secondaryCtaLabel`/`secondaryCtaHref`, in both the
+      image and no-image render branches for consistency.
+- [x] `VideoTestimonialCard.tsx` — added optional `sizes` prop, default
+      preserves current behaviour exactly.
+- [x] `Timeline.tsx` — widened `TimelineStep.number` to `ReactNode`;
+      fixed the two `key={step.number}` usages to `key={step.title}` since
+      a ReactNode isn't a valid React key.
+- [x] New `src/components/lotus-mark/LotusStageIcon.tsx` — renders
+      `LOTUS_FACETS` (the real logomark geometry, already grouped into 6
+      petals by the existing `.lotus-bloom` CSS animation's own reveal
+      order: center → bottom → left/right → upper-left/upper-right) at a
+      `stage` 1–5, filling that many groups white at full opacity and the
+      rest at 0.25 — literal "career blooms in stages," using real brand
+      geometry rather than a generic icon, per your explicit answer to use
+      the same SVG the logo is already split into petals from.
+      Self-review: initially assumed a `white circle + border` badge style
+      to match the Figma pixel-for-pixel, which would have required
+      modifying `Timeline`'s circle styling; reused `Timeline`'s existing
+      solid-teal circle unchanged instead (icon renders in white on it) —
+      keeps `Timeline` untouched beyond the one type change, a closer
+      "spirit not pixel clone" match to this repo's established precedent
+      (the Ireland map, the hero decorative mark) than modifying a
+      component two pages share.
+- [x] `careers-icons.tsx` — added a `clock` icon for the pathway section's
+      "Progression isn't only vertical" callout.
+- [x] `src/data/careers.ts` — removed `trainingPrograms`/`TrainingProgram`;
+      added `whyUsValues` (Respect/Compassion/Quality/Hope, copy verbatim
+      from the Figma, reusing existing icon names).
+- [x] `src/data/testimonial.ts` — added `careersHearQuote` (the
+      pre-"Real voices" original copy, since `homeQuote` now holds the
+      homepage's newer revision).
+- [x] Rewrote `src/app/careers/why-us/page.tsx` in full: hero → breadcrumb
+      → pathway (Timeline + lateral-note callout, both wrapped in the
+      existing `Reveal` scroll-in convention) → `QuoteSection` →
+      `TestimonialPair` → Vision & Values grid (also `Reveal`-wrapped) →
+      featured video (`Reveal`-wrapped) → `CareersCTAStrip`.
+
+## Acceptance criteria
+
+- AC-1 (Overview + Training removed from careers nav): **met.** Verified
+  in-browser: sub-nav shows exactly 5 tabs (was 7), main navbar's mobile
+  Careers submenu has 5 children (was 6), hub page has 5 hub-cards (was 6).
+  `/careers/training` returns 404. Grepped the whole repo post-edit for
+  `careers/training` and `Overview` inside `src/components/careers/` —
+  zero hits.
+- AC-2 (why-us revamped per the Figma): **met.** Verified in-browser
+  section-by-section against the reference screenshot: hero (real photo,
+  highlighted "career.", two CTAs), pathway (5 stages, progressive-bloom
+  icons visibly filling in left-to-right, dashed callout), both quote
+  sections (byte-identical copy to the Figma), Vision & Values (4 cards,
+  correct icons/copy), featured video (James O., large single card), CTA
+  strip (exact gradient + copy match).
+- AC-3 (`how-we-hire` unaffected): **met.** Verified in-browser — its
+  `Timeline` still renders plain numeral badges ("1", "2"...), unchanged.
+- AC-4 (no dangling links): **met.** `benefits` page's CTA strip fixed and
+  verified pointing at `/careers/why-us`.
+
+## Verification
+
+- [x] `npx tsc --noEmit` — exit 0 (one stale `.next` type-validator error
+      referencing the deleted training route, resolved by clearing `.next`
+      — a cache artifact, not a real error).
+- [x] `npm run lint` — exit 0.
+- [x] `npm run build` — exit 0, 21 routes generated (was 22 — training
+      route gone, confirmed absent from the route list).
+- [x] Browser verification: dev server, Chrome. 390/1440/1600px (1600 used
+      specifically to clear the sub-nav's own `1440px` breakpoint token and
+      confirm it renders) — zero overflow at every width, all sections
+      matched against the reference screenshot, nav cleanup confirmed via
+      DOM queries (not just visual spot-checks) on the hub, subnav, and
+      main navbar dropdown.
+
+## Review
+
+Fourteen files touched, two new (`LotusStageIcon.tsx`, the rewritten
+`why-us/page.tsx`). The research-first pass again did most of the work
+before any code was written — of the 8 sections in the new design, 3
+(quote sections, CTA strip, pathway timeline) needed zero new component
+code, only new data fed into existing components, because the client's
+design turned out to reuse copy/gradients/layouts already sitting in the
+codebase from earlier cards. The one genuinely new build — the
+progressive-bloom stage icon — used the real logomark geometry rather than
+a generic icon, per your explicit steer toward the "petals" SVG data,
+and was scoped as a new component specifically so the two shared
+components it's adjacent to (`Timeline`, `LotusMark`) stay exactly as
+every other page already relies on them.
+
+`tasks/lessons.md` not touched — no user correction this round.
+
+---
+
+## #78 follow-up: 5 corrections from user review
+
+Same branch. User caught 5 real defects in the shipped version:
+
+1. **Pathway circles were solid dark teal** — should be white with a
+   dark-teal stroke. Fixed via a new `Timeline` prop,
+   `circleVariant?: "solid" | "outline"` (default `"solid"`, so
+   `how-we-hire`'s existing circles are untouched — verified in-browser
+   after the change, still solid dark teal with white numerals).
+2. **Wrong SVG treatment** — `LotusStageIcon` was rendering every facet
+   flat white, discarding the real per-facet brand colours that were
+   sitting right there in `LOTUS_FACETS` (`lotus-geometry.ts`) the whole
+   time — the same colours `LotusMark tone="color"` uses. Fixed:
+   revealed petals now render in their real `facet.color`; unrevealed
+   ones in a flat muted grey (`--color-neutral-300`) instead of a
+   same-colour opacity fade, so they read clearly as "not yet bloomed"
+   against the now-white circle.
+3. **Last stage wasn't a full bloom** — `BLOOM_ORDER.slice(0, stage)`
+   with 5 stages against 6 petal-groups meant stage 5 only ever revealed
+   5 of 6 — an off-by-one from mapping stage count directly onto group
+   count without checking they matched. Fixed with an explicit
+   `REVEAL_COUNTS = [2, 3, 4, 5, 6]` spread across the 5 stages, so stage
+   5 always resolves to all 6 groups — verified by screenshot, the fifth
+   circle is now visibly the complete, real-colour mark.
+4. **DM Sans wasn't applied anywhere on the page** — despite being
+   explicitly specified in the same Figma export for the hero, both
+   `SectionTitle` headings, the pathway step titles, and the value-card
+   titles, none of it landed in the first pass. Fixed with the same
+   additive-prop pattern used elsewhere this session: `SectionTitle`
+   gained `dmSans?: boolean` (default off, every other caller on the
+   site unaffected), `Timeline` gained `titleClassName?: string`: both
+   confirmed via `getComputedStyle` on the live page, not just visually,
+   that `font-dm-sans` actually resolves to `"DM Sans", ...` — `Careers
+   Hero`'s `h1` got the class directly (applies to every `CareersHero`
+   page, a deliberate, not per-instance, call, since the display font is
+   a heading-level brand choice, not page-specific state like
+   `titleHighlight`). `CareersCTAStrip`'s heading deliberately left
+   alone — the Figma's own CSS specifies Inter for that one heading, not
+   DM Sans, confirmed by re-reading the export rather than assumed.
+5. **"Overview" still reachable** — removed `viewAllHref`/`viewAllLabel`
+   from the Careers entry in `src/data/navigation.ts` (the only two
+   fields controlling that link's render in both `HomesDropdown` and
+   `MobileMenu`, confirmed by reading both before editing) so it no
+   longer appears in either the desktop dropdown or the mobile drawer.
+   Per the user's explicit instruction not to remove the hub page from
+   the actual code, `src/app/careers/page.tsx` itself is untouched
+   except for one added line: an unconditional `redirect("/careers/
+   open-roles")` as the first statement in the component, so the bare
+   `/careers` URL also stops resolving to hub content (confirmed:
+   `curl` returns a 307 to `/careers/open-roles`) — the hub's own
+   JSX/data stays in the file below the redirect, unreachable but not
+   deleted, exactly matching "don't need to remove it on the actual
+   code, but remove it from being accessed."
+
+## Verification
+
+- [x] `npx tsc --noEmit` / `npm run lint` / `npm run build` — all exit 0
+      (one spurious "unused eslint-disable" warning surfaced and was
+      removed — the `no-unreachable` rule doesn't fire on this pattern in
+      this repo's config, confirmed by running lint rather than assumed).
+- [x] Browser, Chrome: pathway circles confirmed white/teal-stroke with
+      real per-facet colours via screenshot; DM Sans confirmed via
+      `getComputedStyle` on 4 separate headings (hero, both `SectionTitle`
+      instances, pathway titles, value-card titles) rather than eyeballed;
+      `/careers` redirect confirmed via `curl`; "Overview" absence
+      confirmed via DOM query on both the desktop dropdown and mobile
+      drawer; `how-we-hire`'s `Timeline` re-confirmed unaffected (solid
+      dark circle, white "1") after the `circleVariant` change.
+
+---
+
+## #78 follow-up: Vision & Values cards — scale up + stagger animation
+
+Same branch. Two small asks: bigger cards, and animation on them (they
+were already inside a `Reveal` but as one block — all 4 faded in
+together with no stagger, unlike every other card grid on the site).
+
+Scaled: `p-6`→`p-8`, icon box `w-12 h-12`→`w-16 h-16` (icon itself
+`w-6 h-6`→`w-8 h-8` via a `[&>svg]:` selector — `getCareersIcon`'s icons
+are hardcoded at a fixed size, so this overrides it per-instance rather
+than changing the shared icon set), title un-sized→`text-lg`,
+description `text-sm`→`text-base`, grid `gap-5`→`gap-6`.
+
+Staggering an entrance animation needs client-side state
+(`useInView`) per card, but `why-us/page.tsx` exports `metadata`, which
+requires it to stay a Server Component — can't add `"use client"` there.
+Extracted a new small client component, `ValuesGrid.tsx`
+(`src/components/careers/values-grid/`), mirroring the exact convention
+`ServiceCard`/`ServicesSection` already use elsewhere: one `useInView`
+on the grid container, each card gets `reveal reveal-delay-{index+1}`
+(the 4 cards land on `reveal-delay-1..4`, `globals.css`'s existing 1-5
+stagger steps) plus the sitewide `card-hover` hover-lift. No new
+animation CSS — reused what's already there and already
+reduced-motion-safe.
+
+## Verification
+
+- [x] `npx tsc --noEmit` / `npm run lint` / `npm run build` — all exit 0.
+- [x] Browser: confirmed via DOM query that each of the 4 cards carries a
+      distinct `reveal-delay-1` through `-4` class (not eyeballed timing);
+      screenshot confirms larger cards/icons; 390px zero overflow.
+
+---
+
+## #78 follow-up: Values cards — white + shadow + hover lift
+
+Same branch. Cards were `bg-neutral-50` with no shadow, styled ad hoc
+rather than against any existing pattern. Matched them to `HubNavCard`'s
+exact classlist (the closest sibling — icon/title/description info card
+in a grid): `bg-white shadow-sm border border-gray-100 hover:shadow-md
+hover:-translate-y-1 transition-all duration-200`.
+
+**One real dead end, corrected before it shipped wrong.** First attempt
+diagnosed the hover lift as broken — `getComputedStyle(el).transform`
+stayed `matrix(1,0,0,1,0,0)` even while `:hover` was confirmed matching —
+and "fixed" it by splitting the card into two nested divs (reveal wrapper
++ hover surface) on the theory that `.reveal.in-view`'s unlayered
+`transform: translateY(0)` was beating Tailwind's layered
+`hover:-translate-y-1` utility. That diagnosis was wrong: Tailwind v4
+compiles `-translate-y-*` to the standalone CSS `translate` property, not
+`transform` — checking `transform` was checking the wrong property
+entirely, there was no real conflict. Caught by re-verifying
+`getComputedStyle(el).translate` (`"0px -4px"` on hover, both before and
+after reverting the split), which confirmed the original single-div
+version already worked correctly. Reverted to one div, matching
+`HubNavCard`'s actual structure exactly — no unnecessary nesting shipped.
+
+## Verification
+
+- [x] `npx tsc --noEmit` / `npm run lint` / `npm run build` — all exit 0.
+- [x] Browser, Chrome: real `:hover` via Playwright (not just CSS
+      inspection) confirmed `translate: 0px -4px` and the shadow
+      escalating from `shadow-sm` to `shadow-md` on the actual rendered
+      card; screenshot shows the hovered card visibly lifted with a
+      shadow against its neighbours; 390px zero overflow.
+
+---
+
+## #78 follow-up: match "Join Our Team" animation, not ServiceCard's
+
+Same branch. User correction: this repo has *two* different reveal
+conventions for card grids — `ServiceCard`/`ServicesSection`'s per-card
+`reveal-delay-{index}` stagger, and `JobCard`/`RecruitmentSection`'s
+single `reveal` around the whole grid (cards only animate via hover, not
+individually on entrance). The values grid had been built against the
+former; the user pointed at the homepage's "Join Our Team" cards
+(`RecruitmentSection`) as the actual comparison point, and asked why it
+didn't match.
+
+Re-read `RecruitmentSection.tsx`/`JobCard.tsx` in full rather than
+guessing from memory. Rebuilt `ValuesGrid` to mirror that pattern
+exactly: one `reveal`/`in-view` on the grid container (no per-card
+`reveal-delay`), and `JobCard`'s literal hover classes
+(`hover:shadow-md hover:-translate-y-0.5 transition-all duration-200`) —
+previously `-translate-y-1` (4px), now `-translate-y-0.5` (2px) to match
+`JobCard`'s actual lift distance, not just its direction.
+
+## Verification
+
+- [x] `npx tsc --noEmit` / `npm run lint` / `npm run build` — all exit 0.
+- [x] Browser: confirmed via DOM query the grid container carries
+      `reveal in-view` (not the individual cards) and each card's
+      classlist is byte-identical to `JobCard`'s hover treatment; real
+      `:hover` confirmed `translate: 0px -2px` (was `-4px` before the
+      fix); 390px zero overflow.

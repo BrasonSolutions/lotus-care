@@ -1,9 +1,12 @@
 "use client";
 
+import type { ReactNode } from "react";
 import { useInView } from "@/hooks/use-in-view";
 
 export interface TimelineStep {
-  number: number | string;
+  /** Usually a number/string badge; accepts any ReactNode (e.g. an icon)
+   * for callers that want something other than a plain numeral. */
+  number: ReactNode;
   title: string;
   description: string;
 }
@@ -12,25 +15,48 @@ export interface TimelineProps {
   steps: TimelineStep[];
   orientation?: "horizontal" | "vertical";
   className?: string;
+  /** "solid" (default, every existing caller's look) is a filled dark-teal
+   * circle with white content. "outline" is a white circle with a
+   * dark-teal ring, for callers whose `number` is a coloured icon that
+   * needs a light background to read against. */
+  circleVariant?: "solid" | "outline";
+  /** Extra classes appended to each step's `h3` title — e.g. `font-dm-sans`
+   * for a caller that wants the brand display font, without changing it
+   * for every other `Timeline` consumer. */
+  titleClassName?: string;
 }
 
 const STAGGER_MS = 90;
 
-export function Timeline({ steps, orientation = "vertical", className = "" }: TimelineProps) {
+const CIRCLE_VARIANT = {
+  solid: "bg-primary-dark text-white",
+  outline: "bg-white border-2 border-primary-dark text-primary-dark",
+} as const;
+
+export function Timeline({
+  steps,
+  orientation = "vertical",
+  className = "",
+  circleVariant = "solid",
+  titleClassName = "",
+}: TimelineProps) {
   const { ref, inView } = useInView();
+  const circleClass = CIRCLE_VARIANT[circleVariant];
 
   const verticalList = (
     <ol className="relative border-l-2 border-primary/30 ml-4 space-y-8">
       {steps.map((step, i) => (
         <li
-          key={step.number}
+          key={step.title}
           className={`relative pl-8 pop-item ${inView ? "in-view" : ""}`}
           style={{ transitionDelay: `${i * STAGGER_MS}ms` }}
         >
-          <span className="absolute -left-4 flex items-center justify-center w-8 h-8 rounded-full bg-primary-dark text-white font-bold text-sm">
+          <span
+            className={`absolute -left-4 flex items-center justify-center w-8 h-8 rounded-full font-bold text-sm ${circleClass}`}
+          >
             {step.number}
           </span>
-          <h3 className="font-semibold text-primary-dark mb-1">{step.title}</h3>
+          <h3 className={`font-semibold text-primary-dark mb-1 ${titleClassName}`}>{step.title}</h3>
           <p className="text-sm text-muted leading-relaxed">{step.description}</p>
         </li>
       ))}
@@ -55,15 +81,19 @@ export function Timeline({ steps, orientation = "vertical", className = "" }: Ti
         >
           {steps.map((step, i) => (
             <li
-              key={step.number}
+              key={step.title}
               className={`flex flex-col items-center text-center pop-item ${inView ? "in-view" : ""}`}
               style={{ transitionDelay: `${i * STAGGER_MS}ms` }}
             >
-              <div className="relative z-10 flex items-center justify-center w-16 h-16 shrink-0 rounded-full bg-primary-dark text-white font-bold text-xl shadow-md">
+              <div
+                className={`relative z-10 flex items-center justify-center w-16 h-16 shrink-0 rounded-full font-bold text-xl shadow-md ${circleClass}`}
+              >
                 {step.number}
               </div>
               <div className="mt-4">
-                <h3 className="font-semibold text-primary-dark mb-1">{step.title}</h3>
+                <h3 className={`font-semibold text-primary-dark mb-1 ${titleClassName}`}>
+                  {step.title}
+                </h3>
                 <p className="text-sm text-foreground leading-relaxed">{step.description}</p>
               </div>
             </li>

@@ -4,6 +4,10 @@ import type { VideoTestimonial } from "@/data/careers";
 interface VideoTestimonialCardProps {
   testimonial: VideoTestimonial;
   accent?: "teal" | "purple";
+  /** Defaults to the 3-column grid's own breakpoints. Pass an override
+   * when the card renders at a different width (e.g. a single large
+   * featured card) so Next doesn't serve an under-resolved image. */
+  sizes?: string;
 }
 
 const BADGE = {
@@ -11,7 +15,13 @@ const BADGE = {
   purple: "bg-purple-600",
 } as const;
 
-export function VideoTestimonialCard({ testimonial, accent = "teal" }: VideoTestimonialCardProps) {
+const DEFAULT_SIZES = "(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw";
+
+export function VideoTestimonialCard({
+  testimonial,
+  accent = "teal",
+  sizes = DEFAULT_SIZES,
+}: VideoTestimonialCardProps) {
   const { name, role, poster, videoSrc, captionsSrc } = testimonial;
 
   return (
@@ -30,7 +40,7 @@ export function VideoTestimonialCard({ testimonial, accent = "teal" }: VideoTest
               src={poster}
               alt={`${name}, ${role} at Lotus Care`}
               fill
-              sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+              sizes={sizes}
               className="object-cover"
             />
             <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
