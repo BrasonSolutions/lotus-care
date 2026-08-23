@@ -2062,3 +2062,190 @@ single-column mobile stacking, real pixel contrast 9.77:1.
 
 `tasks/lessons.md` not touched — no user correction, both findings above
 were self-caught before they reached the user.
+
+---
+
+# Homepage reconciliation against Figma export (#79 / #56)
+
+Branch: `feat/homepage-figma-reconcile` (stacked on `feat/homepage-quote-section`
+— depends on that branch's `homeQuote` data shape, which isn't merged yet).
+
+## Diagnosis
+
+Client sent a full-page CSS export + screenshot from Figma, asking for
+"whatever changes there are" across the whole homepage. Diffed it
+section-by-section against live code (3 parallel research passes) before
+touching anything, because the first check — the About section's "150+"
+Staff Members figure — turned out to be the stale *pre-fix* value (commit
+`7d88da7` already corrected it to "200+" per the client). That proved
+this export is at least partly an older/mixed snapshot, not a clean new
+design, so only genuinely new/different information was acted on.
+
+**Confirmed already matching, zero changes:** About section, Services
+section (all 3 cards), Team section (real roster — issue #57 already
+resolved this), Board section (real 5-member roster), Careers/"Join Our
+Team" section (3 featured jobs), Contact section (form + real contact
+info), Footer.
+
+## Must not break
+
+- C-1: `aboutStats` in `src/app/page.tsx` stays at "200+" — the Figma's
+  "150+" is confirmed stale, not reverted.
+- C-2: `TestimonialPair` (the purple two-up variant from the prior card)
+  untouched — the client's explicit answer was "replace the title and
+  text only, the rest is fine," scoped to `QuoteSection`'s `homeQuote`
+  only.
+- C-3: `HomesCarousel.tsx` itself not rewritten — it already had a
+  non-embedded standalone mode (`embedded` prop, default `false`) that
+  renders exactly the Figma's separate carousel section (own `<section
+  id="homes">`, heading, arrows/dots, "Enquire About Our Homes" CTA) —
+  this was a wiring change (stop passing `embedded`), not new carousel
+  work.
+
+## User's design decisions
+
+- Quote section: keep the current #80 layout/colours exactly as shipped;
+  only swap in the new heading/subtext copy and the real attribution
+  ("JW, Service Owner" / "With Lotus Care since 2018", replacing the
+  "Administrator" placeholder) found in the export.
+- Ireland map: source a real, accurate open-license county map and
+  restyle it to brand — not a pixel clone of the Figma's raw vector
+  (that data isn't reconstructable from CSS position percentages alone).
+- No pins on the map — counties with homes render in a different fill
+  colour instead.
+- County data is client-pending beyond Offaly (the only county
+  confirmable from existing data — HQ address, site's own "Co. Offaly
+  and the Midlands" copy) — built swap-ready, not blocked on.
+
+## Tasks
+
+- [x] 3 parallel research passes confirmed the "already matching"
+      sections above before any edit was made.
+- [x] `src/data/testimonial.ts` — `homeQuote.heading`/`.subtext`/`.name`/
+      `.date` updated to the export's copy and real attribution;
+      `.eyebrow`/`.quote` unchanged (already matched).
+- [x] Sourced "Ireland complete.svg" (Wikimedia Commons, released into
+      the public domain by its author, no attribution required) — 32
+      county boundary paths, but the file's paths carry no id/name
+      attributes of their own. Matched each path to its county name via
+      nearest label-to-path-centroid distance (label layer has real
+      county names + positions; distances came out tight — Mayo 6,
+      Meath 4, Clare 4 units on an 800×1000 canvas — a few looked
+      larger, e.g. Monaghan 97, so **verified by rendering**, not
+      trusted blind: the matched "Offaly" path sits exactly where it
+      should, in the geographic midlands with no coastline).
+- [x] New `src/components/ireland-map/county-paths.ts` — the 32 matched
+      paths + source/method documented in a header comment — and
+      `IrelandMap.tsx`: renders all 32, `highlightedCounties` prop picks
+      the fill (`--color-teal-400` vs `--color-teal-800`), no pins, no
+      labels, `role="img"` + `aria-label` naming the highlighted
+      counties for screen readers since the visual distinction alone
+      wouldn't convey that.
+- [x] New `src/data/homes-map.ts` — `HIGHLIGHTED_COUNTIES` swap-ready
+      config, defaulted to `["Offaly"]`, comment flagging it as
+      client-pending for the full list.
+- [x] `src/components/homes-split-row/HomesSplitRow.tsx` — repurposed:
+      dropped the carousel entirely (moved to its own standalone
+      section), kept the existing video panel (`HOMES_MONTAGE`,
+      untouched, still poster-only), added `IrelandMap` in its place.
+      `id="homes"` moved with the carousel to its new standalone section
+      (via `HomesCarousel`'s own built-in `id="homes"`) — anchor links
+      unaffected.
+- [x] `src/app/page.tsx` — `<HomesSplitRow homes={homes} />` replaced
+      with `<HomesCarousel homes={homes} />` (standalone) directly
+      followed by `<HomesSplitRow />` (now prop-less: video + map only).
+- [x] `stories/sections/HomesSplitRow.stories.tsx` — dropped the now
+      unused `homes` arg.
+
+## Acceptance criteria
+
+- AC-1 (About/Services/Team/Board/Careers/Contact/Footer unchanged):
+  **met** — confirmed via research before implementation, zero edits to
+  any of those files.
+- AC-2 (quote section — copy only, layout/colour untouched): **met.**
+  `QuoteSection.tsx`/`QuoteCard.tsx`/`TestimonialPair.tsx` — zero edits,
+  only `testimonial.ts` data changed.
+- AC-3 (homes carousel split into its own section, unchanged behaviour):
+  **met.** Verified in-browser: still auto-rotates, arrows/dots/modal
+  all work, "Enquire About Our Homes" CTA present — this was `embedded`
+  wiring only, the component itself wasn't touched.
+- AC-4 (video + Ireland map row, no pins, county-colour highlight
+  instead): **met.** Verified in-browser at 390/768/1440px.
+
+## Verification
+
+- [x] `npx tsc --noEmit` — exit 0.
+- [x] `npm run lint` — exit 0.
+- [x] `npm run build` — exit 0 (Next.js 16.2.6, Turbopack, all 22 routes
+      generated).
+- [x] Browser verification: dev server, Chrome. 390/768/1440px: zero
+      page overflow (`scrollWidth - clientWidth = 0` at all three), map
+      renders inside its container at every width, video+map stack
+      correctly on mobile, quote-section copy renders correctly, homes
+      carousel section confirmed still full-width with heading/CTA.
+
+## Review
+
+Five files changed, three new (`IrelandMap.tsx`, `county-paths.ts`,
+`homes-map.ts`). The research-first approach (3 parallel passes before
+any edit) turned what looked like a full-homepage rebuild into a
+5-file change — 7 of 11 sections in the export needed nothing at all,
+and one figure (the stats "150+") would have been a real regression if
+adopted blindly. The map's county-to-path matching used a distance
+heuristic rather than trusted source ids (the source file has none) —
+flagged the larger-distance matches explicitly rather than silently
+trusting the algorithm, and confirmed by rendering before writing the
+matched geometry into the component.
+
+`tasks/lessons.md` not touched — no user correction; the "verify the
+150+ stat before reverting" catch and the map-matching verification were
+both self-driven, not corrections after the fact.
+
+---
+
+## Homepage reconciliation follow-up: the hero was under-checked
+
+Same branch. User correction: the initial reconciliation pass declared
+the hero "already matches, just needed the font" — wrong. Real diffs
+existed that a component-level skim missed entirely:
+
+- **Image**: still the old Unsplash placeholder (`community-friends.jpg`).
+  The user supplied the client's actual chosen photo directly (a Pexels
+  stock image, `pexels-shkrabaanthony-6288114.jpg`) — swapped in as
+  `hero-finger-painting.jpg`, resized 4000×6000 → 1600px wide via
+  `sharp` (already a dependency) to match this repo's other stock-photo
+  file sizes (~130–330KB, was 3.6MB), credited in
+  `public/images/stock/CREDITS.md` (Pexels License, no attribution
+  required, confirmed via the live Pexels page before use).
+- **Heading**: was still split into two colours (`text-accent` on the
+  second phrase) — Figma shows one solid white heading, different
+  wording/casing ("Enhanced living empowering lives.", not "Enhanced
+  Living, Empowered Lives"). Updated copy in `page.tsx` +
+  `HeroSection.stories.tsx`, dropped the accent-colour span, bumped
+  `text-3xl md:text-4xl lg:text-5xl` → `text-4xl md:text-5xl lg:text-6xl`
+  to get closer to the Figma's 55px display size without hardcoding a
+  literal px value.
+- **Subtitle**: had an extra "Co. Offaly and" the Figma's copy doesn't.
+- **Background decoration**: the big rotated bottom-left watermark in
+  the Figma (1069px, opacity 0.06) was being rendered as a small
+  (320px), unrotated, bottom-*right* `LotusMark` (the solid-bloom mark).
+  The Figma's shape — many small disconnected "Vector" pieces in
+  nested "Group"s — matches `LotusMarkAlt`'s construction (a compound
+  outline path), not `LotusMark`'s few solid petal facets. Swapped
+  component, went from `w-80` to `lg:w-[64rem]`, added
+  `rotate-[-23deg]`, repositioned to bottom-left with negative insets
+  so it bleeds off-canvas (matches the reference's off-canvas bleed);
+  `overflow-hidden` on the section (already present) clips it safely.
+  Kept the existing top-right `LotusMarkAlt` untouched — that one
+  already matched the Figma's smaller top-right motif.
+
+Font stayed DM Sans, not the Figma's literal 'Cactus Classical Serif' —
+that substitution was the user's own explicit instruction from an
+earlier message in this session, not a guess, so it wasn't re-litigated
+here.
+
+## Verification
+
+- [x] `npx tsc --noEmit` / `npm run lint` / `npm run build` — all exit 0.
+- [x] Browser: 390/1440px, zero overflow, image/heading/decoration all
+      confirmed visually against the reference screenshot.
