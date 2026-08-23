@@ -29,7 +29,6 @@ export const navItems: NavItem[] = [
       { label: "Open Roles", href: "/careers/open-roles" },
       { label: "Why Work With Us", href: "/careers/why-us" },
       { label: "Benefits", href: "/careers/benefits" },
-      { label: "Training & Development", href: "/careers/training" },
       { label: "How We Hire", href: "/careers/how-we-hire" },
       { label: "Contact Recruitment", href: "/careers/contact" },
     ],

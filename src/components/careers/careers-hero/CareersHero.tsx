@@ -8,9 +8,15 @@ interface CareersHeroStat {
 }
 interface CareersHeroProps {
   title: string;
+  /** Rendered in the accent blossom colour, right after `title`. Only
+   * changes anything when passed — every existing caller keeps today's
+   * plain white title. */
+  titleHighlight?: string;
   subtitle: string;
   ctaLabel?: string;
   ctaHref?: string;
+  secondaryCtaLabel?: string;
+  secondaryCtaHref?: string;
   compact?: boolean;
   image?: string;
   stat?: CareersHeroStat;
@@ -21,9 +27,12 @@ interface CareersHeroProps {
 
 export function CareersHero({
   title,
+  titleHighlight,
   subtitle,
   ctaLabel,
   ctaHref,
+  secondaryCtaLabel,
+  secondaryCtaHref,
   compact = false,
   image,
   stat,
@@ -69,6 +78,7 @@ export function CareersHero({
 
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 animate-fade-up">
               {title}
+              {titleHighlight && <span className="text-blossom"> {titleHighlight}</span>}
             </h1>
             <p
               className="text-lg sm:text-xl text-white/80 animate-fade-up"
@@ -77,13 +87,24 @@ export function CareersHero({
               {subtitle}
             </p>
             {ctaLabel && ctaHref && (
-              <div className="mt-8 animate-fade-up" style={{ animationDelay: "200ms" }}>
+              <div
+                className="mt-8 flex flex-wrap gap-4 animate-fade-up"
+                style={{ animationDelay: "200ms" }}
+              >
                 <a
                   href={ctaHref}
                   className="inline-block bg-white text-primary-dark font-semibold px-8 py-4 rounded-full hover:bg-accent hover:text-white transition-colors focus-ring"
                 >
                   {ctaLabel}
                 </a>
+                {secondaryCtaLabel && secondaryCtaHref && (
+                  <a
+                    href={secondaryCtaHref}
+                    className="inline-block border-2 border-white text-white font-semibold px-8 py-4 rounded-full hover:bg-white/10 transition-colors focus-ring-white"
+                  >
+                    {secondaryCtaLabel}
+                  </a>
+                )}
               </div>
             )}
           </div>
@@ -140,6 +161,7 @@ export function CareersHero({
       <Container className="relative text-center">
         <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 animate-fade-up">
           {title}
+          {titleHighlight && <span className="text-blossom"> {titleHighlight}</span>}
         </h1>
         <p
           className="text-lg sm:text-xl text-white/80 max-w-2xl mx-auto animate-fade-up"
@@ -149,7 +171,7 @@ export function CareersHero({
         </p>
         {ctaLabel && ctaHref && (
           <div
-            className="mt-8 animate-fade-up"
+            className="mt-8 flex flex-wrap justify-center gap-4 animate-fade-up"
             style={{ animationDelay: "200ms" }}
           >
             <a
@@ -158,6 +180,14 @@ export function CareersHero({
             >
               {ctaLabel}
             </a>
+            {secondaryCtaLabel && secondaryCtaHref && (
+              <a
+                href={secondaryCtaHref}
+                className="inline-block border-2 border-white text-white font-semibold px-8 py-4 rounded-full hover:bg-white/10 transition-colors focus-ring-white"
+              >
+                {secondaryCtaLabel}
+              </a>
+            )}
           </div>
         )}
       </Container>

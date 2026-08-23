@@ -39,12 +39,6 @@ const hubCards = [
     href: "/careers/benefits",
   },
   {
-    icon: "academic-cap",
-    title: "Training & Development",
-    description: "Funded training, career progression pathways, and a commitment to your growth.",
-    href: "/careers/training",
-  },
-  {
     icon: "clipboard-list",
     title: "How We Hire",
     description: "Understand our recruitment process and get answers to common questions.",

@@ -1,9 +1,12 @@
 "use client";
 
+import type { ReactNode } from "react";
 import { useInView } from "@/hooks/use-in-view";
 
 export interface TimelineStep {
-  number: number | string;
+  /** Usually a number/string badge; accepts any ReactNode (e.g. an icon)
+   * for callers that want something other than a plain numeral. */
+  number: ReactNode;
   title: string;
   description: string;
 }
@@ -23,7 +26,7 @@ export function Timeline({ steps, orientation = "vertical", className = "" }: Ti
     <ol className="relative border-l-2 border-primary/30 ml-4 space-y-8">
       {steps.map((step, i) => (
         <li
-          key={step.number}
+          key={step.title}
           className={`relative pl-8 pop-item ${inView ? "in-view" : ""}`}
           style={{ transitionDelay: `${i * STAGGER_MS}ms` }}
         >
@@ -55,7 +58,7 @@ export function Timeline({ steps, orientation = "vertical", className = "" }: Ti
         >
           {steps.map((step, i) => (
             <li
-              key={step.number}
+              key={step.title}
               className={`flex flex-col items-center text-center pop-item ${inView ? "in-view" : ""}`}
               style={{ transitionDelay: `${i * STAGGER_MS}ms` }}
             >

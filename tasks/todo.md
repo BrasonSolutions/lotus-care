@@ -2249,3 +2249,188 @@ here.
 - [x] `npx tsc --noEmit` / `npm run lint` / `npm run build` — all exit 0.
 - [x] Browser: 390/1440px, zero overflow, image/heading/decoration all
       confirmed visually against the reference screenshot.
+
+---
+
+# #78: Merge Training into Why Work With Us, remove Overview tab
+
+Branch: `feat/careers-why-us-revamp`.
+
+## Diagnosis
+
+Client sent a Figma CSS export + screenshot for a revamped `/careers/why-us`
+page, plus explicit instructions: remove "Overview" and "Training" from the
+careers navigation, delete the training page. This is issue #78 (long
+deferred, "Combine Training & Why Work With Us in Careers Hub") — the
+client's design finally answers it: the training page's career-pathway
+timeline and "Invest in Your Future" CTA move into `why-us`; its
+mandatory/professional/leadership training-card grid does not carry over —
+confirmed by the Figma export itself (that block is `display: none` in the
+source, not just visually absent from the screenshot).
+
+Two parallel research passes (careers nav/hub/training/CTA-strip;
+video-testimonials + a search for the new "Vision & Values" content)
+confirmed every reused piece below against the actual current code before
+any edit — several pieces turned out to be exact or near-exact matches
+already sitting in the codebase, not new builds:
+
+- `CareersHero`'s image-variant overlay gradient already matches the
+  Figma's stops.
+- `CareersCTAStrip`'s existing `tone="teal"` gradient
+  (`from-teal-800 to-primary-dark` = `#094a4e`→`#0d6a70`) is an *exact*
+  match to the Figma's `linear-gradient(90deg, #094A4E, #0D6A70)` — zero
+  component changes needed there.
+- `Timeline` (`orientation="horizontal"`) is literally the training page's
+  own "Career Progression Pathway" component — reused as-is, just fed 5
+  stages instead of 4.
+- `QuoteSection`/`TestimonialPair` (built earlier this session for the
+  homepage) — the Figma's two quote-section instances are, respectively,
+  the *original* pre-edit `homeQuote` copy (now living in this page's own
+  new `careersHearQuote` export, since `homeQuote` itself moved on to the
+  homepage's newer "Real voices" copy) and the *exact* existing
+  `teamTestimonials` data, verbatim. Zero new quote-section component
+  work.
+- `VideoTestimonialCard`'s fixed-px play-button/badge sizing coincidentally
+  already matches the Figma's numbers at the much larger "featured video"
+  size it's now used at.
+- All 4 "Vision & Values" icons (Respect/Compassion/Quality/Hope) already
+  exist in `careers-icons.tsx`'s dispatch (`user-circle`/`heart`/
+  `shield-check`/`user-group`) — same icons `companyValues` already uses
+  for a different, unrelated value set.
+
+## Must not break
+
+- C-1: `src/components/timeline/Timeline.tsx` is also used by
+  `careers/how-we-hire` — confirmed via grep before touching it. The one
+  change made (`TimelineStep.number: number | string` →
+  `ReactNode`, to accept an icon) is a pure type-widening, zero behaviour
+  change; `how-we-hire` still passes plain strings and still renders plain
+  numeral badges — verified in-browser after the change, not just assumed.
+- C-2: `LotusMark`/`LotusMarkAlt` untouched — the progressive-bloom stage
+  icon is a new, separate component (`LotusStageIcon`), not a prop bolted
+  onto the shared mark components every other page also uses.
+- C-3: `CareersHero`'s new `titleHighlight`/`secondaryCtaLabel`/
+  `secondaryCtaHref` props are additive-only (undefined unless passed) —
+  every other existing caller (`/careers`, `/careers/benefits` — training's
+  own call is now deleted along with the page) keeps its exact current
+  render, unverified by inspection alone: confirmed by reading each
+  remaining caller's props after the change, none pass the new props.
+- C-4: `VideoTestimonialCard`'s new `sizes` prop defaults to the exact
+  previous hardcoded value — the 3-up "In Their Own Words" grid pattern
+  isn't used on this page anymore (per your answer, only James O. features
+  here), but the component itself still behaves identically if reused
+  elsewhere at the old grid size.
+- C-5: `cultureGalleryImages`, `employerStats`, `testimonials` (the 4-person
+  "Hear From Our Team" set) — all dropped from this page's render (not in
+  the new design) but deliberately left in `src/data/careers.ts`, not
+  deleted — real content, just not rendered here anymore.
+- C-6: The hub page's own "Our Values" section (`companyValues` —
+  Person-Centred/Compassionate/Accountable/Inclusive) is explicitly flagged
+  in `docs/build-plan.md` as deferred/placeholder content the client said
+  would change — a separate, out-of-scope page. Not touched.
+
+## Tasks
+
+- [x] Navigation cleanup: removed the `Overview` entry from
+      `CareersSubnav.tsx`'s `links` (no `/careers/overview` route exists —
+      it was a nav label pointing at the hub, confirmed by directory
+      listing before removing); removed `Training` from the same list, from
+      `CareersBreadcrumb.tsx`'s `pageLabels`, from the hub page's
+      `hubCards`, and from the main navbar's mobile "Careers" submenu
+      (`src/data/navigation.ts`).
+- [x] Deleted `src/app/careers/training/` and `trainingPrograms`/
+      `TrainingProgram` from `src/data/careers.ts` (confirmed via grep: used
+      only by the deleted page).
+- [x] Fixed the one dangling internal link found during research —
+      `careers/benefits`'s CTA strip pointed `secondaryHref` at
+      `/careers/training`; repointed to `/careers/why-us` with a new label
+      ("Career Growth") matching where the progression content now lives.
+- [x] `CareersHero.tsx` — added `titleHighlight` (renders in
+      `text-blossom`), `secondaryCtaLabel`/`secondaryCtaHref`, in both the
+      image and no-image render branches for consistency.
+- [x] `VideoTestimonialCard.tsx` — added optional `sizes` prop, default
+      preserves current behaviour exactly.
+- [x] `Timeline.tsx` — widened `TimelineStep.number` to `ReactNode`;
+      fixed the two `key={step.number}` usages to `key={step.title}` since
+      a ReactNode isn't a valid React key.
+- [x] New `src/components/lotus-mark/LotusStageIcon.tsx` — renders
+      `LOTUS_FACETS` (the real logomark geometry, already grouped into 6
+      petals by the existing `.lotus-bloom` CSS animation's own reveal
+      order: center → bottom → left/right → upper-left/upper-right) at a
+      `stage` 1–5, filling that many groups white at full opacity and the
+      rest at 0.25 — literal "career blooms in stages," using real brand
+      geometry rather than a generic icon, per your explicit answer to use
+      the same SVG the logo is already split into petals from.
+      Self-review: initially assumed a `white circle + border` badge style
+      to match the Figma pixel-for-pixel, which would have required
+      modifying `Timeline`'s circle styling; reused `Timeline`'s existing
+      solid-teal circle unchanged instead (icon renders in white on it) —
+      keeps `Timeline` untouched beyond the one type change, a closer
+      "spirit not pixel clone" match to this repo's established precedent
+      (the Ireland map, the hero decorative mark) than modifying a
+      component two pages share.
+- [x] `careers-icons.tsx` — added a `clock` icon for the pathway section's
+      "Progression isn't only vertical" callout.
+- [x] `src/data/careers.ts` — removed `trainingPrograms`/`TrainingProgram`;
+      added `whyUsValues` (Respect/Compassion/Quality/Hope, copy verbatim
+      from the Figma, reusing existing icon names).
+- [x] `src/data/testimonial.ts` — added `careersHearQuote` (the
+      pre-"Real voices" original copy, since `homeQuote` now holds the
+      homepage's newer revision).
+- [x] Rewrote `src/app/careers/why-us/page.tsx` in full: hero → breadcrumb
+      → pathway (Timeline + lateral-note callout, both wrapped in the
+      existing `Reveal` scroll-in convention) → `QuoteSection` →
+      `TestimonialPair` → Vision & Values grid (also `Reveal`-wrapped) →
+      featured video (`Reveal`-wrapped) → `CareersCTAStrip`.
+
+## Acceptance criteria
+
+- AC-1 (Overview + Training removed from careers nav): **met.** Verified
+  in-browser: sub-nav shows exactly 5 tabs (was 7), main navbar's mobile
+  Careers submenu has 5 children (was 6), hub page has 5 hub-cards (was 6).
+  `/careers/training` returns 404. Grepped the whole repo post-edit for
+  `careers/training` and `Overview` inside `src/components/careers/` —
+  zero hits.
+- AC-2 (why-us revamped per the Figma): **met.** Verified in-browser
+  section-by-section against the reference screenshot: hero (real photo,
+  highlighted "career.", two CTAs), pathway (5 stages, progressive-bloom
+  icons visibly filling in left-to-right, dashed callout), both quote
+  sections (byte-identical copy to the Figma), Vision & Values (4 cards,
+  correct icons/copy), featured video (James O., large single card), CTA
+  strip (exact gradient + copy match).
+- AC-3 (`how-we-hire` unaffected): **met.** Verified in-browser — its
+  `Timeline` still renders plain numeral badges ("1", "2"...), unchanged.
+- AC-4 (no dangling links): **met.** `benefits` page's CTA strip fixed and
+  verified pointing at `/careers/why-us`.
+
+## Verification
+
+- [x] `npx tsc --noEmit` — exit 0 (one stale `.next` type-validator error
+      referencing the deleted training route, resolved by clearing `.next`
+      — a cache artifact, not a real error).
+- [x] `npm run lint` — exit 0.
+- [x] `npm run build` — exit 0, 21 routes generated (was 22 — training
+      route gone, confirmed absent from the route list).
+- [x] Browser verification: dev server, Chrome. 390/1440/1600px (1600 used
+      specifically to clear the sub-nav's own `1440px` breakpoint token and
+      confirm it renders) — zero overflow at every width, all sections
+      matched against the reference screenshot, nav cleanup confirmed via
+      DOM queries (not just visual spot-checks) on the hub, subnav, and
+      main navbar dropdown.
+
+## Review
+
+Fourteen files touched, two new (`LotusStageIcon.tsx`, the rewritten
+`why-us/page.tsx`). The research-first pass again did most of the work
+before any code was written — of the 8 sections in the new design, 3
+(quote sections, CTA strip, pathway timeline) needed zero new component
+code, only new data fed into existing components, because the client's
+design turned out to reuse copy/gradients/layouts already sitting in the
+codebase from earlier cards. The one genuinely new build — the
+progressive-bloom stage icon — used the real logomark geometry rather than
+a generic icon, per your explicit steer toward the "petals" SVG data,
+and was scoped as a new component specifically so the two shared
+components it's adjacent to (`Timeline`, `LotusMark`) stay exactly as
+every other page already relies on them.
+
+`tasks/lessons.md` not touched — no user correction this round.
