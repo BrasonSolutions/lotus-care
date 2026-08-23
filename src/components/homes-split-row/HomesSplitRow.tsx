@@ -1,11 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import type { Home } from "@/data/homes";
 import { usePrefersReducedMotion } from "@/hooks/use-in-view";
-import { SectionTitle } from "@/components/section-title";
 import { Container } from "@/components/layout";
-import { HomesCarousel } from "@/components/homes-carousel";
+import { IrelandMap } from "@/components/ireland-map";
+import { HIGHLIGHTED_COUNTIES } from "@/data/homes-map";
 
 interface HomesMontage {
   /** Absolute path under /public, e.g. "/videos/homes-montage.mp4". Left
@@ -23,27 +22,18 @@ const HOMES_MONTAGE: HomesMontage = {
   alt: "Exterior of one of Lotus Care's eight homes",
 };
 
-interface HomesSplitRowProps {
-  homes: Home[];
-}
-
 /**
- * Full-width "Our Homes" row: a muted autoplay video montage (poster-only
- * until the client supplies the file) on the left, the existing homes
- * carousel — resized to its half, fully interactive — on the right.
- * Stacks to video-over-carousel below `lg`.
+ * Full-width row beneath the homes carousel: a muted autoplay video montage
+ * (poster-only until the client supplies the file) on the left, a brand-
+ * coloured map of Ireland highlighting the counties with Lotus Care homes
+ * on the right. Stacks to video-over-map below `lg`.
  */
-export function HomesSplitRow({ homes }: HomesSplitRowProps) {
+export function HomesSplitRow() {
   const prefersReducedMotion = usePrefersReducedMotion();
 
   return (
-    <section id="homes" className="py-20 lg:py-28 bg-white">
+    <section className="py-20 lg:py-28 bg-white">
       <Container>
-        <SectionTitle
-          title="Our Homes"
-          subtitle="Unique homes across Co. Offaly and the Midlands, each designed to feel like home."
-        />
-
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-24 items-center">
           <div className="relative rounded-2xl overflow-hidden aspect-[3/2] min-w-0 after:content-[''] after:absolute after:inset-0 after:z-10 after:rounded-2xl after:border-4 after:border-primary after:pointer-events-none before:content-[''] before:absolute before:inset-2 before:z-10 before:rounded-xl before:border before:border-dashed before:border-teal-300 before:pointer-events-none">
             {HOMES_MONTAGE.src ? (
@@ -69,13 +59,11 @@ export function HomesSplitRow({ homes }: HomesSplitRowProps) {
             )}
           </div>
 
-          {/* min-w-0: without an explicit minimum, this grid item's
-              automatic min-width defaults to its content size — the
-              carousel's horizontally-scrolling card row would otherwise
-              force the grid track (and its sibling) wider instead of
-              scrolling within it. */}
           <div className="min-w-0">
-            <HomesCarousel homes={homes} embedded />
+            <IrelandMap
+              highlightedCounties={HIGHLIGHTED_COUNTIES}
+              className="w-full h-auto max-h-[28rem] mx-auto"
+            />
           </div>
         </div>
       </Container>
