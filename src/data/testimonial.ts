@@ -1,8 +1,45 @@
-// Issue #55. Source: "JW My Journey - JW - 29.06.26.docx" in the client's
-// Drive (Testemonials (Service Owners)). The full piece runs ~1,000 words;
-// this is its opening paragraph, verbatim and unedited. Attribution is still
-// open — the source document identifies the author only by the initials "JW".
-export const serviceOwnerTestimonial = {
-  heading: "Service Owner Testimonial - JW",
-  body: "When I first moved to Pine Lodge with Lotus Care, I was nervous because everything was new to me. I left my family behind and didn't know anybody. The staff were kind, friendly, and caring and gave me their time, sitting and talking to me. They really wanted to get to know me. They helped me settle into my new home. They listened to me and supported me with the things that were important to me. They helped me fill my day as my whole routine what I was used to had all changed. They encouraged me to make choices about my day-to-day life, and made sure I felt a part of my home.",
+// Issue #55/#80. Quote text source: "JW My Journey - JW - 29.06.26.docx" in
+// the client's Drive (Testemonials (Service Owners)). The full piece runs
+// ~1,000 words; this is its opening paragraph, verbatim and unedited.
+// Attribution is still open — the source document identifies the author
+// only by the initials "JW". "Administrator" / the date are the Figma
+// design's own figcaption values, kept as-is pending real attribution.
+export interface QuoteEntry {
+  quote: string;
+  name: string;
+  date: string;
+}
+
+export interface HomeQuote extends QuoteEntry {
+  eyebrow: string;
+  heading: string;
+  subtext: string;
+}
+
+export const homeQuote: HomeQuote = {
+  eyebrow: "People of Lotus",
+  heading: "Hear it from our own.",
+  subtext: "Our colleagues are the drive of everything we work for.",
+  quote:
+    "When I first moved to Pine Lodge with Lotus Care, I was nervous because everything was new to me. I left my family behind and didn't know anybody. The staff were kind, friendly, and caring and gave me their time, sitting and talking to me. They really wanted to get to know me. They helped me settle into my new home. They listened to me and supported me with the things that were important to me. They helped me fill my day as my whole routine what I was used to had all changed. They encouraged me to make choices about my day-to-day life, and made sure I felt a part of my home.",
+  name: "Administrator",
+  date: "10th June 2026",
 };
+
+// #80's second Figma variant — purple band, two testimonials side by side.
+// Attribution/dates as given in the design; swap in real names if/when the
+// client supplies them.
+export const teamTestimonials: [QuoteEntry, QuoteEntry] = [
+  {
+    quote:
+      "I have had the pleasure of working alongside this care company and have consistently been impressed by the high standard of support provided to individuals with additional needs. The team is compassionate, dedicated, and genuinely committed to promoting independence, dignity, and wellbeing for every person they support.",
+    name: "Team Leader",
+    date: "10th June 2026",
+  },
+  {
+    quote:
+      "I have been working in Social Care for many years and joined Lotus Care over two years ago. From the beginning, I have felt supported both professionally and personally. The company has helped me progress in my career and has always been flexible when I needed support to balance my home life and work commitments.",
+    name: "Person in Charge",
+    date: "9th June 2026",
+  },
+];
