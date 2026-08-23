@@ -114,7 +114,7 @@ export default function WhyUsPage() {
       {/* Featured video */}
       <section className="py-16 sm:py-20 bg-white">
         <Container>
-          <SectionTitle dmSans title="Hear from our own" />
+          <SectionTitle dmSans title="Lotus Stories" />
           <Reveal className="max-w-3xl mx-auto">
             <VideoTestimonialCard
               testimonial={featuredVideo}
