@@ -181,27 +181,40 @@ export function HomesCarousel({
             </div>
           </div>
 
-          {/* Dots — larger tap targets */}
+          {/* Dots — one per home, except the last few collapse onto a
+              single shared dot. At this card width there isn't enough
+              scrollable track left for each of the final few cards to
+              reach its own distinct scroll position, so their individual
+              dots could never light up on their own — showing fewer dots
+              here matches what's actually reachable. */}
           <div className="flex justify-center gap-2 mt-6">
-            {homes.map((home, i) => (
-              <button
-                key={home.name}
-                onClick={() => {
-                  pauseAutoScroll();
-                  scrollToIndex(i);
-                }}
-                className="p-1 focus-ring rounded-full"
-                aria-label={`Go to ${home.name}`}
-              >
-                <span
-                  className={`block rounded-full transition-all ${
-                    i === activeIndex
-                      ? "bg-primary w-8 h-4"
-                      : "bg-gray-300 hover:bg-gray-400 w-4 h-4"
-                  }`}
-                />
-              </button>
-            ))}
+            {(() => {
+              const dotCount = Math.max(1, homes.length - 2);
+              return Array.from({ length: dotCount }, (_, i) => {
+                const isLast = i === dotCount - 1;
+                const targetIndex = isLast ? homes.length - 1 : i;
+                const isActive = isLast ? activeIndex >= dotCount - 1 : activeIndex === i;
+                return (
+                  <button
+                    key={homes[targetIndex].name}
+                    onClick={() => {
+                      pauseAutoScroll();
+                      scrollToIndex(targetIndex);
+                    }}
+                    className="p-1 focus-ring rounded-full"
+                    aria-label={`Go to ${homes[targetIndex].name}`}
+                  >
+                    <span
+                      className={`block rounded-full transition-all ${
+                        isActive
+                          ? "bg-primary w-8 h-4"
+                          : "bg-gray-300 hover:bg-gray-400 w-4 h-4"
+                      }`}
+                    />
+                  </button>
+                );
+              });
+            })()}
           </div>
 
           {/* CTA */}
