@@ -38,14 +38,14 @@ export function AboutSection({ title, subtitle, paragraphs, stats }: AboutSectio
                   a pattern. The saturated tones sit toward the middle; only
                   the pale ones reach the radius the values ride at, which is
                   what keeps the teal-700 text above WCAG AA. */}
-              <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-                <div className="absolute left-[6%] top-[18%] h-28 w-28 rounded-full bg-teal-300/75 blur-2xl" />
-                <div className="absolute left-[34%] top-[4%] h-16 w-16 rounded-full bg-purple-300/55 blur-2xl" />
-                <div className="absolute right-[10%] top-[30%] h-24 w-24 rounded-full bg-teal-200/80 blur-2xl" />
-                <div className="absolute left-[30%] top-[38%] h-24 w-24 rounded-full bg-teal-500/50 blur-2xl" />
-                <div className="absolute right-[26%] bottom-[30%] h-20 w-20 rounded-full bg-purple-400/38 blur-2xl" />
-                <div className="absolute left-[14%] bottom-[12%] h-32 w-32 rounded-full bg-teal-400/60 blur-3xl" />
-                <div className="absolute right-[8%] bottom-[8%] h-24 w-24 rounded-full bg-purple-200/65 blur-2xl" />
+              <div className="absolute -inset-16 pointer-events-none" aria-hidden="true">
+                <div className="absolute left-[2%] top-[10%] h-40 w-40 rounded-full bg-teal-300/90 blur-3xl" />
+                <div className="absolute left-[38%] -top-[4%] h-24 w-24 rounded-full bg-purple-300/70 blur-2xl" />
+                <div className="absolute right-[2%] top-[22%] h-36 w-36 rounded-full bg-teal-200/95 blur-3xl" />
+                <div className="absolute left-[34%] top-[40%] h-32 w-32 rounded-full bg-teal-500/60 blur-3xl" />
+                <div className="absolute right-[20%] bottom-[26%] h-28 w-28 rounded-full bg-purple-400/45 blur-2xl" />
+                <div className="absolute left-[8%] bottom-[4%] h-44 w-44 rounded-full bg-teal-400/75 blur-3xl" />
+                <div className="absolute right-[4%] -bottom-[2%] h-32 w-32 rounded-full bg-purple-200/85 blur-3xl" />
               </div>
               <div
                 className="absolute inset-6 rounded-full border border-teal-400/30"
