@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { ServicesSection } from "@/components/services-section";
-import { services } from "@/data/services";
+import { services, enhanceServices } from "@/data/services";
 
 const meta: Meta<typeof ServicesSection> = {
   title: "Sections/ServicesSection",
@@ -8,7 +8,21 @@ const meta: Meta<typeof ServicesSection> = {
   parameters: { layout: "fullscreen" },
   tags: ["autodocs"],
   args: {
-    services,
+    groups: [
+      {
+        title: "Our Services",
+        subtitle:
+          "Comprehensive disability support services designed around each individual's needs and aspirations.",
+        services,
+      },
+      {
+        id: "how-we-enhance",
+        title: "How We Enhance Our Services",
+        subtitle:
+          "The multidisciplinary expertise, model of care and governance that sit behind every service we deliver.",
+        services: enhanceServices,
+      },
+    ],
   },
 };
 export default meta;

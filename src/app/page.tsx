@@ -68,12 +68,22 @@ export default function Home() {
           paragraphs={aboutParagraphs}
           stats={aboutStats}
         />
-        <ServicesSection services={services} />
         <ServicesSection
-          id="how-we-enhance"
-          title="How We Enhance Our Services"
-          subtitle="The multidisciplinary expertise, model of care and governance that sit behind every service we deliver."
-          services={enhanceServices}
+          groups={[
+            {
+              title: "Our Services",
+              subtitle:
+                "Comprehensive disability support services designed around each individual's needs and aspirations.",
+              services,
+            },
+            {
+              id: "how-we-enhance",
+              title: "How We Enhance Our Services",
+              subtitle:
+                "The multidisciplinary expertise, model of care and governance that sit behind every service we deliver.",
+              services: enhanceServices,
+            },
+          ]}
         />
         <QuoteSection quote={homeQuote} />
         <HomesCarousel homes={homes} />
