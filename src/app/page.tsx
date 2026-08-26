@@ -36,7 +36,6 @@ const aboutParagraphs = [
 const aboutStats = [
   { value: "12", label: "Care Homes" },
   { value: "200+", label: "Staff Members" },
-  { value: "25+", label: "Lives Supported" },
   { value: "24/7", label: "Care Available" },
 ];
 
