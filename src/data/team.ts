@@ -7,15 +7,8 @@ export interface TeamMember {
   image?: string;
 }
 
-export interface BoardMember {
-  name: string;
-  role: string;
-  bio: string;
-  initials: string;
-  image?: string;
-}
-
 export const departments = [
+  "Board",
   "Management",
   "Services",
   "Quality",
@@ -187,10 +180,11 @@ export const teamMembers: TeamMember[] = [
   },
 ];
 
-export const boardMembers: BoardMember[] = [
+export const boardMembers: TeamMember[] = [
   {
     name: "Tony O'Brien",
     role: "Chairman",
+    department: "Board",
     bio: "Tony is the former Director General of Ireland's Health Service Executive (HSE), responsible for the country's healthcare and social services. He was previously Chief Advisor to the HSE on implementing the National Cancer Control Strategy and Chairman of the National Cancer Registry Board. He was the founding CEO of the National Screening Service. He is Adjunct Associate Professor with Trinity College Dublin School of Medicine lecturing on health strategy. Tony serves on a number of health sector related boards in Ireland and internationally and is a Chartered Director.",
     initials: "TO",
     image: "/images/staff/Tony-OBrien.webp",
@@ -198,6 +192,7 @@ export const boardMembers: BoardMember[] = [
   {
     name: "David Corboy",
     role: "CEO",
+    department: "Board",
     bio: "David Corboy has 20 years experience in the private healthcare sector. Over this time David has overseen the delivery of services to vulnerable adults and has built a reputation for compliance in all areas of regulated services. David has vast experience in understanding the regulatory aspects that come with providing social care in Ireland.",
     initials: "DC",
     image: "/images/staff/David-Corboy.png",
@@ -205,6 +200,7 @@ export const boardMembers: BoardMember[] = [
   {
     name: "Madeline Corboy",
     role: "CEO",
+    department: "Board",
     bio: "Madeline Corboy is an NMBI registered nurse. Madeline is an Intellectual disability trained Nurse with 25 years of experience working with Children & Adults in various different settings. Madeline has a passion for delivering the highest standards of care in particular focusing on socialisation and inclusion as part of the overall care and wellbeing of each service user. Madeline has a strong track record in developing structures which delivers person centred care that ensures each person can reach their individual potential and goals.",
     initials: "MC",
     image: "/images/staff/Madeline-Corboy.jpg",
@@ -212,6 +208,7 @@ export const boardMembers: BoardMember[] = [
   {
     name: "Brendan O'Sullivan",
     role: "Board Member",
+    department: "Board",
     bio: "Brendan brings extensive expertise to the board of Lotus Care, with a background in property, banking and finance law. Qualifying as a solicitor in 2010, he has served as Corporate Counsel for national and international entities, gaining significant experience in legal, compliance and financial management. Following on from a successful legal career, Brendan now represents and manages direct equity investments for family offices, offering strategic oversight to drive sustainable growth.",
     initials: "BO",
     image: "/images/staff/Brendan-OSullivan.webp",
@@ -219,6 +216,7 @@ export const boardMembers: BoardMember[] = [
   {
     name: "Louise Nieman",
     role: "Board Member",
+    department: "Board",
     bio: "Louise Niemann is a seasoned financial executive with over 25 years of experience in leading financial operations and building high-performance teams. She has a proven track record of executing sustainable growth strategies that prioritize excellent customer and client outcomes.\n\nLouise's career includes notable positions at Deloitte, JP Morgan, and New Look PLC. At The City Bin Co, a private equity-backed business, she served as CFO and played a pivotal role in its successful acquisition by a competitor in 2023.\n\nLouise holds an MBA from London Business School and is a qualified Chartered Accountant.",
     initials: "LN",
     image: "/images/staff/Louise-Niemann.webp",

@@ -10,9 +10,10 @@ interface LotusPhotoMaskProps extends ComponentPropsWithoutRef<"div"> {
 /**
  * Soft lotus-inspired clip mask for photos. Wraps children (an `<Image
  * fill>` or an initials-fallback div) rather than taking `src`/`alt`
- * directly, so it can drop into existing photo-wrapper patterns (see
- * TeamCard/BoardSection/TeamModal) without restructuring their fallback
- * logic. Each instance gets a unique clipPath id via `useId()` — a shared
+ * directly, so it can drop into existing photo-wrapper patterns without
+ * restructuring their fallback logic. No longer used by the team cards
+ * (issue #94 moved those to a rounded square); kept as a brand primitive,
+ * see its Storybook entry. Each instance gets a unique clipPath id via `useId()` — a shared
  * static id would break when multiple masked photos render at once (e.g.
  * a grid of team members).
  *
