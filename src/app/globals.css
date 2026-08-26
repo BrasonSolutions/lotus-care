@@ -464,37 +464,3 @@ body {
   }
 }
 
-/* Halo behind the stat orbit (#87 follow-up). One conic sweep through the
-   brand palette — the logo's teal range plus a turn through the brand
-   purple — masked into a soft donut so it fades in and out at both edges
-   rather than ending on a line.
-   It sits *inside* the value ring on purpose: the values are teal-700 text
-   riding at r≈136px, and the saturated tones would drop them under WCAG AA
-   if the halo reached that far. Colour in the core, clear air under the
-   text. */
-.stat-orbit-halo {
-  background: conic-gradient(
-    from 210deg,
-    color-mix(in oklab, var(--color-teal-700) 70%, transparent) 0%,
-    color-mix(in oklab, var(--color-teal-500) 72%, transparent) 18%,
-    color-mix(in oklab, var(--color-teal-300) 70%, transparent) 36%,
-    color-mix(in oklab, var(--color-teal-100) 78%, transparent) 52%,
-    color-mix(in oklab, var(--color-purple-200) 62%, transparent) 70%,
-    color-mix(in oklab, var(--color-purple-400) 55%, transparent) 84%,
-    color-mix(in oklab, var(--color-teal-700) 70%, transparent) 100%
-  );
-  -webkit-mask: radial-gradient(
-    closest-side,
-    transparent 18%,
-    #000 44%,
-    #000 68%,
-    transparent 98%
-  );
-  mask: radial-gradient(
-    closest-side,
-    transparent 18%,
-    #000 44%,
-    #000 68%,
-    transparent 98%
-  );
-}

@@ -32,10 +32,21 @@ export function AboutSection({ title, subtitle, paragraphs, stats }: AboutSectio
           {/* Stats orbit — values circle slowly and swell on the left (issue #87) */}
           <div className={`reveal reveal-delay-2 ${inView ? "in-view" : ""}`}>
             <div className="relative mx-auto w-64 h-64 lg:w-80 lg:h-80 [--orbit-r:6.5rem] lg:[--orbit-r:8.5rem] [--orbit-dur:36s]">
-              <div
-                className="stat-orbit-halo absolute inset-8 rounded-full blur-xl opacity-80 pointer-events-none"
-                aria-hidden="true"
-              />
+              {/* Soft pools in the brand tones, scattered around the rotation
+                  rather than laid out on a ring (issue #87). Hand-placed at
+                  irregular positions and sizes so they read as drift, not as
+                  a pattern. The saturated tones sit toward the middle; only
+                  the pale ones reach the radius the values ride at, which is
+                  what keeps the teal-700 text above WCAG AA. */}
+              <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+                <div className="absolute left-[6%] top-[18%] h-28 w-28 rounded-full bg-teal-300/75 blur-2xl" />
+                <div className="absolute left-[34%] top-[4%] h-16 w-16 rounded-full bg-purple-300/55 blur-2xl" />
+                <div className="absolute right-[10%] top-[30%] h-24 w-24 rounded-full bg-teal-200/80 blur-2xl" />
+                <div className="absolute left-[30%] top-[38%] h-24 w-24 rounded-full bg-teal-500/50 blur-2xl" />
+                <div className="absolute right-[26%] bottom-[30%] h-20 w-20 rounded-full bg-purple-400/38 blur-2xl" />
+                <div className="absolute left-[14%] bottom-[12%] h-32 w-32 rounded-full bg-teal-400/60 blur-3xl" />
+                <div className="absolute right-[8%] bottom-[8%] h-24 w-24 rounded-full bg-purple-200/65 blur-2xl" />
+              </div>
               <div
                 className="absolute inset-6 rounded-full border border-teal-400/30"
                 aria-hidden="true"
