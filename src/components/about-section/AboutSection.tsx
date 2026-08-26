@@ -41,18 +41,38 @@ export function AboutSection({ title, subtitle, paragraphs, stats }: AboutSectio
                   the pale ones reach the radius the values ride at, which is
                   what keeps the teal-700 text above WCAG AA. */}
               <div className="absolute -inset-20 pointer-events-none" aria-hidden="true">
-                <div className="absolute -left-[4%] top-[6%] h-48 w-48 rounded-full bg-teal-300 blur-3xl" />
-                <div className="absolute left-[40%] -top-[8%] h-28 w-28 rounded-full bg-purple-300/90 blur-2xl" />
-                <div className="absolute -right-[4%] top-[16%] h-44 w-44 rounded-full bg-teal-200 blur-3xl" />
-                <div className="absolute left-[36%] top-[42%] h-28 w-28 rounded-full bg-teal-400/70 blur-3xl" />
-                <div className="absolute -right-[6%] bottom-[30%] h-36 w-36 rounded-full bg-purple-300/80 blur-3xl" />
-                <div className="absolute -left-[6%] -bottom-[4%] h-52 w-52 rounded-full bg-teal-400 blur-3xl" />
-                <div className="absolute right-[2%] -bottom-[8%] h-40 w-40 rounded-full bg-purple-200 blur-3xl" />
+                <div className="absolute -left-[4%] top-[6%] h-48 w-48 rounded-full bg-teal-300/30 blur-3xl" />
+                <div className="absolute left-[40%] -top-[8%] h-28 w-28 rounded-full bg-purple-300/30 blur-2xl" />
+                <div className="absolute -right-[4%] top-[16%] h-44 w-44 rounded-full bg-teal-200/30 blur-3xl" />
+                <div className="absolute left-[36%] top-[42%] h-28 w-28 rounded-full bg-teal-400/30 blur-3xl" />
+                <div className="absolute -right-[6%] bottom-[30%] h-36 w-36 rounded-full bg-purple-300/30 blur-3xl" />
+                <div className="absolute -left-[6%] -bottom-[4%] h-52 w-52 rounded-full bg-teal-400/30 blur-3xl" />
+                <div className="absolute right-[2%] -bottom-[8%] h-40 w-40 rounded-full bg-purple-200/30 blur-3xl" />
               </div>
-              <div
-                className="absolute inset-6 rounded-full border border-teal-400/30"
+              {/* Dashed orbit path, turning slowly the same way as the values.
+                  An SVG circle rather than border-dashed: CSS gives no control
+                  over dash length or gap. pathLength="100" normalises the
+                  circumference, so "2.5 1.5" is exactly 25 dashes with no ragged
+                  seam where the stroke closes.
+                  A full turn ends where it started, so the global
+                  prefers-reduced-motion rule snapping it to the end frame
+                  leaves it looking untouched — no extra guard needed. */}
+              <svg
+                viewBox="0 0 100 100"
+                className="absolute inset-6 animate-[spin_45s_linear_infinite]"
                 aria-hidden="true"
-              />
+              >
+                <circle
+                  cx="50"
+                  cy="50"
+                  r="49"
+                  fill="none"
+                  pathLength="100"
+                  strokeDasharray="2.5 1.5"
+                  strokeWidth="0.7"
+                  className="stroke-teal-400/40"
+                />
+              </svg>
               <dl
                 className="absolute inset-0"
                 style={{ "--orbit-n": stats.length } as React.CSSProperties}
