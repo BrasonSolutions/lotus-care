@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useInView } from "@/hooks/use-in-view";
-import type { TeamMember, BoardMember } from "@/data/team";
+import type { TeamMember } from "@/data/team";
 import { SectionTitle } from "@/components/section-title";
 import { TeamCard } from "@/components/team-card";
 import { TeamModal } from "@/components/team-modal";
@@ -25,7 +25,7 @@ export function TeamSection({
   const { ref, inView } = useInView({ threshold: 0.1 });
   const [activeDept, setActiveDept] = useState<string>("Management");
   const [selectedMember, setSelectedMember] = useState<
-    TeamMember | BoardMember | null
+    TeamMember | null
   >(null);
 
   const filtered = members.filter((m) => m.department === activeDept);

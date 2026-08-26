@@ -86,3 +86,19 @@
     Told to "add animations" to a new careers-page card grid, `ServiceCard`/`ServicesSection`'s per-card `reveal-delay-{index}` stagger was used as the reference — a real, working convention, just the wrong one. The homepage's "Join Our Team" cards (`JobCard`/`RecruitmentSection`) use a different convention: one `reveal` around the whole grid, cards animate only on hover, no per-card entrance stagger. The user's actual complaint wasn't "no animation," it was "inconsistent with the cards right next to this concept" — and `RecruitmentSection` was the more directly comparable section (same careers domain), not `ServicesSection` (a different page entirely).
     **Rule:** when a task says "make it consistent" or "add animation like X," find and read the *specific* X named or most contextually adjacent — don't reach for whichever existing pattern is remembered/found first. If a codebase turns out to have multiple conventions for the same kind of UI, that's worth surfacing, but the immediate fix should match the one the user is actually comparing against.
     **Scope:** project (multiple reveal conventions exist here) — the general rule (verify which precedent is actually being asked for) is global.
+
+18. **Commit and PR messages: short, plain, professional — and never a test plan.**
+    Issue #77 was a two-file logo swap. It got a 20-line commit body and a PR description with
+    four sections, three tables and a rationale essay, then a test-plan checklist. The user's
+    corrections: "the MR and commit message should be simple, small, direct and professional.
+    It's too much." and "don't put never a test plan. Tests are not in the MR should be done before".
+    **Rule:** commit = one `type: subject` line, plus at most 1-3 short body lines when there is a
+    non-obvious *why*. PR = one or two sentences on what changed, `Closes #N`, and at most one line
+    stating that verification passed. **No test-plan checklist, ever** - testing happens before the
+    PR is opened, so a list of things for someone else to click is asking the reviewer to do work
+    that should already be done. No measurement tables, no decision write-ups, no restating the diff.
+    **Note:** this overrides `~/.claude/rules/common/git-workflow.md`, which says to include a test
+    plan with TODOs. The user's instruction wins.
+    Verification still gets **done** in full - it just gets reported in chat, and any detail worth
+    keeping goes in `tasks/todo.md`.
+    **Scope:** global.

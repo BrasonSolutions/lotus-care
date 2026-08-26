@@ -6,7 +6,6 @@ import { QuoteSection } from "@/components/quote-section";
 import { HomesCarousel } from "@/components/homes-carousel";
 import { HomesSplitRow } from "@/components/homes-split-row";
 import { TeamSection } from "@/components/team-section";
-import { BoardSection } from "@/components/board-section";
 import { RecruitmentSection } from "@/components/recruitment-section";
 import { ContactSection } from "@/components/contact-section";
 import { Footer } from "@/components/footer";
@@ -76,8 +75,7 @@ export default function Home() {
         <div aria-hidden="true">
           <LotusBand variant="teal" height={72} />
         </div>
-        <TeamSection members={teamMembers} departments={departments} />
-        <BoardSection members={boardMembers} />
+        <TeamSection members={[...boardMembers, ...teamMembers]} departments={departments} />
         <div aria-hidden="true">
           <LotusBand variant="purple" height={72} />
         </div>
