@@ -15,7 +15,9 @@ export function AboutSection({ title, subtitle, paragraphs, stats }: AboutSectio
   const { ref, inView } = useInView();
 
   return (
-    <section id="about" className="py-20 lg:py-28 bg-white">
+    <section id="about" className="relative overflow-hidden py-20 lg:py-28 bg-white">
+      {/* overflow-hidden: the stat pools sit on a negative inset and would
+          otherwise widen the page on small viewports (#87). */}
       <Container>
         <SectionTitle title={title} subtitle={subtitle} />
 
@@ -38,14 +40,14 @@ export function AboutSection({ title, subtitle, paragraphs, stats }: AboutSectio
                   a pattern. The saturated tones sit toward the middle; only
                   the pale ones reach the radius the values ride at, which is
                   what keeps the teal-700 text above WCAG AA. */}
-              <div className="absolute -inset-16 pointer-events-none" aria-hidden="true">
-                <div className="absolute left-[2%] top-[10%] h-40 w-40 rounded-full bg-teal-300/90 blur-3xl" />
-                <div className="absolute left-[38%] -top-[4%] h-24 w-24 rounded-full bg-purple-300/70 blur-2xl" />
-                <div className="absolute right-[2%] top-[22%] h-36 w-36 rounded-full bg-teal-200/95 blur-3xl" />
-                <div className="absolute left-[34%] top-[40%] h-32 w-32 rounded-full bg-teal-500/60 blur-3xl" />
-                <div className="absolute right-[20%] bottom-[26%] h-28 w-28 rounded-full bg-purple-400/45 blur-2xl" />
-                <div className="absolute left-[8%] bottom-[4%] h-44 w-44 rounded-full bg-teal-400/75 blur-3xl" />
-                <div className="absolute right-[4%] -bottom-[2%] h-32 w-32 rounded-full bg-purple-200/85 blur-3xl" />
+              <div className="absolute -inset-20 pointer-events-none" aria-hidden="true">
+                <div className="absolute -left-[4%] top-[6%] h-48 w-48 rounded-full bg-teal-300 blur-3xl" />
+                <div className="absolute left-[40%] -top-[8%] h-28 w-28 rounded-full bg-purple-300/90 blur-2xl" />
+                <div className="absolute -right-[4%] top-[16%] h-44 w-44 rounded-full bg-teal-200 blur-3xl" />
+                <div className="absolute left-[36%] top-[42%] h-28 w-28 rounded-full bg-teal-400/70 blur-3xl" />
+                <div className="absolute -right-[6%] bottom-[30%] h-36 w-36 rounded-full bg-purple-300/80 blur-3xl" />
+                <div className="absolute -left-[6%] -bottom-[4%] h-52 w-52 rounded-full bg-teal-400 blur-3xl" />
+                <div className="absolute right-[2%] -bottom-[8%] h-40 w-40 rounded-full bg-purple-200 blur-3xl" />
               </div>
               <div
                 className="absolute inset-6 rounded-full border border-teal-400/30"
