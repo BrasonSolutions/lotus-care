@@ -102,3 +102,21 @@
     Verification still gets **done** in full - it just gets reported in chat, and any detail worth
     keeping goes in `tasks/todo.md`.
     **Scope:** global.
+
+19. **Turbopack's dev CSS cache silently serves a stale `globals.css`.**
+    Two separate debugging cycles on card #87 were spent on CSS that looked broken but was
+    never shipped to the browser: the rule was absent from `document.styleSheets` entirely
+    (`position` computed as `static`, `backgroundImage` as `none`), while the *production*
+    build contained it. Confirmed by grepping the emitted chunks — `.next/static/chunks/*.css`
+    had the rule, `.next/dev/static/chunks/*.css` did not. Editing a `.tsx` file hot-reloads
+    fine; appending to `globals.css` does not reliably invalidate the dev CSS chunk.
+    **Rule:** after editing `globals.css`, restart the dev server with `rm -rf .next/dev`
+    before concluding anything about the CSS. If a rule appears to have no effect, check
+    `[...document.styleSheets].some(s => [...s.cssRules].some(r => r.cssText.includes('.your-class')))`
+    first — that one line separates "my CSS is wrong" from "my CSS was never served", which
+    look identical from the rendered page.
+    **Trap within the trap:** `pkill -f "next dev"` matches the agent's own shell (its command
+    line contains that string) and kills the session's command before the cleanup runs — so the
+    cache clear silently never happens and the restart changes nothing. Kill by listening port
+    instead: `kill $(ss -lptn 'sport = :3000' | grep -oP 'pid=\K[0-9]+')`.
+    **Scope:** project (Next.js 16 + Turbopack); the styleSheets check is global.

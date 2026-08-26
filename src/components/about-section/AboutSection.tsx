@@ -33,7 +33,11 @@ export function AboutSection({ title, subtitle, paragraphs, stats }: AboutSectio
           <div className={`reveal reveal-delay-2 ${inView ? "in-view" : ""}`}>
             <div className="relative mx-auto w-64 h-64 lg:w-80 lg:h-80 [--orbit-r:6.5rem] lg:[--orbit-r:8.5rem] [--orbit-dur:36s]">
               <div
-                className="absolute inset-6 rounded-full border border-primary/15"
+                className="stat-orbit-halo absolute inset-8 rounded-full blur-xl opacity-80 pointer-events-none"
+                aria-hidden="true"
+              />
+              <div
+                className="absolute inset-6 rounded-full border border-teal-400/30"
                 aria-hidden="true"
               />
               <dl
@@ -62,8 +66,6 @@ export function AboutSection({ title, subtitle, paragraphs, stats }: AboutSectio
                   </div>
                 ))}
               </dl>
-              <div className="absolute -top-4 -right-4 w-24 h-24 bg-accent/20 rounded-full blur-2xl pointer-events-none" aria-hidden="true" />
-              <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-primary/10 rounded-full blur-2xl pointer-events-none" aria-hidden="true" />
             </div>
           </div>
         </div>
