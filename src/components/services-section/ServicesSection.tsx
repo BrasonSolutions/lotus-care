@@ -9,12 +9,16 @@ import { LotusMark } from "@/components/lotus-mark";
 import { Blob } from "@/components/blob";
 
 interface ServicesSectionProps {
+  /** Anchor id — the page renders this section twice (issue #90), so only
+      the first one can own the "services" hash the navbar links to. */
+  id?: string;
   title?: string;
   subtitle?: string;
   services: Service[];
 }
 
 export function ServicesSection({
+  id = "services",
   title = "Our Services",
   subtitle = "Comprehensive disability support services designed around each individual's needs and aspirations.",
   services,
@@ -23,7 +27,7 @@ export function ServicesSection({
   const { ref: lotusRef, inView: lotusInView } = useInView();
 
   return (
-    <section id="services" className="relative overflow-hidden py-20 lg:py-28 bg-warm-bg">
+    <section id={id} className="relative overflow-hidden py-20 lg:py-28 bg-warm-bg">
       <Blob color="purple" variant={2} className="absolute -top-16 -left-16 w-64 h-64" />
       <Blob color="teal" variant={1} className="absolute -bottom-14 -right-14 w-72 h-72" />
 
@@ -44,7 +48,9 @@ export function ServicesSection({
 
         <div
           ref={ref}
-          className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mt-8"
+          className={`grid sm:grid-cols-2 gap-4 sm:gap-6 mt-8 ${
+            services.length > 2 ? "lg:grid-cols-3" : ""
+          }`}
         >
           {services.map((service, i) => (
             <ServiceCard

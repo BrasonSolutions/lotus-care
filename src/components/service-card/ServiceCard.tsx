@@ -47,7 +47,7 @@ function getIllustration(icon: string, accent: "teal" | "purple") {
   const [base, mid, light] = ACCENT[accent].illustrationFills;
   if (icon === "home") {
     return (
-      <svg viewBox="0 0 400 200" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+      <svg viewBox="0 0 400 200" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" className="w-full h-full">
         <rect width="400" height="200" fill={base} />
         <circle cx="320" cy="60" r="80" fill={mid} opacity="0.2" />
         <circle cx="80" cy="160" r="60" fill={light} opacity="0.15" />
@@ -63,7 +63,7 @@ function getIllustration(icon: string, accent: "teal" | "purple") {
   }
   if (icon === "heart") {
     return (
-      <svg viewBox="0 0 400 200" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+      <svg viewBox="0 0 400 200" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" className="w-full h-full">
         <rect width="400" height="200" fill={base} />
         <circle cx="100" cy="40" r="90" fill={mid} opacity="0.15" />
         <circle cx="340" cy="140" r="70" fill={light} opacity="0.1" />

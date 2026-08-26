@@ -12,7 +12,7 @@ import { Footer } from "@/components/footer";
 import { LotusBand } from "@/components/lotus-band";
 
 import { contactInfo } from "@/data/navigation";
-import { services } from "@/data/services";
+import { services, enhanceServices } from "@/data/services";
 import { homes } from "@/data/homes";
 import { teamMembers, departments, boardMembers } from "@/data/team";
 import { jobs } from "@/data/jobs";
@@ -69,6 +69,12 @@ export default function Home() {
           stats={aboutStats}
         />
         <ServicesSection services={services} />
+        <ServicesSection
+          id="how-we-enhance"
+          title="How We Enhance Our Services"
+          subtitle="The multidisciplinary expertise, model of care and governance that sit behind every service we deliver."
+          services={enhanceServices}
+        />
         <QuoteSection quote={homeQuote} />
         <HomesCarousel homes={homes} />
         <HomesSplitRow />
