@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { ServiceCard } from "@/components/service-card";
-import { services } from "@/data/services";
+import { services, enhanceServices } from "@/data/services";
 
 const meta: Meta<typeof ServiceCard> = {
   title: "UI/ServiceCard",
@@ -12,7 +12,7 @@ export default meta;
 type Story = StoryObj<typeof ServiceCard>;
 
 export const IconCard: Story = {
-  args: { service: services[2], index: 0, inView: true },
+  args: { service: enhanceServices[0], index: 0, inView: true },
 };
 
 export const ImageCard: Story = {
@@ -22,11 +22,9 @@ export const ImageCard: Story = {
 export const AllIconCards: Story = {
   render: () => (
     <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
-      {services
-        .filter((s) => !s.hasImage)
-        .map((service, i) => (
-          <ServiceCard key={service.title} service={service} index={i} inView={true} />
-        ))}
+      {enhanceServices.map((service, i) => (
+        <ServiceCard key={service.title} service={service} index={i} inView={true} />
+      ))}
     </div>
   ),
 };
@@ -34,11 +32,9 @@ export const AllIconCards: Story = {
 export const AllImageCards: Story = {
   render: () => (
     <div className="grid sm:grid-cols-2 gap-6 p-6">
-      {services
-        .filter((s) => s.hasImage)
-        .map((service, i) => (
-          <ServiceCard key={service.title} service={service} index={i} inView={true} />
-        ))}
+      {services.map((service, i) => (
+        <ServiceCard key={service.title} service={service} index={i} inView={true} />
+      ))}
     </div>
   ),
 };
