@@ -412,3 +412,54 @@ body {
     transform: none;
   }
 }
+
+/* About-section stat orbit (issue #87).
+   Values drift slowly around a circle and swell as they pass the left of
+   it. The animation lives inside a `no-preference` query rather than being
+   cancelled by the global `reduce` block above: that block forces
+   animations to their end frame, and this one's end frame is a full 360°
+   turn — every value would land on the same spot. With no animation
+   applied at all, the static transform below holds each value at its own
+   resting angle instead. */
+.stat-orbit {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 7rem;
+  margin: -1.75rem 0 0 -3.5rem;
+  transform: rotate(var(--angle)) translateX(var(--orbit-r))
+    rotate(calc(var(--angle) * -1));
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .stat-orbit {
+    animation: stat-orbit var(--orbit-dur) linear infinite;
+    animation-delay: calc(var(--i) * var(--orbit-dur) / var(--orbit-n) * -1);
+  }
+
+  .stat-orbit-bloom {
+    animation: stat-bloom var(--orbit-dur) linear infinite;
+    animation-delay: calc(var(--i) * var(--orbit-dur) / var(--orbit-n) * -1);
+  }
+}
+
+@keyframes stat-orbit {
+  from {
+    transform: rotate(0deg) translateX(var(--orbit-r)) rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg) translateX(var(--orbit-r)) rotate(-360deg);
+  }
+}
+
+/* Peaks at 50%, which is the left of the circle for every value once its
+   negative delay is applied. */
+@keyframes stat-bloom {
+  0%,
+  100% {
+    transform: scale(0.85);
+  }
+  50% {
+    transform: scale(1.18);
+  }
+}

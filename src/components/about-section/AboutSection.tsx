@@ -29,19 +29,39 @@ export function AboutSection({ title, subtitle, paragraphs, stats }: AboutSectio
             ))}
           </div>
 
-          {/* Stats card */}
+          {/* Stats orbit — values circle slowly and swell on the left (issue #87) */}
           <div className={`reveal reveal-delay-2 ${inView ? "in-view" : ""}`}>
-            <div className="relative">
-              <div className="bg-warm-bg rounded-2xl p-8 lg:p-12">
-                <dl className="grid grid-cols-2 gap-6">
-                  {stats.map((stat) => (
-                    <div key={stat.label} className="text-center">
-                      <dd className="text-4xl font-bold text-primary-dark mb-2">{stat.value}</dd>
-                      <dt className="text-sm text-foreground">{stat.label}</dt>
+            <div className="relative mx-auto w-64 h-64 lg:w-80 lg:h-80 [--orbit-r:6.5rem] lg:[--orbit-r:8.5rem] [--orbit-dur:36s]">
+              <div
+                className="absolute inset-6 rounded-full border border-primary/15"
+                aria-hidden="true"
+              />
+              <dl
+                className="absolute inset-0"
+                style={{ "--orbit-n": stats.length } as React.CSSProperties}
+              >
+                {stats.map((stat, i) => (
+                  <div
+                    key={stat.label}
+                    className="stat-orbit text-center"
+                    style={
+                      {
+                        "--i": i,
+                        "--angle": `${(360 / stats.length) * i}deg`,
+                      } as React.CSSProperties
+                    }
+                  >
+                    <div className="stat-orbit-bloom">
+                      <dd className="text-3xl font-bold text-primary-dark leading-none">
+                        {stat.value}
+                      </dd>
+                      <dt className="text-xs text-foreground mt-1 leading-tight">
+                        {stat.label}
+                      </dt>
                     </div>
-                  ))}
-                </dl>
-              </div>
+                  </div>
+                ))}
+              </dl>
               <div className="absolute -top-4 -right-4 w-24 h-24 bg-accent/20 rounded-full blur-2xl pointer-events-none" aria-hidden="true" />
               <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-primary/10 rounded-full blur-2xl pointer-events-none" aria-hidden="true" />
             </div>
