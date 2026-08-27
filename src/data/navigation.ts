@@ -21,7 +21,7 @@ export const navItems: NavItem[] = [
   },
   { label: "Our Team", href: "/#team" },
   {
-    label: "Careers",
+    label: "Join Our Team",
     href: "/careers",
     // No viewAllHref/viewAllLabel — the hub page stays in the codebase
     // (per docs/build-plan.md, its "Our Values" section is placeholder
@@ -47,6 +47,7 @@ export const navItems: NavItem[] = [
     ],
   },
   { label: "Have Your Say", href: "/#contact" },
+  { label: "Referrals", href: "/referrals" },
 ];
 
 export const contactInfo = {
