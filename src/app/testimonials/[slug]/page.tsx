@@ -36,7 +36,7 @@ export default async function TestimonialDetailPage({ params }: Params) {
   return (
     <div className="py-6 sm:py-8">
       <Container>
-        <div className="max-w-2xl mx-auto">
+        <div className="w-full lg:w-[60%] mx-auto">
         <Link
           href="/testimonials"
           className="inline-flex items-center gap-1 text-sm font-medium text-primary-dark hover:text-teal-800 transition-colors focus-ring rounded mb-5"
