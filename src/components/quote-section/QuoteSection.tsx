@@ -8,12 +8,9 @@ import type { HomeQuote } from "@/data/testimonial";
 
 interface QuoteSectionProps {
   quote: HomeQuote;
-  /** Optional CTA below the intro copy — rendered only when both are passed. */
-  ctaHref?: string;
-  ctaLabel?: string;
 }
 
-export function QuoteSection({ quote, ctaHref, ctaLabel }: QuoteSectionProps) {
+export function QuoteSection({ quote }: QuoteSectionProps) {
   const { ref, inView } = useInView();
 
   return (
@@ -40,17 +37,6 @@ export function QuoteSection({ quote, ctaHref, ctaLabel }: QuoteSectionProps) {
             <p className="text-base text-teal-100 mt-4 max-w-md">
               {quote.subtext}
             </p>
-            {ctaHref && ctaLabel && (
-              <a
-                href={ctaHref}
-                className="inline-flex items-center gap-1 text-sm font-semibold text-blossom hover:text-white transition-colors focus-ring rounded mt-6"
-              >
-                {ctaLabel}
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-                </svg>
-              </a>
-            )}
           </div>
 
           <QuoteCard

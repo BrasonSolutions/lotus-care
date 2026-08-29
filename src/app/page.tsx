@@ -84,11 +84,7 @@ export default function Home() {
             },
           ]}
         />
-        <QuoteSection
-          quote={homeQuote}
-          ctaHref="/testimonials"
-          ctaLabel="Read More Testimonials"
-        />
+        <QuoteSection quote={homeQuote} />
         <HomesCarousel homes={homes} />
         <HomesSplitRow />
         <div aria-hidden="true">
