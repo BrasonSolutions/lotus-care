@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
 import { useInView } from "@/hooks/use-in-view";
+import { ContactForm } from "@/components/contact-form";
+import { contactFields } from "@/data/forms";
 import { SectionTitle } from "@/components/section-title";
 import { Container } from "@/components/layout";
 
@@ -17,19 +18,6 @@ export function ContactSection({
   contactInfo,
 }: ContactSectionProps) {
   const { ref, inView } = useInView({ threshold: 0.1 });
-  const [formState, setFormState] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    message: "",
-  });
-  const [submitted, setSubmitted] = useState(false);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setSubmitted(true);
-  };
-
   return (
     <section id="contact" className="py-20 lg:py-28 bg-white">
       <Container>
@@ -41,93 +29,7 @@ export function ContactSection({
         >
           {/* Form */}
           <div>
-            {submitted ? (
-              <div className="bg-primary/10 rounded-2xl p-8 text-center">
-                <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-8 h-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                  </svg>
-                </div>
-                <h3 className="text-xl font-bold text-primary-dark mb-2">
-                  Thank You!
-                </h3>
-                <p className="text-muted">
-                  We&apos;ve received your message and will be in touch soon.
-                </p>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-5">
-                <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-foreground mb-1.5">
-                    Full Name *
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    required
-                    value={formState.name}
-                    onChange={(e) =>
-                      setFormState({ ...formState, name: e.target.value })
-                    }
-                    className="input-glow w-full px-4 py-3 rounded-xl border-2 border-gray-200 text-foreground placeholder:text-muted/50 transition-all"
-                    placeholder="Your name"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-foreground mb-1.5">
-                    Email Address *
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    required
-                    value={formState.email}
-                    onChange={(e) =>
-                      setFormState({ ...formState, email: e.target.value })
-                    }
-                    className="input-glow w-full px-4 py-3 rounded-xl border-2 border-gray-200 text-foreground placeholder:text-muted/50 transition-all"
-                    placeholder="you@example.com"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="phone" className="block text-sm font-medium text-foreground mb-1.5">
-                    Phone Number
-                  </label>
-                  <input
-                    type="tel"
-                    id="phone"
-                    value={formState.phone}
-                    onChange={(e) =>
-                      setFormState({ ...formState, phone: e.target.value })
-                    }
-                    className="input-glow w-full px-4 py-3 rounded-xl border-2 border-gray-200 text-foreground placeholder:text-muted/50 transition-all"
-                    placeholder="04XX XXX XXX"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-foreground mb-1.5">
-                    Message *
-                  </label>
-                  <textarea
-                    id="message"
-                    required
-                    rows={3}
-                    value={formState.message}
-                    onChange={(e) =>
-                      setFormState({ ...formState, message: e.target.value })
-                    }
-                    className="input-glow w-full px-4 py-3 rounded-xl border-2 border-gray-200 text-foreground placeholder:text-muted/50 transition-all resize-none sm:rows-5"
-                    placeholder="How can we help?"
-                  />
-                </div>
-                <button
-                  type="submit"
-                  className="w-full bg-primary-dark text-white py-3.5 rounded-full font-semibold hover:bg-teal-800 transition-colors text-lg focus-ring"
-                >
-                  Send Message
-                </button>
-              </form>
-            )}
+            <ContactForm kind="contact" fields={contactFields} />
           </div>
 
           {/* Info card */}

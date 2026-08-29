@@ -23,6 +23,8 @@ interface HeroSectionProps {
   primaryCtaHref?: string;
   secondaryCtaLabel?: string;
   secondaryCtaHref?: string;
+  tertiaryCtaLabel?: string;
+  tertiaryCtaHref?: string;
 }
 
 export function HeroSection({
@@ -33,6 +35,8 @@ export function HeroSection({
   primaryCtaHref = "#services",
   secondaryCtaLabel = "Careers",
   secondaryCtaHref = "/careers",
+  tertiaryCtaLabel = "Referrals",
+  tertiaryCtaHref = "/referrals",
 }: HeroSectionProps) {
   return (
     <section className="relative bg-primary-dark overflow-hidden pt-32 pb-20 lg:pt-40 lg:pb-28">
@@ -87,6 +91,15 @@ export function HeroSection({
                 className="inline-block border-2 border-white text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-white/10 transition-colors focus-ring-white text-center"
               >
                 {secondaryCtaLabel}
+              </a>
+              {/* Referrals — same verified outline treatment as the secondary
+                  CTA; the client asked for it alongside Careers here as well
+                  as in the navbar. */}
+              <a
+                href={tertiaryCtaHref}
+                className="inline-block border-2 border-white text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-white/10 transition-colors focus-ring-white text-center"
+              >
+                {tertiaryCtaLabel}
               </a>
             </div>
           </div>

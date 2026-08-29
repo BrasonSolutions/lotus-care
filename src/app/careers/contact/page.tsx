@@ -1,32 +1,19 @@
-"use client";
-
-import { useState, useRef } from "react";
+import type { Metadata } from "next";
 import { CareersHero } from "@/components/careers/careers-hero";
+import { ContactForm } from "@/components/contact-form";
+import { recruitmentFields } from "@/data/forms";
 import { CareersBreadcrumb } from "@/components/careers/careers-breadcrumb";
 import { contactInfo } from "@/data/navigation";
 import { Container } from "@/components/layout";
 
-const roleOptions = [
-  "Residential Support Worker",
-  "Night Support Worker",
-  "Social Care Leader",
-  "Staff Nurse (RNID/RNMH)",
-  "Senior Services Manager",
-  "Clinical / Allied Health",
-  "Administration",
-  "Other",
-];
+export const metadata: Metadata = {
+  title: "Contact Recruitment",
+  description:
+    "Talk to the Lotus Care recruitment team about roles, applications, or registering your interest.",
+};
+
 
 export default function CareersContactPage() {
-  const [submitted, setSubmitted] = useState(false);
-  const formRef = useRef<HTMLFormElement>(null);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setSubmitted(true);
-    formRef.current?.reset();
-  };
-
   return (
     <>
       <CareersHero
@@ -43,109 +30,14 @@ export default function CareersContactPage() {
           <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-10">
             {/* Form */}
             <div className="lg:col-span-2">
-              {submitted ? (
-                <div className="bg-green-50 border border-green-200 rounded-2xl p-8 text-center">
-                  <svg className="w-12 h-12 text-green-500 mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                  <h2 className="text-xl font-bold text-primary-dark mb-2">Message Sent!</h2>
-                  <p className="text-muted">
-                    Thanks for getting in touch. Our recruitment team will respond within 2 business days.
-                  </p>
-                  <button
-                    onClick={() => setSubmitted(false)}
-                    className="mt-6 text-sm text-primary-dark hover:text-teal-800 transition-colors focus-ring rounded font-medium"
-                  >
-                    Send another message
-                  </button>
-                </div>
-              ) : (
-                <form
-                  ref={formRef}
-                  onSubmit={handleSubmit}
-                  className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 sm:p-8 space-y-5"
-                  noValidate
-                >
-                  <h2 className="text-xl font-bold text-primary-dark mb-2">Send Us a Message</h2>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                    <div>
-                      <label htmlFor="rec-name" className="block text-sm font-medium text-foreground mb-1.5">
-                        Full Name <span className="text-red-500" aria-hidden="true">*</span>
-                      </label>
-                      <input
-                        id="rec-name"
-                        type="text"
-                        required
-                        autoComplete="name"
-                        className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl text-base focus:outline-none focus:border-primary transition-colors"
-                        placeholder="Your name"
-                      />
-                    </div>
-                    <div>
-                      <label htmlFor="rec-email" className="block text-sm font-medium text-foreground mb-1.5">
-                        Email Address <span className="text-red-500" aria-hidden="true">*</span>
-                      </label>
-                      <input
-                        id="rec-email"
-                        type="email"
-                        required
-                        autoComplete="email"
-                        className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl text-base focus:outline-none focus:border-primary transition-colors"
-                        placeholder="you@example.com"
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label htmlFor="rec-phone" className="block text-sm font-medium text-foreground mb-1.5">
-                      Phone Number
-                    </label>
-                    <input
-                      id="rec-phone"
-                      type="tel"
-                      autoComplete="tel"
-                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl text-base focus:outline-none focus:border-primary transition-colors"
-                      placeholder="+353 ..."
-                    />
-                  </div>
-
-                  <div>
-                    <label htmlFor="rec-role" className="block text-sm font-medium text-foreground mb-1.5">
-                      Role Type of Interest
-                    </label>
-                    <select
-                      id="rec-role"
-                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl text-base focus:outline-none focus:border-primary transition-colors bg-white"
-                    >
-                      <option value="">Select a role type…</option>
-                      {roleOptions.map((opt) => (
-                        <option key={opt} value={opt}>{opt}</option>
-                      ))}
-                    </select>
-                  </div>
-
-                  <div>
-                    <label htmlFor="rec-message" className="block text-sm font-medium text-foreground mb-1.5">
-                      Message <span className="text-red-500" aria-hidden="true">*</span>
-                    </label>
-                    <textarea
-                      id="rec-message"
-                      required
-                      rows={4}
-                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl text-base focus:outline-none focus:border-primary transition-colors resize-none"
-                      placeholder="Tell us about yourself or your question…"
-                    />
-                  </div>
-
-                  <button
-                    type="submit"
-                    className="w-full bg-primary-dark text-white py-3.5 rounded-full font-semibold text-base hover:bg-teal-800 transition-colors focus-ring"
-                  >
-                    Send Message
-                  </button>
-                </form>
-              )}
+              <ContactForm
+                kind="recruitment"
+                fields={recruitmentFields}
+                heading="Send Us a Message"
+                successTitle="Message Sent!"
+                successMessage="Thanks for getting in touch. Our recruitment team will respond within 2 business days."
+                className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 sm:p-8 space-y-5"
+              />
             </div>
 
             {/* Contact info */}
