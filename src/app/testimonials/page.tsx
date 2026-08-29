@@ -3,7 +3,6 @@ import { Reveal } from "@/components/reveal";
 import { Container } from "@/components/layout";
 import { TestimonialCard } from "@/components/careers/testimonial-card";
 import { serviceOwnerTestimonials } from "@/data/testimonial";
-import { truncateWords } from "@/lib/truncate";
 
 export default function TestimonialsPage() {
   return (
@@ -21,8 +20,8 @@ export default function TestimonialsPage() {
               testimonial={{
                 name: testimonial.initials,
                 role: testimonial.role,
-                // Teaser only — the detail page carries the quote in full.
-                quote: truncateWords(testimonial.quote),
+                // No excerpt on the card — the story lives on the detail page.
+                quote: "",
                 initials: testimonial.initials,
               }}
               action={

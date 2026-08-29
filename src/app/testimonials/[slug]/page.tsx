@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   };
 }
 
-// No record has long-form content yet (Assumption 7.3) — default path, not edge case.
+// Shown when a record carries no long-form piece; JW's is published in full.
 const FALLBACK_BODY =
   "The full story behind this quote hasn't been published yet — the testimonial above is shared in full.";
 
@@ -49,9 +49,11 @@ export default async function TestimonialDetailPage({ params }: Params) {
         <p className="font-dm-sans font-bold text-xs uppercase tracking-[0.15em] text-primary-dark">
           Testimonial
         </p>
-        <blockquote className="text-foreground text-lg leading-relaxed mt-4 italic">
-          &ldquo;{testimonial.quote}&rdquo;
-        </blockquote>
+        {testimonial.title && (
+          <h1 className="font-dm-sans font-bold text-2xl sm:text-3xl text-primary-dark mt-2">
+            {testimonial.title}
+          </h1>
+        )}
         <figcaption className="flex items-center gap-3 mt-6">
           <div className="w-11 h-11 rounded-full bg-primary-dark flex items-center justify-center text-white font-bold text-sm shrink-0">
             {testimonial.initials}
@@ -65,8 +67,16 @@ export default async function TestimonialDetailPage({ params }: Params) {
           </div>
         </figcaption>
 
-        <div className="mt-10 pt-10 border-t border-gray-200">
-          <p className="text-foreground leading-relaxed">{testimonial.body ?? FALLBACK_BODY}</p>
+        <div className="mt-10 pt-10 border-t border-gray-200 space-y-5">
+          {testimonial.body?.length ? (
+            testimonial.body.map((paragraph) => (
+              <p key={paragraph} className="text-foreground leading-relaxed">
+                {paragraph}
+              </p>
+            ))
+          ) : (
+            <p className="text-foreground leading-relaxed">{FALLBACK_BODY}</p>
+          )}
         </div>
       </Container>
     </div>
