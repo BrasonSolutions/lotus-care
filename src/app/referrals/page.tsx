@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { Blob } from "@/components/blob";
 import { LotusMark } from "@/components/lotus-mark";
 import { Navbar } from "@/components/navbar";
@@ -43,8 +44,22 @@ export default function ReferralsPage() {
 
         <div className="relative py-10 sm:py-14">
           <Container>
-            {/* TODO(#86): HIQA and Tusla logos go here — waiting on the assets
-                from the client. */}
+            <div className="flex flex-wrap items-center gap-x-10 gap-y-4 mb-8">
+              <Image
+                src="/images/logos/hiqa.png"
+                alt="Health Information and Quality Authority (HIQA)"
+                width={426}
+                height={300}
+                className="h-[134px] w-auto"
+              />
+              <Image
+                src="/images/logos/tusla.png"
+                alt="Tusla — Child and Family Agency"
+                width={472}
+                height={305}
+                className="h-[134px] w-auto"
+              />
+            </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
               <div className="lg:col-span-2">
