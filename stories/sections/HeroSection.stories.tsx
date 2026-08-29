@@ -15,6 +15,8 @@ const meta: Meta<typeof HeroSection> = {
     primaryCtaHref: "#services",
     secondaryCtaLabel: "Careers",
     secondaryCtaHref: "/careers",
+    tertiaryCtaLabel: "Referrals",
+    tertiaryCtaHref: "/referrals",
   },
 };
 export default meta;

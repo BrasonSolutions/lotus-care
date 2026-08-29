@@ -10,8 +10,14 @@
   /* Navbar collapse breakpoint ("Laptop L") — deliberately separate from
      the default `lg` (1024px) scale used elsewhere for spacing/grids, so
      raising it only affects when the navbar switches from hamburger to
-     full inline layout. */
-  --breakpoint-nav: 1440px;
+     full inline layout.
+
+     Raised from 1440px to 1600px with issue #85: with Referrals added the
+     inline nav needs 1189px and only 1212px is available at 1440px. The
+     `Container` cap (90rem) means the row never gets wider than 1227px, so
+     the extra space comes from moving the crowded case onto the hamburger
+     rather than from a wider screen. */
+  --breakpoint-nav: 1600px;
 
   /* Teal — real brand colour, sourced from lotus-mark.svg / logo assets */
   --color-teal-50: #eef9fb;

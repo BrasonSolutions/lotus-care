@@ -73,7 +73,10 @@ export function Navbar({
             </Link>
 
             {/* Desktop nav */}
-            <div className="hidden nav:flex items-center gap-8">
+            {/* gap-6, not gap-8: with Referrals added the row needs 1253px of
+                the 1212px available at the nav breakpoint, and every item wraps
+                to two lines. 24px gaps bring it to 1189px. */}
+            <div className="hidden nav:flex items-center gap-6">
               {navItems.map((item) =>
                 item.children ? (
                   <HomesDropdown key={item.label} item={item} scrolled={scrolled} />
