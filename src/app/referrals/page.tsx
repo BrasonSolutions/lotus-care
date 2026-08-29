@@ -45,20 +45,19 @@ export default function ReferralsPage() {
         <div className="relative py-10 sm:py-14">
           <Container>
             <div className="flex flex-wrap items-center gap-x-10 gap-y-4 mb-8">
-              <span className="text-sm font-medium text-muted">Regulated by</span>
               <Image
                 src="/images/logos/hiqa.png"
                 alt="Health Information and Quality Authority (HIQA)"
                 width={426}
                 height={300}
-                className="h-12 w-auto"
+                className="h-[134px] w-auto"
               />
               <Image
                 src="/images/logos/tusla.png"
                 alt="Tusla — Child and Family Agency"
                 width={472}
                 height={305}
-                className="h-12 w-auto"
+                className="h-[134px] w-auto"
               />
             </div>
 
