@@ -30,6 +30,14 @@ export interface ContentBlock {
   intro?: string;
   body?: string;
   bullets?: string[];
+  /** Short tags shown as bubbles instead of the full `bullets` prose. */
+  keywords?: string[];
+}
+
+export interface ModelOfCareSection {
+  id: "curriculum" | "adt" | "human-rights" | "safeguarding";
+  heading: string;
+  intro: string;
 }
 
 // --- /quality hub landing page ---
@@ -45,9 +53,9 @@ export const qualityHub = {
 export const hubCards = [
   {
     icon: "shield-check",
-    title: "Human Rights Committee",
+    title: "Model of Care",
     description:
-      "How we embed dignity, choice, and a rights-based approach across every service we provide.",
+      "How we structure daily life, transitions, rights, and safeguarding across every service we provide.",
     href: "/quality/human-rights",
   },
   {
@@ -81,7 +89,34 @@ export const anonymizedTestimonial: Testimonial = {
     "They encouraged me to make choices about my day-to-day life, and made sure I felt a part of my home.",
 };
 
-// --- /quality/human-rights ---
+// --- /quality/human-rights (Model of Care) ---
+
+// Blocked on client: real Model of Care content from Trevor and Caithriona
+// (issue #91). Structure only — swap each `intro` in when copy lands.
+export const modelOfCareSections: ModelOfCareSection[] = [
+  {
+    id: "curriculum",
+    heading: "24-Hour Curriculum",
+    intro:
+      "How support, structure, and activity are planned across every part of a person's day and night.",
+  },
+  {
+    id: "adt",
+    heading: "Admissions, Discharges & Transitions (ADT)",
+    intro: "How we plan and support people moving into, between, and out of our services.",
+  },
+  {
+    id: "human-rights",
+    heading: "Human Rights",
+    intro:
+      "A rights-based approach where dignity, respect, equality, and autonomy are central to every aspect of care.",
+  },
+  {
+    id: "safeguarding",
+    heading: "Safeguarding",
+    intro: "How we protect the people we support from harm, and respond when concerns are raised.",
+  },
+];
 
 export const humanRightsFramework: CycleStep[] = [
   {
@@ -120,6 +155,14 @@ export const humanRightsContent = {
     heading: "Purpose of the Committee",
     intro:
       "The Committee provides independent oversight, guidance, and assurance to ensure that the rights of the children and adults we support are respected, upheld, and actively realised in practice:",
+    keywords: [
+      "Rights-Based Approach",
+      "Dignity & Autonomy",
+      "Least Restrictive Practice",
+      "Rights Oversight",
+      "Continuous Improvement",
+      "HIQA & UNCRPD Alignment",
+    ],
     bullets: [
       "Promote a rights-based and person-centred approach across all services",
       "Strengthen dignity, autonomy, and supported decision-making in daily practice",
@@ -131,6 +174,14 @@ export const humanRightsContent = {
   } satisfies ContentBlock,
   approach: {
     heading: "Our Approach",
+    keywords: [
+      "Voice, Choice & Control",
+      "Supported Decision-Making",
+      "Dignity",
+      "Equality & Fairness",
+      "Safeguarding",
+      "Transparency & Accountability",
+    ],
     bullets: [
       "Voice, choice, and control: ensuring meaningful participation in decisions that affect daily life",
       "Supported decision-making and legal capacity, respecting each person's right to make choices with appropriate supports",
