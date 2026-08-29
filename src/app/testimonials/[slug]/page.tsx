@@ -35,7 +35,8 @@ export default async function TestimonialDetailPage({ params }: Params) {
 
   return (
     <div className="py-6 sm:py-8">
-      <Container width="reading">
+      <Container>
+        <div className="max-w-2xl mx-auto">
         <Link
           href="/testimonials"
           className="inline-flex items-center gap-1 text-sm font-medium text-primary-dark hover:text-teal-800 transition-colors focus-ring rounded mb-5"
@@ -70,13 +71,14 @@ export default async function TestimonialDetailPage({ params }: Params) {
         <div className="mt-6 pt-6 border-t border-gray-200 space-y-4">
           {testimonial.body?.length ? (
             testimonial.body.map((paragraph) => (
-              <p key={paragraph} className="text-foreground leading-relaxed">
+              <p key={paragraph} className="text-foreground text-lg leading-relaxed">
                 {paragraph}
               </p>
             ))
           ) : (
             <p className="text-foreground leading-relaxed">{FALLBACK_BODY}</p>
           )}
+        </div>
         </div>
       </Container>
     </div>
