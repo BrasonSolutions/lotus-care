@@ -13,10 +13,11 @@ export default function TestimonialsPage() {
         <p className="text-neutral-600 text-lg max-w-2xl mx-auto text-center -mt-8 mb-12">
           Real voices from the people we support, in their own words.
         </p>
-        <Reveal className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <Reveal className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {serviceOwnerTestimonials.map((testimonial) => (
             <TestimonialCard
               key={testimonial.slug}
+              size="large"
               testimonial={{
                 name: testimonial.initials,
                 role: testimonial.role,
