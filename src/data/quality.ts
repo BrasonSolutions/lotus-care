@@ -30,7 +30,7 @@ export interface ContentBlock {
   intro?: string;
   body?: string;
   bullets?: string[];
-  /** Short tags shown as bubbles instead of the full `bullets` prose. */
+  /** Short tags shown as bubbles. When present, `bullets` is not rendered. */
   keywords?: string[];
 }
 
@@ -163,17 +163,11 @@ export const humanRightsContent = {
       "Continuous Improvement",
       "HIQA & UNCRPD Alignment",
     ],
-    bullets: [
-      "Promote a rights-based and person-centred approach across all services",
-      "Strengthen dignity, autonomy, and supported decision-making in daily practice",
-      "Safeguard against unnecessary or disproportionate restrictions of liberty or choice, ensuring least restrictive practice",
-      "Identify, review, and respond to potential rights restrictions, risks, or inequalities",
-      "Support continuous improvement in the realisation of human rights in practice and outcomes",
-      "Ensure alignment with national legislation, HIQA standards, and international human rights frameworks, including the UNCRPD",
-    ],
   } satisfies ContentBlock,
   approach: {
     heading: "Our Approach",
+    intro:
+      "Our approach turns rights into everyday practice, balancing safety with the right to live a full and meaningful life, and keeping decisions transparent and accountable:",
     keywords: [
       "Voice, Choice & Control",
       "Supported Decision-Making",
@@ -182,25 +176,18 @@ export const humanRightsContent = {
       "Safeguarding",
       "Transparency & Accountability",
     ],
-    bullets: [
-      "Voice, choice, and control: ensuring meaningful participation in decisions that affect daily life",
-      "Supported decision-making and legal capacity, respecting each person's right to make choices with appropriate supports",
-      "Dignity of risk, balancing safety with the right to live a full and meaningful life",
-      "Equality, fairness, and non-discrimination in all aspects of care and support",
-      "Safeguarding and protection from harm, delivered through a rights-based lens",
-      "Transparent and accountable decision-making at all levels",
-    ],
   } satisfies ContentBlock,
   champions: {
     heading: "Human Rights Champions",
     intro:
-      "Each centre has a dedicated Human Rights Champion translating rights-based principles into everyday practice locally:",
-    bullets: [
-      "Supporting staff to embed rights-based practice in daily work",
-      "Promoting awareness of dignity, choice, and least restrictive practice",
-      "Identifying and escalating potential rights concerns or restrictions",
-      "Reinforcing a culture of reflection, accountability, and respect",
-      "Acting as a link between frontline services and the Human Rights Committee",
+      "Each centre has a dedicated Human Rights Champion who translates rights-based principles into everyday practice locally, supporting colleagues and raising concerns as they arise:",
+    keywords: [
+      "Frontline Staff Support",
+      "Dignity & Choice",
+      "Least Restrictive Practice",
+      "Escalating Concerns",
+      "Reflection & Accountability",
+      "Link to the Committee",
     ],
   } satisfies ContentBlock,
   governance: {
