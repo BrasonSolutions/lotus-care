@@ -3,6 +3,7 @@ import { Reveal } from "@/components/reveal";
 import { Container } from "@/components/layout";
 import { TestimonialCard } from "@/components/careers/testimonial-card";
 import { serviceOwnerTestimonials } from "@/data/testimonial";
+import { truncateWords } from "@/lib/truncate";
 
 export default function TestimonialsPage() {
   return (
@@ -15,22 +16,25 @@ export default function TestimonialsPage() {
         </p>
         <Reveal className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           {serviceOwnerTestimonials.map((testimonial) => (
-            <div key={testimonial.slug} className="flex flex-col gap-4">
-              <TestimonialCard
-                testimonial={{
-                  name: testimonial.initials,
-                  role: testimonial.role,
-                  quote: testimonial.quote,
-                  initials: testimonial.initials,
-                }}
-              />
-              <a
-                href={`/testimonials/${testimonial.slug}`}
-                className="block text-center bg-primary-dark text-white py-2.5 rounded-full text-sm font-semibold hover:bg-teal-800 transition-colors focus-ring"
-              >
-                Read testimonial
-              </a>
-            </div>
+            <TestimonialCard
+              key={testimonial.slug}
+              testimonial={{
+                name: testimonial.initials,
+                role: testimonial.role,
+                // Teaser only — the detail page carries the quote in full.
+                quote: truncateWords(testimonial.quote),
+                initials: testimonial.initials,
+              }}
+              action={
+                <a
+                  href={`/testimonials/${testimonial.slug}`}
+                  aria-label={`Read the full testimonial from ${testimonial.initials}, ${testimonial.role}`}
+                  className="inline-block bg-primary-dark text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-teal-800 transition-colors focus-ring"
+                >
+                  Read more
+                </a>
+              }
+            />
           ))}
         </Reveal>
       </Container>

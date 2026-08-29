@@ -1,14 +1,15 @@
+import type { ReactNode } from "react";
 import type { Testimonial } from "@/data/careers";
 
 interface TestimonialCardProps {
   testimonial: Testimonial;
-  /** Truncates the quote to 4 lines and fixes the card height, so a row of
-   * cards stays uniform regardless of quote length. Off by default — only
-   * opt in where cards sit side by side and must align (e.g. the marquee). */
+  // Clamps to 4 lines and fixes height so side-by-side cards align.
   clampQuote?: boolean;
+  // Sits at the foot's right edge, opposite the attribution.
+  action?: ReactNode;
 }
 
-export function TestimonialCard({ testimonial, clampQuote = false }: TestimonialCardProps) {
+export function TestimonialCard({ testimonial, clampQuote = false, action }: TestimonialCardProps) {
   return (
     <figure
       className={`bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex flex-col ${clampQuote ? "h-64" : ""}`}
@@ -22,13 +23,14 @@ export function TestimonialCard({ testimonial, clampQuote = false }: Testimonial
         <div className="w-10 h-10 rounded-full bg-primary-dark flex items-center justify-center text-white font-bold text-sm shrink-0">
           {testimonial.initials}
         </div>
-        <div>
+        <div className="min-w-0">
           <p className="font-semibold text-primary-dark text-sm">{testimonial.name}</p>
           <p className="text-xs text-muted">
             {testimonial.role}
             {testimonial.yearsAtCompany && ` · ${testimonial.yearsAtCompany} year${testimonial.yearsAtCompany > 1 ? "s" : ""} at Lotus Care`}
           </p>
         </div>
+        {action && <div className="ml-auto shrink-0">{action}</div>}
       </figcaption>
     </figure>
   );
