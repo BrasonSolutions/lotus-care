@@ -8,21 +8,11 @@ import { HIGHLIGHTED_COUNTIES } from "@/data/homes-map";
 
 const HOMES_MONTAGE = {
   src: "/videos/homes-montage.mp4",
-  // First frame of the montage, so the poster-to-playback swap is seamless.
+  // First frame of the montage, so the poster swap is seamless.
   poster: "/images/houses/homes-montage-poster.jpg",
   label: "Aerial montage of Lotus Care's homes and gardens",
 } as const;
 
-/**
- * Full-width row beneath the homes carousel: a muted looping video montage
- * of the homes on the left, a brand-coloured map of Ireland highlighting the
- * counties with Lotus Care homes on the right. Stacks to video-over-map
- * below `lg`.
- *
- * The montage is a ~14 MB file, so it is not autoplayed eagerly: `preload`
- * is off and playback starts only once the row scrolls into view. Under
- * `prefers-reduced-motion` it never plays on its own and exposes controls.
- */
 export function HomesSplitRow() {
   const prefersReducedMotion = usePrefersReducedMotion();
   const { ref, inView } = useInView({ threshold: 0.25 });
@@ -30,8 +20,7 @@ export function HomesSplitRow() {
 
   useEffect(() => {
     if (!inView || prefersReducedMotion) return;
-    // A blocked autoplay is expected on some browsers and needs no handling:
-    // the poster stays up and the controls-free montage is decorative.
+    // Autoplay may be blocked; the poster stays up and that is fine.
     videoRef.current?.play().catch(() => {});
   }, [inView, prefersReducedMotion]);
 
@@ -48,6 +37,7 @@ export function HomesSplitRow() {
               muted
               loop
               playsInline
+              // Off by default: the 14 MB montage loads only once scrolled into view.
               preload="none"
               poster={HOMES_MONTAGE.poster}
               controls={prefersReducedMotion}
