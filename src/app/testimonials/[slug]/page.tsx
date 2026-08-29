@@ -34,11 +34,11 @@ export default async function TestimonialDetailPage({ params }: Params) {
   if (!testimonial) notFound();
 
   return (
-    <div className="py-10 sm:py-14">
+    <div className="py-6 sm:py-8">
       <Container width="reading">
         <Link
           href="/testimonials"
-          className="inline-flex items-center gap-1 text-sm font-medium text-primary-dark hover:text-teal-800 transition-colors focus-ring rounded mb-8"
+          className="inline-flex items-center gap-1 text-sm font-medium text-primary-dark hover:text-teal-800 transition-colors focus-ring rounded mb-5"
         >
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
@@ -50,11 +50,11 @@ export default async function TestimonialDetailPage({ params }: Params) {
           Testimonial
         </p>
         {testimonial.title && (
-          <h1 className="font-dm-sans font-bold text-2xl sm:text-3xl text-primary-dark mt-2">
+          <h1 className="font-dm-sans font-bold text-2xl sm:text-3xl text-primary-dark mt-1">
             {testimonial.title}
           </h1>
         )}
-        <figcaption className="flex items-center gap-3 mt-6">
+        <figcaption className="flex items-center gap-3 mt-4">
           <div className="w-11 h-11 rounded-full bg-primary-dark flex items-center justify-center text-white font-bold text-sm shrink-0">
             {testimonial.initials}
           </div>
@@ -67,7 +67,7 @@ export default async function TestimonialDetailPage({ params }: Params) {
           </div>
         </figcaption>
 
-        <div className="mt-10 pt-10 border-t border-gray-200 space-y-5">
+        <div className="mt-6 pt-6 border-t border-gray-200 space-y-4">
           {testimonial.body?.length ? (
             testimonial.body.map((paragraph) => (
               <p key={paragraph} className="text-foreground leading-relaxed">
