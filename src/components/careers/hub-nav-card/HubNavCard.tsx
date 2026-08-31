@@ -6,6 +6,9 @@ interface HubNavCardProps {
   description: string;
   href: string;
   accent?: "teal" | "purple";
+  /** Link label. Defaults to "Learn more"; same-page anchors want their own
+   * wording since nothing is being navigated to. */
+  cta?: string;
 }
 
 const ACCENT = {
@@ -19,12 +22,13 @@ export function HubNavCard({
   description,
   href,
   accent = "teal",
+  cta = "Learn more",
 }: HubNavCardProps) {
   const a = ACCENT[accent];
   return (
     <a
       href={href}
-      className="group flex flex-col p-6 bg-white rounded-2xl shadow-sm border border-gray-100 hover:shadow-md hover:-translate-y-1 transition-all duration-200 focus-ring"
+      className="group flex h-full flex-col p-6 bg-white rounded-2xl shadow-sm border border-gray-100 hover:shadow-md hover:-translate-y-1 transition-all duration-200 focus-ring"
     >
       <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 ${a.chip}`}>
         {getCareersIcon(icon)}
@@ -34,7 +38,7 @@ export function HubNavCard({
       </h3>
       <p className="text-sm text-muted leading-relaxed flex-1">{description}</p>
       <span className="mt-4 flex items-center gap-1 text-sm font-medium text-primary-dark">
-        Learn more
+        {cta}
         <svg
           className="w-4 h-4 group-hover:translate-x-1 transition-transform"
           fill="none"

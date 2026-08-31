@@ -42,7 +42,7 @@ export const enhanceServices: Service[] = [
     description:
       "A person-centred, rights-based framework that puts dignity, choice, and autonomy at the heart of every interaction — overseen by our Human Rights Committee.",
     icon: "shield",
-    href: "/quality/human-rights",
+    href: "/quality/model-of-care",
   },
   {
     title: "Quality, Safety & Continuous Improvement",
