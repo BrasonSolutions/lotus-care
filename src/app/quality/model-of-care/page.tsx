@@ -60,6 +60,9 @@ function ProvisionalSection({ id, imagePosition = "right" }: { id: string; image
             <Eyebrow number={number} label={label} />
             <h2 className="text-2xl sm:text-3xl font-bold text-primary-dark mb-4">{heading}</h2>
             <p className="text-muted leading-relaxed">{intro}</p>
+            <span className="mt-5 inline-block rounded-full bg-primary-dark px-3 py-1 text-xs font-semibold text-white">
+              Full detail coming soon
+            </span>
           </div>
           <div
             className={`group relative rounded-2xl overflow-hidden aspect-[4/3] ${

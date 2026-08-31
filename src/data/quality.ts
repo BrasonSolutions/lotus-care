@@ -30,6 +30,14 @@ export interface ContentBlock {
   intro?: string;
   body?: string;
   bullets?: string[];
+  /** Short tags shown as bubbles. When present, `bullets` is not rendered. */
+  keywords?: string[];
+}
+
+export interface ModelOfCareSection {
+  id: "curriculum" | "adt" | "human-rights" | "safeguarding";
+  heading: string;
+  intro: string;
 }
 
 /** A bullet reduced to its key word plus the sentence it came from, so long
@@ -54,7 +62,7 @@ export const hubCards = [
     icon: "shield-check",
     title: "Model of Care",
     description:
-      "The 24-hour curriculum, transitions, human rights, and safeguarding that shape how we support every person.",
+      "How we structure daily life, transitions, rights, and safeguarding across every service we provide.",
     href: "/quality/model-of-care",
   },
   {
@@ -196,7 +204,7 @@ export const humanRightsContent = {
         "Safeguard against unnecessary or disproportionate restrictions of liberty or choice.",
     },
     {
-      term: "Oversight",
+      term: "Rights Oversight",
       description:
         "Identify, review, and respond to potential rights restrictions, risks, or inequalities.",
     },
@@ -206,7 +214,7 @@ export const humanRightsContent = {
         "Support continuous improvement in the realisation of human rights in practice and outcomes.",
     },
     {
-      term: "Standards & Compliance",
+      term: "HIQA & UNCRPD Alignment",
       description:
         "Ensure alignment with national legislation, HIQA standards, and the UNCRPD.",
     },
@@ -239,14 +247,22 @@ export const humanRightsContent = {
       description: "Safeguarding delivered through a rights-based lens.",
     },
     {
-      term: "Accountability",
+      term: "Transparency & Accountability",
       description: "Transparent and accountable decision-making at all levels.",
     },
   ] satisfies Keyword[],
   champions: {
     heading: "Human Rights Champions",
     intro:
-      "Each centre has a dedicated Human Rights Champion translating rights-based principles into everyday practice locally:",
+      "Each centre has a dedicated Human Rights Champion who translates rights-based principles into everyday practice locally, supporting colleagues and raising concerns as they arise:",
+    keywords: [
+      "Frontline Staff Support",
+      "Dignity & Choice",
+      "Least Restrictive Practice",
+      "Escalating Concerns",
+      "Reflection & Accountability",
+      "Link to the Committee",
+    ],
     bullets: [
       "Supporting staff to embed rights-based practice in daily work",
       "Promoting awareness of dignity, choice, and least restrictive practice",

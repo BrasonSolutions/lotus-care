@@ -44,6 +44,7 @@ export function FeatureSlab({
   intro,
   body,
   bullets,
+  keywords,
 }: FeatureSlabProps) {
   const { panel, bullet } = TONE[tone];
 
@@ -57,15 +58,23 @@ export function FeatureSlab({
         <h2 className="text-2xl sm:text-3xl font-bold text-white mb-5">{heading}</h2>
         {intro && <p className="text-lg text-white/85 leading-relaxed mb-5">{intro}</p>}
         {body && <p className="text-lg text-white/85 leading-relaxed">{body}</p>}
+        {keywords && keywords.length > 0 && (
+          <div className="flex flex-wrap gap-2 mt-6">
+            {keywords.map((word) => (
+              <span
+                key={word}
+                className="bg-white/15 text-white border border-white/30 backdrop-blur-sm rounded-full px-4 py-2 text-sm font-medium"
+              >
+                {word}
+              </span>
+            ))}
+          </div>
+        )}
         {bullets && (
-          <ul className="mt-2 space-y-4">
+          <ul className="mt-6 space-y-4">
             {bullets.map((item) => (
               <li key={item} className="flex gap-3 text-lg text-white/85 leading-relaxed">
-                {/* A drawn circle rather than "&bull;": the glyph's optical
-                    centre sits well below its box centre, so it lands near
-                    the first line's baseline instead of its middle. At
-                    text-lg/leading-relaxed the line box is 29px, so a 6px
-                    dot centres at (29-6)/2 ≈ 12px — hence mt-3. */}
+                {/* Drawn circle, not a glyph — its optical centre sits low, needs mt-3. */}
                 <span
                   className={`${bullet} mt-3 h-1.5 w-1.5 shrink-0 self-start rounded-full bg-current`}
                   aria-hidden="true"
