@@ -44,7 +44,7 @@ export function ContentSection({
   ...content
 }: ContentSectionProps) {
   if (!image) {
-    // max-w-lg (32rem/512px), not max-w-prose (65ch ≈ 656px at 16px Inter —
+    // max-w-lg (32rem/512px), not max-w-prose (65ch ≈ 656px at 16px DM Sans —
     // "ch" is the "0" glyph's width, which measurably overshoots this
     // font's real average character width; 656px rendered 85-91 real
     // characters/line, verified in-browser). 512px lands ~65-70 real
