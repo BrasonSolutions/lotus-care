@@ -1,11 +1,10 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    "Helvetica Neue", Arial, sans-serif;
-  /* QuoteSection (#80) — eyebrow/heading/name only, per the client's Figma. */
-  --font-dm-sans: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI",
-    Arial, sans-serif;
+  --font-sans: var(--font-dm-sans-loaded), -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  /* Alias kept so existing `font-dm-sans` usages still resolve after #62. */
+  --font-dm-sans: var(--font-sans);
 
   /* Navbar collapse breakpoint ("Laptop L") — deliberately separate from
      the default `lg` (1024px) scale used elsewhere for spacing/grids, so
