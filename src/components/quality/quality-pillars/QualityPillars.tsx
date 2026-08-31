@@ -16,6 +16,8 @@ interface QualityPillarsProps {
   foundation: string[];
   heading?: string;
   subtitle?: string;
+  /** Forwarded to every card — see `HubNavCard`. */
+  cta?: string;
 }
 
 const PILLAR_STAGGER_MS = 90;
@@ -26,8 +28,11 @@ export function QualityPillars({
   foundation,
   heading = "A Culture of Quality & Safety",
   subtitle = "Not a function — the foundation.",
+  cta,
 }: QualityPillarsProps) {
   const { ref, inView } = useInView();
+  // Four pillars need two rows on sm rather than a cramped four-across.
+  const columns = pillars.length === 4 ? "sm:grid-cols-2 lg:grid-cols-4" : "sm:grid-cols-3";
 
   return (
     <div ref={ref} className="text-center">
@@ -39,14 +44,14 @@ export function QualityPillars({
       <h3 className="text-2xl sm:text-3xl font-bold text-primary-dark">{heading}</h3>
       <p className="text-muted mt-2 mb-10">{subtitle}</p>
 
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-10 text-left">
+      <div className={`grid grid-cols-1 gap-5 mb-10 text-left ${columns}`}>
         {pillars.map((pillar, i) => (
           <div
             key={pillar.title}
-            className={`pillar-rise ${inView ? "in-view" : ""}`}
+            className={`h-full pillar-rise ${inView ? "in-view" : ""}`}
             style={{ transitionDelay: `${i * PILLAR_STAGGER_MS}ms` }}
           >
-            <HubNavCard {...pillar} accent={i % 2 === 0 ? "teal" : "purple"} />
+            <HubNavCard {...pillar} accent={i % 2 === 0 ? "teal" : "purple"} cta={cta} />
           </div>
         ))}
       </div>
