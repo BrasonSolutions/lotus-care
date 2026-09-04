@@ -1,6 +1,6 @@
 "use client";
 
-import { useInView } from "@/hooks/use-in-view";
+import { useReveal, useRevealGroup } from "@/hooks/use-reveal";
 import { HubNavCard } from "@/components/careers/hub-nav-card";
 import { LotusMark } from "@/components/lotus-mark";
 
@@ -18,7 +18,7 @@ interface QualityPillarsProps {
   subtitle?: string;
 }
 
-const PILLAR_STAGGER_MS = 90;
+// The foundation line lands after the pillars have all risen.
 const FOUNDATION_DELAY_MS = 750;
 
 export function QualityPillars({
@@ -27,7 +27,8 @@ export function QualityPillars({
   heading = "A Culture of Quality & Safety",
   subtitle = "Not a function — the foundation.",
 }: QualityPillarsProps) {
-  const { ref, inView } = useInView();
+  const { ref, inView, item } = useRevealGroup("rise");
+  const { ref: foundationRef, props: foundationProps } = useReveal("fade", { offsetMs: FOUNDATION_DELAY_MS });
 
   return (
     <div ref={ref} className="text-center">
@@ -43,8 +44,7 @@ export function QualityPillars({
         {pillars.map((pillar, i) => (
           <div
             key={pillar.title}
-            className={`pillar-rise ${inView ? "in-view" : ""}`}
-            style={{ transitionDelay: `${i * PILLAR_STAGGER_MS}ms` }}
+            {...item(i)}
           >
             <HubNavCard {...pillar} accent={i % 2 === 0 ? "teal" : "purple"} />
           </div>
@@ -52,8 +52,9 @@ export function QualityPillars({
       </div>
 
       <div
-        className={`border-t border-dashed border-gray-300 pt-4 foundation-fade ${inView ? "in-view" : ""}`}
-        style={{ transitionDelay: `${FOUNDATION_DELAY_MS}ms` }}
+        ref={foundationRef}
+        {...foundationProps}
+        className={`border-t border-dashed border-gray-300 pt-4 ${foundationProps.className}`}
       >
         <p className="text-sm text-muted">{foundation.join(" · ")}</p>
       </div>

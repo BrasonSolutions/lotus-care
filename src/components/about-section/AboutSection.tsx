@@ -1,6 +1,6 @@
 "use client";
 
-import { useInView } from "@/hooks/use-in-view";
+import { useReveal } from "@/hooks/use-reveal";
 import { SectionTitle } from "@/components/section-title";
 import { Container } from "@/components/layout";
 
@@ -12,7 +12,8 @@ interface AboutSectionProps {
 }
 
 export function AboutSection({ title, subtitle, paragraphs, stats }: AboutSectionProps) {
-  const { ref, inView } = useInView();
+  const { ref, props } = useReveal();
+  const { ref: statsRef, props: statsProps } = useReveal("rise", { index: 2 });
 
   return (
     <section id="about" className="relative overflow-hidden py-20 lg:py-28 bg-white">
@@ -21,9 +22,9 @@ export function AboutSection({ title, subtitle, paragraphs, stats }: AboutSectio
       <Container>
         <SectionTitle title={title} subtitle={subtitle} />
 
-        <div ref={ref} className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center mt-8">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center mt-8">
           {/* Text content */}
-          <div className={`reveal ${inView ? "in-view" : ""}`}>
+          <div ref={ref} {...props} className={props.className}>
             {paragraphs.map((p, i) => (
               <p key={i} className="text-lg text-foreground leading-relaxed mb-6 last:mb-0">
                 {p}
@@ -32,7 +33,7 @@ export function AboutSection({ title, subtitle, paragraphs, stats }: AboutSectio
           </div>
 
           {/* Stats orbit — values circle slowly and swell on the left (issue #87) */}
-          <div className={`reveal reveal-delay-2 ${inView ? "in-view" : ""}`}>
+          <div ref={statsRef} {...statsProps} className={statsProps.className}>
             <div className="relative mx-auto w-64 h-64 lg:w-80 lg:h-80 [--orbit-r:6.5rem] lg:[--orbit-r:8.5rem] [--orbit-dur:36s]">
               {/* Soft pools in the brand tones, scattered around the rotation
                   rather than laid out on a ring (issue #87). Hand-placed at

@@ -1,7 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { useInView } from "@/hooks/use-in-view";
+import { useRevealGroup } from "@/hooks/use-reveal";
 
 export interface TimelineStep {
   /** Usually a number/string badge; accepts any ReactNode (e.g. an icon)
@@ -26,8 +26,6 @@ export interface TimelineProps {
   titleClassName?: string;
 }
 
-const STAGGER_MS = 90;
-
 const CIRCLE_VARIANT = {
   solid: "bg-primary-dark text-white",
   outline: "bg-white border-2 border-primary-dark text-primary-dark",
@@ -40,7 +38,7 @@ export function Timeline({
   circleVariant = "solid",
   titleClassName = "",
 }: TimelineProps) {
-  const { ref, inView } = useInView();
+  const { ref, item } = useRevealGroup();
   const circleClass = CIRCLE_VARIANT[circleVariant];
 
   const verticalList = (
@@ -48,8 +46,8 @@ export function Timeline({
       {steps.map((step, i) => (
         <li
           key={step.title}
-          className={`relative pl-8 pop-item ${inView ? "in-view" : ""}`}
-          style={{ transitionDelay: `${i * STAGGER_MS}ms` }}
+          {...item(i)}
+          className={`relative pl-8 ${item(i).className}`}
         >
           <span
             className={`absolute -left-4 flex items-center justify-center w-8 h-8 rounded-full font-bold text-sm ${circleClass}`}
@@ -82,8 +80,8 @@ export function Timeline({
           {steps.map((step, i) => (
             <li
               key={step.title}
-              className={`flex flex-col items-center text-center pop-item ${inView ? "in-view" : ""}`}
-              style={{ transitionDelay: `${i * STAGGER_MS}ms` }}
+              {...item(i)}
+              className={`flex flex-col items-center text-center ${item(i).className}`}
             >
               <div
                 className={`relative z-10 flex items-center justify-center w-16 h-16 shrink-0 rounded-full font-bold text-xl shadow-md ${circleClass}`}

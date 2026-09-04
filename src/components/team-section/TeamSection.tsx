@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useInView } from "@/hooks/use-in-view";
+import { useReveal } from "@/hooks/use-reveal";
 import type { TeamMember } from "@/data/team";
 import { SectionTitle } from "@/components/section-title";
 import { TeamCard } from "@/components/team-card";
@@ -22,7 +22,7 @@ export function TeamSection({
   members,
   departments,
 }: TeamSectionProps) {
-  const { ref, inView } = useInView({ threshold: 0.1 });
+  const { ref, props } = useReveal("rise", { threshold: 0.1 });
   const [activeDept, setActiveDept] = useState<string>("Management");
   const [selectedMember, setSelectedMember] = useState<
     TeamMember | null
@@ -41,7 +41,8 @@ export function TeamSection({
         {/* Department tabs */}
         <div
           ref={ref}
-          className={`reveal ${inView ? "in-view" : ""} relative`}
+          {...props}
+          className={`${props.className} relative`}
         >
           <div className="flex gap-2 overflow-x-auto hide-scrollbar pb-4 mb-8 justify-start sm:justify-center">
             {departments.map((dept) => (

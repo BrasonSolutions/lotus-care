@@ -1,20 +1,29 @@
 "use client";
 
-import { useInView } from "@/hooks/use-in-view";
+import { useReveal } from "@/hooks/use-reveal";
+import type { RevealEffect, RevealOptions } from "@/hooks/reveal-props";
 
-interface RevealProps {
+interface RevealProps extends RevealOptions {
   children: React.ReactNode;
   className?: string;
-  delay?: 1 | 2 | 3 | 4 | 5;
+  effect?: RevealEffect;
   threshold?: number;
 }
 
-export function Reveal({ children, className, delay, threshold = 0.1 }: RevealProps) {
-  const { ref, inView } = useInView({ threshold });
-  const delayClass = delay ? `reveal-delay-${delay}` : "";
+/** Wrapper for callers that don't already own an element to put the reveal on
+ * — mostly page files, which stay server components this way. Everything else
+ * should spread `useReveal` onto the element it already renders. */
+export function Reveal({
+  children,
+  className,
+  effect = "rise",
+  threshold = 0.1,
+  ...options
+}: RevealProps) {
+  const { ref, props } = useReveal(effect, { threshold, ...options });
 
   return (
-    <div ref={ref} className={`reveal ${delayClass} ${inView ? "in-view" : ""} ${className ?? ""}`}>
+    <div ref={ref} {...props} className={`${props.className} ${className ?? ""}`}>
       {children}
     </div>
   );

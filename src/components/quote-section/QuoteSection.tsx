@@ -1,6 +1,6 @@
 "use client";
 
-import { useInView } from "@/hooks/use-in-view";
+import { useReveal } from "@/hooks/use-reveal";
 import { Container } from "@/components/layout";
 import { Blob } from "@/components/blob";
 import { QuoteCard } from "./QuoteCard";
@@ -14,7 +14,8 @@ interface QuoteSectionProps {
 }
 
 export function QuoteSection({ quote, ctaHref, ctaLabel }: QuoteSectionProps) {
-  const { ref, inView } = useInView();
+  const { ref, props } = useReveal();
+  const { ref: secondRef, props: secondProps } = useReveal("rise", { index: 2 });
 
   return (
     <section className="relative overflow-hidden bg-teal-700 py-16 md:py-20 lg:py-24">
@@ -30,7 +31,7 @@ export function QuoteSection({ quote, ctaHref, ctaLabel }: QuoteSectionProps) {
           ref={ref}
           className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center"
         >
-          <div className={`reveal ${inView ? "in-view" : ""}`}>
+          <div ref={ref} {...props} className={props.className}>
             <p className="font-dm-sans font-bold text-xs uppercase tracking-[0.15em] text-blossom">
               {quote.eyebrow}
             </p>
@@ -53,13 +54,9 @@ export function QuoteSection({ quote, ctaHref, ctaLabel }: QuoteSectionProps) {
             )}
           </div>
 
-          <QuoteCard
-            quote={quote.quote}
-            name={quote.name}
-            date={quote.date}
-            tone="teal"
-            className={`reveal reveal-delay-2 ${inView ? "in-view" : ""}`}
-          />
+          <div ref={secondRef} {...secondProps}>
+            <QuoteCard quote={quote.quote} name={quote.name} date={quote.date} tone="teal" />
+          </div>
         </div>
       </Container>
     </section>
