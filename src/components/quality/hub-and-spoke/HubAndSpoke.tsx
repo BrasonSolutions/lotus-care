@@ -1,6 +1,6 @@
 "use client";
 
-import { useReveal, useRevealGroup } from "@/hooks/use-reveal";
+import { useRevealGroup } from "@/hooks/use-reveal";
 
 interface Spoke {
   label: string;
@@ -19,8 +19,7 @@ const HUB_SIZE = NODE_WIDTH;
 const CORE_POP_MS = 300;
 
 export function HubAndSpoke({ core, spokes }: HubAndSpokeProps) {
-  const { ref, item } = useRevealGroup("pop", { offsetMs: CORE_POP_MS });
-  const { props: coreProps } = useReveal("pop");
+  const { ref, item } = useRevealGroup("pop");
   const count = spokes.length;
   const size = RADIUS * 2 + NODE_WIDTH;
 
@@ -55,8 +54,8 @@ export function HubAndSpoke({ core, spokes }: HubAndSpokeProps) {
           style={{ width: HUB_SIZE, height: HUB_SIZE }}
         >
           <div
-            {...coreProps}
-            className={`w-full h-full rounded-full bg-primary-dark text-white flex flex-col items-center justify-center text-center p-5 shadow-md ${coreProps.className}`}
+            {...item(0, 0)}
+            className={`w-full h-full rounded-full bg-primary-dark text-white flex flex-col items-center justify-center text-center p-5 shadow-md ${item(0, 0).className}`}
           >
             <p className="text-base font-semibold leading-snug">{core.label}</p>
             {core.subtext && (
@@ -83,10 +82,10 @@ export function HubAndSpoke({ core, spokes }: HubAndSpokeProps) {
               }}
             >
               <div
-                {...item(i)}
+                {...item(i, CORE_POP_MS)}
                 className={`bg-white rounded-xl border border-gray-100 border-l-4 shadow-sm p-4 ${
                   i % 2 === 0 ? "border-l-primary-dark" : "border-l-purple-600"
-                } ${item(i).className}`}
+                } ${item(i, CORE_POP_MS).className}`}
               >
                 <h3 className="text-base font-semibold text-primary-dark mb-1">
                   {spoke.label}
@@ -104,8 +103,8 @@ export function HubAndSpoke({ core, spokes }: HubAndSpokeProps) {
       <div className="lg:hidden">
         <div className="text-center mb-6">
           <div
-            {...coreProps}
-            className={`inline-block bg-primary-dark text-white rounded-2xl px-6 py-4 ${coreProps.className}`}
+            {...item(0, 0)}
+            className={`inline-block bg-primary-dark text-white rounded-2xl px-6 py-4 ${item(0, 0).className}`}
           >
             <p className="font-semibold">{core.label}</p>
             {core.subtext && (
@@ -117,10 +116,10 @@ export function HubAndSpoke({ core, spokes }: HubAndSpokeProps) {
           {spokes.map((spoke, i) => (
             <li
               key={spoke.label}
-              {...item(i)}
+              {...item(i, CORE_POP_MS)}
               className={`bg-white rounded-xl border border-gray-100 border-l-4 shadow-sm p-4 ${
                 i % 2 === 0 ? "border-l-primary-dark" : "border-l-purple-600"
-              } ${item(i).className}`}
+              } ${item(i, CORE_POP_MS).className}`}
             >
               <h3 className="text-sm font-semibold text-primary-dark mb-1">
                 {spoke.label}

@@ -33,6 +33,7 @@ export function useRevealGroup(
   return {
     ref,
     inView,
-    item: (index: number) => revealProps(effect, { index, offsetMs }, inView),
+    item: (index: number, itemOffsetMs = offsetMs) =>
+      revealProps(effect, { index, offsetMs: itemOffsetMs }, inView),
   };
 }
