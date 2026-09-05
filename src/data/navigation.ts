@@ -41,7 +41,7 @@ export const navItems: NavItem[] = [
     viewAllHref: "/quality",
     viewAllLabel: "Overview",
     children: [
-      { label: "Human Rights Committee", href: "/quality/human-rights" },
+      { label: "Model of Care", href: "/quality/human-rights" },
       { label: "Multidisciplinary Team", href: "/quality/mdt" },
       { label: "Quality, Safety & Improvement", href: "/quality/safety-improvement" },
     ],

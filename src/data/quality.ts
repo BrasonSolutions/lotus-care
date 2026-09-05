@@ -30,6 +30,14 @@ export interface ContentBlock {
   intro?: string;
   body?: string;
   bullets?: string[];
+  /** Short tags shown as bubbles. When present, `bullets` is not rendered. */
+  keywords?: string[];
+}
+
+export interface ModelOfCareSection {
+  id: "curriculum" | "adt" | "human-rights" | "safeguarding";
+  heading: string;
+  intro: string;
 }
 
 // --- /quality hub landing page ---
@@ -45,9 +53,9 @@ export const qualityHub = {
 export const hubCards = [
   {
     icon: "shield-check",
-    title: "Human Rights Committee",
+    title: "Model of Care",
     description:
-      "How we embed dignity, choice, and a rights-based approach across every service we provide.",
+      "How we structure daily life, transitions, rights, and safeguarding across every service we provide.",
     href: "/quality/human-rights",
   },
   {
@@ -81,7 +89,34 @@ export const anonymizedTestimonial: Testimonial = {
     "They encouraged me to make choices about my day-to-day life, and made sure I felt a part of my home.",
 };
 
-// --- /quality/human-rights ---
+// --- /quality/human-rights (Model of Care) ---
+
+// Blocked on client: real Model of Care content from Trevor and Caithriona
+// (issue #91). Structure only — swap each `intro` in when copy lands.
+export const modelOfCareSections: ModelOfCareSection[] = [
+  {
+    id: "curriculum",
+    heading: "24-Hour Curriculum",
+    intro:
+      "How support, structure, and activity are planned across every part of a person's day and night.",
+  },
+  {
+    id: "adt",
+    heading: "Admissions, Discharges & Transitions (ADT)",
+    intro: "How we plan and support people moving into, between, and out of our services.",
+  },
+  {
+    id: "human-rights",
+    heading: "Human Rights",
+    intro:
+      "A rights-based approach where dignity, respect, equality, and autonomy are central to every aspect of care.",
+  },
+  {
+    id: "safeguarding",
+    heading: "Safeguarding",
+    intro: "How we protect the people we support from harm, and respond when concerns are raised.",
+  },
+];
 
 export const humanRightsFramework: CycleStep[] = [
   {
@@ -120,36 +155,39 @@ export const humanRightsContent = {
     heading: "Purpose of the Committee",
     intro:
       "The Committee provides independent oversight, guidance, and assurance to ensure that the rights of the children and adults we support are respected, upheld, and actively realised in practice:",
-    bullets: [
-      "Promote a rights-based and person-centred approach across all services",
-      "Strengthen dignity, autonomy, and supported decision-making in daily practice",
-      "Safeguard against unnecessary or disproportionate restrictions of liberty or choice, ensuring least restrictive practice",
-      "Identify, review, and respond to potential rights restrictions, risks, or inequalities",
-      "Support continuous improvement in the realisation of human rights in practice and outcomes",
-      "Ensure alignment with national legislation, HIQA standards, and international human rights frameworks, including the UNCRPD",
+    keywords: [
+      "Rights-Based Approach",
+      "Dignity & Autonomy",
+      "Least Restrictive Practice",
+      "Rights Oversight",
+      "Continuous Improvement",
+      "HIQA & UNCRPD Alignment",
     ],
   } satisfies ContentBlock,
   approach: {
     heading: "Our Approach",
-    bullets: [
-      "Voice, choice, and control: ensuring meaningful participation in decisions that affect daily life",
-      "Supported decision-making and legal capacity, respecting each person's right to make choices with appropriate supports",
-      "Dignity of risk, balancing safety with the right to live a full and meaningful life",
-      "Equality, fairness, and non-discrimination in all aspects of care and support",
-      "Safeguarding and protection from harm, delivered through a rights-based lens",
-      "Transparent and accountable decision-making at all levels",
+    intro:
+      "Our approach turns rights into everyday practice, balancing safety with the right to live a full and meaningful life, and keeping decisions transparent and accountable:",
+    keywords: [
+      "Voice, Choice & Control",
+      "Supported Decision-Making",
+      "Dignity",
+      "Equality & Fairness",
+      "Safeguarding",
+      "Transparency & Accountability",
     ],
   } satisfies ContentBlock,
   champions: {
     heading: "Human Rights Champions",
     intro:
-      "Each centre has a dedicated Human Rights Champion translating rights-based principles into everyday practice locally:",
-    bullets: [
-      "Supporting staff to embed rights-based practice in daily work",
-      "Promoting awareness of dignity, choice, and least restrictive practice",
-      "Identifying and escalating potential rights concerns or restrictions",
-      "Reinforcing a culture of reflection, accountability, and respect",
-      "Acting as a link between frontline services and the Human Rights Committee",
+      "Each centre has a dedicated Human Rights Champion who translates rights-based principles into everyday practice locally, supporting colleagues and raising concerns as they arise:",
+    keywords: [
+      "Frontline Staff Support",
+      "Dignity & Choice",
+      "Least Restrictive Practice",
+      "Escalating Concerns",
+      "Reflection & Accountability",
+      "Link to the Committee",
     ],
   } satisfies ContentBlock,
   governance: {
