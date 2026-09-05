@@ -81,7 +81,7 @@ export default function WhyUsPage() {
             circleVariant="outline"
             titleClassName="font-dm-sans"
             steps={pathway.map((step, i) => ({
-              number: <LotusStageIcon stage={i + 1} className="w-9 h-9" />,
+              number: <LotusStageIcon stage={i + 1} className="w-10 h-10 md:w-14 md:h-14" />,
               title: step.title,
               description: step.description,
             }))}
