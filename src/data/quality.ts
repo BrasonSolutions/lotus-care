@@ -40,6 +40,13 @@ export interface ModelOfCareSection {
   intro: string;
 }
 
+/** A bullet reduced to its key word plus the sentence it came from, so long
+ * lists read as cards rather than blocks of text (#91). */
+export interface Keyword {
+  term: string;
+  description: string;
+}
+
 // --- /quality hub landing page ---
 
 export const qualityHub = {
@@ -56,7 +63,7 @@ export const hubCards = [
     title: "Model of Care",
     description:
       "How we structure daily life, transitions, rights, and safeguarding across every service we provide.",
-    href: "/quality/human-rights",
+    href: "/quality/model-of-care",
   },
   {
     icon: "user-group",
@@ -89,34 +96,7 @@ export const anonymizedTestimonial: Testimonial = {
     "They encouraged me to make choices about my day-to-day life, and made sure I felt a part of my home.",
 };
 
-// --- /quality/human-rights (Model of Care) ---
-
-// Blocked on client: real Model of Care content from Trevor and Caithriona
-// (issue #91). Structure only — swap each `intro` in when copy lands.
-export const modelOfCareSections: ModelOfCareSection[] = [
-  {
-    id: "curriculum",
-    heading: "24-Hour Curriculum",
-    intro:
-      "How support, structure, and activity are planned across every part of a person's day and night.",
-  },
-  {
-    id: "adt",
-    heading: "Admissions, Discharges & Transitions (ADT)",
-    intro: "How we plan and support people moving into, between, and out of our services.",
-  },
-  {
-    id: "human-rights",
-    heading: "Human Rights",
-    intro:
-      "A rights-based approach where dignity, respect, equality, and autonomy are central to every aspect of care.",
-  },
-  {
-    id: "safeguarding",
-    heading: "Safeguarding",
-    intro: "How we protect the people we support from harm, and respond when concerns are raised.",
-  },
-];
+// --- /quality/model-of-care ---
 
 export const humanRightsFramework: CycleStep[] = [
   {
@@ -146,37 +126,131 @@ export const humanRightsFramework: CycleStep[] = [
   },
 ];
 
+/** The four Model of Care sections in page order (#91). Human Rights is the
+ * only one with full copy; the other three carry a provisional summary until
+ * Trevor and Caithriona send theirs.
+ * ponytail: placeholder `intro` text, replace with client copy when it lands. */
+export const modelOfCareSections = [
+  {
+    id: "curriculum",
+    icon: "clock",
+    summary: "Every hour of the day planned to build skills, independence, and wellbeing.",
+    image: "/images/stock/warm-home.jpg",
+    label: "24-Hour Curriculum",
+    heading: "The 24-Hour Curriculum",
+    intro:
+      "A structured approach to daily living where every part of the day — routines, activities, education, and rest — is planned to build skills, independence, and wellbeing.",
+    provisional: true,
+  },
+  {
+    id: "adt",
+    icon: "home",
+    summary: "Consistent, well-communicated moves into, through, and on from our services.",
+    image: "/images/stock/clinical-consultation.jpg",
+    label: "ADT",
+    heading: "Admissions, Discharges & Transitions",
+    intro:
+      "How we plan and support each person's move into, through, and on from our services, so that every transition is consistent, well-communicated, and centred on the person.",
+    provisional: true,
+  },
+  {
+    id: "human-rights",
+    icon: "user-circle",
+    summary: "Dignity, respect, equality, and autonomy at the centre of every decision.",
+    image: "/images/stock/community-friends.jpg",
+    label: "Human Rights",
+    heading: "Human Rights",
+    intro:
+      "A rights-based approach where dignity, respect, equality, and autonomy are central to every aspect of care and support.",
+    provisional: false,
+  },
+  {
+    id: "safeguarding",
+    icon: "shield-check",
+    summary: "Clear reporting routes, trained staff, and oversight that never lapses.",
+    image: "/images/stock/team-meeting.jpg",
+    label: "Safeguarding",
+    heading: "Safeguarding",
+    intro:
+      "How we protect the people we support from harm — clear reporting routes, trained staff, and oversight that treats safeguarding as everyone's responsibility.",
+    provisional: true,
+  },
+];
+
 export const humanRightsContent = {
   intro: [
     "At Lotus Care, we are committed to delivering services that are firmly grounded in a human rights-based approach, where dignity, respect, equality, and autonomy are central to every aspect of care and support. We recognise that high-quality care is not only about safety and wellbeing, but also about the active protection, promotion, and realisation of each person's fundamental rights. These rights are not optional or secondary considerations; they are the foundation of how we work.",
     "Lotus Care's Human Rights Committee plays a key role in strengthening this commitment across all our services. It ensures that human rights principles are consistently embedded in practice, decision-making, and governance, and that the people we support are empowered to live lives of choice, control, and inclusion.",
   ],
+  // Same six points as before, each led by its key word so the list renders
+  // as cards rather than a wall of text (#91).
   purpose: {
     heading: "Purpose of the Committee",
     intro:
-      "The Committee provides independent oversight, guidance, and assurance to ensure that the rights of the children and adults we support are respected, upheld, and actively realised in practice:",
-    keywords: [
-      "Rights-Based Approach",
-      "Dignity & Autonomy",
-      "Least Restrictive Practice",
-      "Rights Oversight",
-      "Continuous Improvement",
-      "HIQA & UNCRPD Alignment",
-    ],
+      "The Committee provides independent oversight, guidance, and assurance to ensure that the rights of the children and adults we support are respected, upheld, and actively realised in practice.",
   } satisfies ContentBlock,
+  purposeKeywords: [
+    {
+      term: "Person-Centred",
+      description: "Promote a rights-based and person-centred approach across all services.",
+    },
+    {
+      term: "Dignity & Autonomy",
+      description: "Strengthen dignity, autonomy, and supported decision-making in daily practice.",
+    },
+    {
+      term: "Least Restrictive Practice",
+      description:
+        "Safeguard against unnecessary or disproportionate restrictions of liberty or choice.",
+    },
+    {
+      term: "Rights Oversight",
+      description:
+        "Identify, review, and respond to potential rights restrictions, risks, or inequalities.",
+    },
+    {
+      term: "Continuous Improvement",
+      description:
+        "Support continuous improvement in the realisation of human rights in practice and outcomes.",
+    },
+    {
+      term: "HIQA & UNCRPD Alignment",
+      description:
+        "Ensure alignment with national legislation, HIQA standards, and the UNCRPD.",
+    },
+  ] satisfies Keyword[],
   approach: {
     heading: "Our Approach",
     intro:
-      "Our approach turns rights into everyday practice, balancing safety with the right to live a full and meaningful life, and keeping decisions transparent and accountable:",
-    keywords: [
-      "Voice, Choice & Control",
-      "Supported Decision-Making",
-      "Dignity",
-      "Equality & Fairness",
-      "Safeguarding",
-      "Transparency & Accountability",
-    ],
+      "Six commitments that shape how a rights-based approach shows up in everyday practice.",
   } satisfies ContentBlock,
+  approachKeywords: [
+    {
+      term: "Voice, Choice & Control",
+      description: "Meaningful participation in the decisions that affect daily life.",
+    },
+    {
+      term: "Supported Decision-Making",
+      description:
+        "Respecting each person's legal capacity and right to make choices with the right supports.",
+    },
+    {
+      term: "Dignity of Risk",
+      description: "Balancing safety with the right to live a full and meaningful life.",
+    },
+    {
+      term: "Equality & Fairness",
+      description: "Non-discrimination in all aspects of care and support.",
+    },
+    {
+      term: "Protection from Harm",
+      description: "Safeguarding delivered through a rights-based lens.",
+    },
+    {
+      term: "Transparency & Accountability",
+      description: "Transparent and accountable decision-making at all levels.",
+    },
+  ] satisfies Keyword[],
   champions: {
     heading: "Human Rights Champions",
     intro:
@@ -188,6 +262,13 @@ export const humanRightsContent = {
       "Escalating Concerns",
       "Reflection & Accountability",
       "Link to the Committee",
+    ],
+    bullets: [
+      "Supporting staff to embed rights-based practice in daily work",
+      "Promoting awareness of dignity, choice, and least restrictive practice",
+      "Identifying and escalating potential rights concerns or restrictions",
+      "Reinforcing a culture of reflection, accountability, and respect",
+      "Acting as a link between frontline services and the Human Rights Committee",
     ],
   } satisfies ContentBlock,
   governance: {

@@ -58,7 +58,7 @@ export function FeatureSlab({
         <h2 className="text-2xl sm:text-3xl font-bold text-white mb-5">{heading}</h2>
         {intro && <p className="text-lg text-white/85 leading-relaxed mb-5">{intro}</p>}
         {body && <p className="text-lg text-white/85 leading-relaxed">{body}</p>}
-        {keywords && keywords.length > 0 ? (
+        {keywords && keywords.length > 0 && (
           <div className="flex flex-wrap gap-2 mt-6">
             {keywords.map((word) => (
               <span
@@ -69,21 +69,20 @@ export function FeatureSlab({
               </span>
             ))}
           </div>
-        ) : (
-          bullets && (
-            <ul className="mt-2 space-y-4">
-              {bullets.map((item) => (
-                <li key={item} className="flex gap-3 text-lg text-white/85 leading-relaxed">
-                  {/* Drawn circle, not a glyph — its optical centre sits low, needs mt-3. */}
-                  <span
-                    className={`${bullet} mt-3 h-1.5 w-1.5 shrink-0 self-start rounded-full bg-current`}
-                    aria-hidden="true"
-                  />
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-          )
+        )}
+        {bullets && (
+          <ul className="mt-6 space-y-4">
+            {bullets.map((item) => (
+              <li key={item} className="flex gap-3 text-lg text-white/85 leading-relaxed">
+                {/* Drawn circle, not a glyph — its optical centre sits low, needs mt-3. */}
+                <span
+                  className={`${bullet} mt-3 h-1.5 w-1.5 shrink-0 self-start rounded-full bg-current`}
+                  aria-hidden="true"
+                />
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
         )}
       </div>
     </div>

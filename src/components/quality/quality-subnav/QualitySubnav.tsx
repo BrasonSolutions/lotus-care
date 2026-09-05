@@ -7,7 +7,7 @@ import { useMediaQuery, NAV_BREAKPOINT_QUERY } from "@/hooks/use-media-query";
 
 const links = [
   { label: "Overview", href: "/quality" },
-  { label: "Model of Care", href: "/quality/human-rights" },
+  { label: "Model of Care", href: "/quality/model-of-care" },
   { label: "MDT", href: "/quality/mdt" },
   { label: "Safety & Improvement", href: "/quality/safety-improvement" },
 ];
