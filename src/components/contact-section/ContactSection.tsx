@@ -1,6 +1,6 @@
 "use client";
 
-import { useInView } from "@/hooks/use-in-view";
+import { useReveal } from "@/hooks/use-reveal";
 import { ContactForm } from "@/components/contact-form";
 import { contactFields } from "@/data/forms";
 import { SectionTitle } from "@/components/section-title";
@@ -17,7 +17,8 @@ export function ContactSection({
   subtitle = "We'd love to hear from you. Reach out to learn more about our services.",
   contactInfo,
 }: ContactSectionProps) {
-  const { ref, inView } = useInView({ threshold: 0.1 });
+  const { ref, props } = useReveal("rise", { threshold: 0.1 });
+  const { ref: secondRef, props: secondProps } = useReveal("rise", { threshold: 0.1, index: 2 });
   return (
     <section id="contact" className="py-20 lg:py-28 bg-white">
       <Container>
@@ -25,7 +26,8 @@ export function ContactSection({
 
         <div
           ref={ref}
-          className={`reveal ${inView ? "in-view" : ""} grid lg:grid-cols-2 gap-8 lg:gap-12 mt-8`}
+          {...props}
+          className={`${props.className} grid lg:grid-cols-2 gap-8 lg:gap-12 mt-8`}
         >
           {/* Form */}
           <div>
@@ -33,7 +35,7 @@ export function ContactSection({
           </div>
 
           {/* Info card */}
-          <div className={`reveal reveal-delay-2 ${inView ? "in-view" : ""}`}>
+          <div ref={secondRef} {...secondProps} className={secondProps.className}>
             <div className="bg-warm-bg rounded-2xl p-8 h-full">
               <h3 className="text-xl font-bold text-primary-dark mb-6">
                 Contact Information

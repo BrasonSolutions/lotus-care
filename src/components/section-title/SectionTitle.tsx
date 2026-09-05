@@ -1,6 +1,6 @@
 "use client";
 
-import { useInView } from "@/hooks/use-in-view";
+import { useReveal } from "@/hooks/use-reveal";
 
 interface SectionTitleProps {
   title: string;
@@ -18,13 +18,10 @@ export function SectionTitle({
   light,
   dmSans,
 }: SectionTitleProps) {
-  const { ref, inView } = useInView();
+  const { ref, props } = useReveal();
 
   return (
-    <div
-      ref={ref}
-      className={`reveal text-center mb-12 ${inView ? "in-view" : ""}`}
-    >
+    <div ref={ref} {...props} className={`${props.className} text-center mb-12`}>
       <h2
         className={`text-2xl md:text-3xl lg:text-4xl font-bold mb-4 ${dmSans ? "font-dm-sans" : ""} ${light ? "text-white" : "text-primary-dark"}`}
       >

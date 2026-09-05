@@ -1,5 +1,6 @@
 "use client";
 
+import { useReveal } from "@/hooks/use-reveal";
 import Link from "next/link";
 import type { Service } from "@/data/services";
 
@@ -98,19 +99,19 @@ const ACCENT = {
 
 interface ServiceCardProps {
   service: Service;
-  index: number;
-  inView: boolean;
   accent?: "teal" | "purple";
 }
 
-export function ServiceCard({ service, index, inView, accent = "teal" }: ServiceCardProps) {
+export function ServiceCard({ service, accent = "teal" }: ServiceCardProps) {
+  const { ref, props } = useReveal();
   const isImageCard = service.hasImage;
-  const delayClass = `reveal-delay-${index + 1}`;
 
   if (isImageCard) {
     return (
       <div
-        className={`card-hover reveal ${delayClass} ${inView ? "in-view" : ""} group relative rounded-2xl overflow-hidden min-h-[240px] sm:min-h-[280px] flex items-end`}
+        ref={ref}
+        {...props}
+        className={`card-hover ${props.className} group relative rounded-2xl overflow-hidden min-h-[240px] sm:min-h-[280px] flex items-end`}
       >
         {/* SVG illustration background */}
         <div className="absolute inset-0 transition-transform duration-500 group-hover:scale-105">
@@ -129,7 +130,9 @@ export function ServiceCard({ service, index, inView, accent = "teal" }: Service
 
   return (
     <div
-      className={`card-hover reveal ${delayClass} ${inView ? "in-view" : ""} group bg-white rounded-2xl p-6 border border-gray-100 hover:border-primary/30 transition-colors`}
+      ref={ref}
+      {...props}
+      className={`card-hover ${props.className} group bg-white rounded-2xl p-6 border border-gray-100 hover:border-primary/30 transition-colors`}
     >
       <div className={`w-14 h-14 rounded-xl flex items-center justify-center mb-4 transition-colors duration-300 ${ACCENT[accent].chip}`}>
         {icons[service.icon]}

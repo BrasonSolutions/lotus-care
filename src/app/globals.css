@@ -145,81 +145,61 @@ body {
   outline: none;
 }
 
-/* Scroll reveal animations */
-.reveal {
+/* Scroll reveal. Four effects, one per `useReveal` effect name; the module
+   owns which class goes on and when `in-view` is added. Stagger is an inline
+   transitionDelay from STAGGER_MS, not a class, so groups larger than five
+   items work without new rules.
+
+   No reduced-motion override here on purpose: `useInView` reports in view
+   immediately under reduce, so the resting state is reached by the same path
+   as everything else. An override used to be needed and silently lost a
+   specificity fight with `.reveal.reveal-scale`. */
+.reveal-rise,
+.reveal-scale,
+.reveal-pop,
+.reveal-fade {
   opacity: 0;
-  transform: translateY(24px);
+}
+
+.reveal-rise.in-view,
+.reveal-scale.in-view,
+.reveal-pop.in-view,
+.reveal-fade.in-view {
+  opacity: 1;
+  transform: none;
+}
+
+.reveal-rise,
+.reveal-scale {
   transition: opacity 600ms cubic-bezier(0.25, 0.1, 0.25, 1),
     transform 600ms cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 
-.reveal.in-view {
-  opacity: 1;
-  transform: translateY(0);
+.reveal-rise {
+  transform: translateY(24px);
 }
 
-.reveal-delay-1 {
-  transition-delay: 80ms;
-}
-.reveal-delay-2 {
-  transition-delay: 160ms;
-}
-.reveal-delay-3 {
-  transition-delay: 240ms;
-}
-.reveal-delay-4 {
-  transition-delay: 320ms;
-}
-.reveal-delay-5 {
-  transition-delay: 400ms;
-}
-
-/* Scale-settle variant, layered on top of .reveal for images/media.
-   1.05 overflowed the viewport at 1440px: Reveal renders a single element
-   (no separate clipping wrapper), so a scaled element's own overflow
-   isn't contained by anything, and at the widest Container (1376px
-   content inside the 32px lg gutter) 1.05 bled ~34px past the gutter's
-   32px. 1.03 keeps the bleed (~21px) inside the gutter at every
-   breakpoint measured. */
-.reveal.reveal-scale {
+/* 1.05 overflowed the viewport at 1440px: a scaled element's own overflow
+   isn't contained by anything, and at the widest Container (1376px content
+   inside the 32px lg gutter) 1.05 bled ~34px past it. 1.03 keeps the bleed
+   (~21px) inside the gutter at every breakpoint measured. */
+.reveal-scale {
   transform: translateY(24px) scale(1.03);
 }
 
-.reveal.reveal-scale.in-view {
-  transform: translateY(0) scale(1);
-}
-
-/* Staggered pop-in for infographic items (CircularCycle, HubAndSpoke) —
-   deliberately not `.reveal`, so Storybook's force-in-view decorator doesn't
-   short-circuit the staggered demo; these components drive their own
-   IntersectionObserver via useInView. */
-.pop-item {
-  opacity: 0;
+/* Overshoot easing — the infographic items land with a slight bounce. */
+.reveal-pop {
   transform: scale(0.4);
   transition: opacity 500ms cubic-bezier(0.34, 1.56, 0.64, 1),
     transform 500ms cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.pop-item.in-view {
-  opacity: 1;
-  transform: scale(1);
+.reveal-fade {
+  transition: opacity 500ms cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 
-/* QualityPillars (Q2): pillars rise, lotus blooms petal-by-petal, foundation
-   fades in — one coordinated cascade driven by QualityPillars' own
-   useInView, same reasoning as .pop-item above. */
-.pillar-rise {
-  opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 500ms cubic-bezier(0.25, 0.1, 0.25, 1),
-    transform 500ms cubic-bezier(0.25, 0.1, 0.25, 1);
-}
-
-.pillar-rise.in-view {
-  opacity: 1;
-  transform: translateY(0);
-}
-
+/* Petal-by-petal bloom for the lotus mark. Not a reveal effect: the timing is
+   choreography specific to the mark, driven by a caller's `inView`. */
 .lotus-bloom [data-petal] {
   transform-box: fill-box;
   transform-origin: center;
@@ -247,15 +227,6 @@ body {
 .lotus-bloom.in-view [data-petal="upper-left"],
 .lotus-bloom.in-view [data-petal="upper-right"] {
   transition-delay: 480ms;
-}
-
-.foundation-fade {
-  opacity: 0;
-  transition: opacity 500ms cubic-bezier(0.25, 0.1, 0.25, 1);
-}
-
-.foundation-fade.in-view {
-  opacity: 1;
 }
 
 /* CircularCycle: flowing marching-dash ring */
@@ -400,19 +371,9 @@ body {
     scroll-behavior: auto;
   }
 
-  .reveal {
-    opacity: 1;
-    transform: none;
-  }
-
-  .pop-item {
-    opacity: 1;
-    transform: none;
-  }
-
-  .pillar-rise,
-  .lotus-bloom [data-petal],
-  .foundation-fade {
+  /* Reveal effects need nothing here — useInView reports in view immediately
+     under reduce, so they reach their resting state the normal way. */
+  .lotus-bloom [data-petal] {
     opacity: 1;
     transform: none;
   }

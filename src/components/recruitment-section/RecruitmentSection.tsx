@@ -1,6 +1,6 @@
 "use client";
 
-import { useInView } from "@/hooks/use-in-view";
+import { useReveal } from "@/hooks/use-reveal";
 import { JobCard } from "@/components/careers/job-card";
 import type { JobRole as Job } from "@/data/jobs";
 import { Container } from "@/components/layout";
@@ -23,7 +23,7 @@ export function RecruitmentSection({
     { label: "Life at Lotus Care", href: "/careers/why-us", variant: "outline" },
   ],
 }: RecruitmentSectionProps) {
-  const { ref, inView } = useInView();
+  const { ref, props } = useReveal();
 
   const featuredJobs = jobs.filter((j) => j.featured).slice(0, 3);
 
@@ -32,7 +32,8 @@ export function RecruitmentSection({
       <Container>
         <div
           ref={ref}
-          className={`reveal ${inView ? "in-view" : ""}`}
+          {...props}
+          className={props.className}
         >
           {/* Heading */}
           <div className="max-w-3xl mx-auto text-center mb-12">

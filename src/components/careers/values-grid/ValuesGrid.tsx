@@ -1,6 +1,6 @@
 "use client";
 
-import { useInView } from "@/hooks/use-in-view";
+import { useReveal } from "@/hooks/use-reveal";
 import { getCareersIcon } from "@/components/careers/careers-icons";
 import type { CompanyValue } from "@/data/careers";
 
@@ -19,10 +19,14 @@ interface ValuesGridProps {
  * classes) — cards don't animate independently, only the whole grid does,
  * same as "Join Our Team". */
 export function ValuesGrid({ values }: ValuesGridProps) {
-  const { ref, inView } = useInView();
+  const { ref, props } = useReveal();
 
   return (
-    <div ref={ref} className={`reveal ${inView ? "in-view" : ""} grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6`}>
+    <div
+      ref={ref}
+      {...props}
+      className={`${props.className} grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6`}
+    >
       {values.map((value) => (
         <div
           key={value.title}

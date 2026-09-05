@@ -1,6 +1,6 @@
 "use client";
 
-import { useInView } from "@/hooks/use-in-view";
+import { useReveal } from "@/hooks/use-reveal";
 import { Container } from "@/components/layout";
 import { Blob } from "@/components/blob";
 import { QuoteCard } from "./QuoteCard";
@@ -14,7 +14,8 @@ interface TestimonialPairProps {
  * side. Same band mechanics (full-bleed, Blob corner, .reveal stagger),
  * different tone. */
 export function TestimonialPair({ testimonials }: TestimonialPairProps) {
-  const { ref, inView } = useInView();
+  const { ref: firstRef, props: firstProps } = useReveal();
+  const { ref: secondRef, props: secondProps } = useReveal();
 
   return (
     <section className="relative overflow-hidden bg-purple-600 py-16 md:py-20 lg:py-24">
@@ -30,19 +31,11 @@ export function TestimonialPair({ testimonials }: TestimonialPairProps) {
       />
 
       <Container className="relative">
-        <div
-          ref={ref}
-          className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-14"
-        >
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-14">
           {testimonials.map((t, i) => (
-            <QuoteCard
-              key={t.name}
-              quote={t.quote}
-              name={t.name}
-              date={t.date}
-              tone="purple"
-              className={`reveal ${i === 1 ? "reveal-delay-2" : ""} ${inView ? "in-view" : ""}`}
-            />
+            <div key={t.name} ref={i === 1 ? secondRef : firstRef} {...(i === 1 ? secondProps : firstProps)}>
+              <QuoteCard quote={t.quote} name={t.name} date={t.date} tone="purple" />
+            </div>
           ))}
         </div>
       </Container>

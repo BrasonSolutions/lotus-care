@@ -1,6 +1,6 @@
 "use client";
 
-import { useInView } from "@/hooks/use-in-view";
+import { useRevealGroup } from "@/hooks/use-reveal";
 
 interface CircularCycleStep {
   label: string;
@@ -16,10 +16,8 @@ const RADIUS = 275;
 const NODE_WIDTH = 240;
 const BADGE_SIZE = 50;
 const CENTER_LABEL_WIDTH = 180;
-const STAGGER_MS = 90;
-
 export function CircularCycle({ steps, centerLabel }: CircularCycleProps) {
-  const { ref, inView } = useInView();
+  const { ref, item } = useRevealGroup();
   const count = steps.length;
   const size = RADIUS * 2 + NODE_WIDTH;
 
@@ -75,8 +73,7 @@ export function CircularCycle({ steps, centerLabel }: CircularCycleProps) {
               }}
             >
               <div
-                className={`pop-item ${inView ? "in-view" : ""}`}
-                style={{ transitionDelay: `${i * STAGGER_MS}ms` }}
+                {...item(i)}
               >
                 <div
                   className={`mx-auto rounded-full text-white flex items-center justify-center font-semibold text-lg mb-2 ${
@@ -103,8 +100,8 @@ export function CircularCycle({ steps, centerLabel }: CircularCycleProps) {
         {steps.map((step, i) => (
           <li
             key={step.label}
-            className={`flex gap-4 pop-item ${inView ? "in-view" : ""}`}
-            style={{ transitionDelay: `${i * STAGGER_MS}ms` }}
+            {...item(i)}
+            className={`flex gap-4 ${item(i).className}`}
           >
             <div
               className={`w-10 h-10 shrink-0 rounded-full text-white flex items-center justify-center font-semibold ${

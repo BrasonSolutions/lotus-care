@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import Image from "next/image";
 import type { Home } from "@/data/homes";
-import { useInView } from "@/hooks/use-in-view";
+import { useReveal } from "@/hooks/use-reveal";
 import { SectionTitle } from "@/components/section-title";
 import { HomeModal } from "@/components/home-modal";
 import { Container } from "@/components/layout";
@@ -27,7 +27,7 @@ export function HomesCarousel({
   subtitle = "Unique homes across Co. Offaly and the Midlands, each designed to feel like home.",
   embedded = false,
 }: HomesCarouselProps) {
-  const { ref: sectionRef, inView } = useInView({ threshold: 0.1 });
+  const { ref: sectionRef, props } = useReveal("rise", { threshold: 0.1 });
   const scrollRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [selectedHome, setSelectedHome] = useState<Home | null>(null);
@@ -98,7 +98,7 @@ export function HomesCarousel({
 
   const carousel = (
     <>
-      <div ref={sectionRef} className={`reveal ${inView ? "in-view" : ""}`}>
+      <div ref={sectionRef} {...props} className={props.className}>
         {/* Carousel container */}
         <div className="relative">
             {/* Arrows — visible on all screen sizes */}
