@@ -65,5 +65,8 @@ export function useInView({
     };
   }, [threshold, triggerOnce, prefersReducedMotion]);
 
-  return { ref, inView };
+  // Reduced motion never creates the observer, so `inView` would stay at its
+  // hydration value (false) forever and elements sit at their pre-reveal
+  // transform. Report in view instead.
+  return { ref, inView: inView || prefersReducedMotion };
 }
