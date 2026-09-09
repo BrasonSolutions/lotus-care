@@ -140,7 +140,7 @@ export const modelOfCareSections = [
     heading: "The 24-Hour Curriculum",
     intro:
       "A structured approach to daily living where every part of the day — routines, activities, education, and rest — is planned to build skills, independence, and wellbeing.",
-    provisional: true,
+    provisional: false,
   },
   {
     id: "adt",
@@ -176,6 +176,31 @@ export const modelOfCareSections = [
     provisional: true,
   },
 ];
+
+export const curriculumContent = {
+  subtitle: "Learning doesn't stop when the school day ends",
+  intro: [
+    "At Lotus Care, everyday routines, activities and experiences create opportunities for service owners to build skills, confidence and independence.",
+    "Our 24-hour curriculum is an MDT-led approach which seizes on all opportunities for learning by ensuring residential staff are skilled to implement structured, individualised education programmes. It complements formal education and other learning opportunities, helping skills be developed and reinforced.",
+  ],
+  keywords: [
+    {
+      term: "Everyday Opportunities",
+      description:
+        "Daily routines and meaningful activities provide natural opportunities to practise and develop social, emotional, behavioural and practical skills.",
+    },
+    {
+      term: "Building Independence",
+      description:
+        "We focus on building confidence and skills at each person's own pace, supporting service owners to make choices and take greater ownership of their lives.",
+    },
+    {
+      term: "Learning Together",
+      description:
+        "Residential teams work alongside families, educators, therapists and the wider multidisciplinary team to provide consistent, person-centred support.",
+    },
+  ] satisfies Keyword[],
+};
 
 export const humanRightsContent = {
   intro: [

@@ -13,6 +13,7 @@ import { Blob } from "@/components/blob";
 import { Reveal } from "@/components/reveal";
 import type { ContentBlock } from "@/data/quality";
 import {
+  curriculumContent,
   humanRightsFramework,
   humanRightsContent,
   humanRightsTeam,
@@ -83,6 +84,49 @@ function ProvisionalSection({ id, imagePosition = "right" }: { id: string; image
   );
 }
 
+/** 24-Hour Curriculum (#119) — same intro-plus-photo rhythm as
+ * ProvisionalSection, followed by a KeywordCards block for the three points,
+ * matching how the Human Rights section renders its own keyword lists. */
+function CurriculumSection() {
+  const curriculum = section("curriculum");
+
+  return (
+    <section id="curriculum" className={`relative overflow-hidden py-16 sm:py-20 ${ANCHOR_OFFSET}`}>
+      <Blob color="teal" variant={2} className="absolute -top-24 -right-24 w-80 h-80" />
+      <Blob color="purple" variant={1} className="absolute -bottom-24 -left-24 w-72 h-72" />
+      <Container className="relative">
+        <Reveal className="grid md:grid-cols-2 gap-10 lg:gap-16 items-center reveal-scale">
+          <div className="max-w-lg">
+            <Eyebrow number={curriculum.number} label={curriculum.label} />
+            <h2 className="text-2xl sm:text-3xl font-bold text-primary-dark mb-3">{curriculum.heading}</h2>
+            <p className="text-lg font-semibold text-foreground mb-4">{curriculumContent.subtitle}</p>
+            <div className="space-y-4">
+              {curriculumContent.intro.map((paragraph) => (
+                <p key={paragraph} className="text-muted leading-relaxed">
+                  {paragraph}
+                </p>
+              ))}
+            </div>
+          </div>
+          <div className="group relative rounded-2xl overflow-hidden aspect-[4/3]">
+            <Image
+              src={curriculum.image}
+              alt=""
+              fill
+              sizes="(min-width: 768px) 40vw, 100vw"
+              className="object-cover transition-transform duration-500 group-hover:scale-105"
+            />
+          </div>
+        </Reveal>
+
+        <Reveal className="mt-16 sm:mt-20">
+          <KeywordCards items={curriculumContent.keywords} tone="teal" />
+        </Reveal>
+      </Container>
+    </section>
+  );
+}
+
 function Divider({ variant }: { variant: "teal" | "purple" }) {
   return (
     <div aria-hidden="true">
@@ -134,7 +178,7 @@ export default function ModelOfCarePage() {
 
       <Divider variant="teal" />
 
-      <ProvisionalSection id="curriculum" />
+      <CurriculumSection />
 
       <Divider variant="purple" />
 
