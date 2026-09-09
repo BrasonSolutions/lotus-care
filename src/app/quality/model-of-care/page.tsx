@@ -11,8 +11,12 @@ import { LotusBand } from "@/components/lotus-band";
 import { QualityPillars } from "@/components/quality/quality-pillars";
 import { Blob } from "@/components/blob";
 import { Reveal } from "@/components/reveal";
+import { Timeline } from "@/components/timeline";
+import { Chip } from "@/components/chip";
+import { Button } from "@/components/button";
 import type { ContentBlock } from "@/data/quality";
 import {
+  adtContent,
   curriculumContent,
   humanRightsFramework,
   humanRightsContent,
@@ -127,6 +131,63 @@ function CurriculumSection() {
   );
 }
 
+/** Admissions, Discharges & Transitions (#121) — same intro-plus-photo
+ * rhythm as CurriculumSection (image on the left, per the section's existing
+ * `imagePosition="left"`), followed by a horizontal Timeline for the 4-step
+ * flow, the 7 clinical specialties as wrapped Chip pills (no per-item
+ * description exists to fill a KeywordCards item), and a "Make a Referral"
+ * CTA. */
+function ADTSection() {
+  const adt = section("adt");
+
+  return (
+    <section id="adt" className={`relative overflow-hidden py-16 sm:py-20 ${ANCHOR_OFFSET}`}>
+      <Blob color="teal" variant={2} className="absolute -top-24 -right-24 w-80 h-80" />
+      <Blob color="purple" variant={1} className="absolute -bottom-24 -left-24 w-72 h-72" />
+      <Container className="relative">
+        <Reveal className="grid md:grid-cols-2 gap-10 lg:gap-16 items-center reveal-scale">
+          <div className="group relative rounded-2xl overflow-hidden aspect-[4/3] md:order-1">
+            <Image
+              src={adt.image}
+              alt=""
+              fill
+              sizes="(min-width: 768px) 40vw, 100vw"
+              className="object-cover transition-transform duration-500 group-hover:scale-105"
+            />
+          </div>
+          <div className="max-w-lg md:order-2">
+            <Eyebrow number={adt.number} label={adt.label} />
+            <h2 className="text-2xl sm:text-3xl font-bold text-primary-dark mb-3">{adt.heading}</h2>
+            <p className="text-lg font-semibold text-foreground mb-4">{adtContent.subtitle}</p>
+            <p className="text-muted leading-relaxed">{adtContent.intro}</p>
+          </div>
+        </Reveal>
+
+        <Reveal className="mt-16 sm:mt-20">
+          <Timeline steps={adtContent.steps} orientation="horizontal" circleVariant="solid" />
+        </Reveal>
+
+        <Reveal className="mt-16 sm:mt-20 text-center">
+          <h3 className="text-xl font-bold text-primary-dark mb-5">Clinical Specialties We Support</h3>
+          <div className="flex flex-wrap justify-center gap-2.5">
+            {adtContent.specialties.map((specialty) => (
+              <Chip key={specialty} tone="purple" size="sm">
+                {specialty}
+              </Chip>
+            ))}
+          </div>
+        </Reveal>
+
+        <Reveal className="mt-12 text-center">
+          <Button href="/referrals" variant="primary" size="lg">
+            Make a Referral
+          </Button>
+        </Reveal>
+      </Container>
+    </section>
+  );
+}
+
 function Divider({ variant }: { variant: "teal" | "purple" }) {
   return (
     <div aria-hidden="true">
@@ -182,7 +243,7 @@ export default function ModelOfCarePage() {
 
       <Divider variant="purple" />
 
-      <ProvisionalSection id="adt" imagePosition="left" />
+      <ADTSection />
 
       <Divider variant="teal" />
 
