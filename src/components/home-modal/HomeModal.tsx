@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import type { Home } from "@/data/homes";
+import { Button } from "@/components/button";
 
 interface HomeModalProps {
   home: Home | null;
@@ -185,12 +186,9 @@ export function HomeModal({ home, onClose }: HomeModalProps) {
             </div>
 
             {/* Close */}
-            <button
-              onClick={onClose}
-              className="w-full bg-primary-dark text-white py-3 rounded-full font-semibold hover:bg-teal-800 transition-colors focus-ring"
-            >
+            <Button onClick={onClose} fullWidth>
               Close
-            </button>
+            </Button>
 
           </div>
         </div>

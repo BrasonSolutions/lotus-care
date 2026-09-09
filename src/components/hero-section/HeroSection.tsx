@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Container } from "@/components/layout";
 import { LotusMarkAlt } from "@/components/lotus-mark";
+import { Button } from "@/components/button";
 
 /**
  * Art direction: warm, candid, natural light — real people engaged in an
@@ -77,30 +78,21 @@ export function HeroSection({
             >
               {/* Primary — white fill clears 3:1 against bg-primary-dark (6.34:1);
                   teal-700 label clears 4.5:1 against the white fill (6.34:1). */}
-              <a
-                href={primaryCtaHref}
-                className="inline-block bg-white text-primary-dark px-8 py-4 rounded-full text-lg font-semibold hover:bg-teal-100 transition-colors focus-ring text-center"
-              >
+              <Button href={primaryCtaHref} variant="onDark" size="lg">
                 {primaryCtaLabel}
-              </a>
+              </Button>
               {/* Secondary — outline on the dark hero; white border/text clears
                   both the 3:1 boundary and 4.5:1 text ratios (6.34:1) against
                   bg-primary-dark. Matches CareersCTAStrip's dark-bg outline CTA. */}
-              <a
-                href={secondaryCtaHref}
-                className="inline-block border-2 border-white text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-white/10 transition-colors focus-ring-white text-center"
-              >
+              <Button href={secondaryCtaHref} variant="onDarkOutline" size="lg">
                 {secondaryCtaLabel}
-              </a>
+              </Button>
               {/* Referrals — same verified outline treatment as the secondary
                   CTA; the client asked for it alongside Careers here as well
                   as in the navbar. */}
-              <a
-                href={tertiaryCtaHref}
-                className="inline-block border-2 border-white text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-white/10 transition-colors focus-ring-white text-center"
-              >
+              <Button href={tertiaryCtaHref} variant="onDarkOutline" size="lg">
                 {tertiaryCtaLabel}
-              </a>
+              </Button>
             </div>
           </div>
 

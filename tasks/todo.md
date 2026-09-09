@@ -1,96 +1,134 @@
-# Card: Issue #77 — Change navbar logo
+# Card: Button/Chip primitives consolidation
 
-Branch: `feat/issue-77-navbar-logo`
-Pipeline variant: `fix` (adopt-only asset swap, no new architecture)
+Branch: `refactor/button-chip-primitives`
+Pipeline variant: `fix` (design-system consolidation, no visual redesign)
 
 ## Problem
 
-`Navbar.tsx:69-71` renders a hand-built lockup — `LotusMark` icon plus two
-hand-typed `<span>`s ("LOTUS CARE" / "ENHANCED LIVING"). The client has supplied
-the real logo lockup as SVG. Replace the hand-built version with the client asset,
-in both the colour and white variants.
-
-## Source assets (verified present, real vectors)
-
-| Variant | File | Facts |
-|---|---|---|
-| Colour | `docs/brand-assets/Logo/Lotus Care Logo - Colour.svg` | 36 paths, `viewBox="0 0 526.24 141.34"`, no background `<rect>` → transparent ✅ |
-| White | `docs/brand-assets/Logo/Lotus Care Logo - White.svg` | 36 paths, same viewBox, transparent ✅ |
-
-Aspect ratio 526.24 / 141.34 = **3.723**.
-
-## Known traps (found during planning)
-
-1. **Class-name collision.** Both SVGs define `.cls-1` … `.cls-4` in an internal
-   `<style>` block. SVG `<style>` is document-global, not shadow-scoped. A scrolled
-   page renders `LogoDark` (navbar) *and* `LogoWhite` (footer) at once, so the two
-   rule sets would fight and one logo would render in the wrong palette.
-   → Prefix classes per variant (`.lc-logo-colour-1`, `.lc-logo-white-1`, …).
-2. **`LogoWhite` is shared with the footer** (`Footer.tsx:24`, `h-12 w-auto`).
-   Editing the component changes the footer too. Assumed desirable (consistency —
-   see #96); flagged for the user, not silently scoped away.
-3. **Optical size change.** Today's lockup sets its own 14px caps text next to the
-   mark. In the client SVG the wordmark is baked in, so at `h-10` (40px) the text
-   renders smaller than it does now. Height may need bumping — decide by
-   measurement, not by eye (lessons #2, #10).
-4. **Do not retoken the SVG fills.** Client SVG uses `#096972 / #18a8b2 / #61c3d7 /
-   #e6f4f9`; repo tokens are the near-but-not-equal `#0d6a70 / #1badb2 / #54c7d6 /
-   #eef9fb`. The supplied asset is authoritative — keep its own hex.
-5. **`LotusMark` stays.** Still used by `HeroSection`, `CareersHero`, `BenefitCard`.
-   Only the *lockup* components change.
+Every CTA pill across the codebase hand-rolls its own `<a className="rounded-full ...">`
+markup instead of using a shared `Button` primitive, and there's no shared `Chip` primitive
+either, even though the lotus-care design skill's component inventory (section 7) specifies
+both as core primitives. Consolidate onto two new primitives with **zero visual regression**.
 
 ## Scope
 
-- `src/components/logo-dark/LogoDark.tsx` — replace body with inlined colour SVG
-- `src/components/logo-white/LogoWhite.tsx` — replace body with inlined white SVG
-- Copy both SVGs into the repo source tree as the components' content
+- Build `src/components/button/Button.tsx` — variants `primary | outline | onDark |
+  onDarkOutline`, sizes `sm | md | lg`, `href` renders an anchor (via `next/link`, so
+  internal routes keep client-side navigation), no `href` renders a `<button>`, plus
+  `fullWidth` and `disabled`.
+- Build `src/components/chip/Chip.tsx` — tones `teal | purple | tealSoft | accentSoft |
+  neutral | solid | solidPurple | onDark`, sizes `sm | md`. Renders a `<span>`, never
+  accepts `onClick`/`href`.
+- Replace hand-rolled pill markup at every real call site with the new primitives,
+  preserving exact visual output (colours, padding, border-radius, hover, focus ring).
+- Storybook stories for both, following `stories/ui/*.stories.tsx` convention.
+- `tsc`/`eslint`/`build` clean; verify in a real browser (desktop 1440px + mobile 375px).
 
-Out of scope: `LotusMark`, navbar layout/behaviour, the scroll swap logic, footer layout.
+## Acceptance criteria
 
-## Acceptance criteria — all verified in a real browser (Chromium, dev server)
-
-- [x] AC-1 Top of page: navbar logo computed fills = `rgb(255,255,255)` only → white lockup
-- [x] AC-2 Scrolled: navbar logo computed fills = `#e6f4f9 / #18a8b2 / #096972 / #61c3d7` → colour lockup
-- [x] AC-3 No background `<rect>` in either source; renders transparent over teal (top) and white (scrolled)
-- [x] AC-4 No text nodes remain — both components are pure `<svg>`, hand-typed spans deleted
-- [x] AC-5 **Trap 1 proven handled.** Scrolled, with navbar + footer both mounted:
-      navbar = 4 brand hexes, footer = white only. `<style>` removed, so no collision possible
-- [x] AC-6 Ratio **3.723** at 375 / 768 / 1440 — exactly the viewBox ratio (526.24/141.34), all three
-      viewports, both variants. Navbar 148.9×40, footer 178.7×48. No squash, no CLS
-      (`<svg>` + viewBox reserves its box before paint — no image request to wait on)
-- [x] AC-7 Wordmark cap height measured **11.5px** at `h-10` (via `getBBox()` × 0.283 scale).
-      Previous hand-built lockup was `text-sm` = 14px font → ~10.1px cap.
-      **Planning trap 3 was wrong in direction**: the client lockup renders slightly *larger*,
-      not smaller. No height bump needed
-- [x] AC-8 `npx tsc --noEmit` clean, `eslint --quiet` clean, `npm run build` green (16 routes)
+- [x] AC-1 `Button` implements all 4 variants + 3 sizes per the design skill spec, matching
+      the repo's real tokens (`--color-primary-dark`/teal-800/teal-100/white, `.focus-ring` /
+      `.focus-ring-white`), not the build-plan's placeholder hexes.
+- [x] AC-2 `Chip` implements all 8 tones + 2 sizes, `<span>` only, no `onClick`/`href` prop.
+- [x] AC-3 Every clearly Button-shaped call site converted: `HeroSection` (3 CTAs),
+      `CareersHero` (2), `CareersCtaStrip` (2), `Navbar` (1), `MobileMenu` (1),
+      `RecruitmentSection` (2), `JobCard` (1), `OccupopJobCard` (1), `HomesCarousel` (1),
+      `HomeModal` (1), `TeamModal` (1), `ContactForm` submit (1) — 16 buttons, 12 files.
+- [x] AC-4 Every clearly Chip-shaped call site converted: `JobCard`/`OccupopJobCard` type
+      badge, `TeamCard` department badge, `KeywordCards` term pill, `VideoTestimonialCard`
+      "Coming soon" badge — 5 call sites, 4 files.
+- [x] AC-5 `npx tsc --noEmit` clean repo-wide.
+- [x] AC-6 `npx eslint .` clean repo-wide.
+- [x] AC-7 `npm run build` green (25 routes).
+- [x] AC-8 Verified in a real browser (dev server, Playwright CLI screenshots) at 1440px and
+      375px: homepage hero, `/careers/why-us` hero, `/careers/open-roles`, `/careers/benefits`,
+      footer, `/quality` hero, homepage "Join Our Team" section.
+- [x] AC-9 Every visible deviation from pre-refactor output is called out explicitly, not
+      silently shipped (see Review below).
+- [x] AC-10 Out-of-scope surfaces left untouched: `homes.ts`/`HomesCarousel`/`HomeModal`
+      rainbow colours, `JobFilter`/`CareersSubnav`/`QualitySubnav`/`TeamSection` toggle pills,
+      `Footer` social icons, `HubNavCard`, `ServiceCard`.
 
 ## Review
 
-Both lockups are now the client artwork, inlined as SVG components.
+**`Button` API** — `variant?: "primary" | "outline" | "onDark" | "onDarkOutline"` (default
+`primary`), `size?: "sm" | "md" | "lg"` (default `md`), `href?: string` (renders `next/link`,
+so `#fragment` and external URLs still behave like a plain anchor), `fullWidth?: boolean`,
+`disabled?: boolean`, `onClick?: () => void`, `type?: "button" | "submit" | "reset"` (button
+form only), `target`/`rel` (link form only). No `href` → native `<button>`.
 
-**What changed**
-- `LogoDark.tsx` / `LogoWhite.tsx` — bodies replaced with the client vectors (39 elements each:
-  36 paths + 3 polygons), generated mechanically from the source SVGs
-- Components now take `SVGProps<SVGSVGElement>`, so `className` still flows through unchanged
-  and every existing call site works untouched
+**`Chip` API** — `tone?: ChipTone` (default `neutral`), `size?: "sm" | "md"` (default `sm`),
+`className?: string`, `children`. Always a `<span>`.
 
-**Why the `<style>` block was flattened into `fill=` attributes**
-Both source SVGs ship the same `.cls-1`…`.cls-4` selectors. SVG `<style>` is document-global,
-so a scrolled page (navbar colour + footer white, both mounted) would have had the two rule sets
-overwrite each other. Flattening to per-element attributes removes the failure mode entirely
-rather than working around it with prefixed class names.
+**Call sites touched (16 Button + 5 Chip, across 15 files)**
+`HeroSection.tsx`, `CareersHero.tsx`, `CareersCtaStrip.tsx`, `Navbar.tsx`, `MobileMenu.tsx`,
+`RecruitmentSection.tsx`, `JobCard.tsx` (Button + Chip), `OccupopJobCard.tsx` (Button + Chip),
+`HomesCarousel.tsx`, `HomeModal.tsx`, `TeamModal.tsx`, `ContactForm.tsx`, `TeamCard.tsx` (Chip),
+`KeywordCards.tsx` (Chip), `VideoTestimonialCard.tsx` (Chip).
 
-**Accessibility**
-The old lockup got its accessible name from the literal "LOTUS CARE" / "ENHANCED LIVING" spans.
-Pure SVG would have left the home link nameless, so both components carry
-`role="img"` + `aria-label="Lotus Care — Enhanced Living"`.
+**Visible-change judgment calls (per the guardrail — flagged, not silently shipped):**
 
-**Colours kept as supplied**
-Client hexes (`#096972 / #18a8b2 / #61c3d7 / #e6f4f9`) sit near but not on the repo tokens
-(`#0d6a70 / #1badb2 / #54c7d6 / #eef9fb`). The supplied asset is authoritative — not retokened.
+1. **`CareersHero` and `CareersCtaStrip`'s primary CTA hover colour changes.** Both hand-rolled
+   `hover:bg-accent hover:text-white`; the design skill spec (and `HeroSection`'s already-shipped
+   `onDark` CTA) says onDark hover = `hover:bg-teal-100` with text staying `text-primary-dark`.
+   Consolidating onto one `onDark` variant means these two components now hover to teal-100
+   instead of accent-teal-with-white-text. This is a real, visible hover-colour change on 2
+   CTAs. Chose the spec-correct version per the guardrail ("prefer whichever matches the design
+   skill spec most closely").
+2. **Padding/text-size deltas from consolidating onto 3 canonical sizes.** Several existing
+   pills used one-off padding/text-size combinations that don't land exactly on `sm`/`md`/`lg`:
+   - `CareersHero`, `CareersCtaStrip`: padding was already `px-8`/`py-3or4` (close to `lg`) but
+     had **no explicit text-size class** (inherits ~16px); `lg` sets `text-lg` (18px) explicitly
+     — CTA text is ~2px larger now. `CareersCtaStrip` additionally had `py-3` (12px), now `py-4`
+     (16px) — 4px taller.
+   - `RecruitmentSection`: was `text-base` (16px) with `lg`'s padding; now `text-lg` (18px).
+   - `HomesCarousel`'s outline CTA: was `py-3` (12px) + no text-size class; now `lg`'s `py-4`
+     (16px) + `text-lg` (18px).
+   - `MobileMenu`, `HomeModal`, `TeamModal` full-width CTAs: were `py-3` (12px); mapped to `md`
+     (`py-2.5` = 10px) since text was already 16px (matches `md`'s `text-base`) — 2px shorter.
+   - `ContactForm` submit: was `py-3.5` (14px); mapped to `lg` (`py-4` = 16px, text already
+     `text-lg`) — 2px taller.
+   - `VideoTestimonialCard`'s "Coming soon" badge: was `px-3` (12px horizontal); `Chip`'s `sm`
+     size (matching `JobCard`/`TeamCard`'s exact convention) is `px-2.5` (10px) — 2px narrower.
+   None of these change colour, shape, or layout — only a few px of padding or ~2px of text
+   size on isolated CTAs/badges, invisible without a ruler, but called out per the guardrail
+   rather than silently absorbed.
+3. **Horizontal padding on full-width (`fullWidth`) buttons is a no-op visually.** `Button`
+   always applies its size's `px-*` class even when `fullWidth`, but because these buttons'
+   text was already centred within a 100%-width box (border-box sizing), adding symmetric
+   horizontal padding doesn't move the text or change the pill's outer bounds. Confirmed no
+   visual difference, not just assumed.
 
-**Scope note for review**
-`LogoWhite` is shared with `Footer.tsx:24`, so the footer logo changed too. Treated as desirable
-(consistency, cf. #96). Say the word if the footer should keep the old lockup.
+**Reviewed but deliberately left hand-rolled (documented, not silently skipped):**
+- `Footer.tsx` social icons — icon-only circular buttons (no text label), don't match either
+  primitive's shape (`Button` is a labelled pill, `Chip` is a metadata span).
+- `JobFilter.tsx`, `CareersSubnav.tsx`, `QualitySubnav.tsx`, `TeamSection.tsx` department tabs —
+  interactive toggle/filter pills. Don't fit `Button` (not a one-shot CTA) or `Chip` (spec
+  forbids `onClick` on a Chip, and these need it for selection state).
+- `CareersHero`'s `HeroChips` prop and `FeatureSlab`'s keyword pills — translucent
+  `bg-white/15 ... backdrop-blur` badges with no equivalent among the 8 spec'd `Chip` tones.
+  Converting only the one sub-variant that *does* match (`HeroChips`'s `i === 1` white chip)
+  would have fragmented one `.map()`'s styling logic for no real benefit, so the whole block
+  was left as-is rather than inventing a 9th non-spec tone.
+- `HubNavCard.tsx`, `ServiceCard.tsx` — no `rounded-full` pill present at all (their "Learn
+  more" links are plain text + arrow icon).
+- `homes.ts`/`HomesCarousel`/`HomeModal` rainbow colours (per-home hex `color` field) —
+  explicitly out of scope; only the "Enquire About Our Homes" and "Close" buttons in those two
+  files were touched, not the colour-coded dots/labels.
 
-`LotusMark` untouched — still used by `HeroSection`, `CareersHero`, `BenefitCard`.
+**Verification**
+- `npx tsc --noEmit`: clean (repo-wide).
+- `npx eslint .`: clean (repo-wide).
+- `npm run build`: green, 25 routes generated.
+- Dev server (`npm run dev -- -p 3001`) + `npx playwright screenshot` (Playwright installed
+  as a one-off browser download only, not added to `package.json`) at 1440px and 375px:
+  homepage hero (all 3 CTAs render as solid-white / outline pills exactly as before),
+  `/careers/why-us` hero (onDark CTA resting state unchanged; hover intentionally differs,
+  see above), `/careers/open-roles` (job type `Chip` + "View Role" `Button` render correctly;
+  note: the live Occupop job list itself failed to load in this sandboxed dev environment —
+  pre-existing, unrelated to this change, external API unreachable), homepage "Join Our Team"
+  section (`RecruitmentSection` CTAs + `JobCard` chip/button), `/careers/benefits` (CareersCtaStrip
+  + footer), `/quality` hero (no CTA in this variant — confirmed unaffected).
+
+**Environment note:** the worktree had no `node_modules` (git worktrees don't share
+`node_modules`); ran `npm install` before any verification step.

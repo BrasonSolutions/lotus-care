@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import Image from "next/image";
 import type { TeamMember } from "@/data/team";
+import { Button } from "@/components/button";
 
 interface TeamModalProps {
   member: TeamMember | null;
@@ -74,12 +75,9 @@ export function TeamModal({ member, onClose }: TeamModalProps) {
           ) : (
             <p className="text-muted italic mb-6">Bio coming soon.</p>
           )}
-          <button
-            onClick={onClose}
-            className="w-full bg-primary-dark text-white py-3 rounded-full font-semibold hover:bg-teal-800 transition-colors focus-ring"
-          >
+          <Button onClick={onClose} fullWidth>
             Close
-          </button>
+          </Button>
         </div>
       </div>
     </dialog>

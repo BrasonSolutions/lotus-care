@@ -119,4 +119,22 @@
     line contains that string) and kills the session's command before the cleanup runs — so the
     cache clear silently never happens and the restart changes nothing. Kill by listening port
     instead: `kill $(ss -lptn 'sport = :3000' | grep -oP 'pid=\K[0-9]+')`.
+
+20. **`npx playwright screenshot` fires the instant the page loads — it does not wait for
+    CSS `animate-fade-up`/`animate-fade-in` to finish.**
+    A first-pass screenshot of the homepage hero (card `refactor/button-chip-primitives`)
+    came back with the title, subtitle, and all three new `Button`-based CTAs rendered at
+    near-zero opacity — indistinguishable from "the component failed to render." The markup
+    was correct the whole time; the CLI just captured mid-animation (these elements start at
+    `opacity: 0` and fade in over ~400-600ms with staggered `animationDelay`).
+    **Rule:** always pass `--wait-for-timeout 1200`-`1800` (comfortably past the longest
+    `animationDelay` + duration on the page) before trusting a screenshot as evidence of a
+    broken *or* working component. A washed-out screenshot is not proof of a regression until
+    re-captured with a wait.
+    **Also:** full-page screenshots (`--full-page`) resize the viewport in one jump rather than
+    scrolling incrementally, so `IntersectionObserver`-gated `.reveal` sections below the fold
+    can stay at `opacity: 0` in the capture even though they render fine for a real scrolling
+    user. Navigate to the section's `#id` fragment directly (e.g. `/#careers`) to force it into
+    view instead of trusting a full-page capture's blank gaps as a defect.
+    **Scope:** global (any task verifying animated/reveal-gated UI via a scripted screenshot tool).
     **Scope:** project (Next.js 16 + Turbopack); the styleSheets check is global.

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { LotusMark } from "@/components/lotus-mark";
 import { Container } from "@/components/layout";
+import { Button } from "@/components/button";
 
 interface CareersHeroStat {
   value: string;
@@ -44,19 +45,13 @@ function HeroCTAs({ ctaLabel, ctaHref, secondaryCtaLabel, secondaryCtaHref, alig
       className={`mt-8 flex flex-wrap ${align === "center" ? "justify-center " : ""}gap-4 animate-fade-up`}
       style={{ animationDelay: "200ms" }}
     >
-      <a
-        href={ctaHref}
-        className="inline-block bg-white text-primary-dark font-semibold px-8 py-4 rounded-full hover:bg-accent hover:text-white transition-colors focus-ring"
-      >
+      <Button href={ctaHref} variant="onDark" size="lg">
         {ctaLabel}
-      </a>
+      </Button>
       {secondaryCtaLabel && secondaryCtaHref && (
-        <a
-          href={secondaryCtaHref}
-          className="inline-block border-2 border-white text-white font-semibold px-8 py-4 rounded-full hover:bg-white/10 transition-colors focus-ring-white"
-        >
+        <Button href={secondaryCtaHref} variant="onDarkOutline" size="lg">
           {secondaryCtaLabel}
-        </a>
+        </Button>
       )}
     </div>
   );
