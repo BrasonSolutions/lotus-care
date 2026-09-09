@@ -142,7 +142,7 @@ function ImageHero({
   return (
     <section
       className={`relative flex items-center overflow-hidden ${
-        compact ? "py-16 sm:py-20 min-h-[22rem]" : "py-24 sm:py-32 min-h-[34rem] sm:min-h-[38rem]"
+        compact ? "py-16 sm:py-20 min-h-[22rem]" : "pt-32 pb-20 lg:pt-40 lg:pb-28 min-h-[34rem]"
       }`}
     >
       <Image src={image} alt="" fill priority sizes="100vw" className="object-cover" />
@@ -192,7 +192,7 @@ function GradientHero({
   return (
     <section
       className={`relative flex items-center bg-gradient-to-br from-primary-dark via-primary to-accent/80 ${
-        compact ? "py-16 sm:py-20" : "py-24 sm:py-32"
+        compact ? "py-16 sm:py-20 min-h-[22rem]" : "pt-32 pb-20 lg:pt-40 lg:pb-28 min-h-[34rem]"
       }`}
     >
       {/* Decorative blobs */}

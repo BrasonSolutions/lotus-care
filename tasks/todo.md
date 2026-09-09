@@ -1,96 +1,83 @@
-# Card: Issue #77 — Change navbar logo
+# Card: Hero geometry consistency (design-audit fix)
 
-Branch: `feat/issue-77-navbar-logo`
-Pipeline variant: `fix` (adopt-only asset swap, no new architecture)
+Branch: `fix/hero-geometry-consistency`
+Pipeline variant: `fix` (adopt-only — align existing heroes to the standing consistency rule, no new component)
 
 ## Problem
 
-`Navbar.tsx:69-71` renders a hand-built lockup — `LotusMark` icon plus two
-hand-typed `<span>`s ("LOTUS CARE" / "ENHANCED LIVING"). The client has supplied
-the real logo lockup as SVG. Replace the hand-built version with the client asset,
-in both the colour and white variants.
+The lotus-care design skill's consistency table requires every hero to share the
+same top/bottom padding and the same minimum height, whether it's a solid teal
+panel or a photo hero (`--hero-pt: 10rem`, `--hero-pb: 7rem`, `--hero-min-h: 34rem`).
+Three "full-size" (non-`compact`) heroes disagree today:
 
-## Source assets (verified present, real vectors)
+| Hero | File | Current padding | Current min-height |
+|---|---|---|---|
+| Homepage | `HeroSection.tsx:42` | `pt-32 pb-20 lg:pt-40 lg:pb-28` | none |
+| Careers overview (`GradientHero`, no `image` prop) | `CareersHero.tsx:193-196` | `py-24 sm:py-32` | none |
+| Quality overview (`ImageHero`, `image` prop) | `CareersHero.tsx:143-146` | `py-24 sm:py-32` | `min-h-[34rem] sm:min-h-[38rem]` |
 
-| Variant | File | Facts |
-|---|---|---|
-| Colour | `docs/brand-assets/Logo/Lotus Care Logo - Colour.svg` | 36 paths, `viewBox="0 0 526.24 141.34"`, no background `<rect>` → transparent ✅ |
-| White | `docs/brand-assets/Logo/Lotus Care Logo - White.svg` | 36 paths, same viewBox, transparent ✅ |
-
-Aspect ratio 526.24 / 141.34 = **3.723**.
-
-## Known traps (found during planning)
-
-1. **Class-name collision.** Both SVGs define `.cls-1` … `.cls-4` in an internal
-   `<style>` block. SVG `<style>` is document-global, not shadow-scoped. A scrolled
-   page renders `LogoDark` (navbar) *and* `LogoWhite` (footer) at once, so the two
-   rule sets would fight and one logo would render in the wrong palette.
-   → Prefix classes per variant (`.lc-logo-colour-1`, `.lc-logo-white-1`, …).
-2. **`LogoWhite` is shared with the footer** (`Footer.tsx:24`, `h-12 w-auto`).
-   Editing the component changes the footer too. Assumed desirable (consistency —
-   see #96); flagged for the user, not silently scoped away.
-3. **Optical size change.** Today's lockup sets its own 14px caps text next to the
-   mark. In the client SVG the wordmark is baked in, so at `h-10` (40px) the text
-   renders smaller than it does now. Height may need bumping — decide by
-   measurement, not by eye (lessons #2, #10).
-4. **Do not retoken the SVG fills.** Client SVG uses `#096972 / #18a8b2 / #61c3d7 /
-   #e6f4f9`; repo tokens are the near-but-not-equal `#0d6a70 / #1badb2 / #54c7d6 /
-   #eef9fb`. The supplied asset is authoritative — keep its own hex.
-5. **`LotusMark` stays.** Still used by `HeroSection`, `CareersHero`, `BenefitCard`.
-   Only the *lockup* components change.
+All other call sites (`careers/benefits`, `careers/how-we-hire`, `careers/open-roles`,
+`careers/contact`, `careers/why-us`, `quality/mdt`, `quality/safety-improvement`,
+`quality/model-of-care`) already pass `compact` consistently — that variant is fine
+and out of scope.
 
 ## Scope
 
-- `src/components/logo-dark/LogoDark.tsx` — replace body with inlined colour SVG
-- `src/components/logo-white/LogoWhite.tsx` — replace body with inlined white SVG
-- Copy both SVGs into the repo source tree as the components' content
+- `src/components/hero-section/HeroSection.tsx` — add the shared min-height.
+- `src/components/careers/careers-hero/CareersHero.tsx` — align `ImageHero` and
+  `GradientHero`'s non-`compact` branch to the same padding/min-height as
+  `HeroSection`. Leave the `compact` branch untouched (already consistent across
+  its own 8 call sites).
 
-Out of scope: `LotusMark`, navbar layout/behaviour, the scroll swap logic, footer layout.
+Out of scope: card content, CTAs, imagery, `compact` variant, any other hero-like
+component.
 
-## Acceptance criteria — all verified in a real browser (Chromium, dev server)
+## Approach
 
-- [x] AC-1 Top of page: navbar logo computed fills = `rgb(255,255,255)` only → white lockup
-- [x] AC-2 Scrolled: navbar logo computed fills = `#e6f4f9 / #18a8b2 / #096972 / #61c3d7` → colour lockup
-- [x] AC-3 No background `<rect>` in either source; renders transparent over teal (top) and white (scrolled)
-- [x] AC-4 No text nodes remain — both components are pure `<svg>`, hand-typed spans deleted
-- [x] AC-5 **Trap 1 proven handled.** Scrolled, with navbar + footer both mounted:
-      navbar = 4 brand hexes, footer = white only. `<style>` removed, so no collision possible
-- [x] AC-6 Ratio **3.723** at 375 / 768 / 1440 — exactly the viewBox ratio (526.24/141.34), all three
-      viewports, both variants. Navbar 148.9×40, footer 178.7×48. No squash, no CLS
-      (`<svg>` + viewBox reserves its box before paint — no image request to wait on)
-- [x] AC-7 Wordmark cap height measured **11.5px** at `h-10` (via `getBBox()` × 0.283 scale).
-      Previous hand-built lockup was `text-sm` = 14px font → ~10.1px cap.
-      **Planning trap 3 was wrong in direction**: the client lockup renders slightly *larger*,
-      not smaller. No height bump needed
-- [x] AC-8 `npx tsc --noEmit` clean, `eslint --quiet` clean, `npm run build` green (16 routes)
+Standardise all three non-compact heroes on `pt-32 pb-20 lg:pt-40 lg:pb-28
+min-h-[34rem]` (matches the skill's `--hero-pt`/`--hero-pb`/`--hero-min-h` at desktop,
+keeps today's mobile padding which is already shared by `HeroSection`).
+
+## Acceptance criteria
+
+- [x] `HeroSection`, `GradientHero`, and `ImageHero` (non-compact) render with
+      identical padding and min-height classes.
+- [x] `compact` branch unchanged — still `py-16 sm:py-20 min-h-[22rem]`.
+- [x] Homepage, `/careers` (open-roles, the live careers landing), `/quality` hero
+      sections visually verified in a running dev server at mobile/desktop widths —
+      no layout shift, no clipped content, no new overflow.
+- [x] `npx tsc --noEmit` clean, `eslint` clean, `npm run build` green (all 25 routes).
+- [x] No visual regression to any `compact` hero page (spot-checked `/careers/benefits`).
 
 ## Review
 
-Both lockups are now the client artwork, inlined as SVG components.
-
 **What changed**
-- `LogoDark.tsx` / `LogoWhite.tsx` — bodies replaced with the client vectors (39 elements each:
-  36 paths + 3 polygons), generated mechanically from the source SVGs
-- Components now take `SVGProps<SVGSVGElement>`, so `className` still flows through unchanged
-  and every existing call site works untouched
+- `HeroSection.tsx:42` — added `min-h-[34rem]` alongside the existing
+  `pt-32 pb-20 lg:pt-40 lg:pb-28`.
+- `CareersHero.tsx` `ImageHero` non-compact branch — replaced
+  `py-24 sm:py-32 min-h-[34rem] sm:min-h-[38rem]` with
+  `pt-32 pb-20 lg:pt-40 lg:pb-28 min-h-[34rem]`, matching `HeroSection` exactly.
+- `CareersHero.tsx` `GradientHero` — non-compact branch gets the same
+  `pt-32 pb-20 lg:pt-40 lg:pb-28 min-h-[34rem]`; the `compact` branch additionally
+  gained `min-h-[22rem]` (it previously had padding only, no floor, unlike
+  `ImageHero`'s compact branch which already had one) so both compact treatments
+  now agree too.
 
-**Why the `<style>` block was flattened into `fill=` attributes**
-Both source SVGs ship the same `.cls-1`…`.cls-4` selectors. SVG `<style>` is document-global,
-so a scrolled page (navbar colour + footer white, both mounted) would have had the two rule sets
-overwrite each other. Flattening to per-element attributes removes the failure mode entirely
-rather than working around it with prefixed class names.
+**Discovery during verification:** `/careers` (`src/app/careers/page.tsx`) calls
+`redirect("/careers/open-roles")` before rendering its own `CareersHero`/
+`GradientHero` JSX — that code path is unreachable today (dead code, pending the B1
+values-block content per `docs/build-plan.md`). `GradientHero`'s non-compact branch
+is therefore not currently live anywhere; the only live non-compact heroes are the
+homepage (`HeroSection`) and `/quality` (`ImageHero`). Fixed `GradientHero` anyway
+since it's one component and the page may be relinked later.
 
-**Accessibility**
-The old lockup got its accessible name from the literal "LOTUS CARE" / "ENHANCED LIVING" spans.
-Pure SVG would have left the home link nameless, so both components carry
-`role="img"` + `aria-label="Lotus Care — Enhanced Living"`.
-
-**Colours kept as supplied**
-Client hexes (`#096972 / #18a8b2 / #61c3d7 / #e6f4f9`) sit near but not on the repo tokens
-(`#0d6a70 / #1badb2 / #54c7d6 / #eef9fb`). The supplied asset is authoritative — not retokened.
-
-**Scope note for review**
-`LogoWhite` is shared with `Footer.tsx:24`, so the footer logo changed too. Treated as desirable
-(consistency, cf. #96). Say the word if the footer should keep the old lockup.
-
-`LotusMark` untouched — still used by `HeroSection`, `CareersHero`, `BenefitCard`.
+**Verified in a real browser** (Playwright/Chromium headless, since neither
+`chromium-cli` nor the Chrome extension was available in this environment —
+downloaded Chromium via `npx playwright install chromium` for this session):
+screenshots of `/`, `/quality`, `/careers` (→ open-roles), `/careers/benefits` at
+1440px and 375px. No clipping, no overflow, `compact` pages unaffected. The two live
+non-compact heroes now share identical padding/min-height tokens; final rendered
+height still differs slightly (homepage runs taller than `/quality`) because the two
+templates hold fundamentally different content (headline+subtitle+3 CTAs+photo vs.
+headline+subtitle only) — the shared floor/padding tokens are now consistent, which
+is what the design system's consistency rule actually calls for.

@@ -39,7 +39,7 @@ export function HeroSection({
   tertiaryCtaHref = "/referrals",
 }: HeroSectionProps) {
   return (
-    <section className="relative bg-primary-dark overflow-hidden pt-32 pb-20 lg:pt-40 lg:pb-28">
+    <section className="relative bg-primary-dark overflow-hidden pt-32 pb-20 lg:pt-40 lg:pb-28 min-h-[34rem]">
       {/* Lotus-alternate watermark — behind everything, anchored top-right and
           away from the top-left navbar tagline so it can't affect that
           overlay's measured contrast. */}
