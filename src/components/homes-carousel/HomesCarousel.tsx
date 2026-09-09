@@ -7,6 +7,7 @@ import { useInView } from "@/hooks/use-in-view";
 import { SectionTitle } from "@/components/section-title";
 import { HomeModal } from "@/components/home-modal";
 import { Container } from "@/components/layout";
+import { Button } from "@/components/button";
 
 interface HomesCarouselProps {
   homes: Home[];
@@ -219,12 +220,9 @@ export function HomesCarousel({
 
           {/* CTA */}
           <div className="text-center mt-8">
-            <a
-              href="#contact"
-              className="inline-block border-2 border-primary-dark text-primary-dark px-8 py-3 rounded-full font-semibold hover:bg-primary-dark hover:text-white transition-colors focus-ring"
-            >
+            <Button href="#contact" variant="outline" size="lg">
               Enquire About Our Homes
-            </a>
+            </Button>
         </div>
       </div>
 

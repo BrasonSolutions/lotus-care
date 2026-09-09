@@ -5,6 +5,7 @@ import { createPortal } from "react-dom";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { NavItem } from "@/data/navigation";
+import { Button } from "@/components/button";
 
 const noopSubscribe = () => () => {};
 
@@ -166,13 +167,9 @@ export function MobileMenu({
           )}
 
           <div className="border-t border-gray-100 mt-4 pt-4">
-            <Link
-              href={ctaHref}
-              onClick={close}
-              className="block w-full text-center bg-primary-dark text-white py-3 rounded-full font-semibold hover:bg-teal-800 transition-colors focus-ring"
-            >
+            <Button href={ctaHref} onClick={close} fullWidth>
               {ctaLabel}
-            </Link>
+            </Button>
             <div className="mt-4 space-y-1 text-muted">
               <a
                 href={`tel:${contactInfo.phone}`}

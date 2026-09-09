@@ -2,17 +2,13 @@
 
 import Image from "next/image";
 import type { TeamMember } from "@/data/team";
+import { Chip } from "@/components/chip";
 
 interface TeamCardProps {
   member: TeamMember;
   onClick: () => void;
   accent?: "teal" | "purple";
 }
-
-const ACCENT = {
-  teal: "bg-primary/15 text-primary",
-  purple: "bg-purple-600/15 text-purple-600",
-} as const;
 
 export function TeamCard({ member, onClick, accent = "teal" }: TeamCardProps) {
   return (
@@ -39,11 +35,9 @@ export function TeamCard({ member, onClick, accent = "teal" }: TeamCardProps) {
         )}
       </div>
 
-      <span
-        className={`inline-block px-2.5 py-1 rounded-full text-xs font-medium mb-2 ${ACCENT[accent]}`}
-      >
+      <Chip tone={accent} className="mb-2">
         {member.department}
-      </span>
+      </Chip>
 
       <h3 className="text-lg font-bold text-primary-dark group-hover:text-primary transition-colors">
         {member.name}

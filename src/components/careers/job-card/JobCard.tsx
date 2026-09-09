@@ -1,5 +1,7 @@
 import type { JobRole } from "@/data/jobs";
 import { departmentLabels } from "@/data/jobs";
+import { Button } from "@/components/button";
+import { Chip, type ChipTone } from "@/components/chip";
 
 interface JobCardProps {
   job: JobRole;
@@ -11,10 +13,10 @@ const typeLabels: Record<JobRole["type"], string> = {
   casual: "Casual",
 };
 
-const typeColors: Record<JobRole["type"], string> = {
-  "full-time": "bg-primary/10 text-primary-dark",
-  "part-time": "bg-accent/10 text-primary-dark",
-  casual: "bg-gray-100 text-muted",
+const typeTones: Record<JobRole["type"], ChipTone> = {
+  "full-time": "tealSoft",
+  "part-time": "accentSoft",
+  casual: "neutral",
 };
 
 export function JobCard({ job }: JobCardProps) {
@@ -24,11 +26,9 @@ export function JobCard({ job }: JobCardProps) {
         <h3 className="text-base font-semibold text-primary-dark leading-snug">
           {job.title}
         </h3>
-        <span
-          className={`shrink-0 text-xs font-medium px-2.5 py-1 rounded-full ${typeColors[job.type]}`}
-        >
+        <Chip tone={typeTones[job.type]} className="shrink-0">
           {typeLabels[job.type]}
-        </span>
+        </Chip>
       </div>
 
       <div className="flex flex-wrap gap-x-4 gap-y-1 text-sm text-muted mb-3">
@@ -51,12 +51,9 @@ export function JobCard({ job }: JobCardProps) {
         {job.shortDescription}
       </p>
 
-      <a
-        href={`/careers/open-roles/${job.slug}`}
-        className="block text-center bg-primary-dark text-white py-2.5 rounded-full text-sm font-semibold hover:bg-teal-800 transition-colors focus-ring"
-      >
+      <Button href={`/careers/open-roles/${job.slug}`} size="sm" fullWidth>
         View Role
-      </a>
+      </Button>
     </div>
   );
 }

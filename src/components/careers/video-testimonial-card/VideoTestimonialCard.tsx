@@ -1,5 +1,6 @@
 import Image from "next/image";
 import type { VideoTestimonial } from "@/data/careers";
+import { Chip, type ChipTone } from "@/components/chip";
 
 interface VideoTestimonialCardProps {
   testimonial: VideoTestimonial;
@@ -10,10 +11,10 @@ interface VideoTestimonialCardProps {
   sizes?: string;
 }
 
-const BADGE = {
-  teal: "bg-primary-dark",
-  purple: "bg-purple-600",
-} as const;
+const BADGE_TONE: Record<"teal" | "purple", ChipTone> = {
+  teal: "solid",
+  purple: "solidPurple",
+};
 
 const DEFAULT_SIZES = "(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw";
 
@@ -53,9 +54,9 @@ export function VideoTestimonialCard({
                 </svg>
               </div>
             </div>
-            <span className={`absolute top-3 right-3 ${BADGE[accent]} text-white text-xs font-semibold px-3 py-1 rounded-full`}>
+            <Chip tone={BADGE_TONE[accent]} className="absolute top-3 right-3">
               Coming soon
-            </span>
+            </Chip>
           </>
         )}
       </div>

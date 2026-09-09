@@ -4,6 +4,7 @@ import { useInView } from "@/hooks/use-in-view";
 import { JobCard } from "@/components/careers/job-card";
 import type { JobRole as Job } from "@/data/jobs";
 import { Container } from "@/components/layout";
+import { Button } from "@/components/button";
 
 interface RecruitmentSectionProps {
   title?: string;
@@ -58,25 +59,11 @@ export function RecruitmentSection({
 
           {/* CTAs */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            {ctas.map((cta) =>
-              cta.variant === "primary" ? (
-                <a
-                  key={cta.label}
-                  href={cta.href}
-                  className="inline-block bg-primary-dark text-white px-8 py-4 rounded-full text-base font-semibold hover:bg-teal-800 transition-colors focus-ring text-center"
-                >
-                  {cta.label}
-                </a>
-              ) : (
-                <a
-                  key={cta.label}
-                  href={cta.href}
-                  className="inline-block border-2 border-primary-dark text-primary-dark px-8 py-4 rounded-full text-base font-semibold hover:bg-primary-dark hover:text-white transition-colors focus-ring text-center"
-                >
-                  {cta.label}
-                </a>
-              )
-            )}
+            {ctas.map((cta) => (
+              <Button key={cta.label} href={cta.href} variant={cta.variant} size="lg">
+                {cta.label}
+              </Button>
+            ))}
           </div>
         </div>
       </Container>
