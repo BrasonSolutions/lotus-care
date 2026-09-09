@@ -1,15 +1,16 @@
 import type { Keyword } from "@/data/quality";
+import { Chip, type ChipTone } from "@/components/chip";
 
 // text-muted on purple-50 measures 3.75:1 and fails AA, so the body copy is
 // text-foreground here (9.97:1 on purple-50, 11.82:1 on teal-50).
 const TONE = {
   teal: {
     card: "bg-teal-50 border-teal-200",
-    pill: "bg-primary-dark text-white",
+    pill: "solid" as ChipTone,
   },
   purple: {
     card: "bg-purple-50 border-purple-200",
-    pill: "bg-purple-600 text-white",
+    pill: "solidPurple" as ChipTone,
   },
 } as const;
 
@@ -30,9 +31,9 @@ export function KeywordCards({ items, tone = "teal" }: KeywordCardsProps) {
           key={term}
           className={`rounded-2xl border p-6 shadow-sm transition-all duration-200 hover:shadow-md hover:-translate-y-0.5 ${card}`}
         >
-          <span className={`inline-block rounded-full px-4 py-1.5 text-sm font-semibold ${pill}`}>
+          <Chip tone={pill} size="md">
             {term}
-          </span>
+          </Chip>
           <p className="mt-4 text-foreground leading-relaxed">{description}</p>
         </li>
       ))}

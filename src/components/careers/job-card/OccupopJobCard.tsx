@@ -1,14 +1,16 @@
 import type { NormalizedJob } from "@/lib/occupop";
+import { Button } from "@/components/button";
+import { Chip, type ChipTone } from "@/components/chip";
 
 interface OccupopJobCardProps {
   job: NormalizedJob;
 }
 
-function contractColor(type: string): string {
+function contractTone(type: string): ChipTone {
   const t = type.toLowerCase();
-  if (t.includes("full")) return "bg-primary/10 text-primary-dark";
-  if (t.includes("part")) return "bg-accent/10 text-primary-dark";
-  return "bg-gray-100 text-muted";
+  if (t.includes("full")) return "tealSoft";
+  if (t.includes("part")) return "accentSoft";
+  return "neutral";
 }
 
 export function OccupopJobCard({ job }: OccupopJobCardProps) {
@@ -18,11 +20,9 @@ export function OccupopJobCard({ job }: OccupopJobCardProps) {
         <h3 className="text-base font-semibold text-primary-dark leading-snug">
           {job.title}
         </h3>
-        <span
-          className={`shrink-0 text-xs font-medium px-2.5 py-1 rounded-full ${contractColor(job.contractType)}`}
-        >
+        <Chip tone={contractTone(job.contractType)} className="shrink-0">
           {job.contractType}
-        </span>
+        </Chip>
       </div>
 
       <div className="flex flex-wrap gap-x-4 gap-y-1 text-sm text-muted mb-3">
@@ -47,14 +47,16 @@ export function OccupopJobCard({ job }: OccupopJobCardProps) {
         </p>
       )}
 
-      <a
+      <Button
         href={job.applyUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="block text-center bg-primary-dark text-white py-2.5 rounded-full text-sm font-semibold hover:bg-teal-800 transition-colors focus-ring mt-auto"
+        size="sm"
+        fullWidth
+        className="mt-auto"
       >
         View Role
-      </a>
+      </Button>
     </div>
   );
 }

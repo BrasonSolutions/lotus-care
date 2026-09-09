@@ -9,6 +9,7 @@ import { MobileMenu } from "@/components/mobile-menu";
 import { LogoWhite } from "@/components/logo-white";
 import { LogoDark } from "@/components/logo-dark";
 import { useScrolled } from "@/hooks/use-scrolled";
+import { Button } from "@/components/button";
 
 interface NavbarProps {
   navItems?: NavItem[];
@@ -94,12 +95,9 @@ export function Navbar({
                   </Link>
                 )
               )}
-              <Link
-                href={ctaHref}
-                className="bg-primary-dark text-white px-5 py-2.5 rounded-full text-base font-semibold hover:bg-teal-800 transition-colors focus-ring"
-              >
+              <Button href={ctaHref} size="md">
                 {ctaLabel}
-              </Link>
+              </Button>
             </div>
 
             {/* Mobile hamburger */}

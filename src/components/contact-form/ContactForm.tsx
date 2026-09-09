@@ -3,6 +3,7 @@
 import { useState } from "react";
 import type { FormField } from "@/data/forms";
 import type { FormKind } from "@/lib/forms";
+import { Button } from "@/components/button";
 
 interface ContactFormProps {
   kind: FormKind;
@@ -179,13 +180,9 @@ export function ContactForm({
         </p>
       )}
 
-      <button
-        type="submit"
-        disabled={status === "sending"}
-        className="w-full bg-primary-dark text-white py-3.5 rounded-full font-semibold hover:bg-teal-800 transition-colors text-lg focus-ring disabled:opacity-60 disabled:cursor-not-allowed"
-      >
+      <Button type="submit" disabled={status === "sending"} size="lg" fullWidth>
         {status === "sending" ? "Sending…" : submitLabel}
-      </button>
+      </Button>
     </form>
   );
 }
