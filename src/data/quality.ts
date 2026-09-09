@@ -1,4 +1,5 @@
 import type { Testimonial } from "@/data/careers";
+import type { TimelineStep } from "@/components/timeline";
 import { teamMembers } from "@/data/team";
 
 function pickTeam(names: string[]) {
@@ -151,7 +152,7 @@ export const modelOfCareSections = [
     heading: "Admissions, Discharges & Transitions",
     intro:
       "How we plan and support each person's move into, through, and on from our services, so that every transition is consistent, well-communicated, and centred on the person.",
-    provisional: true,
+    provisional: false,
   },
   {
     id: "human-rights",
@@ -200,6 +201,51 @@ export const curriculumContent = {
         "Residential teams work alongside families, educators, therapists and the wider multidisciplinary team to provide consistent, person-centred support.",
     },
   ] satisfies Keyword[],
+};
+
+export const adtContent = {
+  subtitle: "A caring start",
+  intro:
+    "Every move into, through, or on from a Lotus Care service is planned and supported by a dedicated committee, so that admissions, discharges and transitions are consistent, well-communicated, and centred on the person.",
+  steps: [
+    {
+      number: 1,
+      title: "Referrals & Initial Needs Assessment",
+      description:
+        "Referrals are reviewed through an Initial Needs Assessment to identify the service owner's needs, risks, strengths and assessment requirements.",
+    },
+    {
+      number: 2,
+      title: "ADT Committee",
+      description:
+        "All referrals are considered by the Admission, Discharge & Transitions Committee prior to admission. The referring agent can select from a menu of clinical and multidisciplinary assessments.",
+    },
+    {
+      // Draft copy — the source issue duplicated step 4's description onto
+      // this step. Resolved 2026-09-09 (user confirmed): this description is
+      // drafted, not verbatim client text, pending client sign-off. Flag any
+      // change here to the client before treating it as final.
+      number: 3,
+      title: "12-Week Person-Centred Assessment",
+      description:
+        "Over the 12 weeks, the multidisciplinary team carries out the agreed assessments — observing daily life and gathering clinical, social care and health information to build a full picture of the person's needs, strengths and preferences.",
+    },
+    {
+      number: 4,
+      title: "Report & Recommendations",
+      description:
+        "A comprehensive assessment report is completed at the end of the 12 weeks, incorporating clinical findings, social care observations and physical health needs, with clear recommendations for ongoing and/or future care and support.",
+    },
+  ] satisfies TimelineStep[],
+  specialties: [
+    "ASD",
+    "ADHD",
+    "Developmental Trauma",
+    "Attachment Difficulties",
+    "Personality Disorder",
+    "Acquired Brain Injury (ABI)",
+    "Physical Health Needs",
+  ],
 };
 
 export const humanRightsContent = {
