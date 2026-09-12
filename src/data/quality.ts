@@ -13,8 +13,20 @@ function pickTeam(names: string[]) {
 // Real staff, picked for genuine role overlap with each page's subject matter
 // (not asserted committee members — see PR notes).
 export const humanRightsTeam = pickTeam(["Louise Kidney", "Claire Maher"]);
-export const mdtTeam = pickTeam(["Vaida Cheema", "Nadeeka Pathirana", "Katjia Faria"]);
 export const safetyImprovementTeam = pickTeam(["Caíthríona Lynch", "Louise Kidney"]);
+
+// MDT-page-only additions (2026-09-12) — deliberately NOT added to
+// `teamMembers` in src/data/team.ts, which also feeds the site's "Meet the
+// Team" sections (homepage, /careers). Constructed directly rather than via
+// `pickTeam`, so they only ever appear on /quality/mdt.
+const mdtOnlyMembers = [
+  { name: "Dr Sara Tarr", role: "Psychologist", initials: "ST", image: "/images/staff/Sara-Tarr.jpg" },
+  { name: "Sinead Cahillane", role: "Dietician", initials: "SC", image: "/images/staff/Sinead-Cahillane.png" },
+];
+export const mdtTeam = [
+  ...pickTeam(["Vaida Cheema", "Nadeeka Pathirana", "Katjia Faria", "Katie Kelly"]),
+  ...mdtOnlyMembers,
+];
 
 export interface CycleStep {
   label: string;
@@ -290,18 +302,29 @@ export const mdtCore = {
   subtext: "Integrated clinical and therapeutic support enabling safe, holistic care",
 };
 
+// #92 — 6 of 8 descriptions updated per the client's follow-up comment
+// (2026-09-12); GP and Play Therapy weren't given new copy, left unchanged.
+// Order preserved exactly — it drives HubAndSpoke's radial angles, and the
+// diagram itself must not visually change.
 export const mdtSpokes: Spoke[] = [
   {
     label: "Occupational Therapy",
-    description: "Supports independence, functional ability, and daily living skills.",
+    description:
+      "Supports independence, daily living skills, functional participation, and sensory regulation to enhance quality of life and wellbeing.",
   },
   {
     label: "Behaviour Support",
-    description: "Promotes positive behaviour support and proactive intervention planning.",
+    description:
+      "Behaviour support promotes positive behaviour while respecting each person's human rights and independence, staff support and proactive intervention",
   },
   {
     label: "Nursing",
-    description: "Provides clinical oversight, health monitoring, and coordinated care support.",
+    // "person-centred" per house style (Irish/British spelling, used
+    // everywhere else on the site) — the client's supplied text used the
+    // American "person-centered"; normalised the same way #120's "Right-based
+    // response" casing was normalised, not a content change.
+    description:
+      "Nursing support provides clinical expertise and person-centred guidance, promoting safe, high-quality care while supporting health, wellbeing, dignity, independence and positive outcomes.",
   },
   {
     label: "General Practitioner",
@@ -309,11 +332,13 @@ export const mdtSpokes: Spoke[] = [
   },
   {
     label: "Psychology",
-    description: "Supports emotional wellbeing, assessment, and therapeutic intervention.",
+    description:
+      "Dr Sara offers Psychological consultation, to support staff teams and professionals working with children who have mental health needs by giving them time to understand them through a psychological informed lens.",
   },
   {
     label: "Speech & Language Therapy",
-    description: "Enhances communication, understanding, and expressive abilities.",
+    description:
+      "Promoting safe eating, drinking and swallowing, equal access and opportunities for effective communication, and for education to improve health, wellbeing and quality of life.",
   },
   {
     label: "Play Therapy",
@@ -322,7 +347,7 @@ export const mdtSpokes: Spoke[] = [
   {
     label: "Dietician/Nutrition",
     description:
-      "Promotes nutritional wellbeing, safe eating support, and individualised dietary planning to enhance health outcomes.",
+      "Supporting people to enjoy a healthy and balanced diet while promoting choice, independence and quality of life, with individualised support for their nutritional and hydration needs.",
   },
 ];
 
@@ -356,6 +381,9 @@ export const mdtContent = {
       "Continuous improvement",
     ],
   } satisfies ContentBlock,
+  // No longer its own section on the page — folded into the closing
+  // CareersCTAStrip's body copy instead, rather than giving one sentence its
+  // own throwaway section. Kept here since it's real content.
   commitment: {
     heading: "Our Commitment",
     body: "Integrated, person-centred, proactive, coordinated, and responsive care.",
