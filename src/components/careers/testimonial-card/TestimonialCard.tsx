@@ -26,11 +26,17 @@ export function TestimonialCard({
 
   return (
     <figure
-      className={`bg-white rounded-2xl ${s.pad} shadow-sm border border-gray-100 flex flex-col ${clampQuote ? "h-64" : ""}`}
+      className={`card-hover bg-white rounded-2xl ${s.pad} shadow-sm border border-gray-100 hover:border-primary/30 transition-colors flex flex-col ${clampQuote ? "h-80 md:h-64" : ""}`}
     >
       {testimonial.quote && (
+        // Narrower single-column cards need more wrapped lines for the same
+        // text than the 2-up desktop grid does — measured at real breakpoints
+        // (not guessed): a ~230-char quote needs 6 lines at 308px card width,
+        // only 3 at 626px. A flat line-clamp-4 cut the longer quotes off
+        // mid-word on mobile while barely being needed on desktop. `h-64`
+        // already has headroom for 6 lines regardless of width.
         <blockquote
-          className={`text-foreground leading-relaxed italic flex-1 mb-6 ${clampQuote ? "line-clamp-4" : ""}`}
+          className={`text-foreground leading-relaxed italic flex-1 mb-6 ${clampQuote ? "line-clamp-6 md:line-clamp-4" : ""}`}
         >
           &ldquo;{testimonial.quote}&rdquo;
         </blockquote>

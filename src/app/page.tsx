@@ -86,7 +86,7 @@ export default function Home() {
         />
         <QuoteSection
           quote={homeQuote}
-          ctaHref="/testimonials"
+          ctaHref="/quality/model-of-care#testimonials"
           ctaLabel="Read More Testimonials"
         />
         <HomesCarousel homes={homes} />

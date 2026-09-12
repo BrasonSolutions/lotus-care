@@ -1,3 +1,4 @@
+import { redirect } from "next/navigation";
 import { SectionTitle } from "@/components/section-title";
 import { Reveal } from "@/components/reveal";
 import { Container } from "@/components/layout";
@@ -5,6 +6,14 @@ import { TestimonialCard } from "@/components/careers/testimonial-card";
 import { serviceOwnerTestimonials } from "@/data/testimonial";
 
 export default function TestimonialsPage() {
+  // #122 — this hub is no longer linked anywhere; its content now lives as
+  // the closing "Testimonials" section on /quality/model-of-care instead.
+  // Redirecting rather than deleting: the page/data below stays in the
+  // codebase for whenever it's needed again (see careers/page.tsx for the
+  // same pattern). /testimonials/[slug] detail pages are unaffected and
+  // still resolve directly.
+  redirect("/quality/model-of-care#testimonials");
+
   return (
     <div className="py-10 sm:py-14">
       <Container>

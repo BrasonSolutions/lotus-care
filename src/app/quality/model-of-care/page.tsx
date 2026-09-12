@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { CareersHero } from "@/components/careers/careers-hero";
 import { SectionTitle } from "@/components/section-title";
 import { CircularCycle } from "@/components/quality/circular-cycle";
 import { KeywordCards } from "@/components/quality/keyword-cards";
 import { PrincipleCards } from "@/components/quality/principle-cards";
 import { SpecialtyChips } from "@/components/quality/specialty-chips";
-import { TeamStrip } from "@/components/quality/team-strip";
+import { TestimonialGrid, type TestimonialGridItem } from "@/components/quality/testimonial-grid";
 import { CareersCTAStrip } from "@/components/careers/careers-cta-strip";
 import { LotusBand } from "@/components/lotus-band";
 import { QualityPillars } from "@/components/quality/quality-pillars";
@@ -19,9 +20,9 @@ import {
   curriculumContent,
   humanRightsFramework,
   humanRightsContent,
-  humanRightsTeam,
   modelOfCareSections,
 } from "@/data/quality";
+import { modelOfCareTestimonials } from "@/data/testimonial";
 import { Container } from "@/components/layout";
 
 export const metadata: Metadata = {
@@ -142,10 +143,11 @@ function ADTSection() {
   );
 }
 
-function Divider({ variant }: { variant: "teal" | "purple" }) {
+// Teal only, per standing rule for this page — no purple divider band.
+function Divider() {
   return (
     <div aria-hidden="true">
-      <LotusBand variant={variant} height={72} />
+      <LotusBand variant="teal" height={72} />
     </div>
   );
 }
@@ -175,6 +177,23 @@ function ModelPillars() {
 
 export default function ModelOfCarePage() {
   const humanRights = section("human-rights");
+  const [johnTestimonial, ...otherTestimonials] = modelOfCareTestimonials;
+  const testimonialItems: TestimonialGridItem[] = [
+    {
+      testimonial: johnTestimonial,
+      clampQuote: true,
+      action: (
+        <Link
+          href="/testimonials/jw"
+          aria-label={`Read the full testimonial from ${johnTestimonial.name}, ${johnTestimonial.role}`}
+          className="inline-block bg-primary-dark text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-teal-800 transition-colors focus-ring"
+        >
+          Read more
+        </Link>
+      ),
+    },
+    ...otherTestimonials.map((testimonial) => ({ testimonial, clampQuote: true })),
+  ];
 
   return (
     <>
@@ -191,15 +210,15 @@ export default function ModelOfCarePage() {
         </Container>
       </section>
 
-      <Divider variant="teal" />
+      <Divider />
 
       <CurriculumSection />
 
-      <Divider variant="purple" />
+      <Divider />
 
       <ADTSection />
 
-      <Divider variant="teal" />
+      <Divider />
 
       <section id="human-rights" className={ANCHOR_OFFSET}>
         {/* Blobs live only on the light sections — the client asked for them
@@ -279,16 +298,18 @@ export default function ModelOfCarePage() {
 
       </section>
 
-      <section className="pb-16 sm:pb-20">
-        <Container>
-          <Reveal>
-            <TeamStrip
-              heading="Our Quality & Compliance Team"
-              intro="Real people at Lotus Care working to embed these standards day to day."
-              members={humanRightsTeam}
+      <Divider />
+
+      <section id="testimonials" className={ANCHOR_OFFSET}>
+        <div className="py-14 sm:py-16">
+          <Container>
+            <SectionTitle
+              title="Testimonials"
+              subtitle="Real voices from the people we support, in their own words."
             />
-          </Reveal>
-        </Container>
+            <TestimonialGrid items={testimonialItems} />
+          </Container>
+        </div>
       </section>
 
       <CareersCTAStrip
