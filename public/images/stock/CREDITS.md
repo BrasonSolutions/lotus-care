@@ -12,3 +12,10 @@ All photos sourced from Unsplash under the Unsplash License (free for commercial
 
 - `hero-finger-painting.jpg` — https://www.pexels.com/photo/6288114/ (Antoni Shkraba) — resized to 1600px wide from the original 4000×6000 download.
 - `hero-why-work-with-us.jpg` — https://www.pexels.com/photo/30680377/ (Dmitry Rodionov) — resized to 1600px wide from the original 2400×3600 download.
+
+Model of Care page photo refresh (client-supplied reference set, 2026-09-12) — also Pexels, also free/no-attribution-required:
+
+- `caring-embrace.jpg` — https://www.pexels.com/photo/6288105/ (Antoni Shkraba) — resized to 1600px wide.
+- `learning-through-play.jpg` — https://www.pexels.com/photo/8923363/ (Mikhail Nilov) — resized to 1600px wide.
+- `assessment-session.jpg` — https://www.pexels.com/photo/8422150/ (Pavel Danilyuk) — resized to 1600px wide.
+- `guided-choice.jpg` — https://www.pexels.com/photo/8535183/ (Ksenia Chernaya) — resized to 1600px wide.
