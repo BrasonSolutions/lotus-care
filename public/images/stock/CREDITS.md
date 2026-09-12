@@ -19,3 +19,18 @@ Model of Care page photo refresh (client-supplied reference set, 2026-09-12) —
 - `learning-through-play.jpg` — https://www.pexels.com/photo/8923363/ (Mikhail Nilov) — resized to 1600px wide.
 - `assessment-session.jpg` — https://www.pexels.com/photo/8422150/ (Pavel Danilyuk) — resized to 1600px wide.
 - `guided-choice.jpg` — https://www.pexels.com/photo/8535183/ (Ksenia Chernaya) — resized to 1600px wide.
+
+MDT page photo refresh (client-supplied reference set, 2026-09-12) — also
+Pexels, also free/no-attribution-required. Issue #92 asked for photos of real
+OT/SLT sessions and MDT meetings; no such photos exist in the client's
+supplied set — these are the closest available warm carer+child stock, not
+literal depictions of that brief:
+
+- `hands-on-support.jpg` — https://www.pexels.com/photo/8422256/ (Pavel Danilyuk) — resized to 1600px wide.
+- `everyday-connection.jpg` — https://www.pexels.com/photo/6288107/ (Antoni Shkraba) — resized to 1600px wide.
+
+`helping-child-write.jpg` (Working in Partnership with Teams photo) was
+supplied directly by the user/client, placed straight into this folder —
+not a Pexels/Unsplash download, so no stock-licence link applies. Source/
+usage rights not verified by Claude; confirm with the client before treating
+it as clear for public use if that hasn't already happened.
