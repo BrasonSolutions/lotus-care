@@ -1,0 +1,1 @@
+export { SpecialtyChips } from "./SpecialtyChips";

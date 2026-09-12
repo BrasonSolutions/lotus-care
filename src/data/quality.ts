@@ -36,7 +36,7 @@ export interface ContentBlock {
 }
 
 export interface ModelOfCareSection {
-  id: "curriculum" | "adt" | "human-rights" | "safeguarding";
+  id: "curriculum" | "adt" | "human-rights";
   heading: string;
   intro: string;
 }
@@ -124,16 +124,15 @@ export const humanRightsFramework: CycleStep[] = [
   },
 ];
 
-/** The four Model of Care sections in page order (#91). Human Rights is the
- * only one with full copy; the other three carry a provisional summary until
- * Trevor and Caithriona send theirs.
- * ponytail: placeholder `intro` text, replace with client copy when it lands. */
+/** The three Model of Care sections in page order (#91). Safeguarding was
+ * removed per #117 — its messaging now lives in Human Rights' "Safeguarding
+ * from Harm" approach item instead. */
 export const modelOfCareSections = [
   {
     id: "curriculum",
     icon: "clock",
     summary: "Every hour of the day planned to build skills, independence, and wellbeing.",
-    image: "/images/stock/warm-home.jpg",
+    image: "/images/stock/learning-through-play.jpg",
     label: "24-Hour Curriculum",
     heading: "The 24-Hour Curriculum",
     intro:
@@ -144,7 +143,7 @@ export const modelOfCareSections = [
     id: "adt",
     icon: "home",
     summary: "Consistent, well-communicated moves into, through, and on from our services.",
-    image: "/images/stock/clinical-consultation.jpg",
+    image: "/images/stock/assessment-session.jpg",
     label: "ADT",
     heading: "Admissions, Discharges & Transitions",
     intro:
@@ -155,23 +154,12 @@ export const modelOfCareSections = [
     id: "human-rights",
     icon: "user-circle",
     summary: "Dignity, respect, equality, and autonomy at the centre of every decision.",
-    image: "/images/stock/community-friends.jpg",
+    image: "/images/stock/guided-choice.jpg",
     label: "Human Rights",
     heading: "Human Rights",
     intro:
       "A rights-based approach where dignity, respect, equality, and autonomy are central to every aspect of care and support.",
     provisional: false,
-  },
-  {
-    id: "safeguarding",
-    icon: "shield-check",
-    summary: "Clear reporting routes, trained staff, and oversight that never lapses.",
-    image: "/images/stock/team-meeting.jpg",
-    label: "Safeguarding",
-    heading: "Safeguarding",
-    intro:
-      "How we protect the people we support from harm — clear reporting routes, trained staff, and oversight that treats safeguarding as everyone's responsibility.",
-    provisional: true,
   },
 ];
 
@@ -203,7 +191,7 @@ export const curriculumContent = {
 export const adtContent = {
   subtitle: "A caring start",
   intro:
-    "Every move into, through, or on from a Lotus Care service is planned and supported by a dedicated committee, so that admissions, discharges and transitions are consistent, well-communicated, and centred on the person.",
+    "Our admissions process makes sure every placement starts with a deep understanding of the person – and a clear plan for their future.",
   steps: [
     {
       number: 1,
@@ -246,47 +234,16 @@ export const adtContent = {
 };
 
 export const humanRightsContent = {
+  // Issue #120's subtitle — sits alongside the (pre-existing, kept as-is)
+  // intro paragraphs below.
+  subtitle: "Rights at the heart of care",
   intro: [
     "At Lotus Care, we are committed to delivering services that are firmly grounded in a human rights-based approach, where dignity, respect, equality, and autonomy are central to every aspect of care and support. We recognise that high-quality care is not only about safety and wellbeing, but also about the active protection, promotion, and realisation of each person's fundamental rights. These rights are not optional or secondary considerations; they are the foundation of how we work.",
     "Lotus Care's Human Rights Committee plays a key role in strengthening this commitment across all our services. It ensures that human rights principles are consistently embedded in practice, decision-making, and governance, and that the people we support are empowered to live lives of choice, control, and inclusion.",
   ],
-  // Same six points as before, each led by its key word so the list renders
-  // as cards rather than a wall of text (#91).
-  purpose: {
-    heading: "Purpose of the Committee",
-    intro:
-      "The Committee provides independent oversight, guidance, and assurance to ensure that the rights of the children and adults we support are respected, upheld, and actively realised in practice.",
-  } satisfies ContentBlock,
-  purposeKeywords: [
-    {
-      term: "Person-Centred",
-      description: "Promote a rights-based and person-centred approach across all services.",
-    },
-    {
-      term: "Dignity & Autonomy",
-      description: "Strengthen dignity, autonomy, and supported decision-making in daily practice.",
-    },
-    {
-      term: "Least Restrictive Practice",
-      description:
-        "Safeguard against unnecessary or disproportionate restrictions of liberty or choice.",
-    },
-    {
-      term: "Rights Oversight",
-      description:
-        "Identify, review, and respond to potential rights restrictions, risks, or inequalities.",
-    },
-    {
-      term: "Continuous Improvement",
-      description:
-        "Support continuous improvement in the realisation of human rights in practice and outcomes.",
-    },
-    {
-      term: "HIQA & UNCRPD Alignment",
-      description:
-        "Ensure alignment with national legislation, HIQA standards, and the UNCRPD.",
-    },
-  ] satisfies Keyword[],
+  // "Purpose of the Committee" (+ its 6 keywords) removed per client
+  // confirmation — it predated issue #120 (traced to #91/#112, the original
+  // standalone Human Rights page) and isn't part of any current ticket.
   approach: {
     heading: "Our Approach",
     intro:
@@ -319,34 +276,11 @@ export const humanRightsContent = {
       description: "Transparent and accountable decision-making at all levels.",
     },
   ] satisfies Keyword[],
-  champions: {
-    heading: "Human Rights Champions",
-    intro:
-      "Each centre has a dedicated Human Rights Champion who translates rights-based principles into everyday practice locally, supporting colleagues and raising concerns as they arise:",
-    keywords: [
-      "Frontline Staff Support",
-      "Dignity & Choice",
-      "Least Restrictive Practice",
-      "Escalating Concerns",
-      "Reflection & Accountability",
-      "Link to the Committee",
-    ],
-    bullets: [
-      "Supporting staff to embed rights-based practice in daily work",
-      "Promoting awareness of dignity, choice, and least restrictive practice",
-      "Identifying and escalating potential rights concerns or restrictions",
-      "Reinforcing a culture of reflection, accountability, and respect",
-      "Acting as a link between frontline services and the Human Rights Committee",
-    ],
-  } satisfies ContentBlock,
-  governance: {
-    heading: "Governance & Oversight",
-    body: "The Committee operates within Lotus Care's wider governance framework, working closely with safeguarding, quality, and clinical governance structures, and provides assurance to senior leadership and the Board.",
-  } satisfies ContentBlock,
-  culture: {
-    heading: "Culture of Rights-Based Practice",
-    body: "Human rights are a core professional responsibility and daily practice expectation, not a policy requirement.",
-  } satisfies ContentBlock,
+  // "Human Rights Champions" (+ its focus areas/responsibilities) and the
+  // "Governance & Oversight"/"Culture of Rights-Based Practice" cards were
+  // removed — same reasoning throughout: this predates issue #120, isn't
+  // backed by any current ticket, and the client confirmed none of it is
+  // wanted.
 };
 
 // --- /quality/mdt ---
