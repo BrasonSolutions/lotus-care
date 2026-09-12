@@ -13,7 +13,7 @@ function pickTeam(names: string[]) {
 // Real staff, picked for genuine role overlap with each page's subject matter
 // (not asserted committee members — see PR notes).
 export const humanRightsTeam = pickTeam(["Louise Kidney", "Claire Maher"]);
-export const safetyImprovementTeam = pickTeam(["Caíthríona Lynch", "Louise Kidney"]);
+export const safetyImprovementTeam = pickTeam(["Aisling Carroll", "Louise Kidney"]);
 
 // MDT-page-only additions (2026-09-12) — deliberately NOT added to
 // `teamMembers` in src/data/team.ts, which also feeds the site's "Meet the

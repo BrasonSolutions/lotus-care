@@ -55,12 +55,15 @@ export const teamMembers: TeamMember[] = [
     image: "/images/staff/Danny-Scally.png",
   },
   {
-    name: "Caíthríona Lynch",
+    // Corrected per issue #123 — previously listed under the wrong name
+    // ("Caíthríona Lynch"); her actual name is Aisling Carroll. Role, bio
+    // and photo are unchanged, only the name/initials were wrong.
+    name: "Aisling Carroll",
     role: "Director of Quality Assurance",
     department: "Management",
     bio: "I am an experienced Social Care Worker with a passion for Human Rights and promoting high quality individualised supports. I have worked in the disability sector, starting in front line and working up to management roles, since 2017. During this time, I have led teams through change management processes, developed learning programs, led transitions, and supported people to achieve their individual goals through promotion of self-advocacy. My experience spans across residential, day service, respite and wrap around services.\n\nMy values and wealth of experience align strongly with Lotus Care's vision of empowering people to live as independently as possible in a high-quality, safe and person-centred service. I am committed to supporting and empowering staff teams to deliver consistent safe and effective services.",
-    initials: "CL",
-    image: "/images/staff/Caithriona-Lynch.jpg",
+    initials: "AC",
+    image: "/images/staff/Aisling-Carroll.jpg",
   },
   {
     name: "Nicki Cegielski Egan",
@@ -160,6 +163,23 @@ export const teamMembers: TeamMember[] = [
     department: "People & Culture",
     bio: "I completed my law degree in 2019 and spent 6 years travelling and working in Australia. My experience included working across Customer Service, Australian Immigration and in 2022 entered the Recruitment industry assisting law firms with hiring needs. 2025 brought me back home to Ireland to friends and family. In my spare time I enjoy walks with my 3 year old Golden Doodle who came all the way from Australia, I love travelling Ireland, camping and the occasional drink with family and friends.",
     initials: "RM",
+    image: "/images/staff/Rianna-Mannering.png",
+  },
+  {
+    name: "Chloe Moran",
+    role: "Talent Acquisition Lead",
+    department: "People & Culture",
+    bio: "Chloe is an experienced, relationship-driven recruitment specialist with a strong background in agency recruitment across Ireland and the EU. She has worked across a diverse range of industries and roles, partnering with national and multinational organisations to identify and attract exceptional talent.\n\nWith a strategic, people-focused approach, Chloe is passionate about building long-term relationships, creating positive candidate experiences and delivering recruitment solutions that support sustainable business growth.",
+    initials: "CM",
+    image: "/images/staff/Chloe-Moran.png",
+  },
+  {
+    name: "Megan Mulryan",
+    role: "Human Resources Administrator",
+    department: "People & Culture",
+    bio: "Megan holds a BA in Arts and recently completed her Master's in Human Resource Management and Employee Relations. She has several years of experience in people-facing roles across the hospitality and retail sectors, and has always enjoyed working with and supporting people.\n\nOutside of work, Megan enjoys travelling, spending time with family and friends, and spending time with her two dogs.",
+    initials: "MM",
+    image: "/images/staff/Megan-Mulryan.png",
   },
   // Finance Department
   {
@@ -170,6 +190,14 @@ export const teamMembers: TeamMember[] = [
     initials: "MC",
     image: "/images/staff/Michelle-Cushen.webp",
   },
+  {
+    name: "Laura Keigher",
+    role: "Operations & Finance Administrator",
+    department: "Finance",
+    bio: "Operations & Finance Administrator at Lotus Care, supporting Finance, Payroll and Procurement across multiple residential care centres.\n\nBefore joining Lotus Care, I worked across HR administration, recruitment and financial services in Ireland and Australia, along with hospitality roles in Germany and Canada.\n\nWith a Bachelor of Business (Honours) from the University of Limerick, combined with my varied professional experience, I have developed a broad understanding of business operations, as well as an appreciation for the importance of effective processes and strong relationships in supporting organisational success.\n\nI enjoy bringing these different experiences together in my current role and contributing to a growing organisation.",
+    initials: "LK",
+    image: "/images/staff/Laura-Keigher.png",
+  },
   // Persons in Charge
   {
     name: "Paula Lyons",
@@ -177,6 +205,49 @@ export const teamMembers: TeamMember[] = [
     department: "Persons in Charge",
     bio: "I have five years' experience in the social care sector where I have developed a broad range of experience across mainstream residential services, as well as supporting both adults and children with intellectual disabilities in residential settings.\n\nI graduated in 2021 with an Honours Degree in Applied Social Studies in Social Care and have further developed my professional skills through a Certificate in Supervisory Management and Team Leadership.\n\nI joined Lotus Care in 2024 as a Team Leader and progressed to the role of Person in Charge in October 2025. Throughout my career, I have been committed to promoting high-quality, person-centred care and supporting individuals to have choice, independence, dignity and meaningful opportunities in their everyday lives.\n\nI am passionate about ensuring that every service owner is supported to reach their full potential and that their individual strengths, needs, goals and aspirations remain at the centre of the support they receive. I believe in creating a positive, respectful and inclusive environment where service owners can feel valued, safe and empowered to achieve their goals.\n\nIn my role as Person in Charge, I am committed to leading a dedicated team, promoting high standards of care and supporting the continued development of a service where every individual can thrive.",
     initials: "PL",
+    image: "/images/staff/Paula-Lyons.png",
+  },
+  {
+    name: "Selina Brennan",
+    role: "Person in Charge",
+    department: "Persons in Charge",
+    bio: "I am a Person in Charge in a children's residential service, and I am passionate about creating a safe, caring and supportive environment where children and young people feel valued, listened to and respected.\n\nI have worked in social care for a number of years, with experience in both mental health residential services and intellectual disability services. The majority of my experience has been within intellectual disability, which has given me a strong understanding of person-centred care and the importance of supporting each individual in a way that recognises their unique needs, strengths and abilities.\n\nI hold a degree in Social Care and have also completed a Leadership and Management course, which has supported me in developing my confidence and skills as a leader.\n\nWhat I enjoy most about my role is building positive relationships and being part of a team that can make a genuine difference in the lives of the children and young people we support. I believe that sometimes it is the small things — listening, being consistent, showing kindness and creating a sense of trust — that can make the biggest difference.\n\nI feel very fortunate to work in a role where I can support children and young people as they grow, develop and work towards their own goals. I aim to bring warmth, understanding and a positive attitude to my work each day, while supporting both the young people and the team around them.",
+    initials: "SB",
+    image: "/images/staff/Selina-Brennan.png",
+  },
+  {
+    // Issue #123: "PHOTO/BIO TO BE PROVIDED" — placeholder entry until the
+    // client supplies content, same shape as Alan Doyle's entry above.
+    name: "Megan Daly",
+    role: "Person in Charge",
+    department: "Persons in Charge",
+    bio: "",
+    initials: "MD",
+  },
+  {
+    // Issue #123: "PHOTO/BIO TO BE PROVIDED" — placeholder entry until the
+    // client supplies content, same shape as Alan Doyle's entry above.
+    name: "Tracey McCabe",
+    role: "Person in Charge",
+    department: "Persons in Charge",
+    bio: "",
+    initials: "TM",
+  },
+  {
+    name: "Tamara Murphy",
+    role: "Person in Charge",
+    department: "Persons in Charge",
+    bio: "I have been working in social care for over 12 years, and I genuinely love what I do. I enjoy supporting people, getting to know them as individuals and making a positive difference in their day-to-day lives. I'm a caring, friendly and approachable person, and I really value building strong relationships based on trust, kindness and respect.\n\nOutside of work, I'm a proud parent and love spending quality time with my children. I also enjoy going to the gym, getting outdoors and spending time in nature. Family, keeping active and enjoying the simple things in life are very important to me.",
+    initials: "TM",
+    image: "/images/staff/Tamara-Murphy.png",
+  },
+  {
+    name: "Aoife Buckley",
+    role: "Person in Charge",
+    department: "Persons in Charge",
+    bio: "Aoife is a qualified Social Care Worker with over eight years of experience working within the disability sector. Throughout her career, she has supported both children and adults with autism, intellectual disabilities, complex health needs, and high support needs, including individuals who may present with behaviours that challenge.\n\nIn her management roles, Aoife has successfully led services in achieving compliance during HIQA inspections while also driving continuous quality improvement. She has a particular interest in restrictive practice reduction, the promotion of human rights, and ensuring that individuals receiving support are treated with dignity, respect, and autonomy.\n\nAlongside her extensive professional experience, Aoife has demonstrated a strong commitment to academic and professional development. She successfully completed a Master's degree in Criminology and Criminal Justice and holds a QQI Level 6 qualification in Managing People. These achievements reflect her academic capability, leadership skills, and ongoing commitment to developing her professional knowledge and practice.",
+    initials: "AB",
+    image: "/images/staff/Aoife-Buckley.png",
   },
 ];
 
