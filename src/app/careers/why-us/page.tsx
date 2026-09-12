@@ -53,7 +53,7 @@ export default function WhyUsPage() {
       <CareersHero
         title="Where care becomes a"
         titleHighlight="career."
-        subtitle="We're committed to your professional development at every stage of your career."
+        subtitle="At Lotus Care, we believe your role should be more than just a job, it should be the beginning of a rewarding career."
         compact
         image="/images/stock/hero-why-work-with-us.jpg"
         ctaLabel="View Open Roles"
@@ -74,7 +74,7 @@ export default function WhyUsPage() {
           <SectionTitle
             dmSans
             title="A career that blooms in stages"
-            subtitle="At Lotus Care, learning never stops. From your first day, you'll receive comprehensive induction training and ongoing support. As you grow, we fund your qualifications, provide access to specialist development programmes, and actively promote from within."
+            subtitle="At Lotus Care, learning never stops and your career has room to grow. We'll give you the support, skills and experience you need to develop and progress, helping you reach your full potential."
           />
           <Timeline
             orientation="horizontal"
@@ -90,10 +90,10 @@ export default function WhyUsPage() {
             <div className="flex items-start gap-4 bg-white border border-dashed border-teal-300 rounded-2xl p-6">
               <span className="shrink-0 text-primary-dark mt-0.5">{getCareersIcon("clock")}</span>
               <p className="text-foreground leading-relaxed">
-                Progression isn&apos;t only vertical. Many of our team move sideways into Positive
-                Behaviour Support, Training &amp; Development, or Recruitment &amp; HR once
-                they&apos;ve built floor experience — all with their own funded qualification
-                routes.
+                Progression isn&apos;t always vertical. Your journey is yours to shape. Your career
+                can grow in many directions, and you may choose to explore new opportunities
+                across areas such as multidisciplinary teams, training, or other specialist
+                roles.
               </p>
             </div>
           </Reveal>
