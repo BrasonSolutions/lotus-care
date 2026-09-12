@@ -28,9 +28,9 @@ const quickLinks = [
 ];
 
 const aboutParagraphs = [
-  "Lotus Care is a HIQA-registered provider committed to delivering exceptional residential care across the Midlands. Our network of twelve purpose-designed homes provides warm, supportive environments where individuals are empowered to thrive.",
-  "We believe every person deserves to live a life of dignity, choice, and connection. Our dedicated team of professionals works alongside each participant to develop personalised support plans that reflect their unique goals, interests, and aspirations.",
-  "Through our person-centred approach, multi-disciplinary expertise, and genuine commitment to community integration, we create pathways for individuals to build meaningful relationships, develop new skills, and participate fully in community life.",
+  "Established in 2022, Lotus Care provides residential and non-residential respite services for children and adults whom we call our Service Owners. Lotus Care focuses on creating environments where Service Owners can feel at home, build relationships and have greater choice and independence in their everyday lives.",
+  "Our approach is rooted in dignity, human rights and person-centred care. We take the time to understand each person as an individual, their ambitions and the things that matter most to them, and work alongside the service owner, their families, other stakeholders and our teams to provide the right support. Lotus Care offer a wide range of supports through our dedicated care teams and multidisciplinary teams.",
+  "Lotus Care has continued to grow and our focus has remained the same, putting Service Owners first. We are committed to creating more exceptional places and opportunities for the people we support, while building a workplace where our teams can grow, develop and be proud of the difference they make.",
 ];
 
 const aboutStats = [
@@ -59,7 +59,7 @@ export default function Home() {
         <HeroSection
           title="Enhanced living"
           titleHighlight="empowering lives."
-          subtitle="Providing quality respite and residential disability care services across the Midlands, supporting individuals to live their best lives with dignity and purpose."
+          subtitle="As an award-winning care provider, Lotus Care is committed to the highest standards of care excellence, delivered with pride, compassion, and support to enhance the quality of lives of people with additional needs."
         />
         <AboutSection
           title="About Lotus Care"
