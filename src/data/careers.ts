@@ -37,58 +37,58 @@ export const benefits: Benefit[] = [
       "Market-leading salaries with annual pay reviews and incremental scale progression.",
   },
   {
-    icon: "book-open",
-    title: "Paid Training",
+    icon: "moon",
+    title: "Premiums for Unsocial Hours",
     description:
-      "All mandatory and professional development training is fully funded and completed on company time.",
+      "Enhanced pay for night and weekend hours, recognising the flexibility required to provide 24/7 care.",
   },
   {
-    icon: "calendar",
-    title: "Generous Annual Leave",
+    icon: "user-group",
+    title: "Refer a Friend Scheme",
     description:
-      "Starting at 22 days per year, increasing with service — plus public holidays.",
+      "Great people know other great people. We recognise colleagues who refer talented people to join Lotus Care, with the opportunity to earn up to €750.",
+  },
+  {
+    icon: "academic-cap",
+    title: "Education Support",
+    description:
+      "We support your continued learning and development, with financial or non-financial assistance available on a case-by-case basis.",
+  },
+  {
+    icon: "sparkles",
+    title: "Employee of the Month",
+    description:
+      "We celebrate colleagues who go above and beyond with our Employee of the Month award, recognising the people who make a difference every day.",
+  },
+  {
+    icon: "users",
+    title: "Company Events",
+    description:
+      "Work should be enjoyable too. Our Engagement Committee creates opportunities throughout the year to connect and have fun together.",
+  },
+  {
+    icon: "clock",
+    title: "Long Service Awards",
+    description:
+      "We value commitment and loyalty, recognising colleagues who reach important milestones in their journey with Lotus Care.",
+  },
+  {
+    icon: "gift",
+    title: "Milestone Recognition",
+    description:
+      "We celebrate the personal milestones that matter to our people, recognising and sharing special moments along the way.",
   },
   {
     icon: "heart",
     title: "Wellbeing Support",
     description:
-      "Access to our Employee Assistance Programme (EAP) offering confidential counselling and wellbeing resources.",
+      "Your wellbeing matters to us. From our Employee Assistance Programme to mental health workshops and other supports, we're here to support you both in and outside of work.",
   },
   {
-    icon: "chart-bar",
-    title: "Career Progression",
+    icon: "tag",
+    title: "Discounts",
     description:
-      "Clear career pathways from Support Worker through to Senior Management, with internal promotion prioritised.",
-  },
-  {
-    icon: "users",
-    title: "Supportive Culture",
-    description:
-      "Regular supervision, peer support, and a management team that truly listens and invests in people.",
-  },
-  {
-    icon: "map-pin",
-    title: "Mileage Allowance",
-    description:
-      "Competitive mileage reimbursement for travel between sites and community activities.",
-  },
-  {
-    icon: "academic-cap",
-    title: "Further Education Support",
-    description:
-      "Study leave and financial support for staff pursuing relevant further education qualifications.",
-  },
-  {
-    icon: "moon",
-    title: "Enhanced Night Rates",
-    description:
-      "Premium rates for night shifts and sleep-ins, recognising the demands of 24/7 care.",
-  },
-  {
-    icon: "home",
-    title: "Stable Local Employment",
-    description:
-      "Permanent and part-time roles across multiple sites — work close to where you live.",
+      "Enjoy access to a range of exclusive discounts and savings available to Lotus Care employees.",
   },
 ];
 
@@ -97,80 +97,91 @@ export const processSteps: ProcessStep[] = [
     step: 1,
     title: "Apply Online",
     description:
-      "Browse our open roles and submit your CV and cover letter through our online application form. We review every application personally.",
+      "Browse our open roles and submit your CV through our online application form. We personally review every application.",
   },
   {
     step: 2,
     title: "Screening Call",
     description:
-      "If your application is shortlisted, our recruitment team will reach out to arrange a brief phone or video call to discuss your background and the role.",
+      "Our Recruitment Team will contact you within 24-48 hours for a brief call to discuss your background and experience.",
   },
   {
     step: 3,
     title: "Interview",
     description:
-      "Successful candidates are invited for a structured interview with the hiring manager. We focus on values, experience, and how you approach person-centred care.",
+      "Successful candidates are invited to a Microsoft Teams interview to discuss their experience and knowledge.",
   },
   {
     step: 4,
-    title: "Offer",
+    title: "Your Offer",
     description:
-      "Once interviews are complete, we make a verbal offer followed by a formal contract of employment.",
+      "Successful candidates receive a verbal offer, followed by a formal Job Offer Letter confirming the details of your new role.",
   },
   {
     step: 5,
-    title: "Pre-Employment Checks",
+    title: "Pre-Employment/Onboarding Checks",
     description:
-      "Garda Vetting, two professional references, and occupational health clearance are completed before your start date — we guide you through every step.",
+      "We'll guide you through Garda vetting, reference checks and required documentation, ensuring everything is ready for your start with us.",
   },
   {
     step: 6,
-    title: "Start",
+    title: "In-Person Training",
     description:
-      "You begin a structured induction covering our values, safeguarding, and role-specific training alongside your new team.",
+      "Before you start, you'll complete paid mandatory training including CPI, First Aid and Medication Administration, helping you feel confident in your role.",
+  },
+  {
+    step: 7,
+    title: "Start Your Journey",
+    description:
+      "Your Lotus Care journey begins with a structured induction and shadow shifts, giving you the support and confidence to settle into your role.",
   },
 ];
 
 export const faqs: FAQ[] = [
   {
-    question: "Do I need a qualification to apply for a Support Worker role?",
+    question: "Do I need a qualification to apply?",
     answer:
-      "A QQI Level 5 in Social Care or Healthcare is strongly preferred, but we also welcome applications from candidates who are currently studying towards this. Equivalent international qualifications are considered on a case-by-case basis.",
+      "A QQI Level 5 qualification in Social Care or Healthcare, or equivalent, is strongly preferred. We also welcome candidates currently studying towards their qualification. International qualifications are considered on a case-by-case basis.",
   },
   {
     question: "Do I need a driving licence?",
     answer:
-      "A full clean Irish driving licence is required for most of our direct care roles, as staff often support residents with community access. Some administration and clinical roles do not require a licence — this is stated in each job description.",
+      "Yes. A full Irish driving licence is required for our roles, as our teams support Service Owners with community access. If you have completed lessons and are awaiting your driving test, we welcome your application.",
+  },
+  {
+    question: "Do you provide sponsorship?",
+    answer:
+      "We may provide employment permit sponsorship to eligible candidates already living in Ireland, considered on a case-by-case basis.",
+  },
+  {
+    question: "Can I apply if I am not in Ireland?",
+    answer:
+      "Lotus Care currently only accepts applications from candidates who have the right to work in Ireland and meet all other essential role requirements.",
+  },
+  {
+    question: "Can I apply if I only have experience in home care or nursing homes?",
+    answer:
+      "Absolutely. We welcome candidates with healthcare and caring experience. Your transferable skills can be valuable in social care, and if you're caring and empathetic, you could be a great fit.",
+  },
+  {
+    question: "Do I have to travel from home to home?",
+    answer:
+      "No. At Lotus Care, you'll have a set work location. With residential centres across the country, you'll be based at one designated location most of the time.",
+  },
+  {
+    question: "What does a typical day look like?",
+    answer:
+      "Frontline staff work an average of 42 hours per week across 12-hour shifts. Your day may include supporting Service Owners with routines, school, community access and independent living.",
   },
   {
     question: "How long does the recruitment process take?",
     answer:
-      "From application to offer typically takes 2–4 weeks. We aim to move quickly and keep you informed at every stage. Pre-employment checks (Garda Vetting, references) can take a further 1–3 weeks.",
+      "From application to offer typically takes 1-2 weeks. We aim to move quickly and keep you informed. Pre-employment checks and training can take a further 3–4 weeks at minimum.",
   },
   {
-    question: "What is Garda Vetting and how do I get it?",
+    question: "Do you offer part-time roles?",
     answer:
-      "Garda Vetting is a background check required for all staff working with vulnerable persons in Ireland, processed through the National Vetting Bureau. We guide you through this process once an offer is made — there is no cost to you.",
-  },
-  {
-    question: "What shifts are available?",
-    answer:
-      "Our homes operate 24/7, so we have a range of shift patterns including days, evenings, weekends, and sleepins. We aim to match rosters to your availability as much as possible and work collaboratively on scheduling.",
-  },
-  {
-    question: "Do you offer part-time or casual roles?",
-    answer:
-      "Yes — we have full-time, part-time, and casual positions across our homes. Casual relief panel roles are particularly flexible, ideal for those who want to pick up shifts around other commitments.",
-  },
-  {
-    question: "What training will I receive when I start?",
-    answer:
-      "All new staff complete a comprehensive induction programme covering our policies, values, safeguarding, medication management, manual handling, and role-specific training. Ongoing training is provided throughout your career with us.",
-  },
-  {
-    question: "Can I apply if I am not from Ireland?",
-    answer:
-      "Yes — we welcome applications from candidates across the EU and beyond. You must have the right to work in Ireland, and international qualifications in care or nursing will be assessed for equivalence. We support skilled worker visa applications where applicable.",
+      "We currently don't offer part-time roles. However, our Relief positions provide flexibility, making them ideal for those looking to work around other commitments. You may work between multiple centres.",
   },
   {
     question: "I don't see a role that suits me — can I register my interest?",

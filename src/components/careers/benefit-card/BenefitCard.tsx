@@ -3,8 +3,8 @@ import { getCareersIcon } from "@/components/careers/careers-icons";
 import { LotusMarkAlt } from "@/components/lotus-mark";
 
 const ACCENT = {
-  teal: { card: "bg-primary-dark", chip: "bg-teal-800" },
-  purple: { card: "bg-purple-600", chip: "bg-purple-700" },
+  teal: { card: "bg-primary-dark", chip: "bg-teal-800", hoverBg: "hover:bg-teal-800" },
+  purple: { card: "bg-purple-600", chip: "bg-purple-700", hoverBg: "hover:bg-purple-700" },
 } as const;
 
 interface BenefitCardProps {
@@ -16,12 +16,12 @@ export function BenefitCard({ benefit, accent = "teal" }: BenefitCardProps) {
   const a = ACCENT[accent];
   return (
     <div
-      className={`relative overflow-hidden rounded-3xl p-6 sm:p-10 text-white hover:shadow-lg transition-shadow ${a.card}`}
+      className={`group card-hover relative overflow-hidden rounded-3xl p-6 sm:p-10 text-white transition-colors ${a.card} ${a.hoverBg}`}
     >
-      <LotusMarkAlt className="pointer-events-none absolute -right-10 sm:-right-14 top-0 h-full w-auto text-white opacity-[0.08]" />
+      <LotusMarkAlt className="pointer-events-none absolute -right-10 sm:-right-14 top-0 h-full w-auto text-white opacity-[0.08] transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3" />
       <div className="relative">
         <div
-          className={`w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center text-white ${a.chip}`}
+          className={`w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center text-white transition-transform duration-300 group-hover:scale-110 ${a.chip}`}
         >
           {getCareersIcon(benefit.icon)}
         </div>

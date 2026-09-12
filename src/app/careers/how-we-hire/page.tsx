@@ -53,11 +53,12 @@ export default function HowWeHirePage() {
             </p>
             <ul className="space-y-3">
               {[
-                "Garda Vetting (National Vetting Bureau — we process on your behalf)",
-                "Two professional references (at least one from a recent employer)",
-                "Occupational health clearance",
-                "Proof of qualifications and NMBI/CORU registration (where applicable)",
-                "Right to work in Ireland",
+                "Garda Vetting (we process on your behalf)",
+                "International police clearance (where applicable)",
+                "Two professional references",
+                "Proof of qualifications and/or CORU Registration (where applicable)",
+                "Right to Work in Ireland",
+                "HR Onboarding Documentation",
               ].map((item) => (
                 <li key={item} className="flex items-start gap-3 text-sm text-foreground">
                   <svg className="w-5 h-5 text-primary shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
