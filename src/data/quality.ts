@@ -102,28 +102,25 @@ export const anonymizedTestimonial: Testimonial = {
 export const humanRightsFramework: CycleStep[] = [
   {
     label: "Human Rights Framework",
-    description:
-      "Ensures all services are grounded in human rights principles, dignity, and equal respect for every person.",
+    description: "Grounding our services in dignity, human rights and equal respect.",
   },
   {
     label: "Rights in Action",
     description:
-      "Delivers care in a way that protects rights, promotes autonomy, and supports meaningful daily living.",
+      "Protecting rights, promoting autonomy and supporting meaningful daily living.",
   },
   {
-    label: "Rights Oversight & Assurance",
-    description:
-      "Monitors practice, feedback, and outcomes to ensure rights are consistently upheld in everyday service delivery.",
+    label: "Oversight & Assurance",
+    description: "Reviewing practice, feedback and outcomes to ensure rights are upheld.",
   },
   {
     label: "Rights-Based Response",
     description:
-      "Addresses concerns and gaps through clear actions that strengthen rights protection and reduce risk of harm.",
+      "Responding to concerns with actions that strengthen rights protection.",
   },
   {
-    label: "Rights Culture & Embedding Practice",
-    description:
-      "Promotes continuous learning to embed a strong culture of rights, respect, and person-centred practice.",
+    label: "Embedding Practice",
+    description: "Building a culture of learning, respect and person-centred practice.",
   },
 ];
 
@@ -314,11 +311,11 @@ export const humanRightsContent = {
       description: "Non-discrimination in all aspects of care and support.",
     },
     {
-      term: "Protection from Harm",
+      term: "Safeguarding from Harm",
       description: "Safeguarding delivered through a rights-based lens.",
     },
     {
-      term: "Transparency & Accountability",
+      term: "Open & Accountable",
       description: "Transparent and accountable decision-making at all levels.",
     },
   ] satisfies Keyword[],
