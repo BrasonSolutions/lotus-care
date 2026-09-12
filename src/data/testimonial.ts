@@ -1,4 +1,6 @@
 // Issue #55/#80/#89. Quote source: "JW My Journey" doc, client Drive. Attribution decided 2026-08-29 (spec §7.2).
+import type { Testimonial } from "@/data/careers";
+
 export interface QuoteEntry {
   quote: string;
   name: string;
@@ -54,6 +56,57 @@ export const serviceOwnerTestimonials: ServiceOwnerTestimonial[] = [
       "My biggest goal is coming up soon, where I will be moving to supported living. I will have my own apartment and staff will support me but much less than now. I feel I am ready to make this move. I have learned so much and I know I have more to learn but I am excited and would like to live on my own now. I hope to move back to my home County which will be great for me. I am so grateful to Lotus Care for helping me through the years and helping me become the man I am today. I will truly miss the staff and SO and I will keep in touch, the staff mean so much to me, and I will never forget that.",
     ],
   },
+];
+
+// #122 — the SO & Stakeholder Satisfaction Survey quotes for
+// /quality/model-of-care's closing "Testimonials" section. Attribution is
+// role-only per the issue — `name` carries the descriptor's initials and
+// `role` the descriptor itself, matching how `serviceOwnerTestimonials`
+// already renders John's card elsewhere (name = initials, role = "Service
+// Owner") rather than leaving `role` empty.
+const surveyTestimonials: Testimonial[] = [
+  {
+    name: "SC",
+    initials: "SC",
+    role: "Stakeholder comment",
+    quote:
+      "Staff are caring, kind and genuinely know the children and young people. They treat our family with respect and keep us informed. Our child is happy, settled and thriving – we feel truly blessed to be a part of the Lotus Care family.",
+  },
+  {
+    name: "FM",
+    initials: "FM",
+    role: "Family member",
+    quote:
+      "The environment is welcoming, homely, clean and safe. My child loves living here and takes part in lots of activities. It is great to see them so happy and included.",
+  },
+  {
+    name: "FM",
+    initials: "FM",
+    role: "Family member",
+    quote:
+      "The progress my son has made towards toileting independence after many years of unsuccessful attempts is ground breaking. The staff never gave up on him and believed in what he could achieve",
+  },
+];
+
+// Curated excerpt of John's opening paragraph — deliberately NOT his full
+// ~700-character paragraph. Every card in the Model of Care grid is clamped
+// to 4 lines (`clampQuote`, for uniform card heights); clamping his full
+// paragraph cut it off wherever the 4th line happened to wrap, mid-sentence.
+// This excerpt is curated to end cleanly on its own within that clamp. His
+// full story is still one click away via the card's "Read more" link.
+const johnExcerpt =
+  "When I first moved to my first home with Lotus Care, I was nervous because everything was new to me. I left my family behind and didn't know anybody. The staff were kind, friendly, and caring, and gave me their time, sitting and talking to me.";
+
+// John's excerpt (above) plus the three survey quotes, reshaped into the
+// plain `Testimonial` type `TestimonialGrid`/`TestimonialCard` render.
+export const modelOfCareTestimonials: Testimonial[] = [
+  {
+    name: serviceOwnerTestimonials[0].initials,
+    initials: serviceOwnerTestimonials[0].initials,
+    role: serviceOwnerTestimonials[0].role,
+    quote: johnExcerpt,
+  },
+  ...surveyTestimonials,
 ];
 
 // /careers/why-us's quote section — the site's original "Hear it from our
