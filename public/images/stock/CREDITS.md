@@ -34,3 +34,10 @@ supplied directly by the user/client, placed straight into this folder —
 not a Pexels/Unsplash download, so no stock-licence link applies. Source/
 usage rights not verified by Claude; confirm with the client before treating
 it as clear for public use if that hasn't already happened.
+
+Safety Improvement page redesign (2026-09-13) — also Pexels, also
+free/no-attribution-required. Both from the same Kampus Production shoot,
+chosen for visual continuity between the two sections that use them:
+
+- `team-review.jpg` — https://www.pexels.com/photo/people-in-the-office-having-a-discussion-8636603/ (Kampus Production) — resized to 1600px wide.
+- `governance-review.jpg` — https://www.pexels.com/photo/group-of-healthcare-professionals-having-a-discussion-8636601/ (Kampus Production) — resized to 1600px wide.

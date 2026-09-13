@@ -1369,3 +1369,177 @@ card. Verified: `tsc`/`eslint`/`build` all clean; Playwright screenshots at
 cards sharing the "home" illustration correctly, no overflow/CLS at mobile
 width. Respite copy shipped as-is per user decision, flagged as draft
 pending Trevor's revision in the PR description.
+
+---
+
+## Card: `/quality/safety-improvement` rebuild (third page on the Model of Care/MDT pattern)
+
+Branch: `redesign/safety-improvement-cards`
+Pipeline variant: `full` (structural rewrite, new local section functions —
+though every component reused is pre-existing, nothing new built)
+Status: **done, pending user review before commit.**
+
+No GitHub issue — user-initiated design polish, explicitly "content shouldn't
+change as of right now." Full plan brainstormed via harness Plan Mode (2
+parallel Explore agents — current page state, then the MDT reference pattern
+— followed by a Plan agent, then `AskUserQuestion` on the two genuinely open
+calls: photo assignment and whether to add a closing CTA strip). Plan file:
+`~/.claude/plans/we-re-gonna-rebuild-the-distributed-crab.md`.
+
+### What changed
+
+`src/app/quality/safety-improvement/page.tsx` fully rewritten to match
+`/quality/mdt`'s established pattern: hand-rolled local section functions
+(`IntroSection`, `CycleAndCommitmentSection`, `GovernanceSection`,
+`BroaderViewSection`) instead of the old flat `ContentSection` calls, a
+teal-only `Divider()` (the stray purple `LotusBand` this page still had is
+gone), no pillars-nav (matches MDT's precedent — this page is one continuous
+narrative, not distinct linkable parts), and a closing `CareersCTAStrip`
+(this page had none before — now 3/3 with Model of Care and MDT). All text
+in `src/data/quality.ts` (`qualitySafetyCycle`, `qualitySafetyContent`,
+`safetyImprovementTeam`) is byte-identical, confirmed field-by-field against
+the old file before rewriting — the only new prose anywhere is the CTA
+strip's heading/body, templated directly on the other two pages' own phrasing.
+
+Two components got their first real reuse this card: `PrincipleTags` (for
+Commitment's 5 bullets, previously plain `ContentSection` bullets) and
+`SplitCards` (for Broader View + Culture — orphaned since Model of Care's
+own Governance/Culture split was removed, and built for exactly this
+"two heading+body blocks, no image, no bullets" shape).
+
+**Photos:** checked the client's Drive folder first (same "Stock photos for
+website use" folder used for Model of Care/MDT) — its 4 remaining unused
+Pexels photos are all warm child-play moments, wrong theme for a
+governance/audit-themed page. Sourced 2 new ones from Pexels directly
+instead (same license convention — free, no attribution required), a
+matched pair from the same Kampus Production shoot (same people/office/
+wardrobe) for visual continuity between the two sections that use them:
+`team-review.jpg` (Intro) and `governance-review.jpg` (Governance section,
+tighter shot with data-chart printouts visible). Hero keeps
+`team-meeting.jpg` unchanged (already fits, avoids 3 near-identical "people
+around a table" photos back to back). This drops `clinical-consultation.jpg`
+from this page (Improvement's photo — that block became text-only, matching
+MDT's own text-only Governance sub-block) and frees `dignity-activity.jpg`
+(previously Intro's photo) — both files are still used elsewhere, not
+deleted. `CREDITS.md` updated with a new "Safety Improvement page redesign"
+entry.
+
+### Acceptance criteria
+
+- [x] Every field in `qualitySafetyCycle`/`qualitySafetyContent`/
+      `safetyImprovementTeam` still renders somewhere, verbatim — confirmed
+      by reading the live data file before writing the new page and
+      diffing each block against the new JSX.
+- [x] All dividers teal, zero purple — confirmed via `grep` (single
+      `Divider()` definition, `variant="teal"` only) and a 1px-column pixel
+      scan of the full-page screenshot (the only near-purple pixels found
+      are the closing `CareersCTAStrip`'s intentional gradient, a different
+      component, matching the same distinction made for this exact check on
+      Model of Care).
+- [x] No pillars-nav added (matches MDT precedent).
+- [x] `PrincipleTags` 5-item bookend layout (odd count → last tile spans
+      both columns) renders with no dangling gap, both breakpoints.
+- [x] `npx tsc --noEmit` clean, `eslint` clean, `npm run build` green (25 routes).
+- [x] Verified in a real browser (dev server + Playwright, full-page
+      screenshots at 1440px and 390px): hero, intro, cycle, commitment
+      tags, governance+improvement, broader-view/culture split cards, team
+      strip, and closing CTA all render correctly; exact 390px mobile width
+      confirmed, no horizontal overflow; footer/page-bottom spacing
+      cross-checked against MDT's own screenshot at the same viewport
+      height and found pixel-identical (not a regression).
+
+### Review
+
+First pass under-applied the MDT/Model of Care pattern in two ways, caught
+by the user comparing this page against the other two directly:
+
+1. **Cycle and Commitment were left as two separate full-width sections**
+   instead of one bounded `bg-white rounded-3xl` panel with a hairline
+   between them — the exact treatment MDT gives HubAndSpoke+Approach and
+   Model of Care gives Framework+Approach. Fixed: merged into
+   `CycleAndCommitmentSection`, `CircularCycle` on top, `PrincipleTags` below
+   the hairline, one `SectionTitle` for the whole panel (not two).
+2. **6 dividers, including one immediately after the hero** — MDT/Model of
+   Care never put a divider directly against the hero (always at least one
+   content block first) and use them sparingly. Fixed: down to 2, placed
+   after Intro (before the Cycle+Commitment panel) and after
+   Governance+Improvement (before Broader View/Culture) — confirmed via
+   `AskUserQuestion` rather than guessing the count. Hero flows straight
+   into Intro; Governance+Improvement flows straight out of the panel; Team
+   and the CTA strip follow Broader View/Culture with no divider, matching
+   both other pages' endings exactly.
+
+Checked 21st.dev/Dribbble per the user's suggestion for general inspiration,
+but the actual fix was simply applying the site's own already-proven
+pattern correctly rather than sourcing anything new — flagged this
+explicitly rather than pretending external research drove the fix.
+
+Re-verified after both fixes: `tsc`/`eslint`/`build` all clean; Playwright
+screenshots at 1440px and 390px confirm the merged panel closes cleanly
+(rounded corners, hairline, no dangling gap) at both breakpoints, and the
+2-divider page reads as one continuous flow with breathing room at exactly
+two points, never adjacent to the hero.
+
+Not yet committed/pushed — pending user's in-browser review (dev server
+running on `localhost:3000`).
+
+---
+
+**2026-09-13, follow-up — Governance/Improvement and Broader View/Culture
+redesigned, merged into one icon-card grid.**
+
+User feedback: these two sections still didn't look right even after the
+divider/panel fixes above — "for me they don't look right at all," asked to
+pull real inspiration from 21st.dev before touching anything, and to see
+mockups before any code changed ("we only leave here when we get the perfect
+design").
+
+**Root cause, on inspection:** these are 4 short heading+paragraph blocks (no
+bullets, only 1 of 4 with a photo) that were split across two mismatched
+constructs — a photo-heavy grid for Governance with a bare text block bolted
+on for Improvement underneath it, then a totally different bordered-card
+split for Broader View/Culture right after. Four sibling ideas, three visual
+languages.
+
+**Process:** pulled real reference screenshots from 21st.dev (a quiet
+icon+text grid with left-rule dividers, no card chrome; a HIPAA/SOC2
+compliance grid — literally the same kind of content; a bento icon-card
+grid) via Playwright (`file://`/live-URL screenshots, since the Chrome
+extension isn't connected in this sandbox — same fallback as every other
+visual check this session). Sent all 3 references to the user via
+`SendUserFile` before proposing anything. Noticed the homepage's own
+`enhanceServices` icon-cards already include a teaser card for this exact
+page ("Quality, Safety & Continuous Improvement") — proposed echoing that
+card's own visual language rather than importing a foreign pattern.
+`AskUserQuestion` on card style (icon-card vs. quiet/editorial) got: "show
+me examples... so I can see the difference" — built a live HTML mockup
+(real brand tokens, real copy, the actual governance photo, both options
+stacked) and sent it as a rendered screenshot rather than describing it in
+words. User picked the icon-card option (Option B) and confirmed leaving
+"Our Culture"'s single-sentence brevity as-is rather than padding it.
+
+**What changed:** new component `src/components/quality/icon-cards/{IconCards,index}.ts(x)`
+— a 2-col icon-card grid (icon tile, heading, body, no link), reusing the
+exact 4 SVG icons already coded in `ServiceCard.tsx` (`shield-check`,
+`chart-bar`, `globe`, `users`) and the same 10%-tint-to-solid hover-invert
+treatment, so it reads as a deliberate callback to the homepage's own card
+rather than a new visual language. Own `useInView` + `pop-item` stagger
+(reveal on the `<li>`, hover on the inner card — same split
+`PrincipleTags`/`PrincipleCards` use, so the per-item reveal delay never
+leaks into the hover transition). `GovernanceSection()` and
+`BroaderViewSection()` in `page.tsx` replaced with one `PrinciplesSection()`:
+`governance-review.jpg` now a wide `aspect-[21/9]` banner above the grid
+(not a 50/50 split with just one of the four topics), followed by all 4
+blocks (Governance, Improvement, Broader View, Culture) as equal-weight
+cards. `SplitCards` import removed from this page (component itself
+untouched, still used/kept as a generic primitive elsewhere in spirit).
+Divider count stays at 2 (after Intro, after the Cycle+Commitment panel) —
+merging Governance+Improvement+BroaderView+Culture into one section removed
+the need for a divider between them.
+
+**Verified:** `tsc`/`eslint`/`build` all clean. Playwright screenshots at
+1440px and 390px confirm the 2×2 (1-col on mobile) grid renders correctly,
+banner photo at the correct `21:9` ratio, no CLS. A real simulated hover
+(`tile.hover()` + `getComputedStyle` before/after) confirmed the icon tile's
+background actually inverts from 10%-tint to solid `teal-700`
+(`rgb(13,106,112)`), not just present in source.
