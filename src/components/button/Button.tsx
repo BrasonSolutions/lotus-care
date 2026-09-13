@@ -39,8 +39,8 @@ export type ButtonProps = ButtonAsLinkProps | ButtonAsButtonProps;
 // (border-white/text-white, hover:bg-white/10), and Navbar/JobCard/
 // RecruitmentSection's solid CTAs are the primary reference
 // (bg-primary-dark, hover:bg-teal-800). `outline` mirrors
-// RecruitmentSection's/HomesCarousel's border-primary-dark CTA, inverting
-// to a solid fill on hover.
+// RecruitmentSection's border-primary-dark CTA, inverting to a solid fill
+// on hover.
 const VARIANT_CLASSES: Record<ButtonVariant, string> = {
   primary: "bg-primary-dark text-white hover:bg-teal-800 focus-ring",
   outline:

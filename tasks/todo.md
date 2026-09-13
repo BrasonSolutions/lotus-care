@@ -1543,3 +1543,94 @@ banner photo at the correct `21:9` ratio, no CLS. A real simulated hover
 (`tile.hover()` + `getComputedStyle` before/after) confirmed the icon tile's
 background actually inverts from 10%-tint to solid `teal-700`
 (`rgb(13,106,112)`), not just present in source.
+
+---
+
+## Card: Replace houses carousel + video with a photo-only gallery carousel
+
+Branch: `feature/homes-photo-gallery`
+Pipeline variant: `full`
+Status: **building now.**
+
+No GitHub issue — client no longer wants individual houses identified/highlighted
+on the site. Full plan brainstormed via harness Plan Mode (2 parallel Explore
+agents — current carousel/video/page.tsx, then shadcn setup + existing house
+photos — followed by `AskUserQuestion` on 3 open calls). Plan file:
+`~/.claude/plans/we-re-gonna-rebuild-the-distributed-crab.md`.
+
+### What's changing
+
+Removing `HomesCarousel` (named house cards → `HomeModal` detail view) and
+`HomesSplitRow` (video montage + Ireland map) from the homepage, replacing both
+with one plain photo-gallery carousel — a "coverflow" component the user sourced
+from 21st.dev, 2 photos per house (18 total, no house names/labels anywhere).
+
+**Key finding:** this project has zero shadcn scaffolding (no `components.json`,
+no `src/components/ui/`, no `cn()`, no `clsx`/`tailwind-merge`/`lucide-react`) —
+confirmed by direct inspection, not assumed. Per user decision, adapted the ported
+component into this project's own conventions (own folder+barrel pattern, inline
+SVG icons matching `HomesCarousel`'s own arrow paths, a tiny local classname-joiner)
+rather than bootstrapping a parallel shadcn setup — zero new dependencies.
+
+**No new photos needed** — every home in `src/data/homes.ts` already has 11-23
+processed `.webp` photos; the gallery pulls first-exterior + first-interior per
+home from data already there.
+
+**Confirmed decisions:** arrows/dots/captions all off (bare drag/swipe + keyboard,
+matching the component's own defaults); "Our Homes" nav dropdown (9 house names,
+no photos) simplifies to a plain link, consistent with de-emphasizing individual
+houses everywhere, not just the carousel.
+
+### Acceptance criteria
+
+- [x] New `src/components/coverflow-carousel/{CoverflowCarousel,index}.tsx` ported
+      with local `cn()` + inline SVG icons, no new dependencies added.
+- [x] `src/app/page.tsx`: `HomesCarousel`/`HomesSplitRow` removed, replaced by one
+      `<section id="homes">` using `CoverflowCarousel` with 18 slides (2 per home),
+      same heading copy/CTA as before, same `id="homes"` anchor.
+- [x] `src/data/navigation.ts`: "Our Homes" simplified to a plain link, no
+      per-house dropdown children, unused `homes` import dropped if applicable.
+- [x] Dead code removed: `homes-carousel/`, `home-modal/`, `homes-split-row/`,
+      `ireland-map/`, `data/homes-map.ts`, `public/videos/homes-montage.mp4`,
+      `public/images/houses/homes-montage-poster.jpg`.
+- [x] `src/data/homes.ts` untouched (still feeds the gallery); footer links
+      untouched (already point at `/#homes`, still resolves).
+- [x] `npx tsc --noEmit` clean, `eslint` clean, `npm run build` green (confirms no
+      stale imports of deleted files).
+- [x] Verified in a real browser: gallery renders all 18 photos, drag/swipe +
+      keyboard nav work, no house names/captions visible anywhere, `#homes` anchor
+      still scrolls correctly, "Our Homes" nav item has no dropdown, no console
+      errors, both breakpoints checked.
+
+### Review
+
+**Caught beyond the original exploration:** the repo-wide grep during planning
+only covered `src/`, not `stories/` — the build failed on 3 Storybook files
+(`stories/modals/HomeModal.stories.tsx`, `stories/sections/{HomesCarousel,
+HomesSplitRow}.stories.tsx`) still importing the just-deleted components.
+Deleted all 3 and added `stories/ui/CoverflowCarousel.stories.tsx` in their place
+(matching the `UI/` category other bare primitives like `Timeline`/`ServiceCard`
+use, since this component has no section chrome of its own — that now lives in
+`page.tsx`). Also updated a stale comment in `Button.tsx` that named
+`HomesCarousel` as a styling precedent (the precedent itself — `outline` variant,
+border-primary-dark — still holds via `RecruitmentSection`, just dropped the now
+non-existent component's name).
+
+Ported the component with only the two adaptations the plan called for: a private
+`cn()` (filter+join) replacing `@/lib/utils`, and inline SVG chevrons (unused in
+this build, since arrows are off) replacing `lucide-react`. One additional fix
+made during porting, not anticipated by the plan: the source component's focus
+style used shadcn's `ring-ring` token (`outline-none ring-ring focus-visible:ring-2`),
+which doesn't exist in this project's theme — swapped for this project's own
+`.focus-ring` class (used by every other focusable element sitewide) so keyboard
+focus is actually visible instead of silently doing nothing.
+
+Verified: `tsc`/`eslint`/`build` all clean (25 routes). Real browser checks: the
+coverflow tilt/depth effect renders correctly at both 1440px and 390px; a
+Playwright script confirmed `ArrowRight` actually moves the carousel (screenshot
+diff before/after) with zero console/page errors; confirmed "Our Homes" renders
+as a plain link (not a dropdown button) in the navbar; confirmed the section-to-
+Team transition has no gap left behind by the removed video/map section.
+
+**Not yet committed/pushed** — pending user's in-browser review (dev server
+running on `localhost:3000`).
