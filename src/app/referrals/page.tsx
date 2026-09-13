@@ -90,10 +90,10 @@ export default function ReferralsPage() {
                     <p>
                       <span className="block font-medium text-foreground">Email</span>
                       <a
-                        href="mailto:referals@lotuscare.ie"
+                        href="mailto:referrals@lotuscare.ie"
                         className="text-muted hover:text-primary transition-colors focus-ring rounded"
                       >
-                        referals@lotuscare.ie
+                        referrals@lotuscare.ie
                       </a>
                     </p>
                   </div>

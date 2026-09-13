@@ -5,7 +5,7 @@ import type { FormSubmission } from "./forms";
  * form kind, never a recipient address.
  */
 const RECIPIENTS: Record<FormSubmission["kind"], string> = {
-  referral: "referals@lotuscare.ie",
+  referral: "referrals@lotuscare.ie",
   contact: "info@lotuscare.ie",
   recruitment: "info@lotuscare.ie",
 };
