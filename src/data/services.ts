@@ -6,22 +6,32 @@ export interface Service {
   href?: string;
 }
 
-/* The two services Lotus Care actually delivers (issue #90).
-   Copy is a draft written from the site's existing residential/respite
-   language — client wording still pending, see #62/#88. Both entries live
-   here so they can be swapped without touching any component. */
+/* The three services Lotus Care actually delivers (issue #118 — splits
+   the former single Residential card into Children's/Adults' cards and
+   refreshes the Respite copy; supersedes #90's two-card version). Copy
+   is client-supplied via #118; the Respite entry is still marked as a
+   draft pending Trevor's revision — see the card in tasks/todo.md. All
+   entries live here so they can be swapped without touching any
+   component. */
 export const services: Service[] = [
   {
-    title: "Residential Disability Services for Adults & Children",
+    title: "Children's Residential Services",
     description:
-      "Full-time, person-centred support in our purpose-designed homes across the Midlands, where adults and children with intellectual and physical disabilities are supported to live their best lives.",
+      "Safe, nurturing and individualised care — children are supported within a structured, caring environment that promotes development, positive relationships, education, community participation and increasing independence.",
     icon: "home",
     hasImage: true,
   },
   {
-    title: "Non-Residential Respite for Adults & Children",
+    title: "Adults Residential Services",
     description:
-      "Planned short breaks that give families time to rest, while adults and children enjoy safe, sociable and fully supported time away from home.",
+      "Supporting choice, independence and quality of life — individualised residential support enables adults to build skills, exercise choice, participate in their communities and work towards personally meaningful goals.",
+    icon: "home",
+    hasImage: true,
+  },
+  {
+    title: "Non-Residential Respite",
+    description:
+      "Temporary daytime support for children and adults — offering daytime social activities, stimulation and a safe environment, making use of community facilities where possible.",
     icon: "heart",
     hasImage: true,
   },
