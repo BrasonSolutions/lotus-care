@@ -58,12 +58,38 @@ export const teamMembers: TeamMember[] = [
     // Corrected per issue #123 — previously listed under the wrong name
     // ("Caíthríona Lynch"); her actual name is Aisling Carroll. Role, bio
     // and photo are unchanged, only the name/initials were wrong.
+    // Follow-up correction (issue #123, newest comment): the earlier round
+    // also conflated her with a distinct person, Caithriona Lynch (see her
+    // own entry below). Aisling's actual title/department are Quality
+    // Assurance Officer / Quality, not Director of Quality Assurance /
+    // Management.
     name: "Aisling Carroll",
-    role: "Director of Quality Assurance",
-    department: "Management",
+    role: "Quality Assurance Officer",
+    department: "Quality",
     bio: "I am an experienced Social Care Worker with a passion for Human Rights and promoting high quality individualised supports. I have worked in the disability sector, starting in front line and working up to management roles, since 2017. During this time, I have led teams through change management processes, developed learning programs, led transitions, and supported people to achieve their individual goals through promotion of self-advocacy. My experience spans across residential, day service, respite and wrap around services.\n\nMy values and wealth of experience align strongly with Lotus Care's vision of empowering people to live as independently as possible in a high-quality, safe and person-centred service. I am committed to supporting and empowering staff teams to deliver consistent safe and effective services.",
     initials: "AC",
     image: "/images/staff/Aisling-Carroll.jpg",
+  },
+  {
+    // Added per issue #123 (newest comment) — a distinct person from
+    // Aisling Carroll; a prior round of this issue mistakenly conflated
+    // the two.
+    name: "Caithriona Lynch",
+    role: "Director of Quality Assurance",
+    department: "Management",
+    bio: "Caithriona has over 18 years of experience in social care and leadership roles across adults & children’s disability services and mainstream children’s residential services. She brings a wealth of expertise to her role. Caithriona holds a BA in Applied Social Studies in Social Care in addition to a management qualification, ensuring a thorough academic grounding. She is committed to empowering individuals to make informed decisions, achieve personal goals, and live independently within their communities.\n\nCaithriona’s leadership is shaped by the quality objectives set out in the HIQA National Standards and relevant legislation, which align with Lotus’s commitment to delivering exceptional care and services. She focuses on person-centred care, individual choice, safeguarding, risk management and inclusion. By prioritizing continuous improvement, she will ensure responsive services that meet each service owner’s unique needs while maintaining transparency and accountability.\n\nCaithriona’s passion for her work and her extensive experience reflect her dedication to creating a positive impact and fostering personal growth and independence for those we are privileged to support.",
+    initials: "CL",
+    image: "/images/staff/Caithriona-Lynch.png",
+  },
+  {
+    // Added per issue #123 (newest comment). No photo supplied — falls
+    // back to an initials avatar in the UI, same as Megan Daly / Tracey
+    // McCabe below.
+    name: "Trevor Nesirky",
+    role: "Director of Regulatory Affairs and Service Development",
+    department: "Management",
+    bio: "Trevor has worked in adult and children's social care for his whole career which spans over 4 decades, he has worked in Ireland and the UK within both the public and private sectors. He has held senior posts where  he has shaped significant positive change .He has a particular interest in ensuring that education is available for all and that every opportunity for learning is seized upon, within Lotus Care this achieved by the structured delivery of a 24-hour curriculum.\n\nWith a strong interest in children's rights, Trevor used his master thesis to explore how regulation has impacted children's residential services in both Ireland and the UK. This work allowed him to develop a deep  understanding of regulation and how services can be made safe and productive.",
+    initials: "TN",
   },
   {
     name: "Nicki Cegielski Egan",
@@ -131,6 +157,15 @@ export const teamMembers: TeamMember[] = [
     bio: "Katjia is an Occupational Therapist with a background in paediatric Occupational Therapy and Sensory Integration. She is passionate about supporting individuals to develop greater independence, participation and quality of life through meaningful, person-centred interventions.\n\nIn her role at Lotus Care, Katjia works across residential services supporting both children and adults with a range of needs, including intellectual disabilities, autism and sensory processing difficulties. She focuses on understanding each person's individual sensory, functional and environmental needs and works collaboratively with individuals, families and staff to develop practical strategies and supportive environments.\n\nKatjia is particularly passionate about sensory regulation, functional independence and empowering staff with the knowledge and tools to support individuals in their everyday lives.",
     initials: "KF",
     image: "/images/staff/Katjia-Faria.jpg",
+  },
+  {
+    // Added per issue #123 (newest comment)
+    name: "Eadaoin Fleming",
+    role: "Regional Nurse",
+    department: "MDT",
+    bio: "Eadaoin is a Registered General Nurse with a Bachelor of Science in General Nursing and a background in caring for vulnerable adults. She is passionate about delivering high-quality, personalised care that recognises each individual’s unique needs, preferences, abilities, and goals.\n\nIn her role as a Regional Nurse, Eadaoin will support people with different needs, with a particular focus on promoting health, wellbeing, dignity, and independence. She is a strong advocate for person-centred care and believes that individuals should be actively involved in decisions about their own care and supported to live as independently as possible.\n\nEadaoin has a particular interest in promoting independence, supporting positive health outcomes, and monitoring individuals’ health to identify and respond to changing needs. She is committed to building trusting relationships with the people she supports and working collaboratively with families, carers, and multidisciplinary teams to ensure care is both responsive and personalised.\n\nWith a compassionate and person-centred approach, Eadaoin is dedicated to empowering individuals, promoting their quality of life, and ensuring that every person receives care that respects their individuality, choices, and right to live a fulfilling and meaningful life.",
+    initials: "EF",
+    image: "/images/staff/Eadaoin-Fleming.jpg",
   },
   // People & Culture Department
   {
@@ -232,6 +267,16 @@ export const teamMembers: TeamMember[] = [
     department: "Persons in Charge",
     bio: "",
     initials: "TM",
+  },
+  {
+    // Issue #123 (newest comment): "add entry, needs bio and picture" —
+    // placeholder entry until the client supplies content, same shape as
+    // Megan Daly / Tracey McCabe above.
+    name: "Rachel Conroy",
+    role: "Person in Charge",
+    department: "Persons in Charge",
+    bio: "",
+    initials: "RC",
   },
   {
     name: "Tamara Murphy",

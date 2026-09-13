@@ -18,27 +18,63 @@ export function HomesDropdown({ item, scrolled }: HomesDropdownProps) {
       onMouseEnter={() => setOpen(true)}
       onMouseLeave={() => setOpen(false)}
     >
-      <button
-        className={`text-base font-medium transition-colors flex items-center gap-1 focus-ring rounded ${
-          scrolled
-            ? "text-foreground hover:text-primary"
-            : "text-white hover:text-accent"
-        }`}
-        aria-expanded={open}
-        aria-haspopup="true"
-        onClick={() => setOpen((prev) => !prev)}
-      >
-        {item.label}
-        <svg
-          className={`w-5 h-5 transition-transform ${open ? "rotate-180" : ""}`}
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          strokeWidth={2}
+      {item.clickable ? (
+        <div className="flex items-center gap-1">
+          <Link
+            href={item.href}
+            className={`text-base font-medium transition-colors focus-ring rounded ${
+              scrolled
+                ? "text-foreground hover:text-primary"
+                : "text-white hover:text-accent"
+            }`}
+          >
+            {item.label}
+          </Link>
+          <button
+            className={`focus-ring rounded ${
+              scrolled
+                ? "text-foreground hover:text-primary"
+                : "text-white hover:text-accent"
+            }`}
+            aria-label={`Toggle ${item.label} menu`}
+            aria-expanded={open}
+            aria-haspopup="true"
+            onClick={() => setOpen((prev) => !prev)}
+          >
+            <svg
+              className={`w-5 h-5 transition-transform ${open ? "rotate-180" : ""}`}
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2}
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+        </div>
+      ) : (
+        <button
+          className={`text-base font-medium transition-colors flex items-center gap-1 focus-ring rounded ${
+            scrolled
+              ? "text-foreground hover:text-primary"
+              : "text-white hover:text-accent"
+          }`}
+          aria-expanded={open}
+          aria-haspopup="true"
+          onClick={() => setOpen((prev) => !prev)}
         >
-          <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-        </svg>
-      </button>
+          {item.label}
+          <svg
+            className={`w-5 h-5 transition-transform ${open ? "rotate-180" : ""}`}
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={2}
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+      )}
 
       <div
         className={`absolute top-full left-1/2 -translate-x-1/2 pt-2 transition-all duration-200 ${

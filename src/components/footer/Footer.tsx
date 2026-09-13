@@ -23,8 +23,10 @@ export function Footer({
           <div className="sm:col-span-2 lg:col-span-1">
             <LogoWhite className="h-12 w-auto mb-4" />
             <p className="text-white/70 text-base leading-relaxed">
-              Lotus Care provides quality residential and community disability
-              care services across Co. Offaly and the surrounding Midlands region.
+              As an award-winning care provider, Lotus Care is committed to the
+              highest standards of care excellence, delivered with pride,
+              compassion, and support to enhance the quality of lives of people
+              with additional needs.
             </p>
           </div>
 
