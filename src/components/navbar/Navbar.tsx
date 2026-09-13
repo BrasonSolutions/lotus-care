@@ -22,8 +22,8 @@ interface NavbarProps {
 export function Navbar({
   navItems = defaultNavItems,
   contactInfo = defaultContactInfo,
-  ctaLabel = "Get in Touch",
-  ctaHref = "/#contact",
+  ctaLabel = "Referrals",
+  ctaHref = "/referrals",
   solidWhenTop = false,
 }: NavbarProps) {
   const scrolled = useScrolled();

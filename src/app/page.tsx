@@ -13,6 +13,7 @@ import { SectionTitle } from "@/components/section-title";
 import { Reveal } from "@/components/reveal";
 import { Container } from "@/components/layout";
 import { Button } from "@/components/button";
+import { ValuesGrid } from "@/components/careers/values-grid";
 
 import { contactInfo } from "@/data/navigation";
 import { services, enhanceServices } from "@/data/services";
@@ -20,6 +21,7 @@ import { homes } from "@/data/homes";
 import { teamMembers, departments, boardMembers } from "@/data/team";
 import { jobs } from "@/data/jobs";
 import { homeQuote } from "@/data/testimonial";
+import { whyUsValues } from "@/data/careers";
 
 const quickLinks = [
   { label: "About Us", href: "#about" },
@@ -126,7 +128,7 @@ export default function Home() {
         </div>
         <TeamSection members={[...boardMembers, ...teamMembers]} departments={departments} />
         <div aria-hidden="true">
-          <LotusBand variant="purple" height={72} />
+          <LotusBand variant="teal" height={72} />
         </div>
         <RecruitmentSection
           description={recruitmentDescription}
@@ -134,6 +136,12 @@ export default function Home() {
           jobs={jobs}
           ctas={recruitmentCtas}
         />
+        <section className="py-16 sm:py-20 bg-white">
+          <Container>
+            <SectionTitle dmSans title="Our Vision & Values" />
+            <ValuesGrid values={whyUsValues} />
+          </Container>
+        </section>
         <ContactSection contactInfo={contactInfo} />
       </main>
       <Footer quickLinks={quickLinks} />

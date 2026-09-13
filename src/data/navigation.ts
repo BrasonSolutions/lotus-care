@@ -4,11 +4,25 @@ export interface NavItem {
   children?: { label: string; href: string }[];
   viewAllHref?: string;
   viewAllLabel?: string;
+  // When true, the top-level label itself navigates to `href` *and* opens
+  // the children flyout — instead of the flyout-only toggle button every
+  // other dropdown item uses. Opt-in per item so this doesn't change
+  // existing dropdowns (e.g. "Join Our Team").
+  clickable?: boolean;
 }
 
 export const navItems: NavItem[] = [
   { label: "About Us", href: "/#about" },
-  { label: "Our Services", href: "/#services" },
+  {
+    label: "Our Services",
+    href: "/#services",
+    clickable: true,
+    children: [
+      { label: "Model of Care", href: "/quality/model-of-care" },
+      { label: "Multidisciplinary Team", href: "/quality/mdt" },
+      { label: "Quality, Safety & Improvement", href: "/quality/safety-improvement" },
+    ],
+  },
   { label: "Our Homes", href: "/#homes" },
   { label: "Our Team", href: "/#team" },
   {
@@ -26,23 +40,11 @@ export const navItems: NavItem[] = [
       { label: "Contact Recruitment", href: "/careers/contact" },
     ],
   },
-  {
-    label: "Quality & Governance",
-    href: "/quality",
-    viewAllHref: "/quality",
-    viewAllLabel: "Overview",
-    children: [
-      { label: "Model of Care", href: "/quality/model-of-care" },
-      { label: "Multidisciplinary Team", href: "/quality/mdt" },
-      { label: "Quality, Safety & Improvement", href: "/quality/safety-improvement" },
-    ],
-  },
   { label: "Have Your Say", href: "/#contact" },
-  { label: "Referrals", href: "/referrals" },
 ];
 
 export const contactInfo = {
   phone: "057 910 7107",
   email: "info@lotuscare.ie",
-  address: "Head Office: Suite 204, Birr Technology Park, St Brendans Park, Birr, Co Offaly, R51 E891",
+  address: "Head Office: Suite 204, Birr Technology Park, St Brendans Park, Birr, Co Offaly, R42 XH39",
 };
