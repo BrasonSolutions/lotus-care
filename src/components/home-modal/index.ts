@@ -1,1 +1,0 @@
-export { HomeModal } from './HomeModal';

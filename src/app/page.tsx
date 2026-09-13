@@ -3,13 +3,16 @@ import { HeroSection } from "@/components/hero-section";
 import { AboutSection } from "@/components/about-section";
 import { ServicesSection } from "@/components/services-section";
 import { QuoteSection } from "@/components/quote-section";
-import { HomesCarousel } from "@/components/homes-carousel";
-import { HomesSplitRow } from "@/components/homes-split-row";
+import { CoverflowCarousel } from "@/components/coverflow-carousel";
 import { TeamSection } from "@/components/team-section";
 import { RecruitmentSection } from "@/components/recruitment-section";
 import { ContactSection } from "@/components/contact-section";
 import { Footer } from "@/components/footer";
 import { LotusBand } from "@/components/lotus-band";
+import { SectionTitle } from "@/components/section-title";
+import { Reveal } from "@/components/reveal";
+import { Container } from "@/components/layout";
+import { Button } from "@/components/button";
 
 import { contactInfo } from "@/data/navigation";
 import { services, enhanceServices } from "@/data/services";
@@ -51,6 +54,19 @@ const recruitmentCtas = [
   { label: "Life at Lotus Care", href: "/careers/why-us", variant: "outline" as const },
 ];
 
+// Client no longer wants individual houses identified — a plain photo gallery
+// instead of named cards. Pulls the first exterior + first interior shot
+// already in each home's own `images` array, so it stays in sync with
+// homes.ts without a separate photo list to maintain. `alt` still names the
+// house since that's screen-reader-only, not a visible label.
+const homeGallerySlides = homes.flatMap((home) => [
+  { src: home.images[0], alt: `${home.name}, exterior` },
+  {
+    src: home.images.find((src) => src.includes("/interior-1.")) ?? home.images[1],
+    alt: `${home.name}, interior`,
+  },
+]);
+
 export default function Home() {
   return (
     <>
@@ -89,8 +105,22 @@ export default function Home() {
           ctaHref="/quality/model-of-care#testimonials"
           ctaLabel="Read More Testimonials"
         />
-        <HomesCarousel homes={homes} />
-        <HomesSplitRow />
+        <section id="homes" className="py-20 lg:py-28 bg-white">
+          <Container>
+            <SectionTitle
+              title="Our Homes"
+              subtitle="Unique homes across Co. Offaly and the Midlands, each designed to feel like home."
+            />
+            <Reveal className="reveal-scale">
+              <CoverflowCarousel slides={homeGallerySlides} label="Photos of our homes" />
+            </Reveal>
+            <div className="text-center mt-8">
+              <Button href="#contact" variant="outline" size="lg">
+                Enquire About Our Homes
+              </Button>
+            </div>
+          </Container>
+        </section>
         <div aria-hidden="true">
           <LotusBand variant="teal" height={72} />
         </div>

@@ -1,5 +1,3 @@
-import { homes } from "./homes";
-
 export interface NavItem {
   label: string;
   href: string;
@@ -11,14 +9,7 @@ export interface NavItem {
 export const navItems: NavItem[] = [
   { label: "About Us", href: "/#about" },
   { label: "Our Services", href: "/#services" },
-  {
-    label: "Our Homes",
-    href: "/#homes",
-    viewAllHref: "/#homes",
-    viewAllLabel: "View All Homes",
-    // Derived from homes.ts so the dropdown can't drift from the carousel.
-    children: homes.map((home) => ({ label: home.name, href: "/#homes" })),
-  },
+  { label: "Our Homes", href: "/#homes" },
   { label: "Our Team", href: "/#team" },
   {
     label: "Join Our Team",
