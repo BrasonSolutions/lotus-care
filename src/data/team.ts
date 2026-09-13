@@ -42,7 +42,7 @@ export const teamMembers: TeamMember[] = [
     name: "Alan Doyle",
     role: "Chief Financial Officer",
     department: "Management",
-    bio: "",
+    bio: "Alan is Chief Financial Officer at Lotus Care, where he provides financial leadership and strategic oversight to support the organisation's delivery of high-quality residential and respite services for children and adults with disabilities throughout Ireland.\n\nAlan brings over 30 years of senior finance leadership experience across healthcare, pharmaceutical manufacturing, FMCG, and high-growth organisations. His background includes senior roles with Viatris, a global pharmaceutical company, and Glanbia, an international food and nutrition group, as well as a strategic finance role with the National Treatment Purchase Fund (NTPF). He has also held leadership positions in private equity–backed and owner-managed businesses. Alan is a Fellow of the Association of Chartered Certified Accountants (FCCA) and has a strong track record in strengthening financial governance, improving operational performance, and partnering with Boards and executive teams in regulated environments.\n\nAt Lotus Care, Alan works closely with the CEO and Board to guide planning, budgeting, investment appraisal, compliance, and reporting, ensuring the organisation has robust financial controls and oversight to underpin long-term service excellence.",
     initials: "AD",
     image: "/images/staff/Alan-Doyle.png",
   },
