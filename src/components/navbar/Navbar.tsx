@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { SocialLinks } from "@/components/social-links";
 import { Container } from "@/components/layout";
 import type { NavItem } from "@/data/navigation";
 import { navItems as defaultNavItems, contactInfo as defaultContactInfo } from "@/data/navigation";
@@ -49,6 +50,11 @@ export function Navbar({
           >
             {contactInfo.email}
           </a>
+          <SocialLinks
+            className="gap-1 -mr-2"
+            linkClassName="w-8 h-8 rounded-full flex items-center justify-center hover:bg-white/15 transition-colors focus-ring-white"
+            iconClassName="w-4 h-4"
+          />
         </Container>
       </div>
 

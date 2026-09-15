@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import Image from "next/image";
 import type { Testimonial } from "@/data/careers";
 
 // Two presets: the default used across careers, and a roomier listing card.
@@ -43,9 +44,19 @@ export function TestimonialCard({
       )}
       <figcaption className="flex items-center gap-3">
         <div
-          className={`${s.avatar} rounded-full bg-primary-dark flex items-center justify-center text-white font-bold shrink-0`}
+          className={`${s.avatar} relative rounded-full overflow-hidden bg-primary-dark flex items-center justify-center text-white font-bold shrink-0`}
         >
-          {testimonial.initials}
+          {testimonial.image ? (
+            <Image
+              src={testimonial.image}
+              alt={testimonial.name}
+              fill
+              sizes="64px"
+              className="object-cover object-top"
+            />
+          ) : (
+            testimonial.initials
+          )}
         </div>
         <div className="min-w-0">
           <p className={`font-semibold text-primary-dark ${s.name}`}>{testimonial.name}</p>

@@ -9,8 +9,8 @@ export interface TeamMember {
 
 export const departments = [
   "Board",
-  "Management",
-  "Services",
+  "Senior Management Team",
+  "Senior Services Management",
   "Quality",
   "MDT",
   "People & Culture",
@@ -25,7 +25,7 @@ export const teamMembers: TeamMember[] = [
   {
     name: "Mary Bardin",
     role: "Director of Services",
-    department: "Management",
+    department: "Senior Management Team",
     bio: "Mary is a highly experienced senior health care professional, having worked in the Healthcare Sector for over 30 years, primarily in the provision of services for Children and Adults with Intellectual Disabilities, Community Care / Family Support, Older Persons, and People Living with Dementia.\n\nMary has held many senior leadership roles, including Care Director, Chief Executive Officer, Senior Services Manager of residential and day services for adults with intellectual disabilities at Sunbeam House Services and Operations Manager at the Alzheimer Society of Ireland. Mary has also worked within the Private Nursing Home Sector in Ireland and the UK, The Irish Wheelchair Association, Family Carers Ireland, St Michael's House, and the HSE Psychiatric / Intellectual Disability Services. Mary's reputation for delivering high quality person centred care will further enhance and support the Lotus Care team in meeting the organisations values & mission.",
     initials: "MB",
     image: "/images/staff/Mary-Bardin.png",
@@ -33,7 +33,7 @@ export const teamMembers: TeamMember[] = [
   {
     name: "Patrick Troy",
     role: "Director of People & Culture",
-    department: "Management",
+    department: "Senior Management Team",
     bio: "Patrick Troy is an accomplished HR professional with broad experience across multiple industries, including healthcare, consultancy services, construction, and manufacturing. He holds a Master's degree in Social and Organisational Psychology and is a Chartered Member of the Chartered Institute of Personnel and Development (CIPD).\n\nWith a strong belief in the power of people to drive organisational success, Patrick specialises in developing workplace cultures and systems that empower individuals and enhance engagement. His work has led to the design and implementation of award-winning, industry-first initiatives in talent development and organisational change. Passionate about unlocking potential at every level, Patrick brings a strategic and innovative approach to human resources that consistently delivers impact.",
     initials: "PT",
     image: "/images/staff/Patrick-Troy.png",
@@ -41,15 +41,15 @@ export const teamMembers: TeamMember[] = [
   {
     name: "Alan Doyle",
     role: "Chief Financial Officer",
-    department: "Management",
+    department: "Senior Management Team",
     bio: "Alan is Chief Financial Officer at Lotus Care, where he provides financial leadership and strategic oversight to support the organisation's delivery of high-quality residential and respite services for children and adults with disabilities throughout Ireland.\n\nAlan brings over 30 years of senior finance leadership experience across healthcare, pharmaceutical manufacturing, FMCG, and high-growth organisations. His background includes senior roles with Viatris, a global pharmaceutical company, and Glanbia, an international food and nutrition group, as well as a strategic finance role with the National Treatment Purchase Fund (NTPF). He has also held leadership positions in private equity–backed and owner-managed businesses. Alan is a Fellow of the Association of Chartered Certified Accountants (FCCA) and has a strong track record in strengthening financial governance, improving operational performance, and partnering with Boards and executive teams in regulated environments.\n\nAt Lotus Care, Alan works closely with the CEO and Board to guide planning, budgeting, investment appraisal, compliance, and reporting, ensuring the organisation has robust financial controls and oversight to underpin long-term service excellence.",
     initials: "AD",
     image: "/images/staff/Alan-Doyle.png",
   },
   {
     name: "Danny Scally",
-    role: "ADT Manager",
-    department: "Management",
+    role: "Director of ADT and Operations",
+    department: "Senior Management Team",
     bio: "Danny is a qualified Intellectual Disability Nurse working in the social care area for the past 13 years, primarily in the provision of Disability and Mental Health Services. Danny holds additional qualifications in People Management, Mental Health and a qualification in Train the Trainer which indicates his ongoing professional development.\n\nDanny has held various positions such as Clinical Nurse, Person in Charge, Admission, Discharge and Transition Manager, Operations Manager and Director of Operations in a leading Disability Service. Danny has played a pivotal role in service planning, coordination, and resource management. Demonstrating strong leadership, he collaborates with multidisciplinary teams and relevant agencies to ensure the welfare and progression of those under his care.",
     initials: "DS",
     image: "/images/staff/Danny-Scally.png",
@@ -76,7 +76,7 @@ export const teamMembers: TeamMember[] = [
     // the two.
     name: "Caithriona Lynch",
     role: "Director of Quality Assurance",
-    department: "Management",
+    department: "Senior Management Team",
     bio: "Caithriona has over 18 years of experience in social care and leadership roles across adults & children’s disability services and mainstream children’s residential services. She brings a wealth of expertise to her role. Caithriona holds a BA in Applied Social Studies in Social Care in addition to a management qualification, ensuring a thorough academic grounding. She is committed to empowering individuals to make informed decisions, achieve personal goals, and live independently within their communities.\n\nCaithriona’s leadership is shaped by the quality objectives set out in the HIQA National Standards and relevant legislation, which align with Lotus’s commitment to delivering exceptional care and services. She focuses on person-centred care, individual choice, safeguarding, risk management and inclusion. By prioritizing continuous improvement, she will ensure responsive services that meet each service owner’s unique needs while maintaining transparency and accountability.\n\nCaithriona’s passion for her work and her extensive experience reflect her dedication to creating a positive impact and fostering personal growth and independence for those we are privileged to support.",
     initials: "CL",
     image: "/images/staff/Caithriona-Lynch.png",
@@ -87,14 +87,14 @@ export const teamMembers: TeamMember[] = [
     // McCabe below.
     name: "Trevor Nesirky",
     role: "Director of Regulatory Affairs and Service Development",
-    department: "Management",
+    department: "Senior Management Team",
     bio: "Trevor has worked in adult and children's social care for his whole career which spans over 4 decades, he has worked in Ireland and the UK within both the public and private sectors. He has held senior posts where  he has shaped significant positive change .He has a particular interest in ensuring that education is available for all and that every opportunity for learning is seized upon, within Lotus Care this achieved by the structured delivery of a 24-hour curriculum.\n\nWith a strong interest in children's rights, Trevor used his master thesis to explore how regulation has impacted children's residential services in both Ireland and the UK. This work allowed him to develop a deep  understanding of regulation and how services can be made safe and productive.",
     initials: "TN",
   },
   {
     name: "Nicki Cegielski Egan",
     role: "Finance Manager",
-    department: "Management",
+    department: "Senior Management Team",
     bio: "Nicki has 17 years of experience in healthcare sector finance departments including accounts payable / receivable, payroll, budgets, forecasting, cash flow analysis and office management. Currently studying the CGMA Finance Leadership Program, and holds a BA Hons Degree from NUI Maynooth and a PG Diploma in Financial Management. Nicki is a member of the Irish Payroll Association and a Fellow Member of Accounting Technicians Ireland, and brings a wealth of knowledge and expertise to the role.",
     initials: "NE",
     image: "/images/staff/Nicki-Cegielski-Egan.webp",
@@ -103,7 +103,7 @@ export const teamMembers: TeamMember[] = [
   {
     name: "Claire Maher",
     role: "Senior Services Manager",
-    department: "Services",
+    department: "Senior Services Management",
     bio: "I have worked within the disability sector for the past eight years, holding a variety of leadership roles, including Team Leader, Person in Charge of a high-support service, Dual Person in Charge, and Director of Operations, where I oversaw the day-to-day operations of seven Designated Centres.\n\nThroughout my career, I have gained extensive experience in operational management, governance, regulatory compliance, and staff leadership. I am passionate about ensuring that the people I support receive compassionate, person-centred care of the highest standard. I am committed to empowering each person to achieve their individual goals, and enjoy meaningful opportunities that reflect their unique needs, wishes, and aspirations.",
     initials: "CM",
     image: "/images/staff/Claire-Maher.png",
@@ -111,7 +111,7 @@ export const teamMembers: TeamMember[] = [
   {
     name: "Emma Sweeney",
     role: "Senior Services Manager",
-    department: "Services",
+    department: "Senior Services Management",
     bio: "Emma is an experienced Social Care Worker with 14 years of experience in the disability sector. She has a strong background in both frontline support and service management.\n\nShe's overseen multidisciplinary teams, coordinated individualised support plans, and ensured compliance within residential and respite services.\n\nHer leadership style is collaborative and empathetic, focused on empowering both staff and service owners. She is passionate about advocating for people with disabilities, improving service delivery, and fostering environments where individuals can thrive, grow, and live self-directed lives with dignity.",
     initials: "ES",
     image: "/images/staff/Emma-Sweeney.png",

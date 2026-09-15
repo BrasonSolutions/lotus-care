@@ -21,6 +21,8 @@ export interface Testimonial {
   quote: string;
   initials: string;
   yearsAtCompany?: number;
+  /** Portrait; falls back to the initials disc when absent. */
+  image?: string;
 }
 
 export interface CompanyValue {
@@ -31,7 +33,7 @@ export interface CompanyValue {
 
 export const benefits: Benefit[] = [
   {
-    icon: "currency-dollar",
+    icon: "currency-euro",
     title: "Competitive Pay",
     description:
       "Market-leading salaries with annual pay reviews and incremental scale progression.",

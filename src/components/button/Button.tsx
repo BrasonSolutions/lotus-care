@@ -33,9 +33,9 @@ interface ButtonAsButtonProps extends ButtonCommonProps {
 export type ButtonProps = ButtonAsLinkProps | ButtonAsButtonProps;
 
 // Resting/hover pairs verified against the repo's real, already-shipped CTAs
-// (see the button/chip consolidation audit): HeroSection's primary CTA is
+// (see the button/chip consolidation audit): HeroSection's Referrals CTA is
 // the onDark reference (bg-white/text-primary-dark, hover:bg-teal-100),
-// its secondary/tertiary CTAs are the onDarkOutline reference
+// its other hero CTAs are the onDarkOutline reference
 // (border-white/text-white, hover:bg-white/10), and Navbar/JobCard/
 // RecruitmentSection's solid CTAs are the primary reference
 // (bg-primary-dark, hover:bg-teal-800). `outline` mirrors

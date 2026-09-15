@@ -5,6 +5,7 @@ import { createPortal } from "react-dom";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { NavItem } from "@/data/navigation";
+import { SocialLinks } from "@/components/social-links";
 import { Button } from "@/components/button";
 
 const noopSubscribe = () => () => {};
@@ -211,6 +212,14 @@ export function MobileMenu({
                 {contactInfo.email}
               </a>
             </div>
+            {/* The navbar's social row lives in the desktop-only top strip, so
+                it has to be repeated here or it is invisible below 1600px. */}
+            <SocialLinks
+              className="gap-2 mt-4 px-2"
+              linkClassName="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary-dark hover:bg-primary hover:text-white transition-colors focus-ring"
+              iconClassName="w-5 h-5"
+              onNavigate={close}
+            />
           </div>
         </nav>
       </div>

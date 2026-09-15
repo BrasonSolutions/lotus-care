@@ -43,8 +43,20 @@ export const navItems: NavItem[] = [
   { label: "Have Your Say", href: "/#contact" },
 ];
 
+/* Real profiles, supplied by the client 2026-09-15. Not discoverable from
+   lotuscare.ie — its own social icons render with no href at all. */
+export const socialLinks = [
+  { name: "facebook", href: "https://www.facebook.com/p/Lotus-Care-61569929131161/" },
+  { name: "instagram", href: "https://www.instagram.com/lotus_care_enhancedliving/" },
+  { name: "linkedin", href: "https://www.linkedin.com/company/lotus-care-services/" },
+] as const;
+
 export const contactInfo = {
   phone: "057 910 7107",
+  /* Referrals route through ADT, so the ADT lead's mobile is published on the
+     referrals page alongside the office line. */
+  referralsMobile: "086 822 8942",
+  referralsMobileContact: "Danny Scally",
   email: "info@lotuscare.ie",
   address: "Head Office: Suite 204, Birr Technology Park, St Brendans Park, Birr, Co Offaly, R42 XH39",
 };

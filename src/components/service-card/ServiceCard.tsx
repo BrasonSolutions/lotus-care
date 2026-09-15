@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import type { Service } from "@/data/services";
+import { MagicCard } from "@/components/magic-card";
 
 const icons: Record<string, React.ReactNode> = {
   home: (
@@ -88,11 +89,19 @@ const ACCENT = {
     chip: "bg-primary/10 text-primary group-hover:bg-primary-dark group-hover:text-white",
     overlay: "from-primary-dark/90 via-primary-dark/40 to-transparent",
     illustrationFills: ["var(--color-teal-700)", "var(--color-teal-500)", "var(--color-teal-400)"],
+    ring: "card-ring-teal",
+    gradientFrom: "var(--color-teal-400)",
+    gradientTo: "var(--color-teal-600)",
+    spotlight: "color-mix(in srgb, var(--color-primary) 14%, transparent)",
   },
   purple: {
     chip: "bg-purple-600/10 text-purple-600 group-hover:bg-purple-600 group-hover:text-white",
     overlay: "from-purple-600/90 via-purple-600/40 to-transparent",
     illustrationFills: ["var(--color-purple-600)", "var(--color-purple-400)", "var(--color-purple-300)"],
+    ring: "card-ring-purple",
+    gradientFrom: "var(--color-purple-400)",
+    gradientTo: "var(--color-purple-600)",
+    spotlight: "color-mix(in srgb, var(--color-purple-600) 14%, transparent)",
   },
 } as const;
 
@@ -109,8 +118,13 @@ export function ServiceCard({ service, index, inView, accent = "teal" }: Service
 
   if (isImageCard) {
     return (
-      <div
-        className={`card-hover reveal ${delayClass} ${inView ? "in-view" : ""} group relative rounded-2xl overflow-hidden min-h-[240px] sm:min-h-[280px] flex items-end`}
+      <MagicCard
+        className={`card-hover ${ACCENT[accent].ring} reveal ${delayClass} ${inView ? "in-view" : ""} group relative rounded-2xl overflow-hidden min-h-[240px] sm:min-h-[280px] flex items-end`}
+        background="transparent"
+        gradientFrom={ACCENT[accent].gradientFrom}
+        gradientTo={ACCENT[accent].gradientTo}
+        borderRest="transparent"
+        spotlightColor="rgba(255, 255, 255, 0.18)"
       >
         {/* SVG illustration background */}
         <div className="absolute inset-0 transition-transform duration-500 group-hover:scale-105">
@@ -123,14 +137,21 @@ export function ServiceCard({ service, index, inView, accent = "teal" }: Service
             {service.description}
           </p>
         </div>
-      </div>
+      </MagicCard>
     );
   }
 
   return (
-    <div
-      className={`card-hover reveal ${delayClass} ${inView ? "in-view" : ""} group bg-white rounded-2xl p-6 border border-gray-100 hover:border-primary/30 transition-colors`}
+    <MagicCard
+      className={`card-hover ${ACCENT[accent].ring} reveal ${delayClass} ${inView ? "in-view" : ""} group relative overflow-hidden bg-white rounded-2xl p-6 transition-colors`}
+      background="#ffffff"
+      gradientFrom={ACCENT[accent].gradientFrom}
+      gradientTo={ACCENT[accent].gradientTo}
+      borderRest="var(--color-gray-100)"
+      spotlightColor={ACCENT[accent].spotlight}
     >
+      {/* z-10 keeps content above the spotlight layer, which sits at z-5. */}
+      <div className="relative z-10">
       <div className={`w-14 h-14 rounded-xl flex items-center justify-center mb-4 transition-colors duration-300 ${ACCENT[accent].chip}`}>
         {icons[service.icon]}
       </div>
@@ -155,6 +176,7 @@ export function ServiceCard({ service, index, inView, accent = "teal" }: Service
           </svg>
         </Link>
       )}
-    </div>
+      </div>
+    </MagicCard>
   );
 }

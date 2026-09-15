@@ -5,6 +5,8 @@ export interface QuoteEntry {
   quote: string;
   name: string;
   date: string;
+  /** Portrait for the attribution avatar; falls back to the tone gradient. */
+  image?: string;
 }
 
 export interface HomeQuote extends QuoteEntry {
@@ -24,6 +26,7 @@ export const homeQuote: HomeQuote = {
     "When I first moved to my first home with Lotus Care, I was nervous because everything was new to me. I left my family behind and didn't know anybody. The staff were kind, friendly, and caring and gave me their time, sitting and talking to me. They really wanted to get to know me. They helped me settle into my new home. They listened to me and supported me with the things that were important to me. They helped me fill my day as my whole routine what I was used to had all changed. They encouraged me to make choices about my day-to-day life, and made sure I felt a part of my home.",
   name: `${jwAttribution.initials}, ${jwAttribution.role}`,
   date: "With Lotus Care since 2018",
+  image: "/images/testimonials/jw.webp",
 };
 
 export interface ServiceOwnerTestimonial extends HomeQuote {
@@ -34,6 +37,8 @@ export interface ServiceOwnerTestimonial extends HomeQuote {
   title?: string;
   // Continues after `quote`, which is the piece's opening paragraph.
   body?: string[];
+  /** Portrait of the Service Owner, shown on the card and the detail page. */
+  image?: string;
 }
 
 // Single source for `/testimonials`, its detail pages, and the home band.
@@ -43,6 +48,7 @@ export const serviceOwnerTestimonials: ServiceOwnerTestimonial[] = [
     ...jwAttribution,
     slug: "jw",
     title: "My Journey with Lotus Care",
+    image: "/images/testimonials/jw.webp",
     body: [
       "When I first moved to my first home with Lotus Care, I was nervous because everything was new to me. I left my family behind and didn’t know anybody. The staff were kind, friendly, and caring and gave me their time, sitting and talking to me. They really wanted to get to know me. They helped me settle into my new home. They listened to me and supported me with the things that were important to me. They helped me fill my day as my whole routine what I was used to had all changed. They encouraged me to make choices about my day-to-day life, and made sure I felt a part of my home.",
       "Living in my first home helped me so much, I came as a young boy. I became more confident in myself and started doing more things for myself where I didn’t need staff to help me. For example, I learned how to prepare meals, like pasta, carbonara and spaghetti bolognese. I learned how to do household chores and do them properly like making my bed, changing the bed clothes and using the washing machine. The staff always encouraged me and helped me when I needed support especially on hard days. They would sit with me and really listen and offer me some suggestions to help make me feel better.",
@@ -104,6 +110,7 @@ export const modelOfCareTestimonials: Testimonial[] = [
     name: serviceOwnerTestimonials[0].initials,
     initials: serviceOwnerTestimonials[0].initials,
     role: serviceOwnerTestimonials[0].role,
+    image: serviceOwnerTestimonials[0].image,
     quote: johnExcerpt,
   },
   ...surveyTestimonials,

@@ -88,6 +88,17 @@ export default function ReferralsPage() {
                       </a>
                     </p>
                     <p>
+                      <span className="block font-medium text-foreground">
+                        Mobile ({contactInfo.referralsMobileContact})
+                      </span>
+                      <a
+                        href={`tel:${contactInfo.referralsMobile.replace(/\s/g, "")}`}
+                        className="text-muted hover:text-primary transition-colors focus-ring rounded"
+                      >
+                        {contactInfo.referralsMobile}
+                      </a>
+                    </p>
+                    <p>
                       <span className="block font-medium text-foreground">Email</span>
                       <a
                         href="mailto:referrals@lotuscare.ie"

@@ -17,7 +17,6 @@ import { ValuesGrid } from "@/components/careers/values-grid";
 
 import { contactInfo } from "@/data/navigation";
 import { services, enhanceServices } from "@/data/services";
-import { homes } from "@/data/homes";
 import { teamMembers, departments, boardMembers } from "@/data/team";
 import { jobs } from "@/data/jobs";
 import { homeQuote } from "@/data/testimonial";
@@ -56,18 +55,22 @@ const recruitmentCtas = [
   { label: "Life at Lotus Care", href: "/careers/why-us", variant: "outline" as const },
 ];
 
-// Client no longer wants individual houses identified — a plain photo gallery
-// instead of named cards. Pulls the first exterior + first interior shot
-// already in each home's own `images` array, so it stays in sync with
-// homes.ts without a separate photo list to maintain. `alt` still names the
-// house since that's screen-reader-only, not a visible label.
-const homeGallerySlides = homes.flatMap((home) => [
-  { src: home.images[0], alt: `${home.name}, exterior` },
-  {
-    src: home.images.find((src) => src.includes("/interior-1.")) ?? home.images[1],
-    alt: `${home.name}, interior`,
-  },
-]);
+// Client-supplied photography, replacing the per-house shots this gallery used
+// to derive from homes.ts. The files carry no house attribution, which suits a
+// gallery that deliberately names no houses — so `alt` describes the scene.
+// Interleaved exterior/interior so the run alternates buildings and rooms.
+const homeGallerySlides = [
+  { src: "/images/homes/gallery/exterior-1.webp", alt: "One of our homes seen from the driveway" },
+  { src: "/images/homes/gallery/interior-1.webp", alt: "A bright sensory and activity room" },
+  { src: "/images/homes/gallery/exterior-2.webp", alt: "Lawn and garden along the side of a home" },
+  { src: "/images/homes/gallery/interior-2.webp", alt: "A playroom with a play tent and a bicycle" },
+  { src: "/images/homes/gallery/exterior-3.webp", alt: "A home and its grounds from above" },
+  { src: "/images/homes/gallery/interior-3.webp", alt: "A quiet lounge corner with armchairs and soft toys" },
+  { src: "/images/homes/gallery/exterior-4.webp", alt: "A garden with a trampoline and swings" },
+  { src: "/images/homes/gallery/interior-4.webp", alt: "Shelves of toys, books and games" },
+  { src: "/images/homes/gallery/interior-5.webp", alt: "A bedroom decorated in purple" },
+  { src: "/images/homes/gallery/interior-6.webp", alt: "A bedroom looking out over the garden" },
+];
 
 export default function Home() {
   return (
@@ -111,10 +114,14 @@ export default function Home() {
           <Container>
             <SectionTitle
               title="Our Homes"
-              subtitle="Unique homes across Co. Offaly and the Midlands, each designed to feel like home."
+              subtitle="Our homes are designed around the people who live in them, creating welcoming spaces where everyone can feel comfortable, supported and at home."
             />
             <Reveal className="reveal-scale">
-              <CoverflowCarousel slides={homeGallerySlides} label="Photos of our homes" />
+              <CoverflowCarousel
+                slides={homeGallerySlides}
+                label="Photos of our homes"
+                cardWidth="clamp(220px, 32vw, 420px)"
+              />
             </Reveal>
             <div className="text-center mt-8">
               <Button href="#contact" variant="outline" size="lg">

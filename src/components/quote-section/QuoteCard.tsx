@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 const TONE = {
   teal: {
     text: "text-blossom",
@@ -19,12 +21,14 @@ interface QuoteCardProps {
    * gradient that pass AA on that background (name/date stay teal-50/100
    * either way, already verified safe on both `teal-700` and `purple-600`). */
   tone: keyof typeof TONE;
+  /** Portrait for the avatar; without it the decorative gradient is kept. */
+  image?: string;
   className?: string;
 }
 
 /** Quote mark + blockquote + figcaption. Shared by `QuoteSection` (single,
  * intro column alongside it) and `TestimonialPair` (two side by side). */
-export function QuoteCard({ quote, name, date, tone, className = "" }: QuoteCardProps) {
+export function QuoteCard({ quote, name, date, tone, image, className = "" }: QuoteCardProps) {
   const { text, avatarGradient } = TONE[tone];
 
   return (
@@ -38,11 +42,22 @@ export function QuoteCard({ quote, name, date, tone, className = "" }: QuoteCard
       </span>
       <blockquote className={`${text} text-lg leading-relaxed mt-2`}>{quote}</blockquote>
       <figcaption className="flex items-center gap-3 mt-6">
-        <div
-          aria-hidden="true"
-          className="w-11 h-11 rounded-full shrink-0"
-          style={{ background: avatarGradient }}
-        />
+        {image ? (
+          <Image
+            src={image}
+            alt=""
+            width={44}
+            height={44}
+            sizes="44px"
+            className="w-11 h-11 rounded-full object-cover object-top shrink-0"
+          />
+        ) : (
+          <div
+            aria-hidden="true"
+            className="w-11 h-11 rounded-full shrink-0"
+            style={{ background: avatarGradient }}
+          />
+        )}
         <div>
           <p className="font-dm-sans font-bold text-sm text-teal-50">{name}</p>
           <p className="text-xs text-teal-100">{date}</p>
