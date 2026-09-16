@@ -36,8 +36,7 @@ export default function ReferralsPage() {
               className="text-lg sm:text-xl text-muted max-w-2xl mx-auto animate-fade-up"
               style={{ animationDelay: "100ms" }}
             >
-              Tell us about the person you&apos;d like to refer and our team will be in touch to
-              talk through the next steps.
+              Tell us about the person and we will be in touch within one working day.
             </p>
           </Container>
         </section>
@@ -46,10 +45,10 @@ export default function ReferralsPage() {
           <Container>
             <div className="flex flex-wrap items-center gap-x-10 gap-y-4 mb-8">
               <Image
-                src="/images/logos/hiqa.png"
-                alt="Health Information and Quality Authority (HIQA)"
-                width={426}
-                height={300}
+                src="/images/logos/hse.png"
+                alt="Health Service Executive (HSE)"
+                width={300}
+                height={175}
                 className="h-[134px] w-auto"
               />
               <Image
@@ -63,6 +62,13 @@ export default function ReferralsPage() {
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
               <div className="lg:col-span-2">
+                <div className="mb-6 rounded-xl border-l-4 border-teal-500 bg-teal-50/60 px-5 py-4">
+                  <p className="text-sm sm:text-base text-primary-dark leading-relaxed">
+                    <span className="font-semibold">Referral criteria:</span> intellectual and
+                    physical disability — children and adults — residential and non-residential
+                    respite.
+                  </p>
+                </div>
                 <ContactForm
                   kind="referral"
                   fields={referralFields}
@@ -82,16 +88,27 @@ export default function ReferralsPage() {
                       <span className="block font-medium text-foreground">Phone</span>
                       <a
                         href={`tel:${contactInfo.phone}`}
-                        className="text-muted hover:text-primary transition-colors focus-ring rounded"
+                        className="font-bold text-foreground hover:text-primary transition-colors focus-ring rounded"
                       >
                         {contactInfo.phone}
+                      </a>
+                    </p>
+                    <p>
+                      <span className="block font-medium text-foreground">
+                        Mobile ({contactInfo.referralsMobileContact})
+                      </span>
+                      <a
+                        href={`tel:${contactInfo.referralsMobile.replace(/\s/g, "")}`}
+                        className="font-bold text-foreground hover:text-primary transition-colors focus-ring rounded"
+                      >
+                        {contactInfo.referralsMobile}
                       </a>
                     </p>
                     <p>
                       <span className="block font-medium text-foreground">Email</span>
                       <a
                         href="mailto:referrals@lotuscare.ie"
-                        className="text-muted hover:text-primary transition-colors focus-ring rounded"
+                        className="font-bold text-foreground hover:text-primary transition-colors focus-ring rounded"
                       >
                         referrals@lotuscare.ie
                       </a>
@@ -102,8 +119,8 @@ export default function ReferralsPage() {
                 <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
                   <h2 className="font-bold text-primary-dark mb-2">What Happens Next</h2>
                   <p className="text-sm text-muted leading-relaxed">
-                    Our team reviews every referral and will contact you to discuss the person&apos;s
-                    needs and the support we can offer.
+                    Our admission discharge and transition team reviews every referral received.
+                    Emergency or urgent referrals should phone rather than use the form.
                   </p>
                 </div>
               </aside>

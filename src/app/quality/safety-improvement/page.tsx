@@ -7,7 +7,7 @@ import { PrincipleTags } from "@/components/quality/principle-cards";
 import { IconCards } from "@/components/quality/icon-cards";
 import { TeamStrip } from "@/components/quality/team-strip";
 import { CareersCTAStrip } from "@/components/careers/careers-cta-strip";
-import { LotusBand } from "@/components/lotus-band";
+import { LotusDivider } from "@/components/ui/LotusDivider";
 import { Blob } from "@/components/blob";
 import { Reveal } from "@/components/reveal";
 import { qualitySafetyCycle, qualitySafetyContent, safetyImprovementTeam } from "@/data/quality";
@@ -18,16 +18,6 @@ export const metadata: Metadata = {
   description:
     "The governance and continuous-improvement culture that keeps quality and safety standards high across every Lotus Care home.",
 };
-
-// Teal only, per the same standing rule as /quality/model-of-care and
-// /quality/mdt — no purple divider band.
-function Divider() {
-  return (
-    <div aria-hidden="true">
-      <LotusBand variant="teal" height={72} />
-    </div>
-  );
-}
 
 /** Intro — same 2-column intro-plus-photo rhythm as Model of Care/MDT's own
  * intro sections. */
@@ -163,11 +153,11 @@ export default function SafetyImprovementPage() {
 
       <IntroSection />
 
-      <Divider />
+      <LotusDivider />
 
       <CycleAndCommitmentSection />
 
-      <Divider />
+      <LotusDivider />
 
       <PrinciplesSection />
 

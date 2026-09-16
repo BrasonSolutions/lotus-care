@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { Container } from "@/components/layout";
 import { serviceOwnerTestimonials } from "@/data/testimonial";
 
@@ -56,8 +57,18 @@ export default async function TestimonialDetailPage({ params }: Params) {
           </h1>
         )}
         <figcaption className="flex items-center gap-3 mt-4">
-          <div className="w-11 h-11 rounded-full bg-primary-dark flex items-center justify-center text-white font-bold text-sm shrink-0">
-            {testimonial.initials}
+          <div className="relative w-11 h-11 rounded-full overflow-hidden bg-primary-dark flex items-center justify-center text-white font-bold text-sm shrink-0">
+            {testimonial.image ? (
+              <Image
+                src={testimonial.image}
+                alt=""
+                fill
+                sizes="44px"
+                className="object-cover object-top"
+              />
+            ) : (
+              testimonial.initials
+            )}
           </div>
           <div>
             <p className="font-semibold text-primary-dark text-sm">
@@ -67,6 +78,21 @@ export default async function TestimonialDetailPage({ params }: Params) {
             <p className="text-xs text-neutral-600">{testimonial.date}</p>
           </div>
         </figcaption>
+
+        {testimonial.image && (
+          <figure className="mt-6">
+            {/* Intrinsic width/height, not `fill` — the portrait reserves its
+                own box so nothing shifts as it loads (CLS). */}
+            <Image
+              src={testimonial.image}
+              alt={`${testimonial.initials}, ${testimonial.role}`}
+              width={994}
+              height={1600}
+              sizes="(min-width: 640px) 28rem, 100vw"
+              className="w-full max-w-md mx-auto rounded-2xl shadow-sm"
+            />
+          </figure>
+        )}
 
         <div className="mt-6 pt-6 border-t border-gray-200 space-y-4">
           {testimonial.body?.length ? (

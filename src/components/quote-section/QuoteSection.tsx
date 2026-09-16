@@ -57,6 +57,7 @@ export function QuoteSection({ quote, ctaHref, ctaLabel }: QuoteSectionProps) {
             quote={quote.quote}
             name={quote.name}
             date={quote.date}
+            image={quote.image}
             tone="teal"
             className={`reveal reveal-delay-2 ${inView ? "in-view" : ""}`}
           />

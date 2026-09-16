@@ -31,7 +31,7 @@ export const services: Service[] = [
   {
     title: "Non-Residential Respite",
     description:
-      "Temporary daytime support for children and adults — offering daytime social activities, stimulation and a safe environment, making use of community facilities where possible.",
+      "Daytime support for children and adults, giving families a break and giving the person a day filled with activities, friends and time out in the community.",
     icon: "heart",
     hasImage: true,
   },

@@ -127,9 +127,22 @@ body {
     box-shadow 300ms cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 
+/* Ring lives in this box-shadow rather than Tailwind's ring-*: this rule is
+   unlayered and beats @layer utilities whatever the specificity, so a ring
+   utility would just be overwritten. Defaults to transparent, so the six
+   other .card-hover users are unaffected until they opt in. */
 .card-hover:hover {
   transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 0 0 2px var(--card-ring, transparent),
+    0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.card-ring-teal {
+  --card-ring: color-mix(in srgb, var(--color-primary) 40%, transparent);
+}
+
+.card-ring-purple {
+  --card-ring: color-mix(in srgb, var(--color-purple-600) 40%, transparent);
 }
 
 /* FAQ accordion panel open/close */

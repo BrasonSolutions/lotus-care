@@ -1,11 +1,28 @@
 import type { ReactNode } from "react";
+import Image from "next/image";
 import type { Testimonial } from "@/data/careers";
 
 // Two presets: the default used across careers, and a roomier listing card.
 const SIZES = {
-  default: { pad: "p-6", avatar: "w-10 h-10 text-sm", name: "text-sm", role: "text-xs" },
-  large: { pad: "p-8 sm:p-10", avatar: "w-16 h-16 text-lg", name: "text-lg", role: "text-sm" },
+  default: { pad: "p-6", avatar: "w-10 h-10 text-sm", icon: "w-5 h-5", name: "text-sm", role: "text-xs" },
+  large: { pad: "p-8 sm:p-10", avatar: "w-16 h-16 text-lg", icon: "w-8 h-8", name: "text-lg", role: "text-sm" },
 } as const;
+
+// Plain outline "person" bust (Heroicons-style, matches the stroke weight
+// ServiceCard/QualityPillars use elsewhere) — the no-photo avatar fallback.
+// Replaces showing raw initials, which read like a real person's initials
+// even for anonymised quotes with no name behind them.
+function PersonIcon({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className={className} aria-hidden="true">
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0ZM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
+      />
+    </svg>
+  );
+}
 
 interface TestimonialCardProps {
   testimonial: Testimonial;
@@ -43,16 +60,32 @@ export function TestimonialCard({
       )}
       <figcaption className="flex items-center gap-3">
         <div
-          className={`${s.avatar} rounded-full bg-primary-dark flex items-center justify-center text-white font-bold shrink-0`}
+          className={`${s.avatar} relative rounded-full overflow-hidden bg-primary-dark flex items-center justify-center text-white font-bold shrink-0`}
         >
-          {testimonial.initials}
+          {testimonial.image ? (
+            <Image
+              src={testimonial.image}
+              alt={testimonial.name}
+              fill
+              sizes="64px"
+              className="object-cover object-top"
+            />
+          ) : (
+            <PersonIcon className={s.icon} />
+          )}
         </div>
         <div className="min-w-0">
-          <p className={`font-semibold text-primary-dark ${s.name}`}>{testimonial.name}</p>
-          <p className={`${s.role} text-muted`}>
-            {testimonial.role}
-            {testimonial.yearsAtCompany && ` · ${testimonial.yearsAtCompany} year${testimonial.yearsAtCompany > 1 ? "s" : ""} at Lotus Care`}
-          </p>
+          {testimonial.anonymized ? (
+            <p className={`font-semibold text-primary-dark ${s.name}`}>{testimonial.role}</p>
+          ) : (
+            <>
+              <p className={`font-semibold text-primary-dark ${s.name}`}>{testimonial.name}</p>
+              <p className={`${s.role} text-muted`}>
+                {testimonial.role}
+                {testimonial.yearsAtCompany && ` · ${testimonial.yearsAtCompany} year${testimonial.yearsAtCompany > 1 ? "s" : ""} at Lotus Care`}
+              </p>
+            </>
+          )}
         </div>
         {action && <div className="ml-auto shrink-0">{action}</div>}
       </figcaption>

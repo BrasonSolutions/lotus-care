@@ -5,6 +5,8 @@ export interface QuoteEntry {
   quote: string;
   name: string;
   date: string;
+  /** Portrait for the attribution avatar; falls back to the tone gradient. */
+  image?: string;
 }
 
 export interface HomeQuote extends QuoteEntry {
@@ -23,7 +25,8 @@ export const homeQuote: HomeQuote = {
   quote:
     "When I first moved to my first home with Lotus Care, I was nervous because everything was new to me. I left my family behind and didn't know anybody. The staff were kind, friendly, and caring and gave me their time, sitting and talking to me. They really wanted to get to know me. They helped me settle into my new home. They listened to me and supported me with the things that were important to me. They helped me fill my day as my whole routine what I was used to had all changed. They encouraged me to make choices about my day-to-day life, and made sure I felt a part of my home.",
   name: `${jwAttribution.initials}, ${jwAttribution.role}`,
-  date: "With Lotus Care since 2018",
+  date: "With Lotus Care since 2022",
+  image: "/images/testimonials/jw.webp",
 };
 
 export interface ServiceOwnerTestimonial extends HomeQuote {
@@ -34,6 +37,8 @@ export interface ServiceOwnerTestimonial extends HomeQuote {
   title?: string;
   // Continues after `quote`, which is the piece's opening paragraph.
   body?: string[];
+  /** Portrait of the Service Owner, shown on the card and the detail page. */
+  image?: string;
 }
 
 // Single source for `/testimonials`, its detail pages, and the home band.
@@ -43,6 +48,7 @@ export const serviceOwnerTestimonials: ServiceOwnerTestimonial[] = [
     ...jwAttribution,
     slug: "jw",
     title: "My Journey with Lotus Care",
+    image: "/images/testimonials/jw.webp",
     body: [
       "When I first moved to my first home with Lotus Care, I was nervous because everything was new to me. I left my family behind and didn’t know anybody. The staff were kind, friendly, and caring and gave me their time, sitting and talking to me. They really wanted to get to know me. They helped me settle into my new home. They listened to me and supported me with the things that were important to me. They helped me fill my day as my whole routine what I was used to had all changed. They encouraged me to make choices about my day-to-day life, and made sure I felt a part of my home.",
       "Living in my first home helped me so much, I came as a young boy. I became more confident in myself and started doing more things for myself where I didn’t need staff to help me. For example, I learned how to prepare meals, like pasta, carbonara and spaghetti bolognese. I learned how to do household chores and do them properly like making my bed, changing the bed clothes and using the washing machine. The staff always encouraged me and helped me when I needed support especially on hard days. They would sit with me and really listen and offer me some suggestions to help make me feel better.",
@@ -60,15 +66,16 @@ export const serviceOwnerTestimonials: ServiceOwnerTestimonial[] = [
 
 // #122 — the SO & Stakeholder Satisfaction Survey quotes for
 // /quality/model-of-care's closing "Testimonials" section. Attribution is
-// role-only per the issue — `name` carries the descriptor's initials and
-// `role` the descriptor itself, matching how `serviceOwnerTestimonials`
-// already renders John's card elsewhere (name = initials, role = "Service
-// Owner") rather than leaving `role` empty.
+// role-only per the issue — `name`/`initials` are a placeholder (no real
+// person behind them), so `anonymized: true` tells TestimonialCard to show
+// `role` as the card's title and drop the name/role byline instead of
+// rendering the placeholder initials as if they were someone's name.
 const surveyTestimonials: Testimonial[] = [
   {
-    name: "SC",
-    initials: "SC",
-    role: "Stakeholder comment",
+    name: "FM",
+    initials: "FM",
+    role: "Family member",
+    anonymized: true,
     quote:
       "Staff are caring, kind and genuinely know the children and young people. They treat our family with respect and keep us informed. Our child is happy, settled and thriving – we feel truly blessed to be a part of the Lotus Care family.",
   },
@@ -76,6 +83,7 @@ const surveyTestimonials: Testimonial[] = [
     name: "FM",
     initials: "FM",
     role: "Family member",
+    anonymized: true,
     quote:
       "The environment is welcoming, homely, clean and safe. My child loves living here and takes part in lots of activities. It is great to see them so happy and included.",
   },
@@ -83,6 +91,7 @@ const surveyTestimonials: Testimonial[] = [
     name: "FM",
     initials: "FM",
     role: "Family member",
+    anonymized: true,
     quote:
       "The progress my son has made towards toileting independence after many years of unsuccessful attempts is ground breaking. The staff never gave up on him and believed in what he could achieve",
   },
@@ -104,6 +113,7 @@ export const modelOfCareTestimonials: Testimonial[] = [
     name: serviceOwnerTestimonials[0].initials,
     initials: serviceOwnerTestimonials[0].initials,
     role: serviceOwnerTestimonials[0].role,
+    image: serviceOwnerTestimonials[0].image,
     quote: johnExcerpt,
   },
   ...surveyTestimonials,
@@ -111,15 +121,15 @@ export const modelOfCareTestimonials: Testimonial[] = [
 
 // /careers/why-us's quote section — the site's original "Hear it from our
 // own" copy (kept here since `homeQuote` above now carries the homepage's
-// newer "Real voices" revision). Same JW quote text, "Administrator" /
-// "10th June 2026" attribution as given in this page's Figma export.
+// newer "Real voices" revision). Jessica Lennon's progression story,
+// replacing the earlier placeholder "Administrator" attribution.
 export const careersHearQuote: HomeQuote = {
   eyebrow: "People of Lotus",
   heading: "Hear it from the people who know it best.",
   subtext: "Our colleagues share what makes Lotus Care a place they can grow and build a career they're proud of.",
   quote:
-    "When I first moved to my first home with Lotus Care, I was nervous because everything was new to me. I left my family behind and didn't know anybody. The staff were kind, friendly, and caring and gave me their time, sitting and talking to me. They really wanted to get to know me. They helped me settle into my new home. They listened to me and supported me with the things that were important to me. They helped me fill my day as my whole routine what I was used to had all changed. They encouraged me to make choices about my day-to-day life, and made sure I felt a part of my home.",
-  name: "Administrator",
+    "I started my journey with Lotus Care in September 2024 as an SCA, working on the floor. Since then, I've had the opportunity to progress to Deputy Team Lead in November 2025 and then to Team Lead in April 2026. One of the things I love most about working with Lotus Care is the opportunity to progress. The company recognises staff who put in hard work and show potential, and I've been given the chance to take on new challenges throughout my time with the company. The management have always encouraged and supported me.",
+  name: "Jessica Lennon, Team Lead",
   date: "10th June 2026",
 };
 

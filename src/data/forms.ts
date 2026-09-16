@@ -50,14 +50,34 @@ const message = (placeholder: string, rows = 4): FormField => ({
   placeholder,
 });
 
-/**
- * Referral form. Extra referral-specific fields are still to be confirmed
- * with the client (issue #86), so it stays on the shared template for now.
- */
+export const referralServiceOptions = ["Children", "Adults", "Outreach"];
+
+/** Referral form — includes referrer/organisation details and the service required. */
 export const referralFields: FormField[] = [
   name,
   email,
   phone,
+  {
+    name: "organisation",
+    label: "Organisation / Company",
+    type: "text",
+    placeholder: "Where you're referring from",
+    half: true,
+  },
+  {
+    name: "role",
+    label: "Your Role",
+    type: "text",
+    placeholder: "Your job title",
+    half: true,
+  },
+  {
+    name: "serviceRequired",
+    label: "Service Required",
+    type: "select",
+    options: referralServiceOptions,
+    placeholder: "Select a service…",
+  },
   message("Tell us about the person being referred and how we can help…", 5),
 ];
 

@@ -41,3 +41,44 @@ chosen for visual continuity between the two sections that use them:
 
 - `team-review.jpg` — https://www.pexels.com/photo/people-in-the-office-having-a-discussion-8636603/ (Kampus Production) — resized to 1600px wide.
 - `governance-review.jpg` — https://www.pexels.com/photo/group-of-healthcare-professionals-having-a-discussion-8636601/ (Kampus Production) — resized to 1600px wide.
+
+`hero-high-five.jpg` (homepage hero photo, replacing `hero-finger-painting.jpg`,
+2026-09-16) was supplied directly by the user/client, placed straight into
+this folder and resized to 1600px wide — not a Pexels/Unsplash download, so
+no stock-licence link applies. Source/usage rights not verified by Claude;
+confirm with the client before treating it as clear for public use if that
+hasn't already happened.
+
+`adt-support-session.jpg` (Model of Care → ADT section photo, replacing
+`assessment-session.jpg`, 2026-09-16) — same as above: supplied directly by
+the user/client, placed straight into this folder at its original size, no
+stock-licence link applies, and source/usage rights are not verified by
+Claude.
+
+`why-work-with-us-hero.jpg` (careers/why-us page hero banner, replacing
+`hero-why-work-with-us.jpg`, 2026-09-16) — same as above: supplied directly
+by the user/client, placed straight into this folder at its original size
+(960×480 — low-res for a full-width `fill` banner; will look soft on wide
+viewports), no stock-licence link applies, and source/usage rights are not
+verified by Claude.
+
+`careers-contact-team.jpg` (careers/contact page hero banner, 2026-09-16) —
+unlike the client-supplied photos above, this one's filename is a Pexels
+download (its own `pexels-{photographer}-{id}` naming), so it's credited
+like the other Pexels entries: https://www.pexels.com/photo/3182767/
+(fauxels) — cropped to a 3.64:1 banner (top-weighted, keeping the group's
+faces with headroom instead of the handshake/desk lower in the frame — the
+hero's `fill`+`object-cover` treatment on a wide, short section otherwise
+crops faces out entirely) and resized to 1600px wide, from the original
+6000×4000 download. Only `careers/contact/page.tsx`'s hero was changed —
+`dignity-activity.jpg` is still used by the main careers page, the culture
+gallery, and Sarah M.'s video-testimonial poster, so it was left in place
+rather than overwritten.
+
+`mdt-hero-v2.jpg` (MDT page hero banner, replacing `hands-on-support.jpg`,
+2026-09-16) — same Pexels source (https://www.pexels.com/photo/8422256/,
+Pavel Danilyuk), cropped to a 3.6:1 banner (x=0–1260, y=125–475 of the
+original 1600×1067 download) so both the carer's and child's faces sit with
+headroom and clear of the hero text column on the left — the original
+centred crop cut the child's face at the chin and put the carer's face
+entirely out of frame.

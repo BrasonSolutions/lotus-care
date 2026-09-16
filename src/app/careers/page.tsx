@@ -9,7 +9,7 @@ import { CareersCTAStrip } from "@/components/careers/careers-cta-strip";
 import { SectionTitle } from "@/components/section-title";
 import { getCareersIcon } from "@/components/careers/careers-icons";
 import { Reveal } from "@/components/reveal";
-import { LotusBand } from "@/components/lotus-band";
+import { LotusDivider } from "@/components/ui/LotusDivider";
 import { Container } from "@/components/layout";
 import { jobs } from "@/data/jobs";
 import { testimonials, companyValues, type Testimonial } from "@/data/careers";
@@ -102,9 +102,7 @@ export default function CareersPage() {
         </Container>
       </section>
 
-      <div aria-hidden="true">
-        <LotusBand variant="teal" height={72} />
-      </div>
+      <LotusDivider />
 
       {/* Hub nav cards */}
       <section className="py-16 sm:py-20">

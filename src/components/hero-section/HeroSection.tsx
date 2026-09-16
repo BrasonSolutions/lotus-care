@@ -12,8 +12,8 @@ import { Button } from "@/components/button";
  * public/images/stock/CREDITS.md). Single edit point below.
  */
 const HERO_IMAGE = {
-  src: "/images/stock/hero-finger-painting.jpg",
-  alt: "A mother and her daughter with Down syndrome finger-painting together at home",
+  src: "/images/stock/hero-high-five.jpg",
+  alt: "Two friends laughing and high-fiving at an outdoor café table — one of them has Down syndrome",
 };
 
 interface HeroSectionProps {
@@ -76,21 +76,19 @@ export function HeroSection({
               className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start animate-fade-up"
               style={{ animationDelay: "300ms" }}
             >
-              {/* Primary — white fill clears 3:1 against bg-primary-dark (6.34:1);
-                  teal-700 label clears 4.5:1 against the white fill (6.34:1). */}
-              <Button href={primaryCtaHref} variant="onDark" size="lg">
+              {/* Outline on the dark hero; white border/text clears both the
+                  3:1 boundary and 4.5:1 text ratios (6.34:1) against
+                  bg-primary-dark. Matches CareersCTAStrip's dark-bg outline CTA. */}
+              <Button href={primaryCtaHref} variant="onDarkOutline" size="lg">
                 {primaryCtaLabel}
               </Button>
-              {/* Secondary — outline on the dark hero; white border/text clears
-                  both the 3:1 boundary and 4.5:1 text ratios (6.34:1) against
-                  bg-primary-dark. Matches CareersCTAStrip's dark-bg outline CTA. */}
               <Button href={secondaryCtaHref} variant="onDarkOutline" size="lg">
                 {secondaryCtaLabel}
               </Button>
-              {/* Referrals — same verified outline treatment as the secondary
-                  CTA; the client asked for it alongside Careers here as well
-                  as in the navbar. */}
-              <Button href={tertiaryCtaHref} variant="onDarkOutline" size="lg">
+              {/* Referrals carries the white fill: client asked for it, not
+                  Our Services, to be the highlighted CTA. White clears 3:1
+                  against bg-primary-dark; teal-700 label clears 4.5:1 on it. */}
+              <Button href={tertiaryCtaHref} variant="onDark" size="lg">
                 {tertiaryCtaLabel}
               </Button>
             </div>

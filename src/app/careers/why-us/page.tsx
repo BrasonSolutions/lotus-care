@@ -55,7 +55,7 @@ export default function WhyUsPage() {
         titleHighlight="career."
         subtitle="At Lotus Care, we believe your role should be more than just a job, it should be the beginning of a rewarding career."
         compact
-        image="/images/stock/hero-why-work-with-us.jpg"
+        image="/images/stock/why-work-with-us-hero.jpg"
         ctaLabel="View Open Roles"
         ctaHref="/careers/open-roles"
         secondaryCtaLabel="Our Benefits"

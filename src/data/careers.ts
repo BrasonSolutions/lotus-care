@@ -21,6 +21,13 @@ export interface Testimonial {
   quote: string;
   initials: string;
   yearsAtCompany?: number;
+  /** Portrait; falls back to a person icon when absent — see TestimonialCard. */
+  image?: string;
+  /** True for anonymised feedback with no individual behind `name`/`initials`
+   * (e.g. a survey comment attributed only to "Family member"). TestimonialCard
+   * shows `role` as the card's title and drops the name/role byline entirely,
+   * rather than showing the raw initials as if they were someone's name. */
+  anonymized?: boolean;
 }
 
 export interface CompanyValue {
@@ -31,7 +38,7 @@ export interface CompanyValue {
 
 export const benefits: Benefit[] = [
   {
-    icon: "currency-dollar",
+    icon: "currency-euro",
     title: "Competitive Pay",
     description:
       "Market-leading salaries with annual pay reviews and incremental scale progression.",
@@ -276,7 +283,7 @@ export const whyUsValues: CompanyValue[] = [
   {
     title: "Hope",
     description:
-      "We champion diversity in our teams and actively support social inclusion for every person we support.",
+      "We believe every person has a future worth looking forward to. We help people set goals, try new things, and see what is possible for them.",
     icon: "user-group",
   },
 ];
@@ -295,8 +302,13 @@ export interface GalleryImage {
 export interface VideoTestimonial {
   name: string;
   role: string;
+  /** Fallback poster, used only when neither `youtubeId` nor `videoSrc` is set. */
   poster: string;
-  /** Absent until real footage is provided. */
+  /** Real YouTube video ID (the part after youtu.be/). When set,
+   * VideoTestimonialCard shows a click-to-play facade using YouTube's own
+   * thumbnail, then swaps in the embed on click — see #92/#93. */
+  youtubeId?: string;
+  /** Absent until a real .mp4 asset is provided directly (rare — prefer `youtubeId`). */
   videoSrc?: string;
   /** Absent until a real .vtt captions file is provided. */
   captionsSrc?: string;
@@ -334,6 +346,11 @@ export const cultureGalleryImages: GalleryImage[] = [
 
 export const videoTestimonials: VideoTestimonial[] = [
   { name: "Sarah M.", role: "Residential Support Worker", poster: "/images/stock/dignity-activity.jpg" },
-  { name: "James O.", role: "Social Care Leader", poster: "/images/stock/team-meeting.jpg" },
+  {
+    name: "James O.",
+    role: "Social Care Leader",
+    poster: "/images/stock/team-meeting.jpg",
+    youtubeId: "NYRxgv_3zUo",
+  },
   { name: "Aoife N.", role: "Staff Nurse (RNID)", poster: "/images/stock/clinical-consultation.jpg" },
 ];

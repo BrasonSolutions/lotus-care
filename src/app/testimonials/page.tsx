@@ -33,6 +33,7 @@ export default function TestimonialsPage() {
                 // No excerpt on the card — the story lives on the detail page.
                 quote: "",
                 initials: testimonial.initials,
+                image: testimonial.image,
               }}
               action={
                 <a

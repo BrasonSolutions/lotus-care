@@ -18,6 +18,10 @@ interface CareersHeroProps {
   secondaryCtaHref?: string;
   compact?: boolean;
   image?: string;
+  /** Vertical focal point for the `image` crop — "center" (default) or "top",
+   * for photos where the subjects' faces sit in the upper part of the frame
+   * and would otherwise get cropped out by the hero's wide, short aspect. */
+  imagePosition?: "center" | "top";
   stat?: CareersHeroStat;
   chips?: string[];
   avatarImages?: string[];
@@ -129,6 +133,7 @@ function ImageHero({
   secondaryCtaHref,
   compact = false,
   image,
+  imagePosition = "center",
   stat,
   chips,
   avatarImages,
@@ -140,7 +145,14 @@ function ImageHero({
         compact ? "py-16 sm:py-20 min-h-[22rem]" : "pt-32 pb-20 lg:pt-40 lg:pb-28 min-h-[34rem]"
       }`}
     >
-      <Image src={image} alt="" fill priority sizes="100vw" className="object-cover" />
+      <Image
+        src={image}
+        alt=""
+        fill
+        priority
+        sizes="100vw"
+        className={`object-cover ${imagePosition === "top" ? "object-top" : "object-center"}`}
+      />
       <div
         className="absolute inset-0 bg-gradient-to-r from-primary-dark/95 via-primary-dark/70 to-primary-dark/25"
         aria-hidden="true"
