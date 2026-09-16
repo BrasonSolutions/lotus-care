@@ -39,14 +39,6 @@ function section(id: string) {
   return { ...modelOfCareSections[index], number: String(index + 1).padStart(2, "0") };
 }
 
-function Eyebrow({ number, label }: { number: string; label: string }) {
-  return (
-    <p className="font-dm-sans font-bold text-xs uppercase tracking-[0.15em] text-purple-600 mb-3">
-      {number} — {label}
-    </p>
-  );
-}
-
 /** 24-Hour Curriculum (#119) — an intro-plus-photo block, followed by a
  * KeywordCards block for the three points, matching how the Human Rights
  * section renders its own keyword lists. */
@@ -60,7 +52,6 @@ function CurriculumSection() {
       <Container className="relative">
         <Reveal className="grid md:grid-cols-2 gap-10 lg:gap-16 items-center reveal-scale">
           <div className="max-w-lg">
-            <Eyebrow number={curriculum.number} label={curriculum.label} />
             <h2 className="text-2xl sm:text-3xl font-bold text-primary-dark mb-3">{curriculum.heading}</h2>
             <p className="text-lg font-semibold text-foreground mb-4">{curriculumContent.subtitle}</p>
             <div className="space-y-4">
@@ -115,7 +106,6 @@ function ADTSection() {
             />
           </div>
           <div className="max-w-lg md:order-2">
-            <Eyebrow number={adt.number} label={adt.label} />
             <h2 className="text-2xl sm:text-3xl font-bold text-primary-dark mb-3">{adt.heading}</h2>
             <p className="text-lg font-semibold text-foreground mb-4">{adtContent.subtitle}</p>
             <p className="text-muted leading-relaxed">{adtContent.intro}</p>
@@ -157,7 +147,6 @@ function ModelPillars() {
           description: summary,
           href: `#${id}`,
         }))}
-        foundation={modelOfCareSections.map((s) => s.label)}
         cta="Jump to section"
       />
     </nav>
@@ -216,9 +205,6 @@ export default function ModelOfCarePage() {
           <Blob color="teal" variant={1} className="absolute -top-24 -left-24 w-80 h-80" />
           <Blob color="purple" variant={3} className="absolute -bottom-20 -right-20 w-64 h-64" />
           <Container className="relative">
-            <div className="text-center">
-              <Eyebrow number={humanRights.number} label={humanRights.label} />
-            </div>
             <SectionTitle title={humanRights.heading} subtitle={humanRights.intro} />
             <Reveal className="grid md:grid-cols-2 gap-10 lg:gap-16 items-center reveal-scale">
               <div className="space-y-4 max-w-lg">

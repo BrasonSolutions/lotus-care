@@ -12,8 +12,8 @@ import { Button } from "@/components/button";
  * public/images/stock/CREDITS.md). Single edit point below.
  */
 const HERO_IMAGE = {
-  src: "/images/stock/hero-finger-painting.jpg",
-  alt: "A mother and her daughter with Down syndrome finger-painting together at home",
+  src: "/images/stock/hero-high-five.jpg",
+  alt: "Two friends laughing and high-fiving at an outdoor café table — one of them has Down syndrome",
 };
 
 interface HeroSectionProps {

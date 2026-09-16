@@ -45,10 +45,10 @@ export default function ReferralsPage() {
           <Container>
             <div className="flex flex-wrap items-center gap-x-10 gap-y-4 mb-8">
               <Image
-                src="/images/logos/hiqa.png"
-                alt="Health Information and Quality Authority (HIQA)"
-                width={426}
-                height={300}
+                src="/images/logos/hse.png"
+                alt="Health Service Executive (HSE)"
+                width={300}
+                height={175}
                 className="h-[134px] w-auto"
               />
               <Image

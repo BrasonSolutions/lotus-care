@@ -13,7 +13,10 @@ interface Pillar {
 
 interface QualityPillarsProps {
   pillars: Pillar[];
-  foundation: string[];
+  /** Optional dashed-rule strip below the pillar cards. Omit to skip it
+   * entirely — Model of Care's pillars double as its own section nav, so
+   * that summary line would just repeat the three card titles. */
+  foundation?: string[];
   heading?: string;
   subtitle?: string;
   /** Forwarded to every card — see `HubNavCard`. */
@@ -56,12 +59,14 @@ export function QualityPillars({
         ))}
       </div>
 
-      <div
-        className={`border-t border-dashed border-gray-300 pt-4 foundation-fade ${inView ? "in-view" : ""}`}
-        style={{ transitionDelay: `${FOUNDATION_DELAY_MS}ms` }}
-      >
-        <p className="text-sm text-muted">{foundation.join(" · ")}</p>
-      </div>
+      {foundation && foundation.length > 0 && (
+        <div
+          className={`border-t border-dashed border-gray-300 pt-4 foundation-fade ${inView ? "in-view" : ""}`}
+          style={{ transitionDelay: `${FOUNDATION_DELAY_MS}ms` }}
+        >
+          <p className="text-sm text-muted">{foundation.join(" · ")}</p>
+        </div>
+      )}
     </div>
   );
 }

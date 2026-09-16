@@ -6,7 +6,6 @@ import { useScrolled } from "@/hooks/use-scrolled";
 import { useMediaQuery, NAV_BREAKPOINT_QUERY } from "@/hooks/use-media-query";
 
 const links = [
-  { label: "Overview", href: "/quality" },
   { label: "Model of Care", href: "/quality/model-of-care" },
   { label: "MDT", href: "/quality/mdt" },
   { label: "Safety & Improvement", href: "/quality/safety-improvement" },
@@ -32,10 +31,7 @@ export function QualitySubnav() {
         <div className="relative">
           <ul className="flex gap-1 overflow-x-auto scrollbar-hide py-2">
             {links.map(({ label, href }) => {
-              const isActive =
-                href === "/quality"
-                  ? pathname === "/quality"
-                  : pathname.startsWith(href);
+              const isActive = pathname.startsWith(href);
               return (
                 <li key={href}>
                   <a

@@ -183,6 +183,14 @@ export const teamMembers: TeamMember[] = [
     image: "/images/staff/Jess-Dias.png",
   },
   {
+    name: "Chloe Moran",
+    role: "Talent Acquisition Lead",
+    department: "People & Culture",
+    bio: "Chloe is an experienced, relationship-driven recruitment specialist with a strong background in agency recruitment across Ireland and the EU. She has worked across a diverse range of industries and roles, partnering with national and multinational organisations to identify and attract exceptional talent.\n\nWith a strategic, people-focused approach, Chloe is passionate about building long-term relationships, creating positive candidate experiences and delivering recruitment solutions that support sustainable business growth.",
+    initials: "CM",
+    image: "/images/staff/Chloe-Moran.png",
+  },
+  {
     name: "Dale Cooper",
     role: "Training & Development Coordinator",
     department: "People & Culture",
@@ -197,14 +205,6 @@ export const teamMembers: TeamMember[] = [
     bio: "I completed my law degree in 2019 and spent 6 years travelling and working in Australia. My experience included working across Customer Service, Australian Immigration and in 2022 entered the Recruitment industry assisting law firms with hiring needs. 2025 brought me back home to Ireland to friends and family. In my spare time I enjoy walks with my 3 year old Golden Doodle who came all the way from Australia, I love travelling Ireland, camping and the occasional drink with family and friends.",
     initials: "RM",
     image: "/images/staff/Rianna-Mannering.png",
-  },
-  {
-    name: "Chloe Moran",
-    role: "Talent Acquisition Lead",
-    department: "People & Culture",
-    bio: "Chloe is an experienced, relationship-driven recruitment specialist with a strong background in agency recruitment across Ireland and the EU. She has worked across a diverse range of industries and roles, partnering with national and multinational organisations to identify and attract exceptional talent.\n\nWith a strategic, people-focused approach, Chloe is passionate about building long-term relationships, creating positive candidate experiences and delivering recruitment solutions that support sustainable business growth.",
-    initials: "CM",
-    image: "/images/staff/Chloe-Moran.png",
   },
   {
     name: "Megan Mulryan",

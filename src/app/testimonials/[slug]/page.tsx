@@ -79,20 +79,8 @@ export default async function TestimonialDetailPage({ params }: Params) {
           </div>
         </figcaption>
 
-        <div className="mt-6 pt-6 border-t border-gray-200 space-y-4">
-          {testimonial.body?.length ? (
-            testimonial.body.map((paragraph) => (
-              <p key={paragraph} className="text-foreground text-lg leading-relaxed">
-                {paragraph}
-              </p>
-            ))
-          ) : (
-            <p className="text-foreground leading-relaxed">{FALLBACK_BODY}</p>
-          )}
-        </div>
-
         {testimonial.image && (
-          <figure className="mt-10">
+          <figure className="mt-6">
             {/* Intrinsic width/height, not `fill` — the portrait reserves its
                 own box so nothing shifts as it loads (CLS). */}
             <Image
@@ -105,6 +93,18 @@ export default async function TestimonialDetailPage({ params }: Params) {
             />
           </figure>
         )}
+
+        <div className="mt-6 pt-6 border-t border-gray-200 space-y-4">
+          {testimonial.body?.length ? (
+            testimonial.body.map((paragraph) => (
+              <p key={paragraph} className="text-foreground text-lg leading-relaxed">
+                {paragraph}
+              </p>
+            ))
+          ) : (
+            <p className="text-foreground leading-relaxed">{FALLBACK_BODY}</p>
+          )}
+        </div>
         </div>
       </Container>
     </div>

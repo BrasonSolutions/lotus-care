@@ -159,7 +159,7 @@ export const modelOfCareSections = [
     id: "adt",
     icon: "home",
     summary: "Consistent, well-communicated moves into, through, and on from our services.",
-    image: "/images/stock/assessment-session.jpg",
+    image: "/images/stock/adt-support-session.jpg",
     label: "ADT",
     heading: "Admissions, Discharges & Transitions",
     intro:
