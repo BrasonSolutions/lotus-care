@@ -1,4 +1,3 @@
-import { Container } from "@/components/layout";
 import type { LegalDoc } from "@/data/legal";
 
 interface LegalDocumentProps {
@@ -13,7 +12,7 @@ interface LegalDocumentProps {
 export function LegalDocument({ doc }: LegalDocumentProps) {
   return (
     <div className="py-16 sm:py-20">
-      <Container width="reading" padded>
+      <div className="mx-auto w-full px-6 sm:px-10 md:px-[15%]">
         <h1 className="font-dm-sans text-3xl sm:text-4xl font-bold text-primary-dark mb-3">{doc.title}</h1>
         <p className="text-muted mb-8">{doc.description}</p>
 
@@ -56,7 +55,7 @@ export function LegalDocument({ doc }: LegalDocumentProps) {
             </section>
           ))}
         </div>
-      </Container>
+      </div>
     </div>
   );
 }
