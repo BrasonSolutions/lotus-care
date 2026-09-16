@@ -133,7 +133,10 @@ export function ServiceCard({ service, index, inView, accent = "teal" }: Service
         <div className={`absolute inset-0 bg-gradient-to-t ${ACCENT[accent].overlay}`} />
         <div className="relative z-10 p-6">
           <h3 className="text-xl font-bold text-white mb-2">{service.title}</h3>
-          <p className="text-white/80 text-sm leading-relaxed">
+          {/* Reserves 4 lines regardless of actual copy length, so the title
+              above sits at the same height on every card in the row — the
+              three services' descriptions aren't the same length. */}
+          <p className="text-white/80 text-sm leading-relaxed min-h-[5.7rem]">
             {service.description}
           </p>
         </div>

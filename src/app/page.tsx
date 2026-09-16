@@ -8,7 +8,7 @@ import { TeamSection } from "@/components/team-section";
 import { RecruitmentSection } from "@/components/recruitment-section";
 import { ContactSection } from "@/components/contact-section";
 import { Footer } from "@/components/footer";
-import { LotusBand } from "@/components/lotus-band";
+import { LotusDivider } from "@/components/ui/LotusDivider";
 import { SectionTitle } from "@/components/section-title";
 import { Reveal } from "@/components/reveal";
 import { Container } from "@/components/layout";
@@ -32,9 +32,11 @@ const quickLinks = [
 ];
 
 const aboutParagraphs = [
-  "Established in 2022, Lotus Care provides residential and non-residential respite services for children and adults whom we call our Service Owners. Lotus Care focuses on creating environments where Service Owners can feel at home, build relationships and have greater choice and independence in their everyday lives.",
-  "Our approach is rooted in dignity, human rights and person-centred care. We take the time to understand each person as an individual, their ambitions and the things that matter most to them, and work alongside the service owner, their families, other stakeholders and our teams to provide the right support. Lotus Care offer a wide range of supports through our dedicated care teams and multidisciplinary teams.",
-  "Lotus Care has continued to grow and our focus has remained the same, putting Service Owners first. We are committed to creating more exceptional places and opportunities for the people we support, while building a workplace where our teams can grow, develop and be proud of the difference they make.",
+  "Established in 2022 and now an award-winning care provider, Lotus Care provides residential and non-residential respite services for children and adults, the people we call our Service Owners.",
+  "Our aim is to create places where Service Owners feel at home, build lasting relationships and have real choice and independence in their everyday lives.",
+  "Everything we do is grounded in dignity, human rights, and person-centred care. We take the time to get to know each person as an individual, to understand their ambitions and what matters most to them. We then work alongside the Service Owner, their family, other stakeholders, and our own teams to put the right support in place.",
+  "Through our dedicated frontline care professionals and multidisciplinary teams, Lotus Care offers a broad range of supports tailored to each person's preferences, needs, and interests.",
+  "As Lotus Care has grown in response to high demand for our services, our focus has stayed the same: Service Owners come first. We are committed to creating more exceptional homes and opportunities for the people we support, and to building a workplace where our teams can grow, develop and take pride in the difference they make in the lives of our Service Owners.",
 ];
 
 const aboutStats = [
@@ -84,7 +86,7 @@ export default function Home() {
         />
         <AboutSection
           title="About Lotus Care"
-          subtitle="Dedicated to enhancing the lives of people with disabilities since our founding."
+          subtitle="Enhancing the lives of people with additional needs."
           paragraphs={aboutParagraphs}
           stats={aboutStats}
         />
@@ -96,19 +98,25 @@ export default function Home() {
                 "Comprehensive disability support services designed around each individual's needs and aspirations.",
               services,
             },
+          ]}
+        />
+        {/* People of Lotus testimonial sits ahead of the governance/quality
+            group below — the human story before the quality story. */}
+        <QuoteSection
+          quote={homeQuote}
+          ctaHref="/quality/model-of-care#testimonials"
+          ctaLabel="Read More Testimonials"
+        />
+        <ServicesSection
+          id="how-we-enhance"
+          groups={[
             {
-              id: "how-we-enhance",
               title: "How We Enhance Our Services",
               subtitle:
                 "The multidisciplinary expertise, model of care and governance that sit behind every service we deliver.",
               services: enhanceServices,
             },
           ]}
-        />
-        <QuoteSection
-          quote={homeQuote}
-          ctaHref="/quality/model-of-care#testimonials"
-          ctaLabel="Read More Testimonials"
         />
         <section id="homes" className="py-20 lg:py-28 bg-white">
           <Container>
@@ -130,13 +138,9 @@ export default function Home() {
             </div>
           </Container>
         </section>
-        <div aria-hidden="true">
-          <LotusBand variant="teal" height={72} />
-        </div>
+        <LotusDivider />
         <TeamSection members={[...boardMembers, ...teamMembers]} departments={departments} />
-        <div aria-hidden="true">
-          <LotusBand variant="teal" height={72} />
-        </div>
+        <LotusDivider />
         <RecruitmentSection
           description={recruitmentDescription}
           note={recruitmentNote}

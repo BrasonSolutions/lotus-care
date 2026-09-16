@@ -95,8 +95,8 @@ export function Footer({
             &copy; {new Date().getFullYear()} Lotus Care. All rights reserved.
           </p>
           <div className="flex gap-6 text-sm text-white/50">
-            <a href="#" className="hover:text-accent transition-colors focus-ring-white rounded">Privacy Policy</a>
-            <a href="#" className="hover:text-accent transition-colors focus-ring-white rounded">Terms of Service</a>
+            <Link href="/privacy-policy" className="hover:text-accent transition-colors focus-ring-white rounded">Privacy Policy</Link>
+            <Link href="/terms-of-service" className="hover:text-accent transition-colors focus-ring-white rounded">Terms of Service</Link>
           </div>
         </Container>
       </div>

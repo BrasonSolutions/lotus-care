@@ -48,7 +48,7 @@ export const teamMembers: TeamMember[] = [
   },
   {
     name: "Danny Scally",
-    role: "Director of ADT and Operations",
+    role: "Director of Admissions Discharges Transitions and Operations",
     department: "Senior Management Team",
     bio: "Danny is a qualified Intellectual Disability Nurse working in the social care area for the past 13 years, primarily in the provision of Disability and Mental Health Services. Danny holds additional qualifications in People Management, Mental Health and a qualification in Train the Trainer which indicates his ongoing professional development.\n\nDanny has held various positions such as Clinical Nurse, Person in Charge, Admission, Discharge and Transition Manager, Operations Manager and Director of Operations in a leading Disability Service. Danny has played a pivotal role in service planning, coordination, and resource management. Demonstrating strong leadership, he collaborates with multidisciplinary teams and relevant agencies to ensure the welfare and progression of those under his care.",
     initials: "DS",
@@ -82,14 +82,12 @@ export const teamMembers: TeamMember[] = [
     image: "/images/staff/Caithriona-Lynch.png",
   },
   {
-    // Added per issue #123 (newest comment). No photo supplied — falls
-    // back to an initials avatar in the UI, same as Megan Daly / Tracey
-    // McCabe below.
     name: "Trevor Nesirky",
     role: "Director of Regulatory Affairs and Service Development",
     department: "Senior Management Team",
     bio: "Trevor has worked in adult and children's social care for his whole career which spans over 4 decades, he has worked in Ireland and the UK within both the public and private sectors. He has held senior posts where  he has shaped significant positive change .He has a particular interest in ensuring that education is available for all and that every opportunity for learning is seized upon, within Lotus Care this achieved by the structured delivery of a 24-hour curriculum.\n\nWith a strong interest in children's rights, Trevor used his master thesis to explore how regulation has impacted children's residential services in both Ireland and the UK. This work allowed him to develop a deep  understanding of regulation and how services can be made safe and productive.",
     initials: "TN",
+    image: "/images/staff/Trevor-Nesirky.jpg",
   },
   {
     name: "Nicki Cegielski Egan",

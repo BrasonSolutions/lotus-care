@@ -58,5 +58,5 @@ export const contactInfo = {
   referralsMobile: "086 822 8942",
   referralsMobileContact: "Danny Scally",
   email: "info@lotuscare.ie",
-  address: "Head Office: Suite 204, Birr Technology Park, St Brendans Park, Birr, Co Offaly, R42 XH39",
+  address: "Head Office: Suite 204, Birr Technology Park, St Brendans Park, Birr, Co Offaly, R42 HX39",
 };

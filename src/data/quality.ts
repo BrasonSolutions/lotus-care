@@ -100,11 +100,15 @@ export const qualityFoundationPrinciples: string[] = [
   "Supported decision-making",
 ];
 
-// Anonymized per client decision — no name/initials attribution.
+// Anonymized per client decision — no name/initials attribution. `role` was
+// already empty (nothing to show as a byline); `anonymized: true` now also
+// drops that empty byline line entirely and shows a person icon in place of
+// the "LC" initials — see TestimonialCard.
 export const anonymizedTestimonial: Testimonial = {
   name: "A Lotus Care Resident",
-  role: "",
+  role: "A Lotus Care Resident",
   initials: "LC",
+  anonymized: true,
   quote:
     "They encouraged me to make choices about my day-to-day life, and made sure I felt a part of my home.",
 };
@@ -176,9 +180,9 @@ export const modelOfCareSections = [
 ];
 
 export const curriculumContent = {
-  subtitle: "Learning doesn't stop when the school day ends",
+  subtitle: "Every day is a chance to learn something new at Lotus Care.",
   intro: [
-    "At Lotus Care, everyday routines, activities and experiences create opportunities for service owners to build skills, confidence and independence.",
+    "At Lotus Care, every routine, activity, and experience is a chance to learn. For children, this sits alongside school and helps skills develop. For adults, it means building independence in the home, getting into work or training, taking part in the community and keeping up friendships.",
     "Our 24-hour curriculum is an MDT-led approach which seizes on all opportunities for learning by ensuring residential staff are skilled to implement structured, individualised education programmes. It complements formal education and other learning opportunities, helping skills be developed and reinforced.",
   ],
   keywords: [
@@ -203,7 +207,7 @@ export const curriculumContent = {
 export const adtContent = {
   subtitle: "A caring start",
   intro:
-    "Our admissions process makes sure every placement starts with a deep understanding of the person – and a clear plan for their future.",
+    "Moving into a new home is a big step — we take the time to get it right for the person and their family.",
   steps: [
     {
       number: 1,
@@ -235,8 +239,8 @@ export const adtContent = {
     },
   ] satisfies TimelineStep[],
   specialties: [
-    "ASD",
-    "ADHD",
+    "Autism Spectrum Disorder (ASD)",
+    "Attention Deficit Hyperactivity Disorder (ADHD)",
     "Developmental Trauma",
     "Attachment Difficulties",
     "Personality Disorder",
@@ -250,8 +254,8 @@ export const humanRightsContent = {
   // intro paragraphs below.
   subtitle: "Rights at the heart of care",
   intro: [
-    "At Lotus Care, we are committed to delivering services that are firmly grounded in a human rights-based approach, where dignity, respect, equality, and autonomy are central to every aspect of care and support. We recognise that high-quality care is not only about safety and wellbeing, but also about the active protection, promotion, and realisation of each person's fundamental rights. These rights are not optional or secondary considerations; they are the foundation of how we work.",
-    "Lotus Care's Human Rights Committee plays a key role in strengthening this commitment across all our services. It ensures that human rights principles are consistently embedded in practice, decision-making, and governance, and that the people we support are empowered to live lives of choice, control, and inclusion.",
+    "At Lotus Care, a person's rights shape how we talk to people, how we plan their support, and how we support them to make decisions.",
+    "Everyone we support has a right to be heard, to make their own choices and be treated with respect, whatever their age or disability. Our Human Rights Committee checks that this happens in every home, every day, and that the people we support have a real say in their own lives.",
   ],
   // "Purpose of the Committee" (+ its 6 keywords) removed per client
   // confirmation — it predated issue #120 (traced to #91/#112, the original
@@ -352,6 +356,10 @@ export const mdtSpokes: Spoke[] = [
 ];
 
 export const mdtContent = {
+  introVideo: {
+    youtubeId: "6kuXZ4gjf7M",
+    title: "An introduction to our Multidisciplinary Team",
+  },
   intro: [
     "At Lotus Care, we recognise that delivering high-quality, person-centred support requires a collaborative and holistic approach. Our Internal Multidisciplinary Team (MDT) brings together a range of clinical and therapeutic expertise to ensure that the needs of each child and adult we support are understood, planned for, and responded to in a coordinated way. Our MDT model strengthens decision-making, enhances consistency of care, and ensures that each person benefits from the right expertise at the right time.",
     "Our internal MDT is made up of experienced professionals across Occupational Therapy, Behaviour Support, Nursing, General Practitioner (GP) input, Psychology, Speech and Language Therapy, Play Therapy, and Dietician/Nutrition. This integrated team works alongside frontline staff and management to support holistic, needs-led care planning and delivery.",

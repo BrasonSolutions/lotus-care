@@ -18,12 +18,12 @@ interface TeamSectionProps {
 
 export function TeamSection({
   title = "Meet the Team",
-  subtitle = "Dedicated professionals committed to making a difference every day.",
+  subtitle = "The people behind the people we support.",
   members,
   departments,
 }: TeamSectionProps) {
   const { ref, inView } = useInView({ threshold: 0.1 });
-  const [activeDept, setActiveDept] = useState<string>("Management");
+  const [activeDept, setActiveDept] = useState<string>("Board");
   const [selectedMember, setSelectedMember] = useState<
     TeamMember | null
   >(null);

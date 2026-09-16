@@ -6,10 +6,10 @@ import { HubAndSpoke } from "@/components/quality/hub-and-spoke";
 import { PrincipleTags } from "@/components/quality/principle-cards";
 import { TeamStrip } from "@/components/quality/team-strip";
 import { CareersCTAStrip } from "@/components/careers/careers-cta-strip";
-import { LotusBand } from "@/components/lotus-band";
+import { LotusDivider } from "@/components/ui/LotusDivider";
 import { Blob } from "@/components/blob";
 import { Reveal } from "@/components/reveal";
-import { Chip } from "@/components/chip";
+import { YouTubeFacade } from "@/components/ui/YouTubeFacade";
 import { mdtCore, mdtSpokes, mdtContent, mdtTeam } from "@/data/quality";
 import { Container } from "@/components/layout";
 
@@ -19,40 +19,20 @@ export const metadata: Metadata = {
     "The clinical and therapeutic experts working alongside frontline staff to deliver holistic, coordinated care at Lotus Care.",
 };
 
-// Teal only, per the same standing rule as /quality/model-of-care — no
-// purple divider band.
-function Divider() {
-  return (
-    <div aria-hidden="true">
-      <LotusBand variant="teal" height={72} />
-    </div>
-  );
-}
-
-/** #92 asked for an intro video; no asset exists (nothing in the client's
- * Drive folder, nothing attached to the issue). A clearly-marked
- * placeholder, not a real embed — reuses the exact play-triangle icon and
- * "Coming soon" badge convention already established in
- * VideoTestimonialCard, rather than inventing a new one. Nothing here loads
- * or references any media file. */
-function VideoPlaceholder() {
+/** #92's intro video — real footage now linked via `mdtContent.introVideo`
+ * (see #93). Same click-to-play facade as VideoTestimonialCard, shared via
+ * YouTubeFacade, so nothing loads from YouTube until someone presses play. */
+function IntroVideo() {
+  const { youtubeId, title } = mdtContent.introVideo;
   return (
     <div className="py-14 sm:py-16">
       <Container>
         <Reveal className="reveal-scale">
-          <div className="aspect-video max-w-3xl mx-auto rounded-2xl bg-white border border-gray-100 shadow-sm flex flex-col items-center justify-center gap-3">
-            <div
-              className="w-14 h-14 rounded-full bg-primary-dark/10 flex items-center justify-center"
-              aria-hidden="true"
-            >
-              <svg className="w-5 h-5 text-primary-dark translate-x-0.5" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M8 5v14l11-7z" />
-              </svg>
+          <div className="max-w-3xl mx-auto rounded-2xl bg-white border border-gray-100 shadow-sm overflow-hidden">
+            <div className="relative aspect-video bg-gray-100">
+              <YouTubeFacade youtubeId={youtubeId} title={title} sizes="(min-width: 1024px) 768px, 100vw" />
             </div>
-            <Chip tone="solid" size="sm">
-              Coming soon
-            </Chip>
-            <p className="text-sm text-muted">An introduction to our Multidisciplinary Team</p>
+            <p className="text-sm text-muted text-center py-4 px-5">{title}</p>
           </div>
         </Reveal>
       </Container>
@@ -179,21 +159,21 @@ export default function MdtPage() {
         image="/images/stock/hands-on-support.jpg"
       />
 
-      <VideoPlaceholder />
+      <IntroVideo />
 
-      <Divider />
+      <LotusDivider />
 
       <IntroSection />
 
-      <Divider />
+      <LotusDivider />
 
       <InternalMdtSection />
 
-      <Divider />
+      <LotusDivider />
 
       <PartnershipSection />
 
-      <Divider />
+      <LotusDivider />
 
       <section className="py-16 sm:py-20">
         <Container>
