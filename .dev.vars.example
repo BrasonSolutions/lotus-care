@@ -1,0 +1,4 @@
+# Local values for `opennextjs-cloudflare preview`. Copy to .dev.vars.
+RESEND_API_KEY=
+MAIL_FROM="Lotus Care Website <noreply@lotuscare.ie>"
+OCCUPOP_API_TOKEN=

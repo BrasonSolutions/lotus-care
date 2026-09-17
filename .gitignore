@@ -58,3 +58,8 @@ results/
 
 # Brainstorming visual companion
 .superpowers/
+
+# Cloudflare
+.open-next/
+.wrangler/
+.dev.vars
