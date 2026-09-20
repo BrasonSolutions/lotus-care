@@ -20,8 +20,8 @@ export const safetyImprovementTeam = pickTeam(["Aisling Carroll", "Louise Kidney
 // Team" sections (homepage, /careers). Constructed directly rather than via
 // `pickTeam`, so they only ever appear on /quality/mdt.
 const mdtOnlyMembers = [
-  { name: "Dr Sara Tarr", role: "Psychologist", initials: "ST", image: "/images/staff/Sara-Tarr.jpg" },
-  { name: "Sinead Cahillane", role: "Dietician", initials: "SC", image: "/images/staff/Sinead-Cahillane.png" },
+  { name: "Dr Sara Tarr", role: "Psychologist", initials: "ST", image: "/images/staff/Sara-Tarr.webp" },
+  { name: "Sinead Cahillane", role: "Dietician", initials: "SC", image: "/images/staff/Sinead-Cahillane.webp" },
 ];
 export const mdtTeam = [
   ...pickTeam(["Vaida Cheema", "Nadeeka Pathirana", "Katjia Faria", "Katie Kelly"]),
