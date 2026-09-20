@@ -2,6 +2,8 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "lotus-care",
   "main": ".open-next/worker.js",
+  // Workers Builds runs `wrangler deploy` directly, so build the bundle here.
+  "build": { "command": "npx opennextjs-cloudflare build" },
   "compatibility_date": "2026-09-17",
   "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
   "assets": {
