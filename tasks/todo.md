@@ -1634,3 +1634,94 @@ Team transition has no gap left behind by the removed video/map section.
 
 **Not yet committed/pushed** — pending user's in-browser review (dev server
 running on `localhost:3000`).
+
+---
+
+## Card: Client review feedback, round 2 — 7 small content/photo fixes
+
+Branch: `fix/client-review-feedback-round-2`
+Pipeline variant: `fix` (adopt-only content edits, no new components)
+Status: **built, verified, pending user review before commit.**
+
+No GitHub issue — a flat list of 7 client-review corrections supplied directly by
+the user, bundled into one branch/PR per this project's established precedent for
+this shape of request (PRs #143, #145 did the same). Full plan brainstormed via
+harness Plan Mode (3 parallel Explore agents — ADT/MDT roster, Services/Referrals,
+Benefits/How-We-Hire — followed by `AskUserQuestion` on 4 genuinely open calls).
+Plan file: `~/.claude/plans/i-have-a-list-linked-cake.md`.
+
+### Confirmed decisions (via `AskUserQuestion` before implementing)
+
+- ADT's new heading is a lead-in sentence ("We Support Intellectual Disabilities —
+  including but not limited to:"), not a literal restatement of the specialty list —
+  the chips below keep their existing full names, unchanged.
+- "Competitive Pay & Pension" **renames** the existing "Competitive Pay" benefit
+  (not a new 11th entry — avoids a duplicate + a dangling single card in the 2-col
+  grid). Description gets a short added pension clause, flagged as non-verbatim.
+- "Tina" = **Tina Early, Play Therapist** (her photo already existed in
+  `public/images/staff/`, unreferenced anywhere — fills the "Play Therapy"
+  discipline gap `mdtContent`'s own copy names but never had a team member for).
+  MDT-page-only, same pattern as Dr Sara Tarr / Sinead Cahillane.
+
+### What changed
+
+- `src/app/quality/model-of-care/page.tsx` — ADT specialties heading reworded.
+- `src/data/quality.ts` — removed "Personality Disorder" from `adtContent.specialties`
+  (6 remain); added `"Eadaoin Fleming"` to `mdtTeam`'s `pickTeam([...])` list (she
+  already had a full `teamMembers` entry, `department: "MDT"` — one-line addition);
+  added `"Tina Early"` to `mdtOnlyMembers`.
+- `src/data/services.ts` — "Non-Residential Respite" → "Non-Residential/Outreach".
+- `src/data/forms.ts` — referrals dropdown "Outreach" → "Non-Residential/Outreach"
+  (same string doubles as the submitted form value — confirmed nothing else in the
+  repo keys off the old string).
+- `src/data/careers.ts` — "Competitive Pay" → "Competitive Pay & Pension", description
+  extended with a pension clause.
+- `src/app/careers/how-we-hire/page.tsx` — "HR Onboarding Documentation" →
+  "Onboarding Documentation" (kept house Title Case convention rather than the
+  user's paraphrased "onboarding documents").
+- 4 staff photos replaced (`public/images/staff/{Paula-Lyons,Selina-Brennan,
+  Tamara-Murphy,Aoife-Buckley}.webp`) — client supplied full-res originals
+  (~3200–5400px) in `~/Downloads/` (`PL/SB/TM/AB Colour.jpg`) to replace the
+  existing low-res versions (161–272px). Hand-cropped each to a tight square
+  centred on the face (measured crop boxes via a gridded preview, not guessed —
+  same fix class as commits `65c83f5`/`20fdb90` on these same 4 people), resized to
+  288px and stripped of EXIF/ICC/XMP metadata via ImageMagick to match the site's
+  existing staff-photo convention (`de05120`) — final files 9–13KB, consistent with
+  siblings.
+- Also ran `npm install` — `node_modules` was missing `@opennextjs/cloudflare`
+  (declared in `package.json` but not installed), which broke `tsc --noEmit`
+  unrelated to this card's edits; fixed as a prerequisite for verification.
+
+### Verified
+
+- `npx tsc --noEmit`, `npx eslint` (scoped to changed files), `npm run build` all
+  clean (27 routes).
+- Real browser (dev server + Playwright) at 1440px and 390px: ADT heading + 6 chips
+  (no Personality Disorder, no layout shift); homepage Services card reads
+  "Non-Residential/Outreach"; referrals dropdown confirmed via rendered HTML;
+  `/quality/mdt` team strip shows Eadaoin Fleming + Tina Early alongside the
+  existing 6, no grid gap; Benefits page shows "Competitive Pay & Pension", 10
+  cards, no dangling grid item; How We Hire checklist confirmed via rendered HTML;
+  all 4 replaced photos verified sharp and correctly framed in the homepage's
+  "Meet the Team" → Persons in Charge grid at both breakpoints.
+
+**Follow-up, same branch/session — "Our Homes" gallery 3rd photo swapped.**
+User attached a new exterior photo (stone-built house, `Exterior Shot 4.jpg` from
+`~/Downloads/`, 8064x6048) to replace the homepage's "Our Homes" carousel 3rd slide
+(`homeGallerySlides[2]`, `src/app/page.tsx`), previously a lawn/playground shot
+("Lawn and garden along the side of a home") — identified and confirmed by viewing
+the current file before touching it. Resized to 1600px wide, converted to webp,
+metadata stripped, overwriting `public/images/homes/gallery/exterior-2.webp` in
+place (filename unchanged, only 1 of 10 slides affected). Updated the slide's `alt`
+text to match the new content ("A stone-built home with its driveway and entrance
+archway") since the old alt text no longer described the image. No CREDITS.md entry
+needed — this gallery is client-owned house photography, not licensed stock (the
+Pexels credits file only covers `public/images/stock/`).
+
+Verified: `tsc`/`eslint`/`build` all clean; DOM query confirmed the correct slide
+(index 2) carries the new file + new alt text; isolated element screenshot confirms
+the new photo renders correctly through the carousel's `aspect-square`/`object-cover`
+crop; checked at 1440px and 390px, no overflow.
+
+**Not yet committed/pushed** — pending user's in-browser review (dev server
+running on `localhost:3000`).

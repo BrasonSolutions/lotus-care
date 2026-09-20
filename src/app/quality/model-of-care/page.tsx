@@ -117,7 +117,9 @@ function ADTSection() {
         </Reveal>
 
         <Reveal className="mt-16 sm:mt-20 text-center">
-          <h3 className="text-xl font-bold text-primary-dark mb-5">Clinical Specialties We Support</h3>
+          <h3 className="text-xl font-bold text-primary-dark mb-5">
+            We Support Intellectual Disabilities — including but not limited to:
+          </h3>
           <SpecialtyChips items={adtContent.specialties} tone="purple" />
         </Reveal>
 

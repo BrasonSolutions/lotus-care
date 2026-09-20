@@ -29,7 +29,7 @@ export const services: Service[] = [
     hasImage: true,
   },
   {
-    title: "Non-Residential Respite",
+    title: "Non-Residential/Outreach",
     description:
       "Daytime support for children and adults, giving families a break and giving the person a day filled with activities, friends and time out in the community.",
     icon: "heart",
