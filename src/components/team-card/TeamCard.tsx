@@ -18,7 +18,7 @@ export function TeamCard({ member, onClick, accent = "teal" }: TeamCardProps) {
       className="card-hover bg-white rounded-2xl p-6 sm:p-8 text-center group border border-gray-100 hover:border-primary/30 shadow-sm hover:shadow-md transition-colors w-full h-full focus-ring"
     >
       {/* Photo — rounded square with a teal outline (issue #94) */}
-      <div className="relative w-36 h-36 mx-auto mb-4 rounded-2xl overflow-hidden ring-[3px] ring-primary group-hover:scale-105 transition-transform">
+      <div className="relative w-36 h-36 mx-auto mb-4 rounded-2xl overflow-hidden bg-primary/10 ring-[3px] ring-primary group-hover:scale-105 transition-transform">
         {member.image ? (
           <Image
             src={member.image}
@@ -26,6 +26,7 @@ export function TeamCard({ member, onClick, accent = "teal" }: TeamCardProps) {
             width={144}
             height={144}
             sizes="144px"
+            loading="eager"
             className="w-full h-full object-cover object-top"
           />
         ) : (

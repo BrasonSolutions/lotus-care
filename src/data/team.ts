@@ -28,7 +28,7 @@ export const teamMembers: TeamMember[] = [
     department: "Senior Management Team",
     bio: "Mary is a highly experienced senior health care professional, having worked in the Healthcare Sector for over 30 years, primarily in the provision of services for Children and Adults with Intellectual Disabilities, Community Care / Family Support, Older Persons, and People Living with Dementia.\n\nMary has held many senior leadership roles, including Care Director, Chief Executive Officer, Senior Services Manager of residential and day services for adults with intellectual disabilities at Sunbeam House Services and Operations Manager at the Alzheimer Society of Ireland. Mary has also worked within the Private Nursing Home Sector in Ireland and the UK, The Irish Wheelchair Association, Family Carers Ireland, St Michael's House, and the HSE Psychiatric / Intellectual Disability Services. Mary's reputation for delivering high quality person centred care will further enhance and support the Lotus Care team in meeting the organisations values & mission.",
     initials: "MB",
-    image: "/images/staff/Mary-Bardin.png",
+    image: "/images/staff/Mary-Bardin.webp",
   },
   {
     name: "Patrick Troy",
@@ -36,7 +36,7 @@ export const teamMembers: TeamMember[] = [
     department: "Senior Management Team",
     bio: "Patrick Troy is an accomplished HR professional with broad experience across multiple industries, including healthcare, consultancy services, construction, and manufacturing. He holds a Master's degree in Social and Organisational Psychology and is a Chartered Member of the Chartered Institute of Personnel and Development (CIPD).\n\nWith a strong belief in the power of people to drive organisational success, Patrick specialises in developing workplace cultures and systems that empower individuals and enhance engagement. His work has led to the design and implementation of award-winning, industry-first initiatives in talent development and organisational change. Passionate about unlocking potential at every level, Patrick brings a strategic and innovative approach to human resources that consistently delivers impact.",
     initials: "PT",
-    image: "/images/staff/Patrick-Troy.png",
+    image: "/images/staff/Patrick-Troy.webp",
   },
   {
     name: "Alan Doyle",
@@ -44,7 +44,7 @@ export const teamMembers: TeamMember[] = [
     department: "Senior Management Team",
     bio: "Alan is Chief Financial Officer at Lotus Care, where he provides financial leadership and strategic oversight to support the organisation's delivery of high-quality residential and respite services for children and adults with disabilities throughout Ireland.\n\nAlan brings over 30 years of senior finance leadership experience across healthcare, pharmaceutical manufacturing, FMCG, and high-growth organisations. His background includes senior roles with Viatris, a global pharmaceutical company, and Glanbia, an international food and nutrition group, as well as a strategic finance role with the National Treatment Purchase Fund (NTPF). He has also held leadership positions in private equity–backed and owner-managed businesses. Alan is a Fellow of the Association of Chartered Certified Accountants (FCCA) and has a strong track record in strengthening financial governance, improving operational performance, and partnering with Boards and executive teams in regulated environments.\n\nAt Lotus Care, Alan works closely with the CEO and Board to guide planning, budgeting, investment appraisal, compliance, and reporting, ensuring the organisation has robust financial controls and oversight to underpin long-term service excellence.",
     initials: "AD",
-    image: "/images/staff/Alan-Doyle.png",
+    image: "/images/staff/Alan-Doyle.webp",
   },
   {
     name: "Danny Scally",
@@ -52,7 +52,7 @@ export const teamMembers: TeamMember[] = [
     department: "Senior Management Team",
     bio: "Danny is a qualified Intellectual Disability Nurse working in the social care area for the past 13 years, primarily in the provision of Disability and Mental Health Services. Danny holds additional qualifications in People Management, Mental Health and a qualification in Train the Trainer which indicates his ongoing professional development.\n\nDanny has held various positions such as Clinical Nurse, Person in Charge, Admission, Discharge and Transition Manager, Operations Manager and Director of Operations in a leading Disability Service. Danny has played a pivotal role in service planning, coordination, and resource management. Demonstrating strong leadership, he collaborates with multidisciplinary teams and relevant agencies to ensure the welfare and progression of those under his care.",
     initials: "DS",
-    image: "/images/staff/Danny-Scally.png",
+    image: "/images/staff/Danny-Scally.webp",
   },
   {
     // Corrected per issue #123 — previously listed under the wrong name
@@ -68,7 +68,7 @@ export const teamMembers: TeamMember[] = [
     department: "Quality",
     bio: "I am an experienced Social Care Worker with a passion for Human Rights and promoting high quality individualised supports. I have worked in the disability sector, starting in front line and working up to management roles, since 2017. During this time, I have led teams through change management processes, developed learning programs, led transitions, and supported people to achieve their individual goals through promotion of self-advocacy. My experience spans across residential, day service, respite and wrap around services.\n\nMy values and wealth of experience align strongly with Lotus Care's vision of empowering people to live as independently as possible in a high-quality, safe and person-centred service. I am committed to supporting and empowering staff teams to deliver consistent safe and effective services.",
     initials: "AC",
-    image: "/images/staff/Aisling-Carroll.jpg",
+    image: "/images/staff/Aisling-Carroll.webp",
   },
   {
     // Added per issue #123 (newest comment) — a distinct person from
@@ -79,7 +79,7 @@ export const teamMembers: TeamMember[] = [
     department: "Senior Management Team",
     bio: "Caithriona has over 18 years of experience in social care and leadership roles across adults & children’s disability services and mainstream children’s residential services. She brings a wealth of expertise to her role. Caithriona holds a BA in Applied Social Studies in Social Care in addition to a management qualification, ensuring a thorough academic grounding. She is committed to empowering individuals to make informed decisions, achieve personal goals, and live independently within their communities.\n\nCaithriona’s leadership is shaped by the quality objectives set out in the HIQA National Standards and relevant legislation, which align with Lotus’s commitment to delivering exceptional care and services. She focuses on person-centred care, individual choice, safeguarding, risk management and inclusion. By prioritizing continuous improvement, she will ensure responsive services that meet each service owner’s unique needs while maintaining transparency and accountability.\n\nCaithriona’s passion for her work and her extensive experience reflect her dedication to creating a positive impact and fostering personal growth and independence for those we are privileged to support.",
     initials: "CL",
-    image: "/images/staff/Caithriona-Lynch.png",
+    image: "/images/staff/Caithriona-Lynch.webp",
   },
   {
     name: "Trevor Nesirky",
@@ -87,7 +87,7 @@ export const teamMembers: TeamMember[] = [
     department: "Senior Management Team",
     bio: "Trevor has worked in adult and children's social care for his whole career which spans over 4 decades, he has worked in Ireland and the UK within both the public and private sectors. He has held senior posts where  he has shaped significant positive change .He has a particular interest in ensuring that education is available for all and that every opportunity for learning is seized upon, within Lotus Care this achieved by the structured delivery of a 24-hour curriculum.\n\nWith a strong interest in children's rights, Trevor used his master thesis to explore how regulation has impacted children's residential services in both Ireland and the UK. This work allowed him to develop a deep  understanding of regulation and how services can be made safe and productive.",
     initials: "TN",
-    image: "/images/staff/Trevor-Nesirky.jpg",
+    image: "/images/staff/Trevor-Nesirky.webp",
   },
   {
     name: "Nicki Cegielski Egan",
@@ -104,7 +104,7 @@ export const teamMembers: TeamMember[] = [
     department: "Senior Services Management",
     bio: "I have worked within the disability sector for the past eight years, holding a variety of leadership roles, including Team Leader, Person in Charge of a high-support service, Dual Person in Charge, and Director of Operations, where I oversaw the day-to-day operations of seven Designated Centres.\n\nThroughout my career, I have gained extensive experience in operational management, governance, regulatory compliance, and staff leadership. I am passionate about ensuring that the people I support receive compassionate, person-centred care of the highest standard. I am committed to empowering each person to achieve their individual goals, and enjoy meaningful opportunities that reflect their unique needs, wishes, and aspirations.",
     initials: "CM",
-    image: "/images/staff/Claire-Maher.png",
+    image: "/images/staff/Claire-Maher.webp",
   },
   {
     name: "Emma Sweeney",
@@ -112,7 +112,7 @@ export const teamMembers: TeamMember[] = [
     department: "Senior Services Management",
     bio: "Emma is an experienced Social Care Worker with 14 years of experience in the disability sector. She has a strong background in both frontline support and service management.\n\nShe's overseen multidisciplinary teams, coordinated individualised support plans, and ensured compliance within residential and respite services.\n\nHer leadership style is collaborative and empathetic, focused on empowering both staff and service owners. She is passionate about advocating for people with disabilities, improving service delivery, and fostering environments where individuals can thrive, grow, and live self-directed lives with dignity.",
     initials: "ES",
-    image: "/images/staff/Emma-Sweeney.png",
+    image: "/images/staff/Emma-Sweeney.webp",
   },
   // Quality Department
   {
@@ -121,7 +121,7 @@ export const teamMembers: TeamMember[] = [
     department: "Quality",
     bio: "With a career spanning operational leadership, HR, governance, and frontline social care, Louise has gained a deep understanding of how quality and compliance come together in practice. She has held key roles including Person in Charge, Deputy Director of Operations, HR Generalist, and PIC Peer Mentor, and has been instrumental in establishing both Tusla and HIQA regulated residential centres from the ground up.\n\nLouise is known for her honest and straightforward approach, balanced with a genuine commitment to supporting and empowering staff. She brings strong knowledge, practical insight, and a clear focus on person-centred, safe, and consistent service delivery.",
     initials: "LK",
-    image: "/images/staff/Louise-Kidney.png",
+    image: "/images/staff/Louise-Kidney.webp",
   },
   // Multi-disciplinary Team
   {
@@ -130,7 +130,7 @@ export const teamMembers: TeamMember[] = [
     department: "MDT",
     bio: "Vaida has been working in healthcare for over 10 years primarily with children and young adults on the ASD spectrum and with adults living with acquired brain injuries.\n\nShe completed a Masters in Cognitive Science (Psychology Postgrad) from UCD in 2016. Vaida also obtained a degree in English Philology in 2003 in Lithuania where she worked as an EFL teacher in a secondary school prior to moving to Ireland in 2004.",
     initials: "VC",
-    image: "/images/staff/Vaida-Cheema.png",
+    image: "/images/staff/Vaida-Cheema.webp",
   },
   {
     name: "Nadeeka Pathirana",
@@ -138,7 +138,7 @@ export const teamMembers: TeamMember[] = [
     department: "MDT",
     bio: "Nadeeka worked as a SALT at the Sri Lankan Ministry of Health at Teaching hospital Peradeniya and Base Hospital Mahiyanganaya for over 11 years and recently volunteered as a SALT at the Bright Rainbow Day Care centre in Rwanda. She is also qualified with a master's degree in public health science and health Equality from the Institute of Medicine, Sahlgrenska University Hospital, University of Gothenburg, Sweden, for which she received the Swedish Institute Scholarship for Global Professionals in 2022.",
     initials: "NP",
-    image: "/images/staff/Nadeeka-Pathirana.png",
+    image: "/images/staff/Nadeeka-Pathirana.webp",
   },
   {
     name: "Katie Kelly",
@@ -146,7 +146,7 @@ export const teamMembers: TeamMember[] = [
     department: "MDT",
     bio: "Katie is a Behaviour Support Specialist with an academic background in psychology, holding a BA in Psychological Studies and an MA in Psychology. She is also a Graduate Member of the Psychological Society of Ireland (PSI). Katie has experience supporting children and adults with a range of complex needs across residential, clinical and community settings.\n\nKatie is passionate about person-centred, rights-based approaches to Positive Behaviour Support (PBS), with a particular interest in developing educational, independence and life-skills supports for individuals living in residential settings. She believes that supportive environments, alongside person-centred approaches, can create meaningful opportunities to develop communication, independence and practical life skills, ultimately enhancing autonomy, participation and overall quality of life.\n\nKatie is committed to ensuring that each service owner's voice, preferences and individual needs remain central to the support they receive.",
     initials: "KK",
-    image: "/images/staff/Katie-Kelly.png",
+    image: "/images/staff/Katie-Kelly.webp",
   },
   {
     name: "Katjia Faria",
@@ -154,7 +154,7 @@ export const teamMembers: TeamMember[] = [
     department: "MDT",
     bio: "Katjia is an Occupational Therapist with a background in paediatric Occupational Therapy and Sensory Integration. She is passionate about supporting individuals to develop greater independence, participation and quality of life through meaningful, person-centred interventions.\n\nIn her role at Lotus Care, Katjia works across residential services supporting both children and adults with a range of needs, including intellectual disabilities, autism and sensory processing difficulties. She focuses on understanding each person's individual sensory, functional and environmental needs and works collaboratively with individuals, families and staff to develop practical strategies and supportive environments.\n\nKatjia is particularly passionate about sensory regulation, functional independence and empowering staff with the knowledge and tools to support individuals in their everyday lives.",
     initials: "KF",
-    image: "/images/staff/Katjia-Faria.jpg",
+    image: "/images/staff/Katjia-Faria.webp",
   },
   {
     // Added per issue #123 (newest comment)
@@ -163,7 +163,7 @@ export const teamMembers: TeamMember[] = [
     department: "MDT",
     bio: "Eadaoin is a Registered General Nurse with a Bachelor of Science in General Nursing and a background in caring for vulnerable adults. She is passionate about delivering high-quality, personalised care that recognises each individual’s unique needs, preferences, abilities, and goals.\n\nIn her role as a Regional Nurse, Eadaoin will support people with different needs, with a particular focus on promoting health, wellbeing, dignity, and independence. She is a strong advocate for person-centred care and believes that individuals should be actively involved in decisions about their own care and supported to live as independently as possible.\n\nEadaoin has a particular interest in promoting independence, supporting positive health outcomes, and monitoring individuals’ health to identify and respond to changing needs. She is committed to building trusting relationships with the people she supports and working collaboratively with families, carers, and multidisciplinary teams to ensure care is both responsive and personalised.\n\nWith a compassionate and person-centred approach, Eadaoin is dedicated to empowering individuals, promoting their quality of life, and ensuring that every person receives care that respects their individuality, choices, and right to live a fulfilling and meaningful life.",
     initials: "EF",
-    image: "/images/staff/Eadaoin-Fleming.jpg",
+    image: "/images/staff/Eadaoin-Fleming.webp",
   },
   // People & Culture Department
   {
@@ -172,7 +172,7 @@ export const teamMembers: TeamMember[] = [
     department: "People & Culture",
     bio: "Tomasz brings extensive national HR leadership experience, with a strong background in Irish and EU employment law and people management. Over the past decade, he has worked in healthcare, manufacturing, and professional services, supporting managers, guiding complex employee relations matters, and driving HR initiatives. Tomasz is also a published author in employment law and currently serves as a Peace Commissioner for Co. Westmeath. He is passionate about building positive workplace cultures and supporting organisations through change.",
     initials: "TP",
-    image: "/images/staff/Tomasz-Perkowski.png",
+    image: "/images/staff/Tomasz-Perkowski.webp",
   },
   {
     name: "Jess Dias",
@@ -180,7 +180,7 @@ export const teamMembers: TeamMember[] = [
     department: "People & Culture",
     bio: "Jess is a people-focused HR professional with a Bachelor of Business and Associate CIPD membership. With experience working in the Athlone Chamber of Commerce, Jess has collaborated with a wide range of stakeholders to strengthen the local business community. She is passionate about building positive relationships, and finding practical solutions to workplace challenges. Known for her strong interpersonal skills and approachable style, Jess is committed to creating supportive workplaces where both people and organisations can thrive.",
     initials: "JD",
-    image: "/images/staff/Jess-Dias.png",
+    image: "/images/staff/Jess-Dias.webp",
   },
   {
     name: "Chloe Moran",
@@ -188,7 +188,7 @@ export const teamMembers: TeamMember[] = [
     department: "People & Culture",
     bio: "Chloe is an experienced, relationship-driven recruitment specialist with a strong background in agency recruitment across Ireland and the EU. She has worked across a diverse range of industries and roles, partnering with national and multinational organisations to identify and attract exceptional talent.\n\nWith a strategic, people-focused approach, Chloe is passionate about building long-term relationships, creating positive candidate experiences and delivering recruitment solutions that support sustainable business growth.",
     initials: "CM",
-    image: "/images/staff/Chloe-Moran.png",
+    image: "/images/staff/Chloe-Moran.webp",
   },
   {
     name: "Dale Cooper",
@@ -196,7 +196,7 @@ export const teamMembers: TeamMember[] = [
     department: "People & Culture",
     bio: "Dale joined Lotus Care in September 2024 and quickly became passionate about supporting staff development and maintaining high standards of care. In January 2025, Dale began becoming more involved in training, initially qualifying as a Manual Handling Instructor before progressing to complete Train the Trainer later that year.\n\nAs his involvement in learning and development grew, Dale officially took on the role of Training & Development Coordinator in November 2025. Since then, he has played an active role in developing and delivering training programmes, induction resources and professional development opportunities for staff across Lotus Care.\n\nDale is passionate about making learning practical, accessible and relevant to the day-to-day experiences of staff working in social care. His approach focuses on building confidence, encouraging professional curiosity and supporting staff to continually develop their knowledge and skills so that the people supported by Lotus Care receive the highest possible standard of person-centred care.",
     initials: "DC",
-    image: "/images/staff/Dale-Cooper.jpeg",
+    image: "/images/staff/Dale-Cooper.webp",
   },
   {
     name: "Rianna Mannering",
@@ -204,7 +204,7 @@ export const teamMembers: TeamMember[] = [
     department: "People & Culture",
     bio: "I completed my law degree in 2019 and spent 6 years travelling and working in Australia. My experience included working across Customer Service, Australian Immigration and in 2022 entered the Recruitment industry assisting law firms with hiring needs. 2025 brought me back home to Ireland to friends and family. In my spare time I enjoy walks with my 3 year old Golden Doodle who came all the way from Australia, I love travelling Ireland, camping and the occasional drink with family and friends.",
     initials: "RM",
-    image: "/images/staff/Rianna-Mannering.png",
+    image: "/images/staff/Rianna-Mannering.webp",
   },
   {
     name: "Megan Mulryan",
@@ -212,7 +212,7 @@ export const teamMembers: TeamMember[] = [
     department: "People & Culture",
     bio: "Megan holds a BA in Arts and recently completed her Master's in Human Resource Management and Employee Relations. She has several years of experience in people-facing roles across the hospitality and retail sectors, and has always enjoyed working with and supporting people.\n\nOutside of work, Megan enjoys travelling, spending time with family and friends, and spending time with her two dogs.",
     initials: "MM",
-    image: "/images/staff/Megan-Mulryan.png",
+    image: "/images/staff/Megan-Mulryan.webp",
   },
   // Finance Department
   {
@@ -229,7 +229,7 @@ export const teamMembers: TeamMember[] = [
     department: "Finance",
     bio: "Operations & Finance Administrator at Lotus Care, supporting Finance, Payroll and Procurement across multiple residential care centres.\n\nBefore joining Lotus Care, I worked across HR administration, recruitment and financial services in Ireland and Australia, along with hospitality roles in Germany and Canada.\n\nWith a Bachelor of Business (Honours) from the University of Limerick, combined with my varied professional experience, I have developed a broad understanding of business operations, as well as an appreciation for the importance of effective processes and strong relationships in supporting organisational success.\n\nI enjoy bringing these different experiences together in my current role and contributing to a growing organisation.",
     initials: "LK",
-    image: "/images/staff/Laura-Keigher.png",
+    image: "/images/staff/Laura-Keigher.webp",
   },
   // Persons in Charge
   {
@@ -238,7 +238,7 @@ export const teamMembers: TeamMember[] = [
     department: "Persons in Charge",
     bio: "I have five years' experience in the social care sector where I have developed a broad range of experience across mainstream residential services, as well as supporting both adults and children with intellectual disabilities in residential settings.\n\nI graduated in 2021 with an Honours Degree in Applied Social Studies in Social Care and have further developed my professional skills through a Certificate in Supervisory Management and Team Leadership.\n\nI joined Lotus Care in 2024 as a Team Leader and progressed to the role of Person in Charge in October 2025. Throughout my career, I have been committed to promoting high-quality, person-centred care and supporting individuals to have choice, independence, dignity and meaningful opportunities in their everyday lives.\n\nI am passionate about ensuring that every service owner is supported to reach their full potential and that their individual strengths, needs, goals and aspirations remain at the centre of the support they receive. I believe in creating a positive, respectful and inclusive environment where service owners can feel valued, safe and empowered to achieve their goals.\n\nIn my role as Person in Charge, I am committed to leading a dedicated team, promoting high standards of care and supporting the continued development of a service where every individual can thrive.",
     initials: "PL",
-    image: "/images/staff/Paula-Lyons.png",
+    image: "/images/staff/Paula-Lyons.webp",
   },
   {
     name: "Selina Brennan",
@@ -246,7 +246,7 @@ export const teamMembers: TeamMember[] = [
     department: "Persons in Charge",
     bio: "I am a Person in Charge in a children's residential service, and I am passionate about creating a safe, caring and supportive environment where children and young people feel valued, listened to and respected.\n\nI have worked in social care for a number of years, with experience in both mental health residential services and intellectual disability services. The majority of my experience has been within intellectual disability, which has given me a strong understanding of person-centred care and the importance of supporting each individual in a way that recognises their unique needs, strengths and abilities.\n\nI hold a degree in Social Care and have also completed a Leadership and Management course, which has supported me in developing my confidence and skills as a leader.\n\nWhat I enjoy most about my role is building positive relationships and being part of a team that can make a genuine difference in the lives of the children and young people we support. I believe that sometimes it is the small things — listening, being consistent, showing kindness and creating a sense of trust — that can make the biggest difference.\n\nI feel very fortunate to work in a role where I can support children and young people as they grow, develop and work towards their own goals. I aim to bring warmth, understanding and a positive attitude to my work each day, while supporting both the young people and the team around them.",
     initials: "SB",
-    image: "/images/staff/Selina-Brennan.png",
+    image: "/images/staff/Selina-Brennan.webp",
   },
   {
     // Issue #123: "PHOTO/BIO TO BE PROVIDED" — placeholder entry until the
@@ -282,7 +282,7 @@ export const teamMembers: TeamMember[] = [
     department: "Persons in Charge",
     bio: "I have been working in social care for over 12 years, and I genuinely love what I do. I enjoy supporting people, getting to know them as individuals and making a positive difference in their day-to-day lives. I'm a caring, friendly and approachable person, and I really value building strong relationships based on trust, kindness and respect.\n\nOutside of work, I'm a proud parent and love spending quality time with my children. I also enjoy going to the gym, getting outdoors and spending time in nature. Family, keeping active and enjoying the simple things in life are very important to me.",
     initials: "TM",
-    image: "/images/staff/Tamara-Murphy.png",
+    image: "/images/staff/Tamara-Murphy.webp",
   },
   {
     name: "Aoife Buckley",
@@ -290,7 +290,7 @@ export const teamMembers: TeamMember[] = [
     department: "Persons in Charge",
     bio: "Aoife is a qualified Social Care Worker with over eight years of experience working within the disability sector. Throughout her career, she has supported both children and adults with autism, intellectual disabilities, complex health needs, and high support needs, including individuals who may present with behaviours that challenge.\n\nIn her management roles, Aoife has successfully led services in achieving compliance during HIQA inspections while also driving continuous quality improvement. She has a particular interest in restrictive practice reduction, the promotion of human rights, and ensuring that individuals receiving support are treated with dignity, respect, and autonomy.\n\nAlongside her extensive professional experience, Aoife has demonstrated a strong commitment to academic and professional development. She successfully completed a Master's degree in Criminology and Criminal Justice and holds a QQI Level 6 qualification in Managing People. These achievements reflect her academic capability, leadership skills, and ongoing commitment to developing her professional knowledge and practice.",
     initials: "AB",
-    image: "/images/staff/Aoife-Buckley.png",
+    image: "/images/staff/Aoife-Buckley.webp",
   },
 ];
 
@@ -309,7 +309,7 @@ export const boardMembers: TeamMember[] = [
     department: "Board",
     bio: "David Corboy has 20 years experience in the private healthcare sector. Over this time David has overseen the delivery of services to vulnerable adults and has built a reputation for compliance in all areas of regulated services. David has vast experience in understanding the regulatory aspects that come with providing social care in Ireland.",
     initials: "DC",
-    image: "/images/staff/David-Corboy.png",
+    image: "/images/staff/David-Corboy.webp",
   },
   {
     name: "Madeline Corboy",
@@ -317,7 +317,7 @@ export const boardMembers: TeamMember[] = [
     department: "Board",
     bio: "Madeline Corboy is an NMBI registered nurse. Madeline is an Intellectual disability trained Nurse with 25 years of experience working with Children & Adults in various different settings. Madeline has a passion for delivering the highest standards of care in particular focusing on socialisation and inclusion as part of the overall care and wellbeing of each service user. Madeline has a strong track record in developing structures which delivers person centred care that ensures each person can reach their individual potential and goals.",
     initials: "MC",
-    image: "/images/staff/Madeline-Corboy.jpg",
+    image: "/images/staff/Madeline-Corboy.webp",
   },
   {
     name: "Brendan O'Sullivan",

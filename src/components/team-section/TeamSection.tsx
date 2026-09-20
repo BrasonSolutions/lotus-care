@@ -28,7 +28,14 @@ export function TeamSection({
     TeamMember | null
   >(null);
 
-  const filtered = members.filter((m) => m.department === activeDept);
+  // Every card stays mounted so its photo is already fetched when a tab opens.
+  const indexInDept = new Map<string, number>();
+  const seen = new Map<string, number>();
+  for (const m of members) {
+    const n = seen.get(m.department) ?? 0;
+    indexInDept.set(m.name, n);
+    seen.set(m.department, n + 1);
+  }
 
   return (
     <section id="team" className="relative overflow-hidden py-24 lg:py-32 bg-warm-bg">
@@ -62,10 +69,15 @@ export function TeamSection({
           <div className="sm:hidden absolute right-0 top-0 bottom-4 w-8 bg-gradient-to-l from-warm-bg to-transparent pointer-events-none" aria-hidden="true" />
         </div>
 
-        {/* Team grid — key on activeDept triggers remount+animate on filter change */}
-        <div key={activeDept} className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filtered.map((member, i) => (
-            <div key={member.name} className="animate-fade-up" style={{ animationDelay: `${i * 40}ms` }}>
+        {/* Team grid — hidden cards keep their images cached; display:none replays the fade */}
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          {members.map((member) => (
+            <div
+              key={member.name}
+              hidden={member.department !== activeDept}
+              className="animate-fade-up"
+              style={{ animationDelay: `${(indexInDept.get(member.name) ?? 0) * 40}ms` }}
+            >
               <TeamCard
                 member={member}
                 onClick={() => setSelectedMember(member)}
