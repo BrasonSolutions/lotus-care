@@ -50,7 +50,7 @@ const message = (placeholder: string, rows = 4): FormField => ({
   placeholder,
 });
 
-export const referralServiceOptions = ["Children", "Adults", "Outreach"];
+export const referralServiceOptions = ["Children", "Adults", "Non-Residential/Outreach"];
 
 /** Referral form — includes referrer/organisation details and the service required. */
 export const referralFields: FormField[] = [

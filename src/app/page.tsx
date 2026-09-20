@@ -64,7 +64,7 @@ const recruitmentCtas = [
 const homeGallerySlides = [
   { src: "/images/homes/gallery/exterior-1.webp", alt: "One of our homes seen from the driveway" },
   { src: "/images/homes/gallery/interior-1.webp", alt: "A bright sensory and activity room" },
-  { src: "/images/homes/gallery/exterior-2.webp", alt: "Lawn and garden along the side of a home" },
+  { src: "/images/homes/gallery/exterior-2.webp", alt: "A stone-built home with its driveway and entrance archway" },
   { src: "/images/homes/gallery/interior-2.webp", alt: "A playroom with a play tent and a bicycle" },
   { src: "/images/homes/gallery/exterior-3.webp", alt: "A home and its grounds from above" },
   { src: "/images/homes/gallery/interior-3.webp", alt: "A quiet lounge corner with armchairs and soft toys" },
