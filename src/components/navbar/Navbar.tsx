@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { SocialLinks } from "@/components/social-links";
 import { Container } from "@/components/layout";
@@ -7,6 +8,7 @@ import type { NavItem } from "@/data/navigation";
 import { navItems as defaultNavItems, contactInfo as defaultContactInfo } from "@/data/navigation";
 import { HomesDropdown } from "@/components/homes-dropdown";
 import { MobileMenu } from "@/components/mobile-menu";
+import { FeedbackModal } from "@/components/feedback-modal";
 import { LogoWhite } from "@/components/logo-white";
 import { LogoDark } from "@/components/logo-dark";
 import { useScrolled } from "@/hooks/use-scrolled";
@@ -28,6 +30,7 @@ export function Navbar({
   solidWhenTop = false,
 }: NavbarProps) {
   const scrolled = useScrolled();
+  const [isFeedbackOpen, setFeedbackOpen] = useState(false);
 
   return (
     <>
@@ -87,10 +90,23 @@ export function Navbar({
               {navItems.map((item) =>
                 item.children ? (
                   <HomesDropdown key={item.label} item={item} scrolled={scrolled} />
+                ) : item.opensFeedbackModal ? (
+                  <button
+                    key={item.label}
+                    type="button"
+                    onClick={() => setFeedbackOpen(true)}
+                    className={`text-base font-medium transition-colors focus-ring rounded ${
+                      scrolled
+                        ? "text-foreground hover:text-primary"
+                        : "text-white hover:text-accent"
+                    }`}
+                  >
+                    {item.label}
+                  </button>
                 ) : (
                   <Link
                     key={item.label}
-                    href={item.href}
+                    href={item.href!}
                     className={`text-base font-medium transition-colors focus-ring rounded ${
                       scrolled
                         ? "text-foreground hover:text-primary"
@@ -113,10 +129,13 @@ export function Navbar({
               contactInfo={contactInfo}
               ctaLabel={ctaLabel}
               ctaHref={ctaHref}
+              onOpenFeedback={() => setFeedbackOpen(true)}
             />
           </div>
         </Container>
       </nav>
+
+      <FeedbackModal open={isFeedbackOpen} onClose={() => setFeedbackOpen(false)} />
     </>
   );
 }

@@ -16,6 +16,7 @@ interface MobileMenuProps {
   contactInfo: { phone: string; email: string };
   ctaLabel?: string;
   ctaHref?: string;
+  onOpenFeedback?: () => void;
 }
 
 export function MobileMenu({
@@ -24,6 +25,7 @@ export function MobileMenu({
   contactInfo,
   ctaLabel = "Referrals",
   ctaHref = "/referrals",
+  onOpenFeedback,
 }: MobileMenuProps) {
   const pathname = usePathname() ?? "";
   const [isOpen, setIsOpen] = useState(false);
@@ -46,7 +48,7 @@ export function MobileMenu({
     // careers-page visitor opening the menu sees the Careers submenu
     // already open instead of having to tap it again.
     const activeParent = navItems.find(
-      (item) => item.children && item.href !== "/" && pathname.startsWith(item.href)
+      (item) => item.children && item.href && item.href !== "/" && pathname.startsWith(item.href)
     );
     setExpandedItem(activeParent?.label ?? null);
     setIsOpen(true);
@@ -100,7 +102,7 @@ export function MobileMenu({
                 {item.clickable ? (
                   <div className="flex items-center justify-between w-full">
                     <Link
-                      href={item.href}
+                      href={item.href!}
                       onClick={close}
                       className="flex-1 py-3 px-2 text-foreground font-medium hover:text-primary transition-colors focus-ring rounded"
                     >
@@ -177,14 +179,26 @@ export function MobileMenu({
                   </div>
                 </div>
               </div>
+            ) : item.opensFeedbackModal ? (
+              <button
+                key={item.label}
+                type="button"
+                onClick={() => {
+                  close();
+                  onOpenFeedback?.();
+                }}
+                className="block w-full text-left py-3 px-2 font-medium transition-colors focus-ring rounded text-foreground hover:text-primary"
+              >
+                {item.label}
+              </button>
             ) : (
               <Link
                 key={item.label}
-                href={item.href}
+                href={item.href!}
                 onClick={close}
-                aria-current={isCurrentPage(item.href) ? "page" : undefined}
+                aria-current={isCurrentPage(item.href!) ? "page" : undefined}
                 className={`block py-3 px-2 font-medium transition-colors focus-ring rounded ${
-                  isCurrentPage(item.href)
+                  isCurrentPage(item.href!)
                     ? "text-primary-dark underline underline-offset-4"
                     : "text-foreground hover:text-primary"
                 }`}

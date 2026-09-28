@@ -1,6 +1,8 @@
 export interface NavItem {
   label: string;
-  href: string;
+  // Optional only for an item that opens the feedback modal instead of
+  // navigating — every other item still requires it.
+  href?: string;
   children?: { label: string; href: string }[];
   viewAllHref?: string;
   viewAllLabel?: string;
@@ -9,6 +11,9 @@ export interface NavItem {
   // other dropdown item uses. Opt-in per item so this doesn't change
   // existing dropdowns (e.g. "Join Our Team").
   clickable?: boolean;
+  // When true, the item opens the site-wide "Have Your Say" modal instead
+  // of navigating anywhere — see FeedbackModal.
+  opensFeedbackModal?: boolean;
 }
 
 export const navItems: NavItem[] = [
@@ -40,7 +45,7 @@ export const navItems: NavItem[] = [
       { label: "Contact Recruitment", href: "/careers/contact" },
     ],
   },
-  { label: "Have Your Say", href: "/#contact" },
+  { label: "Have Your Say", opensFeedbackModal: true },
 ];
 
 /* Real profiles, supplied by the client 2026-09-15. Not discoverable from
