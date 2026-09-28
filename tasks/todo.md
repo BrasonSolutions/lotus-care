@@ -1634,3 +1634,120 @@ Team transition has no gap left behind by the removed video/map section.
 
 **Not yet committed/pushed** — pending user's in-browser review (dev server
 running on `localhost:3000`).
+
+---
+
+## Card N1: "Have Your Say" anonymous feedback
+
+Branch: `feat/have-your-say` (off `main`, separate from the client-review-feedback
+round-2 batch, which shipped as its own PR #148 per the project's one-card-one-PR
+convention).
+Pipeline variant: `full` (new subsystem — the only card touching backend/infra).
+Status: **built, verified, pending user review before commit.**
+
+### Problem
+
+The nav's "Have Your Say" label was a dead end — just linked to `/#contact`, the
+same general contact form used for everything else, with no anonymity and no
+categorisation. Client wants a genuinely anonymous channel (`docs/build-plan.md`
+N1): a site-wide trigger opening a modal with a category, required message, and
+optional name/email.
+
+### Key finding that shaped the design
+
+Resend was **already fully wired in** — `src/lib/mail.ts` sends every referral/
+contact/recruitment submission through it today, domain already verified,
+`RESEND_API_KEY` already provisioned. This was not a "should we adopt an email
+vendor" decision, just extending the existing shared pipeline.
+
+### Decisions confirmed via `AskUserQuestion` before building
+
+- Target inbox: reuse `info@lotuscare.ie` (no new mailbox to provision).
+- Categories: ship the build-plan's placeholders (`Quality & Safety`,
+  `HR / People`, `A home or service`, `General / Other`) — one editable array.
+- **Safeguarding signpost: deliberately omitted.** This overrides a standing
+  CLAUDE.md rule and the original build-plan card's "non-negotiable" note. The
+  user was explicitly shown the conflict (HIQA compliance rationale) and
+  confirmed the override twice before implementation proceeded. Flagged back to
+  the user as worth updating CLAUDE.md's N1 note so future sessions stop
+  re-flagging this same conflict — not yet done, still open.
+- Spam protection: added Cloudflare Turnstile on top of the existing
+  honeypot + rate-limit, scoped to the new `feedback` kind only.
+
+### What changed
+
+- `src/lib/forms.ts`: added `"feedback"` to `formKinds`; added
+  `feedbackCategories` (canonical list — validation source of truth, not
+  `data/forms.ts`); made name/email required-checks conditional (blank allowed
+  only for `feedback`); added server-side category validation.
+- `src/data/forms.ts`: added `feedbackFields` (category select required,
+  message required, name/email optional) following the `recruitmentFields`
+  pattern.
+- `src/lib/mail.ts`: added `feedback` recipient/subject; `buildHtml()` and the
+  subject line now handle a blank name ("Anonymous") and blank email (row/
+  reply-to omitted) instead of rendering empty values.
+- `src/app/api/forms/route.ts`: added `verifyTurnstile()`, called after
+  `validateSubmission` succeeds and only for the `feedback` kind. **Drive-by
+  fix while in this file:** the rate-limiter's IP extraction now prefers
+  `CF-Connecting-IP` (Cloudflare-set, not spoofable) over `x-forwarded-for`
+  (client-spoofable) — fixes the rate limiter for all 4 forms, flagged
+  separately since it's shared-infra, not feedback-specific.
+- `src/components/contact-form/ContactForm.tsx`: added an opt-in
+  `turnstileSiteKey` prop — renders the Turnstile widget + manages its token
+  only when passed, zero effect on the 3 existing forms when omitted. Guards
+  against double script-injection (hit this for real in dev — React
+  StrictMode double-invokes the effect, Turnstile's script isn't idempotent
+  and logged a warning; fixed by checking for an existing `<script>` tag
+  before creating a new one).
+- New `src/components/feedback-modal/FeedbackModal.tsx` (+ barrel) — copies
+  `TeamModal.tsx`'s native `<dialog>` pattern exactly (focus trap/ESC-close/
+  focus-return all come from the browser for free, same as the site's one
+  other modal), houses `<ContactForm kind="feedback" .../>`.
+- `src/data/navigation.ts`: `NavItem.href` now optional, new
+  `opensFeedbackModal` flag; the dead `/#contact` entry replaced with
+  `{ label: "Have Your Say", opensFeedbackModal: true }` (confirmed safe —
+  `/#contact` stays reachable via the footer, homepage's own nav, and four
+  `quality/*` CTAs).
+- `src/components/navbar/Navbar.tsx` / `mobile-menu/MobileMenu.tsx` /
+  `homes-dropdown/HomesDropdown.tsx`: wired the modal trigger into both
+  desktop nav and the mobile drawer (drawer closes itself before opening the
+  modal); `HomesDropdown` and `MobileMenu`'s other `item.href` call sites
+  needed a non-null assertion once `href` became optional on the shared type.
+- `src/lib/forms.test.ts`: 5 new cases (blank name/email accepted for
+  `feedback`; provided-but-invalid email still rejected; missing/invalid
+  category rejected; other kinds still require name+email).
+- `.env.example`: added `NEXT_PUBLIC_TURNSTILE_SITE_KEY`/
+  `TURNSTILE_SECRET_KEY`, with Cloudflare's published test keys noted for
+  local dev, and a flagged note that the public site key is inlined at
+  `next build` time (Workers Build environment), unlike `RESEND_API_KEY`'s
+  runtime-only provisioning.
+
+**Manual prerequisite before production** (outside this codebase, the user's
+action): create a Turnstile widget in the Cloudflare dashboard for real
+site key + secret. Not blocking — dev/testing used Cloudflare's published
+always-pass test keys throughout.
+
+### Verified
+
+- `npx tsc --noEmit`, `npx eslint src/` (whole tree, not just changed files),
+  `npm run build` (27 routes), `npm test` (10/10 passing, 5 new) all clean.
+- Real browser (dev server, Cloudflare test Turnstile keys) via Playwright:
+  modal opens from the desktop nav (at the site's 1600px `nav:` breakpoint —
+  confirmed the actual breakpoint value first rather than assuming standard
+  `lg`) and from the mobile drawer (drawer closes itself first); focus moves
+  into the dialog on open and returns to the trigger button after ESC-close,
+  zero console errors; Turnstile widget renders, resolves ("Success!"), and
+  gates the submit button (disabled until a token exists); a full anonymous
+  submission (category + message only) was sent and the outgoing POST body
+  confirmed genuinely empty `name`/`email` strings, not placeholder text;
+  server correctly progressed through validation → Turnstile verification →
+  the mail-send step (failed there only because no `RESEND_API_KEY` exists in
+  this dev environment — expected, and confirms the "no silent failures"
+  requirement: a clear error message rendered, not a hang or blank state); at
+  390px the modal scrolls cleanly with no horizontal overflow, submit button
+  reachable and enabled after scrolling. Regression check on `/referrals` and
+  `/careers/contact`: zero Turnstile widgets present, submit still enabled,
+  zero page errors — confirms the 3 existing forms are unaffected.
+
+**Not yet committed/pushed** — pending user's in-browser review (dev server
+running on `localhost:3000` with Cloudflare's test Turnstile keys active).

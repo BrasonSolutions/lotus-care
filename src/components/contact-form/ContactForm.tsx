@@ -1,9 +1,28 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { FormField } from "@/data/forms";
 import type { FormKind } from "@/lib/forms";
 import { Button } from "@/components/button";
+
+declare global {
+  interface Window {
+    turnstile?: {
+      render: (
+        container: HTMLElement,
+        options: {
+          sitekey: string;
+          callback: (token: string) => void;
+          "expired-callback"?: () => void;
+          "error-callback"?: () => void;
+        },
+      ) => string;
+      remove: (widgetId: string) => void;
+    };
+  }
+}
+
+const TURNSTILE_SCRIPT_SRC = "https://challenges.cloudflare.com/turnstile/v0/api.js";
 
 interface ContactFormProps {
   kind: FormKind;
@@ -13,6 +32,9 @@ interface ContactFormProps {
   successTitle?: string;
   successMessage?: string;
   className?: string;
+  /** Opt-in — only "Have Your Say" needs the extra spam-protection layer,
+   * every other form is unaffected when this is omitted. */
+  turnstileSiteKey?: string;
 }
 
 type Status = "idle" | "sending" | "sent" | "error";
@@ -36,13 +58,62 @@ export function ContactForm({
   successTitle = "Thank You!",
   successMessage = "We've received your message and will be in touch soon.",
   className = "space-y-5",
+  turnstileSiteKey,
 }: ContactFormProps) {
   const [values, setValues] = useState<Record<string, string>>({});
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState("");
+  const [turnstileToken, setTurnstileToken] = useState("");
+  const turnstileContainerRef = useRef<HTMLDivElement>(null);
 
   const setValue = (name: string, value: string) =>
     setValues((current) => ({ ...current, [name]: value }));
+
+  // Turnstile manages its own DOM inside the container div — React never
+  // touches it again after the initial render, and the widget is torn down
+  // on unmount (e.g. the modal closing) so a stale widget/token can't linger.
+  useEffect(() => {
+    if (!turnstileSiteKey) return;
+    const container = turnstileContainerRef.current;
+    if (!container) return;
+
+    let widgetId: string | undefined;
+    let cancelled = false;
+
+    const render = () => {
+      if (cancelled || !window.turnstile) return;
+      widgetId = window.turnstile.render(container, {
+        sitekey: turnstileSiteKey,
+        callback: setTurnstileToken,
+        "expired-callback": () => setTurnstileToken(""),
+        "error-callback": () => setTurnstileToken(""),
+      });
+    };
+
+    if (window.turnstile) {
+      render();
+    } else {
+      // Script injection isn't idempotent — guard against a second copy
+      // (e.g. React StrictMode's dev-only double-invoke) racing the first.
+      const existing = document.querySelector<HTMLScriptElement>(
+        `script[src="${TURNSTILE_SCRIPT_SRC}"]`,
+      );
+      if (existing) {
+        existing.addEventListener("load", render);
+      } else {
+        const script = document.createElement("script");
+        script.src = TURNSTILE_SCRIPT_SRC;
+        script.async = true;
+        script.onload = render;
+        document.head.appendChild(script);
+      }
+    }
+
+    return () => {
+      cancelled = true;
+      if (widgetId && window.turnstile) window.turnstile.remove(widgetId);
+    };
+  }, [turnstileSiteKey]);
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -65,6 +136,7 @@ export function ContactForm({
           message: values.message ?? "",
           website: values.website ?? "",
           extra,
+          ...(turnstileSiteKey && { turnstileToken }),
         }),
       });
 
@@ -174,13 +246,20 @@ export function ContactForm({
         />
       </div>
 
+      {turnstileSiteKey && <div ref={turnstileContainerRef} />}
+
       {status === "error" && (
         <p role="alert" className="text-sm text-red-600">
           {error}
         </p>
       )}
 
-      <Button type="submit" disabled={status === "sending"} size="lg" fullWidth>
+      <Button
+        type="submit"
+        disabled={status === "sending" || (!!turnstileSiteKey && !turnstileToken)}
+        size="lg"
+        fullWidth
+      >
         {status === "sending" ? "Sending…" : submitLabel}
       </Button>
     </form>
