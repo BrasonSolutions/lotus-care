@@ -9,7 +9,19 @@ import { Container } from "@/components/layout";
 interface ContactSectionProps {
   title?: string;
   subtitle?: string;
-  contactInfo: { phone: string; email: string; address: string };
+  contactInfo: {
+    phone: string;
+    email: string;
+    address: string;
+    officeHours: { dayOfWeek: string[]; opens: string; closes: string };
+  };
+}
+
+// "09:00" -> "9:00 AM", matching the copy this section always showed.
+function to12Hour(time: string) {
+  const [hours, minutes] = time.split(":");
+  const h = Number(hours);
+  return `${h % 12 || 12}:${minutes} ${h < 12 ? "AM" : "PM"}`;
 }
 
 export function ContactSection({
@@ -18,6 +30,7 @@ export function ContactSection({
   contactInfo,
 }: ContactSectionProps) {
   const { ref, inView } = useInView({ threshold: 0.1 });
+  const { dayOfWeek, opens, closes } = contactInfo.officeHours;
   return (
     <section id="contact" className="py-20 lg:py-28 bg-white">
       <Container>
@@ -87,7 +100,9 @@ export function ContactSection({
                   Office Hours
                 </p>
                 <div className="text-sm text-muted space-y-1">
-                  <p>Monday - Friday: 9:00 AM - 5:00 PM</p>
+                  <p>
+                    {dayOfWeek[0]} - {dayOfWeek[dayOfWeek.length - 1]}: {to12Hour(opens)} - {to12Hour(closes)}
+                  </p>
                   <p>Saturday - Sunday: Closed</p>
                   <p className="text-primary-dark font-medium mt-2">
                     Care services operate 24/7

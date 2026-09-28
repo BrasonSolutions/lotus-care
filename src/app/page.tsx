@@ -16,6 +16,7 @@ import { Button } from "@/components/button";
 import { ValuesGrid } from "@/components/careers/values-grid";
 
 import { contactInfo } from "@/data/navigation";
+import { SITE_URL } from "@/lib/site";
 import { services, enhanceServices } from "@/data/services";
 import { teamMembers, departments, boardMembers } from "@/data/team";
 import { jobs } from "@/data/jobs";
@@ -74,9 +75,30 @@ const homeGallerySlides = [
   { src: "/images/homes/gallery/interior-6.webp", alt: "A bedroom looking out over the garden" },
 ];
 
+const localBusinessJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  name: "Lotus Care",
+  url: SITE_URL,
+  image: `${SITE_URL}/images/logo.png`,
+  // Irish national number to E.164: drop the trunk 0, prefix +353.
+  telephone: `+353 ${contactInfo.phone.slice(1)}`,
+  email: contactInfo.email,
+  address: { "@type": "PostalAddress", ...contactInfo.headOffice },
+  openingHoursSpecification: [
+    { "@type": "OpeningHoursSpecification", ...contactInfo.officeHours },
+  ],
+};
+
 export default function Home() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(localBusinessJsonLd).replace(/</g, "\\u003c"),
+        }}
+      />
       <Navbar />
       <main id="main">
         <HeroSection

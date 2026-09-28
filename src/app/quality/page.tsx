@@ -10,7 +10,6 @@ import { qualityHub, hubCards, qualityFoundationPrinciples, anonymizedTestimonia
 import { Container } from "@/components/layout";
 
 export const metadata: Metadata = {
-  title: "Overview",
   description: qualityHub.heroSubtitle,
 };
 
