@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
-import { Analytics } from "@vercel/analytics/next";
+import Script from "next/script";
 import { HashScroll } from "@/components/hash-scroll";
 import { SITE_URL } from "@/lib/site";
 import "./globals.css";
+
+// Cloudflare Web Analytics; cookie-less. Token from dashboard > Web Analytics > Manage site.
+const CF_BEACON_TOKEN = process.env.NEXT_PUBLIC_CF_BEACON_TOKEN;
 
 const dmSans = DM_Sans({
   variable: "--font-dm-sans-loaded",
@@ -43,10 +46,13 @@ export default function RootLayout({
           Skip to main content
         </a>
         {children}
-        {/* Vercel Web Analytics. Cookieless and no cross-site identifiers, so
-            it needs no consent banner — worth keeping that way on a care
-            provider's site. Injects nothing outside production on Vercel. */}
-        <Analytics />
+        {CF_BEACON_TOKEN && (
+          <Script
+            src="https://static.cloudflareinsights.com/beacon.min.js"
+            strategy="afterInteractive"
+            data-cf-beacon={JSON.stringify({ token: CF_BEACON_TOKEN })}
+          />
+        )}
       </body>
     </html>
   );
