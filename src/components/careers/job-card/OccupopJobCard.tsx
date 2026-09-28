@@ -47,14 +47,7 @@ export function OccupopJobCard({ job }: OccupopJobCardProps) {
         </p>
       )}
 
-      <Button
-        href={job.applyUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        size="sm"
-        fullWidth
-        className="mt-auto"
-      >
+      <Button href={`/careers/jobs/${job.slug}`} size="sm" fullWidth className="mt-auto">
         View Role
       </Button>
     </div>
