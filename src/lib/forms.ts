@@ -5,9 +5,17 @@
  * sent from the client, so the form can't be turned into an open relay.
  */
 
-export const formKinds = ["referral", "contact", "recruitment"] as const;
+export const formKinds = ["referral", "contact", "recruitment", "feedback"] as const;
 
 export type FormKind = (typeof formKinds)[number];
+
+/** "Have Your Say" categories — client to finalise, trivially editable. */
+export const feedbackCategories = [
+  "Quality & Safety",
+  "HR / People",
+  "A home or service",
+  "General / Other",
+];
 
 export interface FormSubmission {
   kind: FormKind;
@@ -74,13 +82,17 @@ export function validateSubmission(body: unknown): ValidationResult {
     return { ok: false, error: "Unknown form." };
   }
 
+  // "Have Your Say" is genuinely anonymous-capable — name/email are optional
+  // for that kind only; every other kind keeps requiring both.
+  const anonymousAllowed = kind === "feedback";
+
   const name = asTrimmedString(body.name);
-  if (!name) return { ok: false, error: "Please enter your name." };
+  if (!anonymousAllowed && !name) return { ok: false, error: "Please enter your name." };
   if (name.length > LIMITS.name) return { ok: false, error: "Name is too long." };
 
   const email = asTrimmedString(body.email);
-  if (!email) return { ok: false, error: "Please enter your email address." };
-  if (email.length > LIMITS.email || !EMAIL_PATTERN.test(email)) {
+  if (!anonymousAllowed && !email) return { ok: false, error: "Please enter your email address." };
+  if (email && (email.length > LIMITS.email || !EMAIL_PATTERN.test(email))) {
     return { ok: false, error: "Please enter a valid email address." };
   }
 
@@ -93,6 +105,10 @@ export function validateSubmission(body: unknown): ValidationResult {
 
   const extra = readExtra(body.extra);
   if (typeof extra === "string") return { ok: false, error: extra };
+
+  if (kind === "feedback" && !feedbackCategories.includes(extra.category)) {
+    return { ok: false, error: "Please select a category." };
+  }
 
   return {
     ok: true,

@@ -21,7 +21,7 @@ export function HomesDropdown({ item, scrolled }: HomesDropdownProps) {
       {item.clickable ? (
         <div className="flex items-center gap-1">
           <Link
-            href={item.href}
+            href={item.href!}
             className={`text-base font-medium transition-colors focus-ring rounded ${
               scrolled
                 ? "text-foreground hover:text-primary"

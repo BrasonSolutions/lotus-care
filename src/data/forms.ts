@@ -1,5 +1,7 @@
 /** Field definitions for the site's forms — see components/contact-form. */
 
+import { feedbackCategories } from "@/lib/forms";
+
 export interface FormField {
   name: string;
   label: string;
@@ -114,4 +116,20 @@ export const recruitmentFields: FormField[] = [
     placeholder: "Select a role type…",
   },
   message("Tell us about yourself or your question…", 4),
+];
+
+/** "Have Your Say" — genuinely anonymous-capable: category and message are
+ * required, name and email are optional. */
+export const feedbackFields: FormField[] = [
+  {
+    name: "category",
+    label: "Category",
+    type: "select",
+    required: true,
+    options: feedbackCategories,
+    placeholder: "Select a category…",
+  },
+  message("Tell us what's on your mind…", 5),
+  { ...name, required: false },
+  { ...email, required: false },
 ];
