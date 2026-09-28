@@ -122,15 +122,24 @@ export function Navbar({
               </Button>
             </div>
 
-            {/* Mobile hamburger */}
-            <MobileMenu
-              scrolled={scrolled}
-              navItems={navItems}
-              contactInfo={contactInfo}
-              ctaLabel={ctaLabel}
-              ctaHref={ctaHref}
-              onOpenFeedback={() => setFeedbackOpen(true)}
-            />
+            {/* Mobile CTA + hamburger */}
+            <div className="flex items-center gap-2 nav:hidden">
+              <Button
+                href={ctaHref}
+                size="sm"
+                variant={scrolled ? "primary" : "onDark"}
+              >
+                {ctaLabel}
+              </Button>
+              <MobileMenu
+                scrolled={scrolled}
+                navItems={navItems}
+                contactInfo={contactInfo}
+                ctaLabel={ctaLabel}
+                ctaHref={ctaHref}
+                onOpenFeedback={() => setFeedbackOpen(true)}
+              />
+            </div>
           </div>
         </Container>
       </nav>

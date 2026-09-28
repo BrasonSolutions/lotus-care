@@ -167,7 +167,7 @@ export const privacyPolicy: LegalDoc = {
     {
       heading: "Cookies and website analytics",
       body: [
-        "This website uses Vercel Web Analytics to understand overall site usage. It is cookie-less and does not use cross-site identifiers or track individual visitors. We do not otherwise place tracking or advertising cookies on this website.",
+        "This website uses Cloudflare Web Analytics to understand overall site usage. It is cookie-less and does not use cross-site identifiers or track individual visitors. We do not otherwise place tracking or advertising cookies on this website.",
       ],
     },
     {

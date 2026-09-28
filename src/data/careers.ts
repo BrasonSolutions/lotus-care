@@ -110,7 +110,7 @@ export const processSteps: ProcessStep[] = [
     step: 2,
     title: "Screening Call",
     description:
-      "Our Recruitment Team will contact you within 24-48 hours for a brief call to discuss your background and experience.",
+      "Our Recruitment Team will contact you within 2 business days for a brief call to discuss your background and experience.",
   },
   {
     step: 3,
