@@ -1,0 +1,1369 @@
+{
+  "data": [
+    {
+      "uuid": "843d4191-5f1f-47f9-81f1-0427221df90f",
+      "id_ref": "",
+      "title": "Team Leader",
+      "description": "<p><strong>Team Leader</strong></p><p>Lotus Care provides a range of respite, residential and support services to Children &amp; Adults with intellectual disabilities in a homely and comfortable community setting. We aim to empower people with the necessary skills to live full and satisfying lives as equal citizens of their local communities.</p><p><br></p><p>Do to company expansions and recent promotions we are now seeking a <strong>Team Leader </strong>for on of our <strong>Laois</strong> locations.</p><p><br></p><p><strong>Role Overview</strong></p><p><strong><em>Reporting to:</em></strong><em> </em>Person in Charge</p><p><strong><em>Job Type:</em></strong><em> </em>Full-Time, Monday to Friday (some on-call as required)</p><p><strong><em>Working Week</em></strong>: 40 hours a week</p><p><strong><em>Location of Work</em>: </strong>Borris-in-Ossory</p><p><br></p><p><strong>What We Offer</strong></p><ul><li>Competitive Salary</li><li>Employee of the Month Scheme</li><li>Annual bonus</li><li>EAP Scheme</li><li>Refer a Friend Scheme</li><li>Company events</li><li>On-going mentoring and support</li><li>CPD support</li></ul><p><br></p><p><strong>Role Responsibilities</strong></p><ul><li>Lead and support staff in delivering high-quality services for individuals with intellectual disabilities.</li><li>Oversee and implement each person’s Personal Plan through regular reviews.</li><li>Liaise with families, schools, and day programme staff to ensure continuity of support.</li><li>Support the PIC in ensuring compliance with HIQA regulations and standards.</li><li>Ensure delivery of appropriate, person-centred care and support for daily living activities.</li><li>Manage key operational areas including safety, risk, finances, transport, and rosters.</li><li>Provide leadership, supervision, and performance management for assigned staff.</li><li>Support staff development through training, personal development planning, and reviews.</li><li>Keep records and databases up to date, including monitoring and auditing processes.</li><li>Act as a point of contact for the service, addressing queries professionally and promptly.</li></ul><p><br></p><p><strong>Essential Requirements</strong></p><ul><li>Minimum of a Level 7 degree in Social Care or equivalent.</li><li>Previous experience in the ID sector, preferably in a management/supervisory role</li><li>CORU registered (or in the process)</li><li>Working knowledge of HIQA standards and regulations</li><li>Garda Vetting/Police Clearance</li></ul><p><br></p><p><br></p><p>IND1</p>",
+      "location": {
+        "city": "Borris-in-Ossory",
+        "state": "County Laois",
+        "country": "Ireland",
+        "cityId": "ChIJe2aShn0dXUgRkOMxl6nHAAo",
+        "cityFullName": "Townparks, Borris-in-Ossory, Co. Laois, Ireland",
+        "cityLat": "52.93904140",
+        "cityLng": "-7.63216360",
+        "countryShort": "IE"
+      },
+      "sectors": [
+        {
+          "uuid": "f7bf76ed-7d79-452e-aef8-82c7d548cda7",
+          "name": "Medical & Healthcare",
+          "translation_key": "medical_healthcare"
+        }
+      ],
+      "subsectors": [
+        {
+          "uuid": "9c333344-b0eb-43fd-bb07-f442fda56ee3",
+          "name": "Social Care / Social Worker",
+          "translation_key": "medical_he_social_care"
+        }
+      ],
+      "contract": "Permanent",
+      "period": "Fulltime",
+      "workplace": "onSite",
+      "salary": {
+        "type": "Competitive",
+        "period": "Annual",
+        "start": null,
+        "end": null,
+        "details": null
+      },
+      "published": true,
+      "published_at": "2026-09-28T07:51:38.000000Z",
+      "internal": false,
+      "external": true,
+      "questions_form": [
+        {
+          "type": "YesNo",
+          "text": "Do you hold a valid Irish Driver's License?",
+          "options": [
+            "Full Irish Driver's License",
+            "Learner's Permit",
+            "International"
+          ],
+          "answer": null
+        },
+        {
+          "type": "Options",
+          "text": "How many years people management experience do you have?",
+          "options": [
+            "1 to 3 years",
+            "4 to 6 years",
+            "over 6",
+            "0 years"
+          ],
+          "answer": null
+        },
+        {
+          "type": "YesNo",
+          "text": "Do you have a minimum of a QQI Level 5 in healthcare or equivalent?",
+          "options": [
+            "Yes",
+            "No"
+          ],
+          "answer": null
+        },
+        {
+          "type": "Options",
+          "text": "Are you a Current Permanent Resident of Ireland?",
+          "options": [
+            "Yes",
+            "No",
+            "I am moving to Ireland"
+          ],
+          "answer": null
+        },
+        {
+          "type": "Options",
+          "text": "What is you eligibility status?",
+          "options": [
+            "EU Citizen/ National Passport?",
+            "Stamp 4 / Labour Market Access",
+            "Stamp 1G",
+            "Stamp 1 Visa",
+            "Sponsorship Required?"
+          ],
+          "answer": null
+        }
+      ],
+      "closed_for_applicants": false,
+      "require_cv": true,
+      "require_opt_in_for_job": true,
+      "require_opt_in_for_database": true,
+      "apply_url": "https://api.occupop.com/shared/job/team-leader-843d4",
+      "unique_slug": "team-leader-843d4",
+      "cv_upload_signed_url": "REDACTED",
+      "custom_fields_for_details": [],
+      "custom_fields_for_applicants": [],
+      "company_name": "Lotus Care Services",
+      "company_logo": "https://recruitment.cezannehr.com/bucket/hiring_companies/66a3ad9e4ee80.jpg",
+      "company_label_uuid": null,
+      "created_at": "2026-09-28T07:51:38.000000Z",
+      "close_date": null
+    },
+    {
+      "uuid": "e3b36394-dca0-405a-b6af-09f3c42badbe",
+      "id_ref": "",
+      "title": "Social Care Assistant",
+      "description": "<p><strong>Social Care Assistant – Full Time (Permanent)</strong></p><p><br></p><p><em>Are you fed up with traveling from client to client?</em></p><p><em>Do you enjoy supporting vulnerable children and young adults?</em></p><p><em>Do you spend a lot of your working day dealing with traffic?</em></p><p><em>Do your expenses not cover the wear and tear of your own personal car?</em></p><p><br></p><p>Here at Lotus Care we are offering real, <strong>full-time contracts</strong>, a 42hr week, at the <strong>same location</strong>.</p><p><br></p><p><strong>Benefits&nbsp;</strong>&nbsp;</p><ul><li>One set work location and guaranteed hours</li><li>Competitive premiums for unsocial hours</li><li>Ongoing mentoring and support</li><li>Refer a Friend Scheme</li><li>Employee of the Month Scheme</li><li>Company events</li><li>Free onsite parking</li><li>CPD support</li></ul><p><br></p><p><strong>Role Overview</strong></p><ul><li>&nbsp;<em>Reporting to:</em> Person in Charge</li><li>&nbsp;<em>Contract Type:</em> Full-time</li><li>&nbsp;<em>Working Week</em>: Average of 42 hours a week,</li><li>Location of Work: Kildare Region</li></ul><p><br></p><p><strong>Role Responsibilities</strong></p><ul><li>&nbsp;Facilitate and encourage decision-making, independence, and personal development.</li><li>&nbsp;Provide support in daily living skills, including personal hygiene, health and appearance.</li><li>&nbsp;Work in a person-centred manner to meet individual care plans and goals.</li><li>&nbsp;Adhere to policies and procedures, standards, regulations, and codes of practice</li><li>&nbsp;Administer and document the dispensation of prescribed medication.</li><li>&nbsp;Undertake key worker responsibilities, helping service owners achieve goals.</li><li>&nbsp;Document and report incidents and complaints involving staff, service owners or visitors.</li><li>&nbsp;Work with MDT to achieve the goals of service owners.</li></ul><p><br></p><p><strong>Essential Requirements</strong></p><ul><li>&nbsp;Minimum Level 5 qualification in Social or Health Care Studies</li><li>&nbsp;Hold a full Irish driving license (to drive a company car, when required)</li><li>&nbsp;Prior experience in social care or healthcare desirable but not essential</li><li>&nbsp;Working knowledge of relevant standards and regulations.</li><li>&nbsp;Excellent English essential (verbal and written skills)</li><li>&nbsp;Garda Vetting/Police Clearance</li></ul><p><br></p><p>If you’re looking for stability, strong support, and the opportunity to build a meaningful career in social care - we would love to hear from you.</p><p><br></p><p><strong>Apply today and join a team that truly makes an impact!</strong></p><p><br></p><p>We have multiple houses in the Kildare Region, commutable locations are:</p><p>House A</p><p><strong style=\"color: rgb(30, 138, 120);\">0–10 min </strong><span style=\"color: rgb(28, 43, 40);\">Coill Dubh, Robertstown, Kilmeague, Derrinturn</span></p><p><strong style=\"color: rgb(30, 138, 120);\">10–15 min </strong><span style=\"color: rgb(28, 43, 40);\">Prosperous, Rathangan, Carbury, Lullymore, Milltown</span></p><p><strong style=\"color: rgb(30, 138, 120);\">15–20 min </strong><span style=\"color: rgb(28, 43, 40);\">Clane, Kildangan, Edenderry, Sallins</span></p><p><strong style=\"color: rgb(30, 138, 120);\">20–25 min</strong> <span style=\"color: rgb(28, 43, 40);\">Naas, Newbridge, Kildare, Monasterevin</span></p><p><strong style=\"color: rgb(30, 138, 120);\">25–30 min </strong><span style=\"color: rgb(28, 43, 40);\">Maynooth, Portarlington, Athy, Celbridge</span></p><p><strong style=\"color: rgb(30, 138, 120);\">30–35 min</strong> <span style=\"color: rgb(28, 43, 40);\">Portlaoise, Mullingar, Kilcock, Athgarvan</span></p><p><strong style=\"color: rgb(30, 138, 120);\">35–40 min </strong><span style=\"color: rgb(28, 43, 40);\">Athlone, Carlow, Leixlip, Tullamore</span></p><p><span style=\"color: rgb(28, 43, 40);\">House B &amp; C</span></p><p><strong style=\"color: rgb(30, 138, 120);\">0–10 min </strong><span style=\"color: rgb(28, 43, 40);\">Kildare, Monasterevin, Rathangan, Kildangan</span></p><p><strong style=\"color: rgb(30, 138, 120);\">10–15 min </strong><span style=\"color: rgb(28, 43, 40);\">Newbridge, Athy, Portarlington, Kilmeague</span></p><p><strong style=\"color: rgb(30, 138, 120);\">15–20 min </strong><span style=\"color: rgb(28, 43, 40);\">Naas, Clane, Stradbally, Allenwood</span></p><p><strong style=\"color: rgb(30, 138, 120);\">20–25 min </strong><span style=\"color: rgb(28, 43, 40);\">Portlaoise, Mountmellick, Sallins, Edenderry</span></p><p><strong style=\"color: rgb(30, 138, 120);\">25–30 min </strong><span style=\"color: rgb(28, 43, 40);\">Athgarvan, Carlow, Abbeyleix, Maynooth</span></p><p><strong style=\"color: rgb(30, 138, 120);\">30–35 min</strong><span style=\"color: rgb(28, 43, 40);\">Tullamore, Kilkenny, Castledermot, Mullingar</span></p><p><strong style=\"color: rgb(30, 138, 120);\">35–40 min </strong><span style=\"color: rgb(28, 43, 40);\">Athlone, Celbridge, Prosperous, Castlecomer</span></p><p><span style=\"color: rgb(28, 43, 40);\">House D</span></p><p><strong style=\"color: rgb(30, 138, 120);\">0–10 min</strong> <span style=\"color: rgb(28, 43, 40);\">Kildare, Newbridge, Rathangan, Kildangan</span></p><p><strong style=\"color: rgb(30, 138, 120);\">10–15 min </strong><span style=\"color: rgb(28, 43, 40);\">Monasterevin, Athy, Kilmeague, Allenwood</span></p><p><strong style=\"color: rgb(30, 138, 120);\">15–20 min </strong><span style=\"color: rgb(28, 43, 40);\">Portarlington, Naas, Clane, Stradbally</span></p><p><strong style=\"color: rgb(30, 138, 120);\">20–25 min </strong><span style=\"color: rgb(28, 43, 40);\">Portlaoise, Edenderry, Mountmellick, Sallins</span></p><p><strong style=\"color: rgb(30, 138, 120);\">25–30 min </strong><span style=\"color: rgb(28, 43, 40);\">Athgarvan, Carlow, Abbeyleix, Maynooth</span></p><p><strong style=\"color: rgb(30, 138, 120);\">30–35 min </strong><span style=\"color: rgb(28, 43, 40);\">Tullamore, Kilkenny, Castledermot, Mullingar</span></p><p><strong style=\"color: rgb(30, 138, 120);\">35–40 min </strong><span style=\"color: rgb(28, 43, 40);\">Athlone, Celbridge, Prosperous, Castlecomer</span></p><p><br></p><p><strong>This role is suited to candidates looking for Social Care Worker Jobs (SCW), Social Care Assistants Jobs (SCA), Social Worker Jobs (SW), Health Care Assistants Jobs(HCA), Health Care Worker Jobs (HCW), Carer Jobs, Residential Worker Jobs, Support Worker Jobs, Senior Support Worker Jobs.</strong></p>",
+      "location": {
+        "city": "Kildare",
+        "state": "County Kildare",
+        "country": "Ireland",
+        "cityId": "ChIJkxNuX8V4XUgRIHQxl6nHAAo",
+        "cityFullName": "Kildare, Ireland",
+        "cityLat": "53.15980590",
+        "cityLng": "-6.90897630",
+        "countryShort": "IE"
+      },
+      "sectors": [
+        {
+          "uuid": "0418f8ad-ab1e-4ce7-b3e7-b0774a15e5f2",
+          "name": "Social Care",
+          "translation_key": "social_care"
+        }
+      ],
+      "subsectors": [
+        {
+          "uuid": "84bd1143-50d2-4596-b054-4331789008e2",
+          "name": "Social Care Worker",
+          "translation_key": "social_care_worker"
+        }
+      ],
+      "contract": "Permanent",
+      "period": "Fulltime",
+      "workplace": "onSite",
+      "salary": {
+        "type": "Competitive",
+        "period": "Annual",
+        "start": null,
+        "end": null,
+        "details": null
+      },
+      "published": true,
+      "published_at": "2026-09-03T08:05:59.000000Z",
+      "internal": false,
+      "external": true,
+      "questions_form": [
+        {
+          "type": "YesNo",
+          "text": "Do you hold a valid Irish Driver's License?",
+          "options": [
+            "Full Irish Driver's License",
+            "Learner's Permit",
+            "International"
+          ],
+          "answer": null
+        },
+        {
+          "type": "Options",
+          "text": "How many years experience do you have?",
+          "options": [
+            "1 to 3 years",
+            "4 to 6 years",
+            "over 6",
+            "0 years"
+          ],
+          "answer": null
+        },
+        {
+          "type": "YesNo",
+          "text": "Do you have a minimum of a QQI Level 5 in healthcare or equivalent?",
+          "options": [
+            "Yes",
+            "No"
+          ],
+          "answer": null
+        },
+        {
+          "type": "Options",
+          "text": "Are you a Current Permanent Resident of Ireland?",
+          "options": [
+            "Yes",
+            "No",
+            "I am moving to Ireland"
+          ],
+          "answer": null
+        },
+        {
+          "type": "Options",
+          "text": "What is you eligibility status?",
+          "options": [
+            "EU Citizen/ National Passport?",
+            "Stamp 4 / Labour Market Access",
+            "Stamp 1G",
+            "Stamp 1 Visa",
+            "Sponsorship Required?"
+          ],
+          "answer": null
+        }
+      ],
+      "closed_for_applicants": false,
+      "require_cv": true,
+      "require_opt_in_for_job": true,
+      "require_opt_in_for_database": true,
+      "apply_url": "https://api.occupop.com/shared/job/social-care-assistant-e3b36",
+      "unique_slug": "social-care-assistant-e3b36",
+      "cv_upload_signed_url": "REDACTED",
+      "custom_fields_for_details": [],
+      "custom_fields_for_applicants": [],
+      "company_name": "Lotus Care Services",
+      "company_logo": "https://recruitment.cezannehr.com/bucket/hiring_companies/66a3ad9e4ee80.jpg",
+      "company_label_uuid": null,
+      "created_at": "2026-09-03T08:05:59.000000Z",
+      "close_date": null
+    },
+    {
+      "uuid": "1d3225b3-6b02-4f28-abfa-593a2c5fea39",
+      "id_ref": "",
+      "title": "Social Care Worker",
+      "description": "<p><em>Do you enjoy supporting vulnerable children</em>?</p><p><em>Are you looking to make a real difference every day?</em></p><p>If so, this could be the role for you.</p><p><br></p><p>Lotus Care provides a range of respite, residential and support services to Children &amp; Adults with intellectual disabilities in a homely and comfortable community setting. We aim to empower people with the necessary skills to live full and satisfying lives as equal citizens of their local communities.</p><p><br></p><p><strong>This role is also suitable for Social Care Assistants.</strong></p><p><br></p><p><strong>Role Overview</strong></p><p>Location: Tullamore</p><p>Contract Type: Full-Time - 42 Hours / Weekly Average</p><p>Salary: €35,000 – €50,000 DOE</p><p>&nbsp;</p><p><strong>Why Join Lotus Care?</strong></p><ul><li>Competitive premiums for unsocial hours</li><li>Yearly rate reviews</li><li>Ongoing mentoring and support</li><li>Internal Progression Opportunities</li><li>CPD support</li><li>Refer a Friend Scheme</li><li>Employee of the Month Scheme</li><li>One consistent work location</li><li>Company events</li><li>Free onsite parking</li></ul><p>&nbsp;</p><p><strong>The Role</strong></p><ul><li>Support with daily living skills and personal development</li><li>Promote independence and decision-making</li><li>Deliver person-centred care plans</li><li>Administer and record prescribed medication</li><li>Take on Key Worker responsibilities, helping service owners reach goals</li><li>Maintain accurate documentation and reports</li><li>Work closely with the MDT to support service owners’ goals</li><li>Document and report incidents and complaints involving staff, service owners or visitors.</li><li>Day and waking night shifts required.</li></ul><p>&nbsp;</p><p><strong>What You Need</strong></p><ul><li>Minimum Level 5 qualification in Social / Health Care Studies or relevant discipline (SCA)</li><li>Minimum Level 7 qualification in Social / Health Care Studies or relevant discipline</li><li>CORU Registered (SCW)</li><li>Full Irish driving licence (to drive company vehicle when required)</li><li>Flexibility for both Day/Night Shifts</li><li>Experience in social care or healthcare desirable but not essential</li><li>Good knowledge of relevant standards and regulations</li><li>Excellent written and spoken English</li><li>Garda Vetting/Police Clearance</li></ul><p>&nbsp;</p><p><em>If you’re looking for stability, strong support, and the opportunity to build a meaningful career in social care - </em><strong><em>we would love to hear from you.</em></strong></p><p><br></p><p><strong>Apply today and join a team that truly makes an impact!</strong></p><p><br></p><p><strong>Commutable locations:</strong></p><p><strong>10–15 min:</strong> Killeigh</p><p><strong>15–20 min:</strong> Clara, Kilbeggan, Daingean, Geashill, Ballycumber, Ballinagar</p><p><strong>20–25 min:</strong> Tyrrellspass</p><p><strong>25–30 min:</strong> Mullingar, Portarlington, Portlaoise, Moate, Ferbane, Edenderry, Mountmellick, Rosenallis, Clonaslee</p><p><strong>30–35 min:</strong> Edenderry</p><p><strong>35–40 min:</strong> Athlone, Birr, Newbridge, Kildare, Carlow, Borris-in-Ossory, Kinnegad</p><p><br></p><p><strong>This role is suited to candidates looking for Social Care Worker Jobs (SCW), Social Care Assistants Jobs (SCA), Social Worker Jobs (SW), Health Care Assistants Jobs(HCA), Health Care Worker Jobs (HCW), Carer Jobs, Residential Worker Jobs, Support Worker Jobs, Senior Support Worker Jobs.</strong></p>",
+      "location": {
+        "city": "Tullamore",
+        "state": "County Offaly",
+        "country": "Ireland",
+        "cityId": "ChIJCSa3DoalXUgRAHUxl6nHAAo",
+        "cityFullName": "Tullamore, Co. Offaly, Ireland",
+        "cityLat": "53.27527680",
+        "cityLng": "-7.49244390",
+        "countryShort": "IE"
+      },
+      "sectors": [
+        {
+          "uuid": "0418f8ad-ab1e-4ce7-b3e7-b0774a15e5f2",
+          "name": "Social Care",
+          "translation_key": "social_care"
+        }
+      ],
+      "subsectors": [
+        {
+          "uuid": "84bd1143-50d2-4596-b054-4331789008e2",
+          "name": "Social Care Worker",
+          "translation_key": "social_care_worker"
+        }
+      ],
+      "contract": "Permanent",
+      "period": "Fulltime",
+      "workplace": "onSite",
+      "salary": {
+        "type": "Competitive",
+        "period": "Annual",
+        "start": null,
+        "end": null,
+        "details": null
+      },
+      "published": true,
+      "published_at": "2026-09-03T07:57:45.000000Z",
+      "internal": false,
+      "external": true,
+      "questions_form": [
+        {
+          "type": "YesNo",
+          "text": "Do you hold a valid Irish Driver's License?",
+          "options": [
+            "Full Irish Driver's License",
+            "Learner's Permit",
+            "International"
+          ],
+          "answer": null
+        },
+        {
+          "type": "Options",
+          "text": "How many years experience do you have?",
+          "options": [
+            "1 to 3 years",
+            "4 to 6 years",
+            "over 6",
+            "0 years"
+          ],
+          "answer": null
+        },
+        {
+          "type": "YesNo",
+          "text": "Do you have a minimum of a QQI Level 5 in healthcare or equivalent?",
+          "options": [
+            "Yes",
+            "No"
+          ],
+          "answer": null
+        },
+        {
+          "type": "Options",
+          "text": "Are you a Current Permanent Resident of Ireland?",
+          "options": [
+            "Yes",
+            "No",
+            "I am moving to Ireland"
+          ],
+          "answer": null
+        },
+        {
+          "type": "Options",
+          "text": "What is you eligibility status?",
+          "options": [
+            "EU Citizen/ National Passport?",
+            "Stamp 4 / Labour Market Access",
+            "Stamp 1G",
+            "Stamp 1 Visa",
+            "Sponsorship Required?"
+          ],
+          "answer": null
+        }
+      ],
+      "closed_for_applicants": false,
+      "require_cv": true,
+      "require_opt_in_for_job": true,
+      "require_opt_in_for_database": true,
+      "apply_url": "https://api.occupop.com/shared/job/social-care-worker-1d322",
+      "unique_slug": "social-care-worker-1d322",
+      "cv_upload_signed_url": "REDACTED",
+      "custom_fields_for_details": [],
+      "custom_fields_for_applicants": [],
+      "company_name": "Lotus Care Services",
+      "company_logo": "https://recruitment.cezannehr.com/bucket/hiring_companies/66a3ad9e4ee80.jpg",
+      "company_label_uuid": null,
+      "created_at": "2026-09-03T07:57:45.000000Z",
+      "close_date": null
+    },
+    {
+      "uuid": "9e0d0f69-f4be-4d9c-b987-366b3c732049",
+      "id_ref": "",
+      "title": "Support Worker",
+      "description": "<p><strong>Support Worker – Full Time (Permanent)</strong></p><p><br></p><p><em>Are you fed up with traveling from client to client?</em></p><p><em>Do you enjoy supporting vulnerable children?</em></p><p><em>Do you spend a lot of your working day dealing with traffic?</em></p><p><em>Do your expenses not cover the wear and tear of your own personal car?</em></p><p><br></p><p>Here at Lotus Care we are offering real, <strong>full-time contracts</strong>, at the <strong>same location</strong>, <strong>DAYS ONLY</strong>!.</p><p><br></p><p><strong>Benefits&nbsp;</strong>&nbsp;</p><ul><li>One set work location and guaranteed hours</li><li>Competitive premiums for unsocial hours</li><li>Ongoing mentoring and support</li><li>Refer a Friend Scheme</li><li>Employee of the Month Scheme</li><li>Company events</li><li>Free onsite parking</li><li>CPD support</li></ul><p><br></p><p><strong>Role Overview</strong></p><ul><li>&nbsp;<em>Reporting to:</em> Person in Charge</li><li>&nbsp;<em>Contract Type:</em> Full-time</li><li>&nbsp;<em>Working Week</em>: Average of 40-42 hours a week, (DAYS ONLY)</li><li>Location of Work: Athlone Region</li></ul><p><br></p><p><strong>Role Responsibilities</strong></p><ul><li>&nbsp;Facilitate and encourage decision-making, independence, and personal development.</li><li>&nbsp;Provide support in daily living skills, including personal hygiene, health and appearance.</li><li>&nbsp;Work in a person-centred manner to meet individual care plans and goals.</li><li>&nbsp;Adhere to policies and procedures, standards, regulations, and codes of practice</li><li>&nbsp;Administer and document the dispensation of prescribed medication.</li><li>&nbsp;Undertake key worker responsibilities, helping service owners achieve goals.</li><li>&nbsp;Document and report incidents and complaints involving staff, service owners or visitors.</li><li>&nbsp;Work with MDT to achieve the goals of service owners.</li></ul><p><br></p><p><strong>Essential Requirements</strong></p><ul><li>&nbsp;Minimum Level 5 qualification in Social or Health Care Studies</li><li>&nbsp;Hold a full Irish driving license (to drive a company car, when required)</li><li>&nbsp;Prior experience in social care or healthcare desirable but not essential</li><li>&nbsp;Working knowledge of relevant standards and regulations.</li><li>&nbsp;Excellent English essential (verbal and written skills)</li><li>&nbsp;Garda Vetting/Police Clearance</li></ul><p><br></p><p><strong>Commutable locations:</strong></p><p><strong style=\"color: rgb(30, 138, 120);\">0–10 min </strong><span style=\"color: black;\">Athlone, Baylough, Coosan, Glasson</span></p><p><strong style=\"color: rgb(30, 138, 120);\">10–15 min </strong><span style=\"color: black;\">Moate, Ballinahown, Ballymore, Ferbane</span></p><p><strong style=\"color: rgb(30, 138, 120);\">15–20 min </strong><span style=\"color: black;\">Kilbeggan, Clara, Ballycumber, Horseleap</span></p><p><strong style=\"color: rgb(30, 138, 120);\">20–25 min</strong> <span style=\"color: black;\">Tullamore, Roscommon, Ballinasloe, Kinnegad</span></p><p><strong style=\"color: rgb(30, 138, 120);\">25–30 min </strong><span style=\"color: black;\">Mullingar, Ferbane, Edenderry, Tyrrellspass</span></p><p><strong style=\"color: rgb(30, 138, 120);\">30–35 min</strong> <span style=\"color: black;\">Birr, Portarlington, Castlerea, Longford</span></p><p><strong style=\"color: rgb(30, 138, 120);\">35–40 min</strong> <span style=\"color: black;\">Portlaoise, Mountmellick, Kildare, Newbridge</span></p><p><br></p><p>This role is suited to candidates looking for Social Care Worker Jobs (SCW), Social Care Assistants Jobs (SCA), Social Worker Jobs (SW), Health Care Assistants Jobs(HCA), Health Care Worker Jobs (HCW), Carer Jobs, Residential Worker Jobs, Support Worker Jobs, Senior Support Worker Jobs.</p><p><br></p><p>IND1</p>",
+      "location": {
+        "city": "Athlone",
+        "state": "County Westmeath",
+        "country": "Ireland",
+        "cityId": "ChIJn4xkPgFJXEgRgOO9Ro0a-do",
+        "cityFullName": "Athlone, Co. Westmeath, Ireland",
+        "cityLat": "53.42392260",
+        "cityLng": "-7.94027750",
+        "countryShort": "IE"
+      },
+      "sectors": [
+        {
+          "uuid": "f7bf76ed-7d79-452e-aef8-82c7d548cda7",
+          "name": "Medical & Healthcare",
+          "translation_key": "medical_healthcare"
+        }
+      ],
+      "subsectors": [
+        {
+          "uuid": "9c333344-b0eb-43fd-bb07-f442fda56ee3",
+          "name": "Social Care / Social Worker",
+          "translation_key": "medical_he_social_care"
+        }
+      ],
+      "contract": "Permanent",
+      "period": "Fulltime",
+      "workplace": "onSite",
+      "salary": {
+        "type": "Competitive",
+        "period": "Annual",
+        "start": null,
+        "end": null,
+        "details": null
+      },
+      "published": true,
+      "published_at": "2026-08-06T09:46:15.000000Z",
+      "internal": false,
+      "external": true,
+      "questions_form": [
+        {
+          "type": "YesNo",
+          "text": "Do you hold a valid Irish Driver's License?",
+          "options": [
+            "Full Irish Driver's License",
+            "Learner's Permit",
+            "International"
+          ],
+          "answer": null
+        },
+        {
+          "type": "Options",
+          "text": "How many years experience do you have?",
+          "options": [
+            "1 to 3 years",
+            "4 to 6 years",
+            "over 6",
+            "0 years"
+          ],
+          "answer": null
+        },
+        {
+          "type": "YesNo",
+          "text": "Do you have a minimum of a QQI Level 5 in healthcare or equivalent?",
+          "options": [
+            "Yes",
+            "No"
+          ],
+          "answer": null
+        },
+        {
+          "type": "Options",
+          "text": "Are you a Current Permanent Resident of Ireland?",
+          "options": [
+            "Yes",
+            "No",
+            "I am moving to Ireland"
+          ],
+          "answer": null
+        },
+        {
+          "type": "Options",
+          "text": "What is you eligibility status?",
+          "options": [
+            "EU Citizen/ National Passport?",
+            "Stamp 4 / Labour Market Access",
+            "Stamp 1G",
+            "Stamp 1 Visa",
+            "Sponsorship Required?"
+          ],
+          "answer": null
+        }
+      ],
+      "closed_for_applicants": false,
+      "require_cv": true,
+      "require_opt_in_for_job": true,
+      "require_opt_in_for_database": true,
+      "apply_url": "https://api.occupop.com/shared/job/social-care-assistant-9e0d0",
+      "unique_slug": "social-care-assistant-9e0d0",
+      "cv_upload_signed_url": "REDACTED",
+      "custom_fields_for_details": [],
+      "custom_fields_for_applicants": [],
+      "company_name": "Lotus Care Services",
+      "company_logo": "https://recruitment.cezannehr.com/bucket/hiring_companies/66a3ad9e4ee80.jpg",
+      "company_label_uuid": null,
+      "created_at": "2026-08-06T09:46:15.000000Z",
+      "close_date": null
+    },
+    {
+      "uuid": "82ba2885-8301-4b27-a9e6-f09429bb3bd1",
+      "id_ref": "",
+      "title": "Healthcare Assistant - Full Time, Permenant",
+      "description": "<p><strong>Health Care Assistant</strong></p><p><br></p><p><em>Do you enjoy supporting vulnerable children and adults? Are you looking to make a real difference every day?</em></p><p><br></p><p>If so, this could be the role for you.</p><p>Lotus Care provides a range of respite, residential and support services to children and adults with intellectual disabilities in homely and comfortable community settings across the Midlands. We aim to empower the people we support with the skills to live full and satisfying lives as equal citizens of their local communities.</p><p><br></p><p>We currently have Health Care Assistant vacancies at several of our locations across the Midlands region, so we can work with you to find the setting that suits you best.</p><p><br></p><p><strong style=\"color: rgb(46, 125, 116);\">Role Overview</strong></p><p><em>•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Location: </em>Tullamore OR Clonaslee</p><p><em>•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Contract Type: </em>Permanent, Full-Time</p><p><em>•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Working Week: </em>Average of 42 hours a week, day and waking night shifts required</p><p><em>•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Salary: </em>€35,000 – €50,000 DOE</p><p>•<em>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Reporting to:</em> Person in Charge</p><p><br></p><p><strong style=\"color: rgb(46, 125, 116);\">Why Join Lotus Care?</strong></p><p>•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Competitive premiums for unsocial hours</p><p>•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Yearly rate reviews</p><p>•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Full induction training and extensive in-house training programme</p><p>•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ongoing mentoring and support</p><p>•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Internal progression opportunities</p><p>•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CPD support</p><p>•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Refer a Friend Scheme</p><p>•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Employee of the Month Scheme</p><p>•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Long Service Awards</p><p>•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EAP Access</p><p>•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Company events</p><p>•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Free onsite parking</p><p><br></p><p><strong style=\"color: rgb(46, 125, 116);\">The Role</strong></p><p>•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Facilitate and encourage decision-making, independence and personal development</p><p>•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Support daily living skills, including personal hygiene, health and appearance</p><p>•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Work in a person-centred manner to meet individual care plans and goals</p><p>•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Administer and document the dispensation of prescribed medication</p><p>•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Undertake Key Worker responsibilities, helping service users achieve their goals</p><p>•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Maintain accurate documentation and reports</p><p>•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Work closely with the MDT to support service users' goals</p><p>•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Document and report incidents and complaints involving staff, service users or visitors</p><p>•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Adhere to policies, procedures, standards, regulations and codes of practice</p><p><br></p><p><strong style=\"color: rgb(46, 125, 116);\">Essential Requirements</strong></p><p>•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Minimum Level 5 qualification in Applied Social Studies, Social Care or a relevant discipline</p><p>•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Registered (or in the process of registering) with the Health Care Assistants Registration Board, CORU -SCW Only</p><p>•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Full, clean Irish driving licence</p><p>•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Prior experience in social care or healthcare desirable</p><p>•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Good working knowledge of HIQA standards and regulations</p><p>•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Excellent verbal and written English</p><p>•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Satisfactory Garda Vetting / Police Clearance</p><p><br></p><p><strong style=\"color: rgb(46, 125, 116);\">Apply Today</strong></p><p>If you're looking for stability, strong support and the opportunity to build a meaningful career in social care, we would love to hear from you. Apply today and join a team that truly makes an impact!</p>",
+      "location": {
+        "city": "Clonaslee",
+        "state": "County Laois",
+        "country": "Ireland",
+        "cityId": "ChIJ4_NLqH8HXUgR0I4xl6nHAAo",
+        "cityFullName": "Clonaslee, Co. Laois, Ireland",
+        "cityLat": "53.14860140",
+        "cityLng": "-7.52436960",
+        "countryShort": "IE"
+      },
+      "sectors": [
+        {
+          "uuid": "f7bf76ed-7d79-452e-aef8-82c7d548cda7",
+          "name": "Medical & Healthcare",
+          "translation_key": "medical_healthcare"
+        }
+      ],
+      "subsectors": [
+        {
+          "uuid": "9c333344-b0eb-43fd-bb07-f442fda56ee3",
+          "name": "Social Care / Social Worker",
+          "translation_key": "medical_he_social_care"
+        }
+      ],
+      "contract": "Permanent",
+      "period": "Fulltime",
+      "workplace": "onSite",
+      "salary": {
+        "type": "Competitive",
+        "period": "Annual",
+        "start": null,
+        "end": null,
+        "details": null
+      },
+      "published": true,
+      "published_at": "2026-07-22T14:30:38.000000Z",
+      "internal": false,
+      "external": true,
+      "questions_form": [
+        {
+          "type": "YesNo",
+          "text": "Do you hold a valid Irish Driver's License?",
+          "options": [
+            "Full Irish Driver's License",
+            "Learner's Permit",
+            "International"
+          ],
+          "answer": null
+        },
+        {
+          "type": "Options",
+          "text": "How many years experience do you have?",
+          "options": [
+            "1 to 3 years",
+            "4 to 6 years",
+            "over 6",
+            "0 years"
+          ],
+          "answer": null
+        },
+        {
+          "type": "YesNo",
+          "text": "Do you have a minimum of a QQI Level 5 in healthcare or equivalent?",
+          "options": [
+            "Yes",
+            "No"
+          ],
+          "answer": null
+        },
+        {
+          "type": "Options",
+          "text": "Are you a Current Permanent Resident of Ireland?",
+          "options": [
+            "Yes",
+            "No",
+            "I am moving to Ireland"
+          ],
+          "answer": null
+        },
+        {
+          "type": "Options",
+          "text": "What is you eligibility status?",
+          "options": [
+            "EU Citizen/ National Passport?",
+            "Stamp 4 / Labour Market Access",
+            "Stamp 1G",
+            "Stamp 1 Visa",
+            "Sponsorship Required?"
+          ],
+          "answer": null
+        }
+      ],
+      "closed_for_applicants": false,
+      "require_cv": true,
+      "require_opt_in_for_job": true,
+      "require_opt_in_for_database": true,
+      "apply_url": "https://api.occupop.com/shared/job/healthcare-assistant-full-time-permen-82ba2",
+      "unique_slug": "healthcare-assistant-full-time-permen-82ba2",
+      "cv_upload_signed_url": "REDACTED",
+      "custom_fields_for_details": [],
+      "custom_fields_for_applicants": [],
+      "company_name": "Lotus Care Services",
+      "company_logo": "https://recruitment.cezannehr.com/bucket/hiring_companies/66a3ad9e4ee80.jpg",
+      "company_label_uuid": null,
+      "created_at": "2026-07-22T14:30:38.000000Z",
+      "close_date": null
+    },
+    {
+      "uuid": "c8f01108-13e8-4eef-8e1c-3e4467e0f49f",
+      "id_ref": "",
+      "title": "Social Care Assistant / Social Care Worker",
+      "description": "<p><strong>Social Care Worker</strong></p><p><em style=\"color: rgb(46, 125, 116);\">Multiple locations across the Midlands, Ireland</em></p><p><br></p><p><em>Do you enjoy supporting vulnerable children and adults? Are you looking to make a real difference every day?</em></p><p><br></p><p>If so, this could be the role for you.</p><p>Lotus Care provides a range of respite, residential and support services to children and adults with intellectual disabilities in homely and comfortable community settings across the Midlands. We aim to empower the people we support with the skills to live full and satisfying lives as equal citizens of their local communities.</p><p>We currently have Social Care Worker/Social Care Assitant vacancies at several of our locations across the Midlands region, so we can work with you to find the setting that suits you best.</p><p><br></p><p><strong style=\"color: rgb(46, 125, 116);\">Role Overview</strong></p><p>•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Location: Midlands, Ireland (multiple options available including Athlone, Tullamore, Borris-in-Ossory, Kildare, Portlaoise, Portarlington, Clonalsee, Mullingar, Roscommon)</p><p>•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Contract Type: Permanent, Full-Time</p><p>•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Working Week: Average of 42 hours a week, day and waking night shifts required</p><p>•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Salary: €35,000 – €50,000 DOE</p><p>•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Reporting to: Person in Charge</p><p><br></p><p><strong style=\"color: rgb(46, 125, 116);\">Why Join Lotus Care?</strong></p><p>•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Competitive premiums for unsocial hours</p><p>•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Yearly rate reviews</p><p>•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Full induction training and extensive in-house training programme</p><p>•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ongoing mentoring and support</p><p>•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Internal progression opportunities</p><p>•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CPD support</p><p>•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Refer a Friend Scheme</p><p>•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Employee of the Month Scheme</p><p>•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Long Service Awards</p><p>•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EAP Access</p><p>•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Company events</p><p>•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Free onsite parking</p><p><br></p><p><strong style=\"color: rgb(46, 125, 116);\">The Role</strong></p><p>•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Facilitate and encourage decision-making, independence and personal development</p><p>•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Support daily living skills, including personal hygiene, health and appearance</p><p>•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Work in a person-centred manner to meet individual care plans and goals</p><p>•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Administer and document the dispensation of prescribed medication</p><p>•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Undertake Key Worker responsibilities, helping service users achieve their goals</p><p>•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Maintain accurate documentation and reports</p><p>•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Work closely with the MDT to support service users' goals</p><p>•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Document and report incidents and complaints involving staff, service users or visitors</p><p>•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Adhere to policies, procedures, standards, regulations and codes of practice</p><p><br></p><p><strong style=\"color: rgb(46, 125, 116);\">Essential Requirements</strong></p><p>•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Minimum Level 5 qualification in Applied Social Studies, Social Care or a relevant discipline</p><p>•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Registered (or in the process of registering) with the Social Care Workers Registration Board, CORU - (SCW only)</p><p>•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Full, clean Irish driving licence</p><p>•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Prior experience in social care or healthcare desirable</p><p>•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Good working knowledge of HIQA standards and regulations</p><p>•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Excellent verbal and written English</p><p>•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Satisfactory Garda Vetting / Police Clearance</p><p><br></p><p><strong style=\"color: rgb(46, 125, 116);\">Apply Today</strong></p><p>If you're looking for stability, strong support and the opportunity to build a meaningful career in social care, we would love to hear from you. Apply today and join a team that truly makes an impact!</p>",
+      "location": {
+        "city": "Tullamore",
+        "state": "County Offaly",
+        "country": "Ireland",
+        "cityId": "ChIJCSa3DoalXUgRAHUxl6nHAAo",
+        "cityFullName": "Tullamore, Co. Offaly, Ireland",
+        "cityLat": "53.27527680",
+        "cityLng": "-7.49244390",
+        "countryShort": "IE"
+      },
+      "sectors": [
+        {
+          "uuid": "f7bf76ed-7d79-452e-aef8-82c7d548cda7",
+          "name": "Medical & Healthcare",
+          "translation_key": "medical_healthcare"
+        }
+      ],
+      "subsectors": [
+        {
+          "uuid": "9c333344-b0eb-43fd-bb07-f442fda56ee3",
+          "name": "Social Care / Social Worker",
+          "translation_key": "medical_he_social_care"
+        }
+      ],
+      "contract": "Permanent",
+      "period": "Fulltime",
+      "workplace": "onSite",
+      "salary": {
+        "type": "Competitive",
+        "period": "Annual",
+        "start": null,
+        "end": null,
+        "details": null
+      },
+      "published": true,
+      "published_at": "2026-07-22T09:07:14.000000Z",
+      "internal": false,
+      "external": true,
+      "questions_form": [
+        {
+          "type": "YesNo",
+          "text": "Do you hold a valid Irish Driver's License?",
+          "options": [
+            "Full Irish Driver's License",
+            "Learner's Permit",
+            "International"
+          ],
+          "answer": null
+        },
+        {
+          "type": "Options",
+          "text": "How many years experience do you have?",
+          "options": [
+            "1 to 3 years",
+            "4 to 6 years",
+            "over 6",
+            "0 years"
+          ],
+          "answer": null
+        },
+        {
+          "type": "YesNo",
+          "text": "Do you have a minimum of a QQI Level 5 in healthcare or equivalent?",
+          "options": [
+            "Yes",
+            "No"
+          ],
+          "answer": null
+        },
+        {
+          "type": "Options",
+          "text": "Are you a Current Permanent Resident of Ireland?",
+          "options": [
+            "Yes",
+            "No",
+            "I am moving to Ireland"
+          ],
+          "answer": null
+        },
+        {
+          "type": "Options",
+          "text": "What is you eligibility status?",
+          "options": [
+            "EU Citizen/ National Passport?",
+            "Stamp 4 / Labour Market Access",
+            "Stamp 1G",
+            "Stamp 1 Visa",
+            "Sponsorship Required?"
+          ],
+          "answer": null
+        }
+      ],
+      "closed_for_applicants": false,
+      "require_cv": true,
+      "require_opt_in_for_job": true,
+      "require_opt_in_for_database": true,
+      "apply_url": "https://api.occupop.com/shared/job/social-care-assistant-social-care-work-c8f01",
+      "unique_slug": "social-care-assistant-social-care-work-c8f01",
+      "cv_upload_signed_url": "REDACTED",
+      "custom_fields_for_details": [],
+      "custom_fields_for_applicants": [],
+      "company_name": "Lotus Care Services",
+      "company_logo": "https://recruitment.cezannehr.com/bucket/hiring_companies/66a3ad9e4ee80.jpg",
+      "company_label_uuid": null,
+      "created_at": "2026-07-22T09:07:14.000000Z",
+      "close_date": null
+    },
+    {
+      "uuid": "79a06f0d-ae3c-4548-a371-f7071f46eca8",
+      "id_ref": "Outreach",
+      "title": "Support Worker",
+      "description": "<p><strong>Support Worker</strong></p><p>Lotus Care provides a range of respite, residential and support services to Children &amp; Adults with intellectual disabilities in a homely and comfortable community setting. We aim to empower people with the necessary skills to live full and satisfying lives as equal citizens of their local communities.</p><p><br></p><p><strong>Role Overview</strong></p><ul><li>Contract Type: Full-Time</li><li>Working Week: Average of 40 hours a week, day shifts only</li><li>Location of Work: Athlone</li></ul><p><br></p><p><strong>What We Offer</strong></p><ul><li>Competitive premiums</li><li>Full induction training</li><li>Extensive in-house training programme</li><li>On-going mentoring and support</li><li>Refer a Friend Scheme</li><li>Employee of the Month Scheme</li><li>Long&nbsp;Service Awards</li><li>EAP Access</li><li>Company events</li><li>Free on-site parking</li><li>CPD support</li></ul><p><br></p><p><strong>Role Responsibilities</strong></p><ul><li>Facilitate and encourage decision-making, independence, and personal development.</li><li>Provide support in daily living skills, including personal hygiene, health and appearance.</li><li>Work in a person-centred manner to meet individual care plans and goals.</li><li>Adhere to policies and procedures, standards, regulations, and codes of practice</li><li>Administer and document the dispensation of prescribed medication.</li><li>Document and report incidents and complaints involving staff, service owners or visitors.</li><li>Work with MDT to achieve the goals of service owners.</li></ul><p><br></p><p><strong>Essential Requirements</strong></p><ul><li>Minimum QQI Level 5 (8 modules) in Healthcare or equivalent</li><li>Hold a full Irish driving license</li><li>Prior experience in social care or healthcare</li><li>Working knowledge of HIQA standards and regulations</li><li>Excellent verbal and writing skills</li><li>Garda Vetting/Police Clearance</li></ul>",
+      "location": {
+        "city": "Athlone",
+        "state": "County Westmeath",
+        "country": "Ireland",
+        "cityId": "ChIJn4xkPgFJXEgRgOO9Ro0a-do",
+        "cityFullName": "Athlone, Co. Westmeath, Ireland",
+        "cityLat": "53.42392260",
+        "cityLng": "-7.94027750",
+        "countryShort": "IE"
+      },
+      "sectors": [
+        {
+          "uuid": "f7bf76ed-7d79-452e-aef8-82c7d548cda7",
+          "name": "Medical & Healthcare",
+          "translation_key": "medical_healthcare"
+        }
+      ],
+      "subsectors": [
+        {
+          "uuid": "9c333344-b0eb-43fd-bb07-f442fda56ee3",
+          "name": "Social Care / Social Worker",
+          "translation_key": "medical_he_social_care"
+        }
+      ],
+      "contract": "Permanent",
+      "period": "Fulltime",
+      "workplace": "onSite",
+      "salary": {
+        "type": "Competitive",
+        "period": "Annual",
+        "start": null,
+        "end": null,
+        "details": null
+      },
+      "published": true,
+      "published_at": "2026-07-09T15:04:42.000000Z",
+      "internal": false,
+      "external": true,
+      "questions_form": [
+        {
+          "type": "YesNo",
+          "text": "Do you hold a valid Irish Driver's License?",
+          "options": [
+            "Full Irish Driver's License",
+            "Learner's Permit",
+            "International"
+          ],
+          "answer": null
+        },
+        {
+          "type": "Options",
+          "text": "How many years experience do you have?",
+          "options": [
+            "1 to 3 years",
+            "4 to 6 years",
+            "over 6",
+            "0 years"
+          ],
+          "answer": null
+        },
+        {
+          "type": "YesNo",
+          "text": "Do you have a minimum of a QQI Level 5 in healthcare or equivalent?",
+          "options": [
+            "Yes",
+            "No"
+          ],
+          "answer": null
+        },
+        {
+          "type": "Options",
+          "text": "Are you a Current Permanent Resident of Ireland?",
+          "options": [
+            "Yes",
+            "No",
+            "I am moving to Ireland"
+          ],
+          "answer": null
+        },
+        {
+          "type": "Options",
+          "text": "What is you eligibility status?",
+          "options": [
+            "EU Citizen/ National Passport?",
+            "Stamp 4 / Labour Market Access",
+            "Stamp 1G",
+            "Stamp 1 Visa",
+            "Sponsorship Required?"
+          ],
+          "answer": null
+        }
+      ],
+      "closed_for_applicants": true,
+      "require_cv": true,
+      "require_opt_in_for_job": true,
+      "require_opt_in_for_database": true,
+      "apply_url": "https://api.occupop.com/shared/job/healthcare-assistant-79a06",
+      "unique_slug": "healthcare-assistant-79a06",
+      "cv_upload_signed_url": "REDACTED",
+      "custom_fields_for_details": [],
+      "custom_fields_for_applicants": [],
+      "company_name": "Lotus Care Services",
+      "company_logo": "https://recruitment.cezannehr.com/bucket/hiring_companies/66a3ad9e4ee80.jpg",
+      "company_label_uuid": null,
+      "created_at": "2026-07-09T15:04:42.000000Z",
+      "close_date": null
+    },
+    {
+      "uuid": "333d7a47-8f24-465e-9ccf-c1469281f991",
+      "id_ref": "",
+      "title": "Residential Support Worker",
+      "description": "<p>Lotus Care provides a range of respite, residential and support services to Children &amp; Adults with intellectual disabilities in a homely and comfortable community setting. We aim to empower people with the necessary skills to live full and satisfying lives as equal citizens of their local communities.&nbsp;</p><p>Lotus Care is currently recruiting for an experienced Healthcare Assistant.</p><p>&nbsp;</p><p><strong>Position Details</strong></p><ul><li><strong>Employer:</strong> Lotus Care</li><li><strong>Position:</strong> <span style=\"color: rgb(36, 36, 36);\">Residential Support Worker</span></li><li><strong>Location:</strong> Clonalsee, Co. Laois</li><li><strong>Hours:</strong> Average 42 hours per week (12 hour shifts, days &amp; nights)</li><li><strong>Role Type</strong>: Permanent position - expected start date August.</li></ul><p>&nbsp;</p><p><strong>Key Responsibilities</strong></p><ul><li>Provide high-quality, person-centred care and support to service owners.</li><li>Assist service owners with personal care, hygiene, feeding, and daily living activities.</li><li>Support the emotional, social, and physical wellbeing of service owners.</li><li>Maintain a clean, safe, and secure environment in line with health and safety standards and individual care plans.</li><li>Promote and advocate for the rights, dignity, and individual needs of service owners.</li><li>Support participation in community and recreational activities.</li><li>Monitor and report safeguarding, welfare, or health concerns in accordance with company policies and procedures.</li><li>Carry out additional duties as required by management.</li></ul><p>&nbsp;</p><p><strong>Candidate Requirements</strong></p><ul><li>Minimum QQI Level 5 qualification in Healthcare Support, Social Care, or equivalent qualification.</li><li>Previous experience supporting children or adults with intellectual and/or physical disabilities.</li><li>Good communication and interpersonal skills.</li><li>Ability to work independently and as part of a multidisciplinary team.</li><li>Commitment to delivering high standards of care and support.</li></ul><p><br></p><p>This role is also suitable for Experienced Support Workers, Assistant Support Workers, Care Workers, Healthcare Workers, High Support Specialist, Senior Support Worker, Senior Care Assistant and Care Assistants!</p><p><br></p><p>IND1</p>",
+      "location": {
+        "city": "Clonaslee",
+        "state": "County Laois",
+        "country": "Ireland",
+        "cityId": "ChIJ4_NLqH8HXUgR0I4xl6nHAAo",
+        "cityFullName": "Clonaslee, Co. Laois, Ireland",
+        "cityLat": "53.14860140",
+        "cityLng": "-7.52436960",
+        "countryShort": "IE"
+      },
+      "sectors": [
+        {
+          "uuid": "f7bf76ed-7d79-452e-aef8-82c7d548cda7",
+          "name": "Medical & Healthcare",
+          "translation_key": "medical_healthcare"
+        }
+      ],
+      "subsectors": [
+        {
+          "uuid": "9c333344-b0eb-43fd-bb07-f442fda56ee3",
+          "name": "Social Care / Social Worker",
+          "translation_key": "medical_he_social_care"
+        }
+      ],
+      "contract": "Permanent",
+      "period": "Fulltime",
+      "workplace": "onSite",
+      "salary": {
+        "type": "Competitive",
+        "period": "Annual",
+        "start": null,
+        "end": null,
+        "details": null
+      },
+      "published": true,
+      "published_at": "2026-05-14T07:10:59.000000Z",
+      "internal": false,
+      "external": true,
+      "questions_form": [
+        {
+          "type": "YesNo",
+          "text": "Do you hold a valid Irish Driver's License?",
+          "options": [
+            "Full Irish Driver's License",
+            "Learner's Permit",
+            "International"
+          ],
+          "answer": null
+        },
+        {
+          "type": "Options",
+          "text": "How many years experience do you have?",
+          "options": [
+            "1 to 3 years",
+            "4 to 6 years",
+            "over 6",
+            "0 years"
+          ],
+          "answer": null
+        },
+        {
+          "type": "YesNo",
+          "text": "Do you have a minimum of a QQI Level 5 in healthcare or equivalent?",
+          "options": [
+            "Yes",
+            "No"
+          ],
+          "answer": null
+        },
+        {
+          "type": "Options",
+          "text": "Are you a Current Permanent Resident of Ireland?",
+          "options": [
+            "Yes",
+            "No",
+            "I am moving to Ireland"
+          ],
+          "answer": null
+        },
+        {
+          "type": "Options",
+          "text": "What is you eligibility status?",
+          "options": [
+            "EU Citizen/ National Passport?",
+            "Stamp 4 / Labour Market Access",
+            "Stamp 1G",
+            "Stamp 1 Visa",
+            "Sponsorship Required?"
+          ],
+          "answer": null
+        }
+      ],
+      "closed_for_applicants": false,
+      "require_cv": true,
+      "require_opt_in_for_job": true,
+      "require_opt_in_for_database": true,
+      "apply_url": "https://api.occupop.com/shared/job/residential-support-worker-333d7a",
+      "unique_slug": "residential-support-worker-333d7a",
+      "cv_upload_signed_url": "REDACTED",
+      "custom_fields_for_details": [],
+      "custom_fields_for_applicants": [],
+      "company_name": "Lotus Care Services",
+      "company_logo": "https://recruitment.cezannehr.com/bucket/hiring_companies/66a3ad9e4ee80.jpg",
+      "company_label_uuid": null,
+      "created_at": "2026-05-14T07:10:59.000000Z",
+      "close_date": null
+    },
+    {
+      "uuid": "53dc2907-a7b1-45d1-8ad0-6ef8fdad0903",
+      "id_ref": "",
+      "title": "Social Care Worker - Full Time",
+      "description": "<p><strong>Social Care Worker </strong></p><p><br></p><p><em>Do you enjoy supporting vulnerable children</em>?</p><p><em>Are you looking to make a real difference every day?</em></p><p>If so, this could be the role for you.</p><p><br></p><p>Lotus Care provides a range of respite, residential and support services to Children &amp; Adults with intellectual disabilities in a homely and comfortable community setting. We aim to empower people with the necessary skills to live full and satisfying lives as equal citizens of their local communities.</p><p><br></p><p><strong>This role is also suitable for Social Care Assistants.</strong></p><p><br></p><p><strong>Role Overview</strong></p><p>Location: Tullamore</p><p>Contract Type: Full-Time - 42 Hours / Weekly Average</p><p>Salary: €35,000 – €50,000 DOE</p><p>&nbsp;</p><p><strong>Why Join Lotus Care?</strong></p><ul><li>Competitive premiums for unsocial hours</li><li>Yearly rate reviews</li><li>Ongoing mentoring and support</li><li>Internal Progression Opportunities</li><li>CPD support</li><li>Refer a Friend Scheme</li><li>Employee of the Month Scheme</li><li>One consistent work location</li><li>Company events</li><li>Free onsite parking</li></ul><p>&nbsp;</p><p><strong>The Role</strong></p><ul><li>Support with daily living skills and personal development</li><li>Promote independence and decision-making</li><li>Deliver person-centred care plans</li><li>Administer and record prescribed medication</li><li>Take on Key Worker responsibilities, helping service owners reach goals</li><li>Maintain accurate documentation and reports</li><li>Work closely with the MDT to support service owners’ goals</li><li>Document and report incidents and complaints involving staff, service owners or visitors.</li><li>Day and waking night shifts required.</li></ul><p>&nbsp;</p><p><strong>What You Need</strong></p><ul><li>Minimum Level 5 qualification in Social / Health Care Studies or relevant discipline (SCA)</li><li>Minimum Level 7 qualification in Social / Health Care Studies or relevant discipline</li><li>CORU Registered (SCW)</li><li>Full Irish driving licence (to drive company vehicle when required)</li><li>Flexibility for both Day/Night Shifts</li><li>Experience in social care or healthcare desirable but not essential</li><li>Good knowledge of relevant standards and regulations</li><li>Excellent written and spoken English</li><li>Garda Vetting/Police Clearance</li></ul><p>&nbsp;</p><p><em>If you’re looking for stability, strong support, and the opportunity to build a meaningful career in social care - </em><strong><em>we would love to hear from you.</em></strong></p><p><br></p><p><strong>Apply today and join a team that truly makes an impact!</strong></p>",
+      "location": {
+        "city": "Tullamore",
+        "state": "County Offaly",
+        "country": "Ireland",
+        "cityId": "ChIJCSa3DoalXUgRAHUxl6nHAAo",
+        "cityFullName": "Tullamore, Co. Offaly, Ireland",
+        "cityLat": "53.27527680",
+        "cityLng": "-7.49244390",
+        "countryShort": "IE"
+      },
+      "sectors": [
+        {
+          "uuid": "f7bf76ed-7d79-452e-aef8-82c7d548cda7",
+          "name": "Medical & Healthcare",
+          "translation_key": "medical_healthcare"
+        }
+      ],
+      "subsectors": [
+        {
+          "uuid": "9c333344-b0eb-43fd-bb07-f442fda56ee3",
+          "name": "Social Care / Social Worker",
+          "translation_key": "medical_he_social_care"
+        }
+      ],
+      "contract": "Permanent",
+      "period": "Fulltime",
+      "workplace": "onSite",
+      "salary": {
+        "type": "Competitive",
+        "period": "Annual",
+        "start": null,
+        "end": null,
+        "details": null
+      },
+      "published": true,
+      "published_at": "2026-05-13T14:51:35.000000Z",
+      "internal": false,
+      "external": true,
+      "questions_form": [
+        {
+          "type": "YesNo",
+          "text": "Do you hold a valid Irish Driver's License?",
+          "options": [
+            "Full Irish Driver's License",
+            "Learner's Permit",
+            "International"
+          ],
+          "answer": null
+        },
+        {
+          "type": "Options",
+          "text": "How many years experience do you have?",
+          "options": [
+            "1 to 3 years",
+            "4 to 6 years",
+            "over 6",
+            "0 years"
+          ],
+          "answer": null
+        },
+        {
+          "type": "YesNo",
+          "text": "Do you have a minimum of a QQI Level 5 in healthcare or equivalent?",
+          "options": [
+            "Yes",
+            "No"
+          ],
+          "answer": null
+        },
+        {
+          "type": "Options",
+          "text": "Are you a Current Permanent Resident of Ireland?",
+          "options": [
+            "Yes",
+            "No",
+            "I am moving to Ireland"
+          ],
+          "answer": null
+        },
+        {
+          "type": "Options",
+          "text": "What is you eligibility status?",
+          "options": [
+            "EU Citizen/ National Passport?",
+            "Stamp 4 / Labour Market Access",
+            "Stamp 1G",
+            "Stamp 1 Visa",
+            "Sponsorship Required?"
+          ],
+          "answer": null
+        }
+      ],
+      "closed_for_applicants": true,
+      "require_cv": true,
+      "require_opt_in_for_job": true,
+      "require_opt_in_for_database": true,
+      "apply_url": "https://api.occupop.com/shared/job/social-care-worker-full-time-53dc29",
+      "unique_slug": "social-care-worker-full-time-53dc29",
+      "cv_upload_signed_url": "REDACTED",
+      "custom_fields_for_details": [],
+      "custom_fields_for_applicants": [],
+      "company_name": "Lotus Care Services",
+      "company_logo": "https://recruitment.cezannehr.com/bucket/hiring_companies/66a3ad9e4ee80.jpg",
+      "company_label_uuid": null,
+      "created_at": "2026-05-13T14:51:35.000000Z",
+      "close_date": null
+    },
+    {
+      "uuid": "471793a7-de10-4d24-b5a2-ed0d5862cbda",
+      "id_ref": "",
+      "title": "Healthcare Assistant",
+      "description": "<p>Lotus Care provides a range of respite, residential and support services to Children &amp; Adults with intellectual disabilities in a homely and comfortable community setting. We aim to empower people with the necessary skills to live full and satisfying lives as equal citizens of their local communities.&nbsp;</p><p>Lotus Care is currently recruiting for an experienced Healthcare Assistant.</p><p>&nbsp;</p><p><strong>Position Details</strong></p><ul><li><strong>Employer:</strong> Lotus Care</li><li><strong>Position:</strong> Healthcare Assistant</li><li><strong>Location:</strong> Birr, Co. Offaly, Ireland</li><li><strong>Hours:</strong> 42 hours per week</li><li><strong>Salary:</strong> €36,036 per annum</li></ul><p>&nbsp;</p><p><strong>Key Responsibilities</strong></p><ul><li>Provide high-quality, person-centred care and support to service owners.</li><li>Assist service owners with personal care, hygiene, feeding, and daily living activities.</li><li>Support the emotional, social, and physical wellbeing of service owners.</li><li>Maintain a clean, safe, and secure environment in line with health and safety standards and individual care plans.</li><li>Promote and advocate for the rights, dignity, and individual needs of service owners.</li><li>Support participation in community and recreational activities.</li><li>Monitor and report safeguarding, welfare, or health concerns in accordance with company policies and procedures.</li><li>Carry out additional duties as required by management.</li></ul><p>&nbsp;</p><p><strong>Candidate Requirements</strong></p><ul><li>Minimum QQI Level 5 qualification in Healthcare Support, Social Care, or equivalent qualification.</li><li>Previous experience supporting children or adults with intellectual and/or physical disabilities.</li><li>Good communication and interpersonal skills.</li><li>Ability to work independently and as part of a multidisciplinary team.</li><li>Commitment to delivering high standards of care and support.</li></ul><p><br></p><p><span style=\"color: rgb(89, 89, 89);\">This role is also suitable for Experienced Support Workers, Assistant Support Workers, Care Workers, Healthcare Workers, High Support Specialist, Senior Support Worker, Senior Care Assistant and Care Assistants!</span></p><p><br></p><p><span style=\"color: rgb(89, 89, 89);\">IND1</span></p>",
+      "location": {
+        "city": "Birr",
+        "state": "County Offaly",
+        "country": "Ireland",
+        "cityId": "ChIJMZQnTij4XEgR4OExl6nHAAo",
+        "cityFullName": "Townparks, Birr, Co. Offaly, Ireland",
+        "cityLat": "53.09800520",
+        "cityLng": "-7.90968820",
+        "countryShort": "IE"
+      },
+      "sectors": [
+        {
+          "uuid": "f7bf76ed-7d79-452e-aef8-82c7d548cda7",
+          "name": "Medical & Healthcare",
+          "translation_key": "medical_healthcare"
+        }
+      ],
+      "subsectors": [
+        {
+          "uuid": "9c333344-b0eb-43fd-bb07-f442fda56ee3",
+          "name": "Social Care / Social Worker",
+          "translation_key": "medical_he_social_care"
+        }
+      ],
+      "contract": "Permanent",
+      "period": "Fulltime",
+      "workplace": "onSite",
+      "salary": {
+        "type": "Competitive",
+        "period": "Annual",
+        "start": null,
+        "end": null,
+        "details": null
+      },
+      "published": true,
+      "published_at": "2026-05-12T12:09:38.000000Z",
+      "internal": false,
+      "external": true,
+      "questions_form": [
+        {
+          "type": "YesNo",
+          "text": "Do you hold a valid Irish Driver's License?",
+          "options": [
+            "Full Irish Driver's License",
+            "Learner's Permit",
+            "International"
+          ],
+          "answer": null
+        },
+        {
+          "type": "Options",
+          "text": "How many years experience do you have?",
+          "options": [
+            "1 to 3 years",
+            "4 to 6 years",
+            "over 6",
+            "0 years"
+          ],
+          "answer": null
+        },
+        {
+          "type": "YesNo",
+          "text": "Do you have a minimum of a QQI Level 5 in healthcare or equivalent?",
+          "options": [
+            "Yes",
+            "No"
+          ],
+          "answer": null
+        },
+        {
+          "type": "Options",
+          "text": "Are you a Current Permanent Resident of Ireland?",
+          "options": [
+            "Yes",
+            "No",
+            "I am moving to Ireland"
+          ],
+          "answer": null
+        },
+        {
+          "type": "Options",
+          "text": "What is you eligibility status?",
+          "options": [
+            "EU Citizen/ National Passport?",
+            "Stamp 4 / Labour Market Access",
+            "Stamp 1G",
+            "Stamp 1 Visa",
+            "Sponsorship Required?"
+          ],
+          "answer": null
+        }
+      ],
+      "closed_for_applicants": false,
+      "require_cv": true,
+      "require_opt_in_for_job": true,
+      "require_opt_in_for_database": true,
+      "apply_url": "https://api.occupop.com/shared/job/healthcare-assistant-47179",
+      "unique_slug": "healthcare-assistant-47179",
+      "cv_upload_signed_url": "REDACTED",
+      "custom_fields_for_details": [],
+      "custom_fields_for_applicants": [],
+      "company_name": "Lotus Care Services",
+      "company_logo": "https://recruitment.cezannehr.com/bucket/hiring_companies/66a3ad9e4ee80.jpg",
+      "company_label_uuid": null,
+      "created_at": "2026-05-12T12:09:38.000000Z",
+      "close_date": null
+    },
+    {
+      "uuid": "bf7ea31a-2f4b-4fed-bae4-9b11420d5c54",
+      "id_ref": "",
+      "title": "Healthcare Assistant - Midlands",
+      "description": "<p><strong>Healthcare Assistant – Full Time (Permanent) </strong></p><p><br></p><p><em>Are you fed up with traveling from client to client? </em></p><p><em>Do you enjoy supporting vulnerable children?</em></p><p><em>Do you spend a lot of your working day dealing with traffic?</em></p><p><em>Do your expenses not cover the wear and tear of your own personal car?</em></p><p><br></p><p>Here at Lotus Care we are offering real, full-time contracts, guarantee a 42hr week, at the same location.</p><p><br></p><p><strong>Salary ranges €35,000-€50,000 DOE</strong></p><p><br></p><p><strong>Benefits&nbsp;</strong>&nbsp;</p><ul><li>One set work location (Locations options include:&nbsp;Athlone, Tullamore, Borris-in-Ossory, Kildare, Portlaoise, Portarlington, Clonalsee, Mullingar, Roscommon)</li><li>Competitive premiums for unsocial hours</li><li>Ongoing mentoring and support</li><li>Refer a Friend Scheme</li><li>Employee of the Month Scheme</li><li>Company events</li><li>Free onsite parking</li><li>CPD support</li></ul><p><br></p><p><strong>Role Overview</strong></p><ul><li>&nbsp;<em>Reporting to:</em> Person in Charge</li><li>&nbsp;<em>Contract Type:</em> Full-time</li><li>&nbsp;<em>Working Week</em>: Average of 42 hours a week, (day and waking night shifts required</li><li>Location of Work: Portarlington, Co. Laois</li></ul><p><br></p><p><strong>Role Responsibilities</strong></p><ul><li>&nbsp;Facilitate and encourage decision-making, independence, and personal development.</li><li>&nbsp;Provide support in daily living skills, including personal hygiene, health and appearance.</li><li>&nbsp;Work in a person-centred manner to meet individual care plans and goals.</li><li>&nbsp;Adhere to policies and procedures, standards, regulations, and codes of practice</li><li>&nbsp;Administer and document the dispensation of prescribed medication.</li><li>&nbsp;Undertake key worker responsibilities, helping service owners achieve goals.</li><li>&nbsp;Document and report incidents and complaints involving staff, service owners or visitors.</li><li>&nbsp;Work with MDT to achieve the goals of service owners.</li></ul><p><br></p><p><strong>Essential Requirements</strong></p><ul><li>&nbsp;Minimum Level 5 qualification in Social or Health Care Studies</li><li>&nbsp;Hold a full Irish driving license (to drive a company car, when required)</li><li>&nbsp;Prior experience in social care or healthcare desirable but not essential</li><li>&nbsp;Working knowledge of relevant standards and regulations.</li><li>&nbsp;Excellent English essential (verbal and written skills)</li><li>&nbsp;Garda Vetting/Police Clearance</li></ul><p><br></p><p>IND1</p>",
+      "location": {
+        "city": "Portarlington",
+        "state": "County Laois",
+        "country": "Ireland",
+        "cityId": "ChIJWxX_mXF1XUgRYJAxl6nHAAo",
+        "cityFullName": "Portarlington, Co. Laois, Ireland",
+        "cityLat": "53.16203320",
+        "cityLng": "-7.18957400",
+        "countryShort": "IE"
+      },
+      "sectors": [
+        {
+          "uuid": "f7bf76ed-7d79-452e-aef8-82c7d548cda7",
+          "name": "Medical & Healthcare",
+          "translation_key": "medical_healthcare"
+        }
+      ],
+      "subsectors": [
+        {
+          "uuid": "9c333344-b0eb-43fd-bb07-f442fda56ee3",
+          "name": "Social Care / Social Worker",
+          "translation_key": "medical_he_social_care"
+        }
+      ],
+      "contract": "Permanent",
+      "period": "Fulltime",
+      "workplace": "onSite",
+      "salary": {
+        "type": "Range",
+        "period": "Annual",
+        "start": "35000.00",
+        "end": "50000.00",
+        "details": null
+      },
+      "published": true,
+      "published_at": "2026-04-20T13:00:50.000000Z",
+      "internal": false,
+      "external": true,
+      "questions_form": [
+        {
+          "type": "YesNo",
+          "text": "Do you hold a valid Irish Driver's License?",
+          "options": [
+            "Yes",
+            "No"
+          ],
+          "answer": null
+        },
+        {
+          "type": "Options",
+          "text": "How many years experience do you have?",
+          "options": [
+            "1-3 years",
+            "4-6 years",
+            "Over 6",
+            "0 years"
+          ],
+          "answer": null
+        },
+        {
+          "type": "YesNo",
+          "text": "Do you have a minimum of a QQI Level 5 in healthcare or equivalent?",
+          "options": [
+            "Yes",
+            "No"
+          ],
+          "answer": null
+        },
+        {
+          "type": "Options",
+          "text": "What is you eligibility status?",
+          "options": [
+            "EU Citizen/Passport",
+            "Stamp 4 / Labour Market Access",
+            "Stamp 1G",
+            "Stamp 1",
+            "Sponsorship Required"
+          ],
+          "answer": null
+        }
+      ],
+      "closed_for_applicants": false,
+      "require_cv": true,
+      "require_opt_in_for_job": true,
+      "require_opt_in_for_database": true,
+      "apply_url": "https://api.occupop.com/shared/job/senior-healthcare-assistant-tullamore-bf7ea",
+      "unique_slug": "senior-healthcare-assistant-tullamore-bf7ea",
+      "cv_upload_signed_url": "REDACTED",
+      "custom_fields_for_details": [],
+      "custom_fields_for_applicants": [],
+      "company_name": "Lotus Care Services",
+      "company_logo": "https://recruitment.cezannehr.com/bucket/hiring_companies/66a3ad9e4ee80.jpg",
+      "company_label_uuid": null,
+      "created_at": "2026-04-20T13:00:50.000000Z",
+      "close_date": null
+    },
+    {
+      "uuid": "a5b6f9ef-a8aa-467b-8d4c-d57274840b66",
+      "id_ref": "",
+      "title": "Social Care Worker - Full Time, Permanent (Kildare)",
+      "description": "<p><strong>Social Care Worker</strong></p><p><br></p><p><em>Do you enjoy supporting vulnerable children</em>?</p><p><em>Are you looking to make a real difference every day?</em></p><p>If so, this could be the role for you.</p><p><br></p><p>Lotus Care provides a range of respite, residential and support services to Children &amp; Adults with intellectual disabilities in a homely and comfortable community setting. We aim to empower people with the necessary skills to live full and satisfying lives as equal citizens of their local communities.</p><p><strong>This role is also suitable for Social Care Assistants.</strong></p><p><br></p><p><strong>Role Overview</strong></p><p>Location: Kildare </p><p>Contract Type: Full-Time - 42 Hours / Weekly Average</p><p>Salary: €35,000 – €50,000 DOE</p><p>&nbsp;</p><p><strong>Why Join Lotus Care?</strong></p><ul><li>Competitive premiums for unsocial hours</li><li>Yearly rate reviews</li><li>Ongoing mentoring and support</li><li>Internal Progression Opportunities</li><li>CPD support</li><li>Refer a Friend Scheme</li><li>Employee of the Month Scheme</li><li>One consistent work location</li><li>Company events</li><li>Free onsite parking</li></ul><p>&nbsp;</p><p><strong>The Role</strong></p><ul><li>Support with daily living skills and personal development</li><li>Promote independence and decision-making</li><li>Deliver person-centred care plans</li><li>Administer and record prescribed medication</li><li>Take on Key Worker responsibilities, helping service owners reach goals</li><li>Maintain accurate documentation and reports</li><li>Work closely with the MDT to support service owners’ goals</li><li><span style=\"color: black;\">Document and report incidents and complaints involving staff, service owners or visitors.</span></li><li>Day and waking night shifts required.</li></ul><p>&nbsp;</p><p><strong>What You Need</strong></p><ul><li>Minimum Level 5 qualification in Social / Health Care Studies or relevant discipline (SCA)</li><li>Minimum Level 7 qualification in Social / Health Care Studies or relevant discipline </li><li>CORU Registered (SCW)</li><li>Full Irish driving licence (to drive company vehicle when required)</li><li>Flexibility for both Day/Night Shifts</li><li>Experience in social care or healthcare desirable but not essential</li><li>Good knowledge of relevant standards and regulations</li><li>Excellent written and spoken English</li><li>Garda Vetting/Police Clearance</li></ul><p>&nbsp;</p><p><em>If you’re looking for stability, strong support, and the opportunity to build a meaningful career in social care - </em><strong><em>we would love to hear from you.</em></strong></p><p><br></p><p><strong>Apply today and join a team that truly makes an impact!</strong></p><p>&nbsp;</p>",
+      "location": {
+        "city": "Kildare",
+        "state": "County Kildare",
+        "country": "Ireland",
+        "cityId": "ChIJkxNuX8V4XUgRIHQxl6nHAAo",
+        "cityFullName": "Kildare, Ireland",
+        "cityLat": "53.15980590",
+        "cityLng": "-6.90897630",
+        "countryShort": "IE"
+      },
+      "sectors": [
+        {
+          "uuid": "f7bf76ed-7d79-452e-aef8-82c7d548cda7",
+          "name": "Medical & Healthcare",
+          "translation_key": "medical_healthcare"
+        }
+      ],
+      "subsectors": [
+        {
+          "uuid": "9c333344-b0eb-43fd-bb07-f442fda56ee3",
+          "name": "Social Care / Social Worker",
+          "translation_key": "medical_he_social_care"
+        }
+      ],
+      "contract": "Permanent",
+      "period": "Fulltime",
+      "workplace": "onSite",
+      "salary": {
+        "type": "Range",
+        "period": "Hourly",
+        "start": "350.00",
+        "end": "500.00",
+        "details": null
+      },
+      "published": true,
+      "published_at": "2026-03-03T08:19:41.000000Z",
+      "internal": false,
+      "external": true,
+      "questions_form": [
+        {
+          "type": "YesNo",
+          "text": "Do you hold a valid Irish Driver's License?",
+          "options": [
+            "Full Irish Driver's License",
+            "Learner's Permit",
+            "International"
+          ],
+          "answer": null
+        },
+        {
+          "type": "Options",
+          "text": "How many years experience do you have?",
+          "options": [
+            "1 to 3 years",
+            "4 to 6 years",
+            "over 6",
+            "0 years"
+          ],
+          "answer": null
+        },
+        {
+          "type": "YesNo",
+          "text": "Do you have a minimum of a QQI Level 5 in healthcare or equivalent?",
+          "options": [
+            "Yes",
+            "No"
+          ],
+          "answer": null
+        },
+        {
+          "type": "Options",
+          "text": "Are you a Current Permanent Resident of Ireland?",
+          "options": [
+            "Yes",
+            "No",
+            "I am moving to Ireland"
+          ],
+          "answer": null
+        },
+        {
+          "type": "Options",
+          "text": "What is you eligibility status?",
+          "options": [
+            "EU Citizen/ National Passport?",
+            "Stamp 4 / Labour Market Access",
+            "Stamp 1G",
+            "Stamp 1 Visa",
+            "Sponsorship Required?"
+          ],
+          "answer": null
+        }
+      ],
+      "closed_for_applicants": true,
+      "require_cv": true,
+      "require_opt_in_for_job": true,
+      "require_opt_in_for_database": true,
+      "apply_url": "https://api.occupop.com/shared/job/social-care-worker-full-time-permanen-a5b6f",
+      "unique_slug": "social-care-worker-full-time-permanen-a5b6f",
+      "cv_upload_signed_url": "REDACTED",
+      "custom_fields_for_details": [],
+      "custom_fields_for_applicants": [],
+      "company_name": "Lotus Care Services",
+      "company_logo": "https://recruitment.cezannehr.com/bucket/hiring_companies/66a3ad9e4ee80.jpg",
+      "company_label_uuid": null,
+      "created_at": "2026-03-03T08:19:41.000000Z",
+      "close_date": null
+    }
+  ],
+  "links": {
+    "first": "http://api.occupop.com/rest/jobs?page=1",
+    "last": "http://api.occupop.com/rest/jobs?page=1",
+    "prev": null,
+    "next": null
+  },
+  "meta": {
+    "current_page": 1,
+    "from": 1,
+    "last_page": 1,
+    "links": [
+      {
+        "url": null,
+        "label": "&laquo; Previous",
+        "active": false
+      },
+      {
+        "url": "http://api.occupop.com/rest/jobs?page=1",
+        "label": "1",
+        "active": true
+      },
+      {
+        "url": null,
+        "label": "Next &raquo;",
+        "active": false
+      }
+    ],
+    "path": "http://api.occupop.com/rest/jobs",
+    "per_page": 15,
+    "to": 12,
+    "total": 12
+  }
+}
