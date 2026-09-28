@@ -56,6 +56,15 @@ export const socialLinks = [
   { name: "linkedin", href: "https://www.linkedin.com/company/lotus-care-services/" },
 ] as const;
 
+// schema.org PostalAddress keys, so the homepage JSON-LD can spread it directly.
+const headOffice = {
+  streetAddress: "Suite 204, Birr Technology Park, St Brendans Park",
+  addressLocality: "Birr",
+  addressRegion: "Co Offaly",
+  postalCode: "R42 HX39",
+  addressCountry: "IE",
+};
+
 export const contactInfo = {
   phone: "057 910 7107",
   /* Referrals route through ADT, so the ADT lead's mobile is published on the
@@ -63,5 +72,11 @@ export const contactInfo = {
   referralsMobile: "086 822 8942",
   referralsMobileContact: "Danny Scally",
   email: "info@lotuscare.ie",
-  address: "Head Office: Suite 204, Birr Technology Park, St Brendans Park, Birr, Co Offaly, R42 HX39",
+  address: `Head Office: ${headOffice.streetAddress}, ${headOffice.addressLocality}, ${headOffice.addressRegion}, ${headOffice.postalCode}`,
+  headOffice,
+  officeHours: {
+    dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+    opens: "09:00",
+    closes: "17:00",
+  },
 };

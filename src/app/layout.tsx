@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { HashScroll } from "@/components/hash-scroll";
+import { SITE_URL } from "@/lib/site";
 import "./globals.css";
 
 const dmSans = DM_Sans({
@@ -10,9 +11,15 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Lotus Care — Enhanced Living | Disability Care Services",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: "Lotus Care — Enhanced Living | Disability Care Services",
+    template: "%s | Lotus Care",
+  },
   description:
     "Lotus Care provides quality respite and residential disability care services, empowering individuals to live their best lives with dignity and support.",
+  openGraph: { siteName: "Lotus Care", type: "website", locale: "en_IE" },
+  twitter: { card: "summary_large_image" },
 };
 
 export default function RootLayout({

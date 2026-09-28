@@ -5,7 +5,7 @@ import { Footer } from "@/components/footer";
 export const metadata: Metadata = {
   title: {
     template: "%s | Testimonials | Lotus Care",
-    default: "Testimonials | Lotus Care",
+    default: "Testimonials",
   },
   description:
     "Read testimonials from the people Lotus Care supports, in their own words.",

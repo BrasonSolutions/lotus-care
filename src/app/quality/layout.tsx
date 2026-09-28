@@ -6,7 +6,7 @@ import { QualitySubnav } from "@/components/quality/quality-subnav";
 export const metadata: Metadata = {
   title: {
     template: "%s | Quality & Governance | Lotus Care",
-    default: "Quality & Governance | Lotus Care",
+    default: "Quality & Governance",
   },
   description:
     "Lotus Care's commitment to safe, rights-based, person-centred care — governance, oversight, and continuous improvement.",
