@@ -39,9 +39,9 @@ export interface CompanyValue {
 export const benefits: Benefit[] = [
   {
     icon: "currency-euro",
-    title: "Competitive Pay",
+    title: "Competitive Pay & Pension",
     description:
-      "Market-leading salaries with annual pay reviews and incremental scale progression.",
+      "Market-leading salaries with annual pay reviews, incremental scale progression, and pension contributions.",
   },
   {
     icon: "moon",

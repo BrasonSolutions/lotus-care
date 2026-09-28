@@ -22,9 +22,10 @@ export const safetyImprovementTeam = pickTeam(["Aisling Carroll", "Louise Kidney
 const mdtOnlyMembers = [
   { name: "Dr Sara Tarr", role: "Psychologist", initials: "ST", image: "/images/staff/Sara-Tarr.webp" },
   { name: "Sinead Cahillane", role: "Dietician", initials: "SC", image: "/images/staff/Sinead-Cahillane.webp" },
+  { name: "Tina Early", role: "Play Therapist", initials: "TE", image: "/images/staff/Tina-Early.webp" },
 ];
 export const mdtTeam = [
-  ...pickTeam(["Vaida Cheema", "Nadeeka Pathirana", "Katjia Faria", "Katie Kelly"]),
+  ...pickTeam(["Vaida Cheema", "Nadeeka Pathirana", "Katjia Faria", "Katie Kelly", "Eadaoin Fleming"]),
   ...mdtOnlyMembers,
 ];
 
@@ -243,7 +244,6 @@ export const adtContent = {
     "Attention Deficit Hyperactivity Disorder (ADHD)",
     "Developmental Trauma",
     "Attachment Difficulties",
-    "Personality Disorder",
     "Acquired Brain Injury (ABI)",
     "Physical Health Needs",
   ],
