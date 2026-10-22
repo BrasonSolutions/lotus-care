@@ -47,8 +47,18 @@ export function OccupopJobCard({ job }: OccupopJobCardProps) {
         </p>
       )}
 
-      <Button href={`/careers/jobs/${job.slug}`} size="sm" fullWidth className="mt-auto">
-        View Role
+      {/* Straight to Occupop's own job page (description + Apply) — one click
+          fewer than our /careers/jobs/[slug] page, which stays for the sitemap
+          and JobPosting schema. */}
+      <Button
+        href={job.applyUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        size="sm"
+        fullWidth
+        className="mt-auto"
+      >
+        View Role<span className="sr-only"> (opens Occupop in a new tab)</span>
       </Button>
     </div>
   );

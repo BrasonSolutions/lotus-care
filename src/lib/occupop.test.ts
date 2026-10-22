@@ -177,3 +177,53 @@ test("fetchLiveJob finds by slug, by uuid, or returns null", async () => {
   assert.equal((await fetchLiveJob(jobs[0].uuid))?.slug, "team-leader-843d4");
   assert.equal(await fetchLiveJob("no-such-role"), null);
 });
+
+// Workers Cache API stub — `caches.default` only exists on Cloudflare.
+type CacheStub = { match(key: Request | string): Promise<Response | undefined>; put(key: Request | string, res: Response): Promise<void> };
+const keyOf = (key: Request | string) => (typeof key === "string" ? key : key.url);
+function stubCache(overrides: Partial<CacheStub> = {}) {
+  const store = new Map<string, Response>();
+  const cache: CacheStub = {
+    async match(key) { return store.get(keyOf(key))?.clone(); },
+    async put(key, res) { store.set(keyOf(key), res); },
+    ...overrides,
+  };
+  (globalThis as { caches?: unknown }).caches = { default: cache };
+  return store;
+}
+afterEach(() => {
+  delete (globalThis as { caches?: unknown }).caches;
+});
+
+test("fetchLiveJobs serves a repeat call from the Workers cache", async () => {
+  const calls: string[] = [];
+  const store = stubCache();
+  stubFetch([page([jobs[0], jobs[1]], null, 1)], calls);
+  const first = await fetchLiveJobs();
+  const second = await fetchLiveJobs();
+  assert.equal(calls.length, 1);
+  assert.deepEqual(second, first);
+  const [[key, cached]] = [...store];
+  assert.equal(key.includes("test-token"), false);
+  assert.equal(cached.headers.get("Cache-Control"), "public, max-age=3600");
+});
+
+test("fetchLiveJobs falls back to Occupop when the cache throws", async () => {
+  const calls: string[] = [];
+  stubCache({
+    match: async () => { throw new Error("cache down"); },
+    put: async () => { throw new Error("cache down"); },
+  });
+  stubFetch([page([jobs[0]], null, 1)], calls);
+  const result = await fetchLiveJobs();
+  assert.deepEqual(result.map((j) => j.slug), [jobs[0].unique_slug]);
+  assert.equal(calls.length, 1);
+});
+
+test("fetchLiveJobs does not cache a failed Occupop response", async () => {
+  const store = stubCache();
+  process.env.OCCUPOP_API_TOKEN = "test-token";
+  globalThis.fetch = (async () => new Response("", { status: 500 })) as typeof fetch;
+  await assert.rejects(fetchLiveJobs(), /Occupop API error: 500/);
+  assert.equal(store.size, 0);
+});
