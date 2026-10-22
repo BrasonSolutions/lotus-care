@@ -1,15 +1,45 @@
+import { Suspense } from "react";
 import { CareersHero } from "@/components/careers/careers-hero";
 import { CareersBreadcrumb } from "@/components/careers/careers-breadcrumb";
 import { CareersCTAStrip } from "@/components/careers/careers-cta-strip";
 import { OpenRolesClient } from "./OpenRolesClient";
 import { fetchLiveJobs } from "@/lib/occupop";
 import { Container } from "@/components/layout";
+import { JobCardSkeletons } from "@/components/careers/job-card/JobCardSkeletons";
 
 export const dynamic = "force-dynamic";
 
-export default async function OpenRolesPage() {
+// Occupop is slow on a cold cache, so the roles stream in behind placeholder
+// cards while the rest of the page renders immediately.
+async function LiveRoles() {
   const jobs = await fetchLiveJobs().catch(() => null);
 
+  if (jobs === null) {
+    return (
+      <p className="text-muted text-center py-16">
+        We&apos;re having trouble loading roles right now. Please check back soon.
+      </p>
+    );
+  }
+  return <OpenRolesClient jobs={jobs} />;
+}
+
+// Same vertical rhythm as OpenRolesClient (filter row, then grid) so the
+// placeholders hand over to real content without shifting the page.
+function RolesFallback() {
+  return (
+    <>
+      <div className="mt-8 mb-6 flex gap-2 pb-2" aria-hidden="true">
+        {[96, 88, 104].map((w) => (
+          <div key={w} className="h-[38px] rounded-full bg-gray-100 animate-pulse" style={{ width: w }} />
+        ))}
+      </div>
+      <JobCardSkeletons count={6} />
+    </>
+  );
+}
+
+export default function OpenRolesPage() {
   return (
     <>
       <CareersHero
@@ -23,13 +53,9 @@ export default async function OpenRolesPage() {
         <Container>
           <CareersBreadcrumb />
 
-          {jobs === null ? (
-            <p className="text-muted text-center py-16">
-              We&apos;re having trouble loading roles right now. Please check back soon.
-            </p>
-          ) : (
-            <OpenRolesClient jobs={jobs} />
-          )}
+          <Suspense fallback={<RolesFallback />}>
+            <LiveRoles />
+          </Suspense>
 
           <div className="mt-12 text-center p-8 bg-white rounded-2xl border border-gray-100">
             <h3 className="font-semibold text-primary-dark mb-2">

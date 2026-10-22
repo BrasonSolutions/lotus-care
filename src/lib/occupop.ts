@@ -179,7 +179,6 @@ export function normalise(job: OccupopJob): NormalizedJob {
   };
 }
 
-// Fetched per request; a KV cache is the upgrade path.
 async function fetchPage(token: string, page: number): Promise<OccupopResponse> {
   const res = await fetch(`${BASE_URL}/jobs?page=${page}`, {
     headers: { Authorization: `Bearer ${token}` },
@@ -206,11 +205,55 @@ function isLive(job: OccupopJob): boolean {
   return job.published !== false && job.closed_for_applicants !== true;
 }
 
+// Occupop takes ~2.5s per call, and every careers page awaits it. The raw job
+// list is kept in the Workers Cache API (per Cloudflare data centre, no binding
+// needed) for an hour. The key is synthetic and never carries the token.
+// `caches` doesn't exist under `next dev`/Node, and any cache error falls
+// through to a live fetch — the cache can only make things faster, never break them.
+const CACHE_KEY = "https://occupop-cache.lotuscare.internal/jobs";
+const CACHE_TTL_SECONDS = 3600;
+
+function workersCache(): Cache | null {
+  const store = (globalThis as { caches?: CacheStorage & { default?: Cache } }).caches;
+  return store?.default ?? null;
+}
+
+async function fetchAllJobsCached(token: string): Promise<OccupopJob[]> {
+  const cache = workersCache();
+  if (cache) {
+    try {
+      const hit = await cache.match(CACHE_KEY);
+      if (hit) return (await hit.json()) as OccupopJob[];
+    } catch {
+      // fall through to a live fetch
+    }
+  }
+
+  const jobs = await fetchAllJobs(token);
+
+  if (cache) {
+    try {
+      await cache.put(
+        CACHE_KEY,
+        new Response(JSON.stringify(jobs), {
+          headers: {
+            "Content-Type": "application/json",
+            "Cache-Control": `public, max-age=${CACHE_TTL_SECONDS}`,
+          },
+        }),
+      );
+    } catch {
+      // serving the live result matters more than caching it
+    }
+  }
+  return jobs;
+}
+
 export async function fetchLiveJobs(): Promise<NormalizedJob[]> {
   const token = process.env.OCCUPOP_API_TOKEN;
   if (!token) throw new Error("OCCUPOP_API_TOKEN is not set");
 
-  const jobs = await fetchAllJobs(token);
+  const jobs = await fetchAllJobsCached(token);
   return jobs.filter(isLive).map(normalise);
 }
 

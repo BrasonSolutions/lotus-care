@@ -37,7 +37,7 @@ function IntroSection() {
           </div>
           <div className="group relative rounded-2xl overflow-hidden aspect-[4/3]">
             <Image
-              src="/images/stock/team-review.webp"
+              src="/images/stock/safety-intro.webp"
               alt=""
               fill
               sizes="(min-width: 768px) 40vw, 100vw"
@@ -104,7 +104,7 @@ function PrinciplesSection() {
         <Reveal className="reveal-scale">
           <div className="relative rounded-2xl overflow-hidden aspect-[21/9] mb-12">
             <Image
-              src="/images/stock/governance-review.webp"
+              src="/images/stock/safety-banner.webp"
               alt=""
               fill
               sizes="100vw"

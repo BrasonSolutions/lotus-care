@@ -1,133 +1,101 @@
-# fix/client-review-feedback-round-3
+# fix/client-review-feedback-round-4
 
-Spec: client feedback round 3 (approved plan, 2026-10-22). Previous handoff content is in git history.
+Spec: client feedback round 4 (approved plan, 2026-10-22). Earlier content is in git history.
 
 ## Checklist
-- [x] T1 Homepage "Join our Team" renders live Occupop roles (OccupopJobCard), error and empty states, CTA goes to /careers/open-roles
-- [x] T1 Storybook story with fixture-backed jobs plus error and empty variants
-- [x] T2 recruitmentRoles changed to the client's 8 options
-- [x] T3 Jessica date changed to "With Lotus Care since September 2024"
-- [x] T3 Linas Christian replaces the "Team Leader" testimonial
-- [x] T4 7 heroes swapped to client imagery (webp, new filenames, subject on the right)
-- [x] T5 all public/images jpg/png converted to webp and references updated (exclusions: email/*, logo.png, OG, favicon)
-- [x] Verify: lint, build, test, browser check (no 404s, heroes at mobile/desktop, AA contrast)
+- [x] T1 Safety page: imagery 7 in first photo, imagery 4 in wide banner (new filenames)
+- [x] T2 TeamStrip one column below sm (MDT + Safety)
+- [x] T3 OccupopJobCard links to applyUrl in new tab
+- [x] T4a fetchLiveJobs cached 1h via Workers Cache API (+ tests)
+- [x] T4b Open Roles + homepage stream with JobCardSkeletons (no CLS)
+- [x] Verify: tsc, eslint, tests, build, browser measurements
 
-## Task 1: Homepage "Join our Team" shows live Occupop roles
+## Task 1: Quality, Safety & Improvement photos
+`src/app/quality/safety-improvement/page.tsx`
+- First photo (line ~40, `aspect-[4/3]`, `sizes="(min-width: 768px) 40vw, 100vw"`):
+  `stock/team-review.webp` becomes **Possible imagery 7**, saved as `public/images/stock/safety-intro.webp`
+  (webp q≈85, no upscaling, strip metadata). Check its 4:3 crop by eye, since `object-cover`
+  trims the sides of the 1.86:1 source.
+- Wide banner (line ~107, `aspect-[21/9]`): `stock/governance-review.webp` becomes
+  **Possible imagery 4**, saved as `public/images/stock/safety-banner.webp` (1920w, q≈80). This
+  photo is also the `/quality` hero; the repeat is accepted.
+- New filenames, so no browser serves a cached old image. The old files stay as they are.
 
-**Now:** `src/app/page.tsx:22,166` passes the static `jobs` (`src/data/jobs.ts`) into
-`RecruitmentSection`, which renders 3 `featured` `JobCard`s linking to the old static
-`/careers/open-roles/[slug]` pages (generic "Apply Now"). The "Explore All Roles" CTA goes to `/careers`.
+## Task 2: Team list is a single column on mobile
+**Cause:** `src/components/quality/team-strip/TeamStrip.tsx` uses `flex flex-wrap gap-6` with
+content-width items. On a ~358px phone, two people share a row only when both role lines
+are short, which gives the ragged one-or-two-column mix.
+**Fix:** `flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:gap-6`. This gives one person per row below
+640px and keeps the current wrap layout from `sm` up. `TeamStrip` is used on both
+`/quality/mdt` and `/quality/safety-improvement`, and both get the fix (same bug on both).
 
-**Change:**
-- `src/app/page.tsx`: `const jobs = await fetchLiveJobs().catch(() => null)` and
-  `export const dynamic = "force-dynamic"`. This is the same pattern as
-  `src/app/careers/open-roles/page.tsx` and `careers/jobs/[slug]/page.tsx`, which already
-  run on Cloudflare. Pass `jobs` into `RecruitmentSection`.
-- `src/components/recruitment-section/RecruitmentSection.tsx`:
-  - Prop type changes from `JobRole[]` to `NormalizedJob[] | null` (from `@/lib/occupop`).
-  - Render the first 3 with the existing `OccupopJobCard` (links to
-    `/careers/jobs/[slug]`, which has "Apply on Occupop"). No new card design.
-  - `null` (error or no token) shows "We're having trouble loading roles right now…".
-    An empty list shows "No open roles right now. Register your interest" linking to
-    `/careers/contact`. Copy matches Open Roles.
-  - Default CTA "Explore All Roles" goes to `/careers/open-roles` (direct, no redirect hop).
-- Leave `src/data/jobs.ts` and the old static `/careers/open-roles/[slug]` route alone.
-  Removing them is out of scope.
-- **Building it without the token:** add/update a Storybook story for `RecruitmentSection`
-  fed with normalised jobs from `src/lib/__fixtures__/occupop-jobs.json` (through the
-  existing `normalise` path, as `occupop.test.ts` does), plus error and empty variants.
-  Once the token is in `.env.local`, check against live data in the dev server.
+## Task 3: Job cards open Occupop directly
+`src/components/careers/job-card/OccupopJobCard.tsx:~11`: the button `href` changes from
+`/careers/jobs/${job.slug}` to `job.applyUrl` (Occupop's public job page, e.g.
+`api.occupop.com/shared/job/…`, which shows the full description and the Apply button). Add
+`target="_blank" rel="noopener noreferrer"`, matching the existing `ApplyPanel` in
+`careers/jobs/[slug]/page.tsx:87`. Label: "View Role" stays, with the new-tab cue
+handled however `Button` already does it, or a visually-hidden "(opens in a new tab)".
+- This applies to both the Open Roles grid and the homepage "Join our Team" cards (same component).
+- Keep `/careers/jobs/[slug]`. It still powers the sitemap and the JobPosting schema
+  (Google for Jobs, PR #152). It just isn't linked from the cards any more.
 
-## Task 2: Recruitment dropdown options
+## Task 4: Open Roles is slow
+**Measured (live):** `/careers/open-roles` 2.8 s and `/careers/jobs/[slug]` 2.9 s before the first
+byte, and `/` (homepage) 3.4 s, against **0.17 s** for static `/careers/benefits` from the same Worker.
+**Root cause:** `fetchPage()` (`src/lib/occupop.ts:183`) calls the Occupop API **uncached on
+every request** (a single page, 12 jobs), and every Occupop-backed page `await`s it before
+sending any HTML. The homepage regression came from PR #153, which added this fetch to `/`.
 
-`src/data/forms.ts:96`: replace `recruitmentRoles` with, in this order:
-Social Care Assistant · Social Care Worker · Team Lead · Person in Charge · Clinical ·
-Senior Management · Administration · Other.
-The form and email templates read this list, so there are no other changes.
-
-## Task 3: Testimonials (`/careers/why-us`)
-
-`src/data/testimonial.ts`:
-- `careersHearQuote` (Jessica Lennon): change `date: "10th June 2026"` to
-  `"With Lotus Care since September 2024"`. The quote text stays the same.
-- `teamTestimonials[0]` ("Team Leader"): replace it with:
-  - quote: "Working with Lotus Care has been a very positive experience for me. I have always felt supported by my managers and colleagues, and I really appreciate the opportunities I have been given to learn, grow and develop in my role. I'm proud to be part of the Lotus Care team."
-  - name: "Linas Christian, Social Care Assistant"
-  - date: "With Lotus Care since February 2025"
-- Update the stale "#80 Figma variant / placeholder" comment above `teamTestimonials`.
-- `teamTestimonials[1]` ("Person in Charge") stays as it is.
-
-## Task 4: Hero and banner imagery (7 pages)
-
-All 7 slots are `CareersHero` image heroes (`image=` prop, `fill` + `object-cover`, decorative
-`alt=""`, with a left-to-right `primary-dark` gradient overlay so the white text stays AA).
-
-**Proposed mapping:**
-
-| Page | File | Current | New source (`~/Downloads/lotus-care-images/`) |
-|---|---|---|---|
-| Model of Care banner | `quality/model-of-care/page.tsx:184` | `stock/caring-embrace.jpg` | **Model of Care Banner.jpg** (client-specified) |
-| Multidisciplinary banner | `quality/mdt/page.tsx:159` | `stock/mdt-hero-v2.jpg` | **Multidisciplinary banner.png** (client-specified) |
-| Quality | `quality/page.tsx:22` | `stock/warm-home.jpg` | Possible imagery 4 (two staff, children, alphabet chart) |
-| Open Roles | `careers/open-roles/page.tsx:19` | `stock/team-meeting.jpg` | Possible imagery 6 (staff member with boy in wheelchair) |
-| Benefits | `careers/benefits/page.tsx:22` | `stock/warm-home.jpg` | Possible imagery 5 (staff playing on floor with girl) |
-| How We Hire | `careers/how-we-hire/page.tsx:23` | `stock/team-meeting.jpg` | Possible imagery 1 (two staff, three children at table) |
-| Contact Recruitment | `careers/contact/page.tsx:23` | `stock/careers-contact-team.jpg` | Possible Imagery 3 (girl drawing at table) |
-
-- **Not used:** *Possible imagery 7* is only 755×406, which would look pixelated in a full-width hero.
-- **Processing** (ImageMagick): crop each to the hero's aspect so the people sit in the
-  **right ~60%** (the overlay is darkest on the left, behind the text). Resize to 1920px
-  wide and export **webp, q≈80**, to **new filenames** under `public/images/heroes/`
-  (e.g. `model-of-care-banner.webp`, `mdt-banner.webp`, `quality-hero.webp`, …) so no
-  browser shows a cached old image. Strip metadata.
-- Leave the old stock files in `public/images/stock/`. Some are still used elsewhere
-  (e.g. `team-meeting.jpg` on Safety & Improvement), and deleting files is out of scope.
-- No component changes: `CareersHero` `fill` keeps the layout fixed, so there's no CLS.
-  Use `imagePosition="top"` only if a crop needs it.
-
-## Task 5: Convert all site imagery to `.webp`
-
-**Now:** about 100 JPG/PNG files (about 30 MB) under `public/images/` (`stock/`, `houses/*/`,
-`logos/`, `home-bg.jpg`). The staff photos are already webp.
-
-**Change:**
-- Batch-convert every `.jpg/.jpeg/.png` under `public/images/` to `.webp` (ImageMagick,
-  q≈80, strip metadata, cap at 1920px wide, never upscale). Use lossless for the
-  `logos/*.png` so the edges stay crisp. Each file keeps its name and directory, with a
-  `.webp` extension.
-- Update every reference in `src/` (21 files, mostly `src/data/*.ts` and page `src`s) from
-  `.jpg/.png` to `.webp` with a scripted find-and-replace. Then `grep` for any leftover
-  `/images/…\.(jpg|jpeg|png)` and confirm each remaining one is an intended exclusion.
-- Delete each original once nothing references it any more (git history keeps them).
-- **Exclusions (stay PNG/JPG on purpose):**
-  - `public/images/email/*`: Outlook and some other mail clients don't render webp (`src/lib/mail.ts:84-85`).
-  - `public/images/logo.png`: the schema.org `logo` in the homepage JSON-LD and `src/lib/job-posting.ts:58`. Google's guidance prefers PNG/JPG there.
-  - `src/app/opengraph-image.png` and `favicon.ico`: social crawlers and favicons need these formats.
-- Task 4's new hero images are produced as webp directly, so this task doesn't touch them.
-- Report the before/after total size in the PR.
+**Fix (two parts):**
+1. **Cache, 1 hour:** in `fetchLiveJobs()`, wrap the fetch in the Workers Cache API
+   (`caches.default`, which needs no new Cloudflare binding). Store the raw jobs JSON under a
+   synthetic key URL (no token in the key) with `Cache-Control: max-age=3600`. On a miss or any
+   cache error, fall back to the direct fetch. When `caches` is undefined (local `next dev`),
+   skip the cache. Caching is per Cloudflare data centre, so the first visitor per hour per
+   region pays the ~2.5 s. Update the stale "KV cache is the upgrade path" comment.
+2. **Stream with placeholder cards:** so even an uncached visit shows the page instantly.
+   - `careers/open-roles/page.tsx`: move `fetchLiveJobs()` into an async `<LiveRoles />` server
+     component wrapped in `<Suspense fallback={<JobCardSkeletons count={6} />}>`. The hero,
+     breadcrumb and "Don't see the right role?" render immediately.
+   - Homepage: `RecruitmentSection` (client) takes a `roles` slot (`ReactNode`) instead of `jobs`.
+     `page.tsx` passes `<Suspense fallback={<JobCardSkeletons count={3} />}><HomeRoles /></Suspense>`,
+     and the error/empty/3-card logic moves into `HomeRoles`. Update the Storybook story to match.
+   - New `JobCardSkeletons`: same size and grid as `OccupopJobCard`, so there's no layout shift
+     when real cards arrive. Use `animate-pulse` (already covered by the global
+     `prefers-reduced-motion` rule in `globals.css:403`) and `aria-busy`/`sr-only` "Loading roles…".
+- Add a unit test in `src/lib/occupop.test.ts`: with a stubbed `caches.default`, a second
+  `fetchLiveJobs()` call is served from the cache (fetch called once). A cache that throws
+  falls back to fetch.
 
 ---
 
 ## Verification
-- `npm run lint`, `npm run build`, `npm test` (the existing `occupop.test.ts` must stay green).
-- Storybook: the `RecruitmentSection` story shows 3 fixture-backed Occupop cards, plus the error and empty states.
-- Dev server (`npm run dev`, left running for review):
-  - Homepage: without a token, the section shows the error message and nothing crashes. With a token, it shows 3 live roles linking to `/careers/jobs/[slug]`, and "Explore All Roles" goes to `/careers/open-roles`.
-  - `/careers/contact`: the dropdown shows exactly the 8 new options.
-  - `/careers/why-us`: Jessica shows "With Lotus Care since September 2024", and Linas's quote has replaced "Team Leader".
-  - All 7 heroes show the new images. Check the crop at mobile and desktop widths, the title/subtitle contrast over the gradient, and that there's no layout shift.
-  - Webp sweep: the homes carousel/gallery, the referrals logos, the team, quality and careers pages all show images with no 404s (check the dev-server log and the browser Network tab). `grep` finds no stray `.jpg/.png` references beyond the exclusions.
-- Screenshot each changed hero for the PR description.
+- `npx tsc --noEmit`, eslint on changed files, `npm test` (existing 36 + new cache tests), `npm run build`.
+- Dev server: the Safety page shows the two new photos (check crop and sharpness at 1440 and 390);
+  the MDT and Safety team lists are one column at 390px and wrap at ≥640px (measured with
+  `getBoundingClientRect`, so every item has the same x at 390); job card buttons have
+  `href` = Occupop URL and open a new tab.
+- Streaming: the Open Roles HTML shell arrives before the cards. Check that skeleton→cards
+  causes no layout shift (CLS ≈ 0 via `PerformanceObserver`).
+- After merge, on the live site: re-time `/careers/open-roles` and `/` (first hit ≈ old, repeat
+  hits ≈ static-page speed), and confirm cards still link to Occupop.
+- Start `npm run dev` and leave it running for review when the PR opens.
 
 ---
 
 ## Review (2026-10-22)
 
-All five tasks are implemented on `fix/client-review-feedback-round-3` (not committed yet).
-
-- **T1:** the homepage is now `force-dynamic` and calls `fetchLiveJobs()`. `RecruitmentSection` renders `OccupopJobCard`s plus error and empty states. Checked in Storybook against the real fixture (3 cards, error, empty) and on the dev server without a token (error message, no crash). Still to do: check live data once `OCCUPOP_API_TOKEN` is in `.env.local`.
-- **T2 / T3:** data-only changes in `src/data/forms.ts` and `src/data/testimonial.ts`.
-- **T4:** 7 client images saved to `public/images/heroes/*.webp`, cropped to a band around the faces. MDT uses `imagePosition="top"` (its subjects sit at the very top of the source). *Possible imagery 7* is unused (755px, too small).
-  - **Contrast (unplanned, required by the standing AA rule):** measured the real pixels behind the hero text (DevTools protocol, text hidden). The live site's `CareersHero` was already failing AA (mobile subtitle down to 1.51:1, desktop down to 2.91:1), and the new photos were no better. Fix: below `lg` the scrim is a uniform `primary-dark/85`; from `lg` the gradient holds 85% to 60% width, and the subtitle is solid white. Every image hero now passes at 1440/1024/390 (worst subtitle 4.61:1, h1 ≥ 4.55:1). This affects all 10 image heroes, so they look a little more teal than before.
-- **T5:** 15 referenced JPG/PNGs converted to webp (3.90 MB → 1.75 MB), references rewritten and originals removed. Also fixed a broken `Danny-Scally.png` path in a story. Exclusions kept: `email/*`, `logo.png`. Found but **not touched, waiting on the user's decision**: `public/images/houses/` (101 files, ~30 MB) and 10 other files that nothing references (`home-bg.jpg`, `logos/hiqa.png`, 8 stock images).
-- **Verification:** `tsc` clean; eslint clean on changed files (full `npm run lint` is noisy because of the pre-existing `.claude/` agent worktrees); `npm test` 36/36; `npm run build` passes; 67 image URLs across 14 pages all return 200.
+- **T1:** Safety page intro uses imagery 7 (`stock/safety-intro.webp`, native 755px; slightly soft at 656px on desktop, as agreed). Banner uses imagery 4 (`stock/safety-banner.webp`), pre-cropped to 21:9 with the band biased upward, because the centred crop cut the adults' faces off.
+- **T2:** `TeamStrip` is `flex-col` below `sm`. Measured at 390px: MDT 8/8 and Safety 2/2 items share x=16, one per row. At 1024 the wrap layout is unchanged. All avatars load.
+- **T3:** `OccupopJobCard` links to `job.applyUrl` in a new tab, with "(opens Occupop in a new tab)" for screen readers. `/careers/jobs/[slug]` is kept for the sitemap and JobPosting schema.
+- **T4 root cause (measured live):** an uncached Occupop call on every request (open-roles 2.8 s, `/` 3.4 s, job page 2.9 s, vs static 0.17 s). Fix:
+  - Workers Cache API, 1 hour, synthetic key with no token, errors fall through to a live fetch. Covered by 3 new tests (written first, then made to pass).
+  - Open Roles and the homepage stream their roles behind `JobCardSkeletons`. The dev HTML shows the "Loading roles…" shell before the resolved content.
+  - Skeleton heights were measured against real fixture cards: 270 = 270px at 1280, and 910 vs 915px for the 3-card column at 390.
+- **Caveats:**
+  - The Cache API is per Cloudflare data centre and only works on the custom domain (not `*.workers.dev`).
+  - The first visit per hour per region still waits ~2.5 s, but now behind placeholder cards.
+  - Live speed can only be confirmed after deploy.
+- **Verification:** tsc, eslint (changed files), `npm test` 39/39, `npm run build` all clean.
+- **Also checked:** the site icon from the previous commit matches the official `Logomark - Colour.svg` (RMSE 0.5%).

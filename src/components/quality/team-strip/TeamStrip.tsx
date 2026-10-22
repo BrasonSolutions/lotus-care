@@ -18,7 +18,7 @@ export function TeamStrip({ heading, intro, members }: TeamStripProps) {
     <div>
       <h2 className="text-xl sm:text-2xl font-bold text-primary-dark mb-4">{heading}</h2>
       {intro && <p className="text-muted leading-relaxed mb-6">{intro}</p>}
-      <div className="flex flex-wrap gap-6">
+      <div className="flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:gap-6">
         {members.map((member) => (
           <div key={member.name} className="flex items-center gap-3">
             <div className="w-14 h-14 rounded-full overflow-hidden shrink-0">

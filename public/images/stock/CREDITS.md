@@ -82,3 +82,8 @@ original 1600×1067 download) so both the carer's and child's faces sit with
 headroom and clear of the hero text column on the left — the original
 centred crop cut the child's face at the chin and put the carer's face
 entirely out of frame.
+
+Quality, Safety & Improvement refresh (client feedback round 4, 2026-10-22) — Pexels, free/no-attribution-required:
+
+- `safety-intro.webp` — https://www.pexels.com/photo/6288104/ (Antoni Shkraba) — centre-cropped to 4:3 and resized to 1200px wide from the original 4000×2667 download.
+- `safety-banner.webp` — client-supplied "Possible imagery 4" (no source URL supplied) — cropped to 21:9 with the band biased upward so every face stays in frame.

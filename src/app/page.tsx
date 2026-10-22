@@ -5,7 +5,9 @@ import { ServicesSection } from "@/components/services-section";
 import { QuoteSection } from "@/components/quote-section";
 import { CoverflowCarousel } from "@/components/coverflow-carousel";
 import { TeamSection } from "@/components/team-section";
-import { RecruitmentSection } from "@/components/recruitment-section";
+import { Suspense } from "react";
+import { RecruitmentSection, HomeRoles } from "@/components/recruitment-section";
+import { JobCardSkeletons } from "@/components/careers/job-card/JobCardSkeletons";
 import { ContactSection } from "@/components/contact-section";
 import { Footer } from "@/components/footer";
 import { LotusDivider } from "@/components/ui/LotusDivider";
@@ -19,7 +21,6 @@ import { contactInfo } from "@/data/navigation";
 import { SITE_URL } from "@/lib/site";
 import { services, enhanceServices } from "@/data/services";
 import { teamMembers, departments, boardMembers } from "@/data/team";
-import { fetchLiveJobs } from "@/lib/occupop";
 import { homeQuote } from "@/data/testimonial";
 import { whyUsValues } from "@/data/careers";
 
@@ -90,12 +91,12 @@ const localBusinessJsonLd = {
   ],
 };
 
-// Live Occupop roles are fetched per request, same as /careers/open-roles.
+// Live Occupop roles are fetched per request (cached for an hour in
+// fetchLiveJobs) and stream into the Join Our Team section — the rest of the
+// page doesn't wait for them.
 export const dynamic = "force-dynamic";
 
-export default async function Home() {
-  const jobs = await fetchLiveJobs().catch(() => null);
-
+export default function Home() {
   return (
     <>
       <script
@@ -171,7 +172,11 @@ export default async function Home() {
         <RecruitmentSection
           description={recruitmentDescription}
           note={recruitmentNote}
-          jobs={jobs}
+          roles={
+            <Suspense fallback={<JobCardSkeletons count={3} className="grid grid-cols-1 md:grid-cols-3 gap-5" />}>
+              <HomeRoles />
+            </Suspense>
+          }
           ctas={recruitmentCtas}
         />
         <section className="py-16 sm:py-20 bg-white">
