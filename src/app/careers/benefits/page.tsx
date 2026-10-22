@@ -19,7 +19,7 @@ export default function BenefitsPage() {
         title="Your Wellbeing Matters"
         subtitle="We invest in our people — because happy, supported staff deliver the best care."
         compact
-        image="/images/stock/warm-home.jpg"
+        image="/images/heroes/benefits-hero.webp"
       />
 
       <div className="py-10 sm:py-14">

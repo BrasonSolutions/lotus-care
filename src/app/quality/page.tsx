@@ -19,7 +19,7 @@ export default function QualityPage() {
       <CareersHero
         title={qualityHub.heroTitle}
         subtitle={qualityHub.heroSubtitle}
-        image="/images/stock/warm-home.jpg"
+        image="/images/heroes/quality-hero.webp"
       />
 
       {/* Intro */}

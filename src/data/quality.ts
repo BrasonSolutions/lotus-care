@@ -149,7 +149,7 @@ export const modelOfCareSections = [
     id: "curriculum",
     icon: "clock",
     summary: "Every hour of the day planned to build skills, independence, and wellbeing.",
-    image: "/images/stock/learning-through-play.jpg",
+    image: "/images/stock/learning-through-play.webp",
     label: "24-Hour Curriculum",
     heading: "The 24-Hour Curriculum",
     intro:
@@ -160,7 +160,7 @@ export const modelOfCareSections = [
     id: "adt",
     icon: "home",
     summary: "Consistent, well-communicated moves into, through, and on from our services.",
-    image: "/images/stock/adt-support-session.jpg",
+    image: "/images/stock/adt-support-session.webp",
     label: "ADT",
     heading: "Admissions, Discharges & Transitions",
     intro:
@@ -171,7 +171,7 @@ export const modelOfCareSections = [
     id: "human-rights",
     icon: "user-circle",
     summary: "Dignity, respect, equality, and autonomy at the centre of every decision.",
-    image: "/images/stock/guided-choice.jpg",
+    image: "/images/stock/guided-choice.webp",
     label: "Human Rights",
     heading: "Human Rights",
     intro:

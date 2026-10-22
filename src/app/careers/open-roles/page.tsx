@@ -16,7 +16,7 @@ export default async function OpenRolesPage() {
         title="Open Roles"
         subtitle="Find your next opportunity and join a team that truly cares."
         compact
-        image="/images/stock/team-meeting.jpg"
+        image="/images/heroes/open-roles-hero.webp"
       />
 
       <div className="py-10 sm:py-14">

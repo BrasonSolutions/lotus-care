@@ -19,7 +19,7 @@ import { contactInfo } from "@/data/navigation";
 import { SITE_URL } from "@/lib/site";
 import { services, enhanceServices } from "@/data/services";
 import { teamMembers, departments, boardMembers } from "@/data/team";
-import { jobs } from "@/data/jobs";
+import { fetchLiveJobs } from "@/lib/occupop";
 import { homeQuote } from "@/data/testimonial";
 import { whyUsValues } from "@/data/careers";
 
@@ -54,7 +54,7 @@ const recruitmentNote =
   "Competitive salaries, funded training, genuine career progression, and a culture built on respect and inclusion.";
 
 const recruitmentCtas = [
-  { label: "Explore All Roles", href: "/careers", variant: "primary" as const },
+  { label: "Explore All Roles", href: "/careers/open-roles", variant: "primary" as const },
   { label: "Life at Lotus Care", href: "/careers/why-us", variant: "outline" as const },
 ];
 
@@ -90,7 +90,12 @@ const localBusinessJsonLd = {
   ],
 };
 
-export default function Home() {
+// Live Occupop roles are fetched per request, same as /careers/open-roles.
+export const dynamic = "force-dynamic";
+
+export default async function Home() {
+  const jobs = await fetchLiveJobs().catch(() => null);
+
   return (
     <>
       <script

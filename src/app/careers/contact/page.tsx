@@ -20,7 +20,7 @@ export default function CareersContactPage() {
         title="Talk to Our Recruitment Team"
         subtitle="Have a question, or want to register your interest? We'd love to hear from you."
         compact
-        image="/images/stock/careers-contact-team.jpg"
+        image="/images/heroes/contact-recruitment-hero.webp"
       />
 
       <div className="py-10 sm:py-14">

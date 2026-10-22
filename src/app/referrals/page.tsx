@@ -45,14 +45,14 @@ export default function ReferralsPage() {
           <Container>
             <div className="flex flex-wrap items-center gap-x-10 gap-y-4 mb-8">
               <Image
-                src="/images/logos/hse.png"
+                src="/images/logos/hse.webp"
                 alt="Health Service Executive (HSE)"
                 width={300}
                 height={175}
                 className="h-[134px] w-auto"
               />
               <Image
-                src="/images/logos/tusla.png"
+                src="/images/logos/tusla.webp"
                 alt="Tusla — Child and Family Agency"
                 width={472}
                 height={305}
