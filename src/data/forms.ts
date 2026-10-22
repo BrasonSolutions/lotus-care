@@ -94,12 +94,12 @@ export const contactFields: FormField[] = [
 ];
 
 export const recruitmentRoles = [
-  "Residential Support Worker",
-  "Night Support Worker",
-  "Social Care Leader",
-  "Staff Nurse (RNID/RNMH)",
-  "Senior Services Manager",
-  "Clinical / Allied Health",
+  "Social Care Assistant",
+  "Social Care Worker",
+  "Team Lead",
+  "Person in Charge",
+  "Clinical",
+  "Senior Management",
   "Administration",
   "Other",
 ];

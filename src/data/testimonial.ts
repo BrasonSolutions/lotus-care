@@ -130,18 +130,18 @@ export const careersHearQuote: HomeQuote = {
   quote:
     "I started my journey with Lotus Care in September 2024 as an SCA, working on the floor. Since then, I've had the opportunity to progress to Deputy Team Lead in November 2025 and then to Team Lead in April 2026. One of the things I love most about working with Lotus Care is the opportunity to progress. The company recognises staff who put in hard work and show potential, and I've been given the chance to take on new challenges throughout my time with the company. The management have always encouraged and supported me.",
   name: "Jessica Lennon, Team Lead",
-  date: "10th June 2026",
+  date: "With Lotus Care since September 2024",
 };
 
 // #80's second Figma variant — purple band, two testimonials side by side.
-// Attribution/dates as given in the design; swap in real names if/when the
-// client supplies them.
+// Linas Christian's quote was supplied by the client (round 3), replacing the
+// design's placeholder "Team Leader" entry; the second is still the design's.
 export const teamTestimonials: [QuoteEntry, QuoteEntry] = [
   {
     quote:
-      "I have had the pleasure of working alongside this care company and have consistently been impressed by the high standard of support provided to individuals with additional needs. The team is compassionate, dedicated, and genuinely committed to promoting independence, dignity, and wellbeing for every person they support.",
-    name: "Team Leader",
-    date: "10th June 2026",
+      "Working with Lotus Care has been a very positive experience for me. I have always felt supported by my managers and colleagues, and I really appreciate the opportunities I have been given to learn, grow and develop in my role. I'm proud to be part of the Lotus Care team.",
+    name: "Linas Christian, Social Care Assistant",
+    date: "With Lotus Care since February 2025",
   },
   {
     quote:

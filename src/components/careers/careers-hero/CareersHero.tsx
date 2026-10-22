@@ -153,8 +153,12 @@ function ImageHero({
         sizes="100vw"
         className={`object-cover ${imagePosition === "top" ? "object-top" : "object-center"}`}
       />
+      {/* AA over any photo: white text needs >=85% primary-dark behind it
+          (4.59:1 over a pure-white pixel). Below lg the text spans the full
+          width, so the scrim is uniform; from lg the text column ends before
+          60%, so the gradient holds 85% to there and only fades after it. */}
       <div
-        className="absolute inset-0 bg-gradient-to-r from-primary-dark/95 via-primary-dark/70 to-primary-dark/25"
+        className="absolute inset-0 bg-primary-dark/85 lg:bg-transparent lg:bg-gradient-to-r lg:from-primary-dark/95 lg:via-primary-dark/85 lg:via-60% lg:to-primary-dark/25"
         aria-hidden="true"
       />
 
@@ -165,7 +169,7 @@ function ImageHero({
           <HeroAvatarRow compact={compact} avatarImages={avatarImages} avatarCaption={avatarCaption} />
           <HeroTitle title={title} titleHighlight={titleHighlight} />
           <p
-            className="text-lg sm:text-xl text-white/80 animate-fade-up"
+            className="text-lg sm:text-xl text-white animate-fade-up"
             style={{ animationDelay: "100ms" }}
           >
             {subtitle}

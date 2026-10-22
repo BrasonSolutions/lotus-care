@@ -15,7 +15,7 @@ export const Default: Story = {
   render: () => (
     <LotusPhotoMask className="w-48 h-48">
       <Image
-        src="/images/staff/Danny-Scally.png"
+        src="/images/staff/Danny-Scally.webp"
         alt="Danny Scally"
         fill
         className="object-cover object-top"

@@ -323,34 +323,34 @@ export const employerStats: StatItem[] = [
 
 export const cultureGalleryImages: GalleryImage[] = [
   {
-    src: "/images/stock/team-meeting.jpg",
+    src: "/images/stock/team-meeting.webp",
     alt: "Lotus Care staff gathered for a team meeting",
     caption: "Weekly team catch-ups",
   },
   {
-    src: "/images/stock/warm-home.jpg",
+    src: "/images/stock/warm-home.webp",
     alt: "A warmly furnished Lotus Care residential home living room",
     caption: "Homes designed to feel like home",
   },
   {
-    src: "/images/stock/dignity-activity.jpg",
+    src: "/images/stock/dignity-activity.webp",
     alt: "Staff member supporting a resident during a group activity",
     caption: "Person-centred activities",
   },
   {
-    src: "/images/stock/clinical-consultation.jpg",
+    src: "/images/stock/clinical-consultation.webp",
     alt: "Staff nurse in a clinical consultation with a colleague",
     caption: "Strong clinical support",
   },
 ];
 
 export const videoTestimonials: VideoTestimonial[] = [
-  { name: "Sarah M.", role: "Residential Support Worker", poster: "/images/stock/dignity-activity.jpg" },
+  { name: "Sarah M.", role: "Residential Support Worker", poster: "/images/stock/dignity-activity.webp" },
   {
     name: "James O.",
     role: "Social Care Leader",
-    poster: "/images/stock/team-meeting.jpg",
+    poster: "/images/stock/team-meeting.webp",
     youtubeId: "NYRxgv_3zUo",
   },
-  { name: "Aoife N.", role: "Staff Nurse (RNID)", poster: "/images/stock/clinical-consultation.jpg" },
+  { name: "Aoife N.", role: "Staff Nurse (RNID)", poster: "/images/stock/clinical-consultation.webp" },
 ];

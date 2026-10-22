@@ -1,6 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { RecruitmentSection } from "@/components/recruitment-section";
-import { jobs } from "@/data/jobs";
+import { normalise } from "@/lib/occupop";
+import fixture from "@/lib/__fixtures__/occupop-jobs.json";
+
+// Real Occupop API response, normalised the same way the homepage does it —
+// lets the live-roles cards be reviewed without an OCCUPOP_API_TOKEN.
+const jobs = (fixture.data as Parameters<typeof normalise>[0][]).map(normalise);
 
 const meta: Meta<typeof RecruitmentSection> = {
   title: "Sections/RecruitmentSection",
@@ -19,3 +24,9 @@ export default meta;
 type Story = StoryObj<typeof RecruitmentSection>;
 
 export const Default: Story = {};
+
+/** Occupop fetch failed, or no API token is configured. */
+export const LoadError: Story = { args: { jobs: null } };
+
+/** Occupop returned no live roles. */
+export const NoOpenRoles: Story = { args: { jobs: [] } };

@@ -37,7 +37,7 @@ function IntroSection() {
           </div>
           <div className="group relative rounded-2xl overflow-hidden aspect-[4/3]">
             <Image
-              src="/images/stock/team-review.jpg"
+              src="/images/stock/team-review.webp"
               alt=""
               fill
               sizes="(min-width: 768px) 40vw, 100vw"
@@ -104,7 +104,7 @@ function PrinciplesSection() {
         <Reveal className="reveal-scale">
           <div className="relative rounded-2xl overflow-hidden aspect-[21/9] mb-12">
             <Image
-              src="/images/stock/governance-review.jpg"
+              src="/images/stock/governance-review.webp"
               alt=""
               fill
               sizes="100vw"
@@ -148,7 +148,7 @@ export default function SafetyImprovementPage() {
         title="Quality, Safety & Continuous Improvement"
         subtitle="Quality and safety are the foundation of our culture — the standard by which we measure ourselves every day."
         compact
-        image="/images/stock/team-meeting.jpg"
+        image="/images/stock/team-meeting.webp"
       />
 
       <IntroSection />

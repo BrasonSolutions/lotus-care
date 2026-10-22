@@ -88,7 +88,7 @@ export default function CareersPage() {
         subtitle="Join the Lotus Care team and make a genuine difference in the lives of people with disabilities every single day."
         ctaLabel="View Open Roles"
         ctaHref="/careers/open-roles"
-        image="/images/stock/dignity-activity.jpg"
+        image="/images/stock/dignity-activity.webp"
       />
 
       {/* Team testimonials */}

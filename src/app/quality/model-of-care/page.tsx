@@ -181,7 +181,7 @@ export default function ModelOfCarePage() {
         title="Model of Care"
         subtitle="How we support every person day to day — a 24-hour curriculum, considered transitions, and a rights-based approach."
         compact
-        image="/images/stock/caring-embrace.jpg"
+        image="/images/heroes/model-of-care-banner.webp"
       />
 
       <section className="py-14 sm:py-16">
@@ -219,7 +219,7 @@ export default function ModelOfCarePage() {
               </div>
               <div className="group relative rounded-2xl overflow-hidden aspect-[4/3]">
                 <Image
-                  src="/images/stock/guided-choice.jpg"
+                  src="/images/stock/guided-choice.webp"
                   alt=""
                   fill
                   sizes="(min-width: 768px) 40vw, 100vw"

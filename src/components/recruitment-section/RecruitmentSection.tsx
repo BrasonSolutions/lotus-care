@@ -1,8 +1,9 @@
 "use client";
 
 import { useInView } from "@/hooks/use-in-view";
-import { JobCard } from "@/components/careers/job-card";
-import type { JobRole as Job } from "@/data/jobs";
+import Link from "next/link";
+import { OccupopJobCard } from "@/components/careers/job-card/OccupopJobCard";
+import type { NormalizedJob } from "@/lib/occupop";
 import { Container } from "@/components/layout";
 import { Button } from "@/components/button";
 
@@ -10,7 +11,8 @@ interface RecruitmentSectionProps {
   title?: string;
   description: string[];
   note?: string;
-  jobs: Job[];
+  /** Live Occupop roles; `null` when the fetch failed (or no API token). */
+  jobs: NormalizedJob[] | null;
   ctas?: Array<{ label: string; href: string; variant: "primary" | "outline" }>;
 }
 
@@ -20,13 +22,13 @@ export function RecruitmentSection({
   note,
   jobs,
   ctas = [
-    { label: "Explore All Roles", href: "/careers", variant: "primary" },
+    { label: "Explore All Roles", href: "/careers/open-roles", variant: "primary" },
     { label: "Life at Lotus Care", href: "/careers/why-us", variant: "outline" },
   ],
 }: RecruitmentSectionProps) {
   const { ref, inView } = useInView();
 
-  const featuredJobs = jobs.filter((j) => j.featured).slice(0, 3);
+  const featuredJobs = jobs?.slice(0, 3) ?? [];
 
   return (
     <section id="careers" className="py-20 lg:py-28 bg-accent/10">
@@ -50,12 +52,26 @@ export function RecruitmentSection({
             )}
           </div>
 
-          {/* Featured roles */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-10">
-            {featuredJobs.map((job) => (
-              <JobCard key={job.slug} job={job} />
-            ))}
-          </div>
+          {/* Live roles from Occupop — same card and fallback copy as /careers/open-roles */}
+          {jobs === null ? (
+            <p className="text-muted text-center mb-10">
+              We&apos;re having trouble loading roles right now. Please check back soon.
+            </p>
+          ) : featuredJobs.length === 0 ? (
+            <p className="text-muted text-center mb-10">
+              There are no open roles right now, but we&apos;re always looking for great people.{" "}
+              <Link href="/careers/contact" className="text-primary-dark font-semibold underline focus-ring rounded">
+                Register your interest
+              </Link>
+              .
+            </p>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-10">
+              {featuredJobs.map((job) => (
+                <OccupopJobCard key={job.uuid} job={job} />
+              ))}
+            </div>
+          )}
 
           {/* CTAs */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center">

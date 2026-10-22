@@ -59,7 +59,7 @@ function IntroSection() {
           </div>
           <div className="group relative rounded-2xl overflow-hidden aspect-[4/3]">
             <Image
-              src="/images/stock/everyday-connection.jpg"
+              src="/images/stock/everyday-connection.webp"
               alt=""
               fill
               sizes="(min-width: 768px) 40vw, 100vw"
@@ -119,7 +119,7 @@ function PartnershipSection() {
         <Reveal className="grid md:grid-cols-2 gap-10 lg:gap-16 items-center reveal-scale">
           <div className="group relative rounded-2xl overflow-hidden aspect-[4/3] md:order-1">
             <Image
-              src="/images/stock/helping-child-write.jpg"
+              src="/images/stock/helping-child-write.webp"
               alt=""
               fill
               sizes="(min-width: 768px) 40vw, 100vw"
@@ -156,7 +156,8 @@ export default function MdtPage() {
         title="Multidisciplinary Team"
         subtitle="A collaborative, holistic approach bringing together clinical and therapeutic expertise for every person we support."
         compact
-        image="/images/stock/mdt-hero-v2.jpg"
+        image="/images/heroes/mdt-banner.webp"
+        imagePosition="top"
       />
 
       <IntroVideo />
