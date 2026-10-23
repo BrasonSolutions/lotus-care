@@ -13,7 +13,8 @@
   "images": { "binding": "IMAGES" },
   "workers_dev": true,
   "routes": [
-    { "pattern": "lotus-care.brasonsolutions.com", "custom_domain": true }
+    // Custom hostname (Cloudflare for SaaS) on the brasonsolutions.com zone.
+    { "pattern": "www.lotuscare.ie/*", "zone_name": "brasonsolutions.com" }
   ],
   "observability": { "enabled": true }
 }
