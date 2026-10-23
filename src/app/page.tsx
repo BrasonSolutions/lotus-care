@@ -167,7 +167,8 @@ export default function Home() {
           </Container>
         </section>
         <LotusDivider />
-        <TeamSection members={[...boardMembers, ...teamMembers]} departments={departments} />
+        {/* Members without a photo are hidden until the client supplies one. */}
+        <TeamSection members={[...boardMembers, ...teamMembers].filter((m) => m.image)} departments={departments} />
         <LotusDivider />
         <RecruitmentSection
           description={recruitmentDescription}

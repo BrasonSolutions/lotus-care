@@ -80,7 +80,7 @@ const RECIPIENT_OVERRIDE = process.env.MAIL_TO_OVERRIDE;
  * publicly hosted — inline/data-URI images are unreliable in Outlook.
  * Swap this once lotuscare.ie itself is the deployed custom domain.
  */
-const ASSET_BASE_URL = process.env.MAIL_ASSET_BASE_URL ?? "https://lotus-care.brasonsolutions.com";
+const ASSET_BASE_URL = process.env.MAIL_ASSET_BASE_URL ?? "https://www.lotuscare.ie";
 const LOGO_URL = `${ASSET_BASE_URL}/images/email/logo-white.png`;
 const MARK_URL = `${ASSET_BASE_URL}/images/email/lotus-mark-teal.png`;
 
