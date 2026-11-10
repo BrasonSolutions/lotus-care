@@ -33,6 +33,7 @@ async function verifyTurnstile(token: string, ip: string): Promise<boolean> {
   });
 
   const result = await response.json().catch(() => ({ success: false }));
+  if (result.success !== true) console.warn("Turnstile rejected token", result["error-codes"]);
   return result.success === true;
 }
 

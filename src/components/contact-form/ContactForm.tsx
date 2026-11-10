@@ -18,6 +18,7 @@ declare global {
         },
       ) => string;
       remove: (widgetId: string) => void;
+      reset: (widgetId: string) => void;
     };
   }
 }
@@ -65,6 +66,7 @@ export function ContactForm({
   const [error, setError] = useState("");
   const [turnstileToken, setTurnstileToken] = useState("");
   const turnstileContainerRef = useRef<HTMLDivElement>(null);
+  const turnstileWidgetRef = useRef<string | undefined>(undefined);
 
   const setValue = (name: string, value: string) =>
     setValues((current) => ({ ...current, [name]: value }));
@@ -77,12 +79,11 @@ export function ContactForm({
     const container = turnstileContainerRef.current;
     if (!container) return;
 
-    let widgetId: string | undefined;
     let cancelled = false;
 
     const render = () => {
       if (cancelled || !window.turnstile) return;
-      widgetId = window.turnstile.render(container, {
+      turnstileWidgetRef.current = window.turnstile.render(container, {
         sitekey: turnstileSiteKey,
         callback: setTurnstileToken,
         "expired-callback": () => setTurnstileToken(""),
@@ -111,6 +112,8 @@ export function ContactForm({
 
     return () => {
       cancelled = true;
+      const widgetId = turnstileWidgetRef.current;
+      turnstileWidgetRef.current = undefined;
       if (widgetId && window.turnstile) window.turnstile.remove(widgetId);
     };
   }, [turnstileSiteKey]);
@@ -143,6 +146,12 @@ export function ContactForm({
       const payload = await response.json().catch(() => ({}));
 
       if (!response.ok) {
+        // Turnstile tokens are single-use — the server has spent this one
+        // whatever the failure, so fetch a fresh one for the retry.
+        if (turnstileWidgetRef.current && window.turnstile) {
+          setTurnstileToken("");
+          window.turnstile.reset(turnstileWidgetRef.current);
+        }
         setError(payload.error ?? "Something went wrong. Please try again.");
         setStatus("error");
         return;
