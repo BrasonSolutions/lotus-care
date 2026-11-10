@@ -1,20 +1,27 @@
+import Image from "next/image";
 import Link from "next/link";
 import { LogoWhite } from "@/components/logo-white";
 import { SocialLinks } from "@/components/social-links";
 import { Container } from "@/components/layout";
 import { contactInfo as defaultContactInfo } from "@/data/navigation";
-import { quickLinks as defaultQuickLinks, serviceNames as defaultServiceNames } from "@/data/footer";
+import {
+  partners as defaultPartners,
+  quickLinks as defaultQuickLinks,
+  serviceNames as defaultServiceNames,
+} from "@/data/footer";
 
 interface FooterProps {
   contactInfo?: { phone: string; email: string; address: string };
   quickLinks?: Array<{ label: string; href: string }>;
   serviceNames?: string[];
+  partners?: typeof defaultPartners;
 }
 
 export function Footer({
   contactInfo = defaultContactInfo,
   quickLinks = defaultQuickLinks,
   serviceNames = defaultServiceNames,
+  partners = defaultPartners,
 }: FooterProps) {
   return (
     <footer className="bg-primary-dark text-white">
@@ -86,6 +93,32 @@ export function Footer({
             />
           </div>
         </div>
+
+        {partners.length > 0 && (
+          <div className="mt-12 pt-8 border-t border-white/10">
+            <h3 className="font-bold text-lg mb-4">Our Partners</h3>
+            <ul className="flex flex-wrap items-center gap-4">
+              {partners.map((partner) => (
+                <li key={partner.name}>
+                  <a
+                    href={partner.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block rounded-lg opacity-80 hover:opacity-100 focus-visible:opacity-100 motion-safe:transition-opacity focus-ring-white"
+                  >
+                    <Image
+                      src={partner.logo}
+                      alt={`${partner.name} (opens in a new tab)`}
+                      width={partner.width}
+                      height={partner.height}
+                      className="h-20 w-auto md:h-24"
+                    />
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </Container>
 
       {/* Bottom bar */}

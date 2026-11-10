@@ -12,3 +12,14 @@ export const quickLinks = [
 // Derived from the homepage cards so the two can never drift apart again
 // (issue #55 — footer was still listing services removed from "Our Services").
 export const serviceNames = services.map((service) => service.title);
+
+// Shown as linked logos in the footer. Add new partners here.
+export const partners = [
+  {
+    name: "Little Blue Heroes Foundation",
+    href: "https://www.littleblueheroes.org/",
+    logo: "/images/partners/little-blue-heroes.webp",
+    width: 560,
+    height: 374,
+  },
+];
