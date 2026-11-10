@@ -104,14 +104,14 @@ export function Footer({
                     href={partner.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="block rounded-xl bg-white p-3 hover:ring-2 hover:ring-accent transition focus-ring-white"
+                    className="block rounded-lg opacity-80 hover:opacity-100 focus-visible:opacity-100 motion-safe:transition-opacity focus-ring-white"
                   >
                     <Image
                       src={partner.logo}
                       alt={`${partner.name} (opens in a new tab)`}
                       width={partner.width}
                       height={partner.height}
-                      className="h-16 w-auto"
+                      className="h-20 w-auto md:h-24"
                     />
                   </a>
                 </li>

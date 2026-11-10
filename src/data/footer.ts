@@ -19,7 +19,7 @@ export const partners = [
     name: "Little Blue Heroes Foundation",
     href: "https://www.littleblueheroes.org/",
     logo: "/images/partners/little-blue-heroes.webp",
-    width: 480,
-    height: 321,
+    width: 560,
+    height: 374,
   },
 ];
